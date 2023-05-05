@@ -1,0 +1,3 @@
+| Name | Link |    Characteristics (discrete vs continuous vs mixed)     | #Instances | #Features | #Continuous features | #Discrete features | Task |
+|:----:|:----:|:--------------------------------------------------------:|:----------:|-----------|----------------------|--------------------|------|
+|      |      |                                                          |            |           |                      |                    |      |

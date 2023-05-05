@@ -1,3 +1,3 @@
-| Name | Link |    Characteristics (discrete vs continuous vs mixed)     | #Instances | #Features | #Continuous features | #Discrete features | Task |
-|:----:|:----:|:--------------------------------------------------------:|:----------:|-----------|----------------------|--------------------|------|
-|      |      |                                                          |            |           |                      |                    |      |
+| Name | Link |    Characteristics (discrete vs continuous vs mixed)     | #Instances | #Features | #Continuous features | #Discrete features | #Categorical features | #Nominal features | #Ordinal features | Task | RQ1 | RQ2 | RQ3 | RQ4 | RQ5 |
+|:----:|:----:|:--------------------------------------------------------:|:----------:|-----------|----------------------|--------------------|-----------------------|-------------------|-------------------|------|-----|-----|-----|-----|-----|
+|      |      |                                                          |            |           |                      |                    |                       |                   |                   |      |     |     |     |     |     |

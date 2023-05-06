@@ -1,6 +1,6 @@
 from sklearn import preprocessing
+import category_encoders
 import pandas as pd
-import numpy as np
 from pandas.api.types import is_object_dtype
 
 def getCategoricalColumns(df):
@@ -11,11 +11,15 @@ def getCategoricalColumns(df):
     df = df.astype(df.infer_objects().dtypes)
     return df.select_dtypes(include=['object']).columns
 
+def normalizeColumns(df, target_column):
+    normalizer = preprocessing.Normalizer()
+    train_columns = df.drop([target_column], axis = 1).columns
+    df[train_columns] = normalizer.fit_transform(df[train_columns])
+    return df
+
 class OneHotEncoder:
     def __init__(self):
         self.encoder = preprocessing.OneHotEncoder()
-        self.normalizer = preprocessing.Normalizer()
-        
 
     def encode(self, df, target_column):
         categoricalColumns = getCategoricalColumns(df.drop([target_column], axis = 1))
@@ -26,97 +30,83 @@ class OneHotEncoder:
         df = df.drop(categoricalColumns, axis=1)
         df = pd.concat([df, onehot_df], axis=1)
 
-        train_columns = df.drop([target_column], axis = 1).columns
-        df[train_columns] = self.normalizer.fit_transform(df[train_columns])
+        df = normalizeColumns(df, target_column)
         
         return df
 
-# def encode_ordinal(df, categorical_columns):
-#     # Create an instance of the Ordinal Encoder
-#     encoder = OrdinalEncoder()
-#     normalizer = Normalizer()
+class OrdinalEncoder:
+    def __init__(self):
+        self.encoder = preprocessing.OrdinalEncoder()
+        
+    def encode(self, df, target_column):
+        categoricalColumns = getCategoricalColumns(df.drop([target_column], axis = 1))
+        self.encoder.fit(df[categoricalColumns])
+        ordinal = self.encoder.transform(df[categoricalColumns])
 
-#     # Fit the encoder on the categorical columns of the DataFrame
-#     encoder.fit(df[categorical_columns])
+        ordinal_df = pd.DataFrame(ordinal, columns=categoricalColumns)
+        df = df.drop(categoricalColumns, axis=1)
+        df = pd.concat([df, ordinal_df], axis=1)
 
-#     # Transform the categorical columns into ordinal encoded columns
-#     ordinal = encoder.transform(df[categorical_columns])
-
-#     # Create a new DataFrame with the ordinal encoded columns
-#     ordinal_df = pd.DataFrame(ordinal, columns=categorical_columns)
-
-#     # Drop the original categorical variables from the DataFrame
-#     df = df.drop(categorical_columns, axis=1)
-
-#     # Concatenate the ordinal encoded DataFrame with the original DataFrame
-#     df = pd.concat([df, ordinal_df], axis=1)
+        df = normalizeColumns(df, target_column)
+        
+        return df
     
-#     #Normalize data using sk-learn normalizer
-#     df[df.columns] = normalizer.fit_transform(df[df.columns])
+class TargetEncoder:
+    def __init__(self):
+        self.encoder = category_encoders.TargetEncoder()
+        
+    def encode(self, df, target_column):
+        categoricalColumns = getCategoricalColumns(df.drop([target_column], axis = 1))
+        
+        target = df[[target_column]]
+        df = df.drop(target_column, axis = 1)
+        non_categorical_df = df.drop(categoricalColumns, axis = 1)
+        df = df.drop(non_categorical_df, axis = 1)
 
-#     return df
+        self.encoder.fit(df, target)
+        df = self.encoder.transform(df)
 
-# def encode_catboost(df, categorical_columns, target_column):
-#     # Create an instance of the CatBoost Encoder
-#     encoder = CatBoostEncoder()
-
-#     target = df[[target_column]]
-#     df = df.drop(target_column, axis = 1)
-#     non_categorical_df = df.drop(categorical_columns, axis = 1)
-#     df = df.drop(non_categorical_df, axis = 1)
-
-#     # Fit encoder and transform the features
-#     encoder.fit(df, target)
-#     df = encoder.transform(df)
-
-#     df = pd.concat([df, non_categorical_df], axis = 1)
-#     scaler = StandardScaler()
-#     df[df.columns] = scaler.fit_transform(df[df.columns])
-
-#     df = pd.concat([df, target], axis=1)
+        df = pd.concat([df, non_categorical_df, target], axis = 1)
+        df = normalizeColumns(df, target_column)
+        
+        return df
     
-#     return df
+class CatBoostEncoder:
+    def __init__(self):
+        self.encoder = category_encoders.CatBoostEncoder()
+        
+    def encode(self, df, target_column):
+        categoricalColumns = getCategoricalColumns(df.drop([target_column], axis = 1))
+        
+        target = df[[target_column]]
+        df = df.drop(target_column, axis = 1)
+        non_categorical_df = df.drop(categoricalColumns, axis = 1)
+        df = df.drop(non_categorical_df, axis = 1)
 
+        self.encoder.fit(df, target)
+        df = self.encoder.transform(df)
 
+        df = pd.concat([df, non_categorical_df, target], axis = 1)
+        df = normalizeColumns(df, target_column)
+        
+        return df
 
-# def encode_target(df, categorical_columns, target_column):
-#     # Create an instance of the TargetEncoder
-#     encoder = TargetEncoder()
+class CountEncoder:
+    def __init__(self):
+        self.encoder = category_encoders.CountEncoder()
+        
+    def encode(self, df, target_column):
+        categoricalColumns = getCategoricalColumns(df.drop([target_column], axis = 1))
+        
+        target = df[[target_column]]
+        df = df.drop(target_column, axis = 1)
+        non_categorical_df = df.drop(categoricalColumns, axis = 1)
+        df = df.drop(non_categorical_df, axis = 1)
 
-#     target = df[[target_column]]
-#     df = df.drop(target_column, axis = 1)
-#     non_categorical_df = df.drop(categorical_columns, axis = 1)
-#     df = df.drop(non_categorical_df, axis = 1)
+        self.encoder.fit(df, target)
+        df = self.encoder.transform(df)
 
-#     # Fit encoder and transform the features
-#     encoder.fit(df, target)
-#     df = encoder.transform(df)
-
-#     df = pd.concat([df, non_categorical_df], axis = 1)
-#     scaler = StandardScaler()
-#     df[df.columns] = scaler.fit_transform(df[df.columns])
-
-#     df = pd.concat([df, target], axis=1)
-    
-#     return df
-
-# def encode_count(df, categorical_columns, target_column):
-#     # Create an instance of the CountEncoder
-#     encoder = CountEncoder()
-
-#     target = df[[target_column]]
-#     df = df.drop(target_column, axis = 1)
-#     non_categorical_df = df.drop(categorical_columns, axis = 1)
-#     df = df.drop(non_categorical_df, axis = 1)
-
-#     # Fit encoder and transform the features
-#     encoder.fit(df, target)
-#     df = encoder.transform(df)
-
-#     df = pd.concat([df, non_categorical_df], axis = 1)
-#     scaler = StandardScaler()
-#     df[df.columns] = scaler.fit_transform(df[df.columns])
-
-#     df = pd.concat([df, target], axis=1)
-    
-#     return df
+        df = pd.concat([df, non_categorical_df, target], axis = 1)
+        df = normalizeColumns(df, target_column)
+        
+        return df

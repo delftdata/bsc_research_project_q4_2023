@@ -1,5 +1,5 @@
 from models.models import LinearModel, TreeModel, SVMModel
-from encoders.encoders import OneHotEncoder
+import encoders.encoders as encoders
 import pandas as pd
 
 file = 'datasets/CensusIncome.csv'
@@ -11,7 +11,7 @@ label = 'income_label'
 # print(linearModel.evaluate())
 
 treeModel = TreeModel(problem_type='binary', label=label, data_preprocessing=False, test_size=0.2)
-treeModel.fit(OneHotEncoder().encode(df.head(10000), label))
+treeModel.fit(encoders.CountEncoder().encode(df.head(10000), label))
 print(treeModel.evaluate())
 
 # encoder = OneHotEncoder()

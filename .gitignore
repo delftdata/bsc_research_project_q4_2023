@@ -161,3 +161,6 @@ cython_debug/
 
 # Autogluon Models
 AutogluonModels
+
+# Grid Search Results
+models/grid_searches

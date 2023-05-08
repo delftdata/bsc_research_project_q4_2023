@@ -1,6 +1,7 @@
 from autogluon.tabular import TabularPredictor
 from autogluon.features.generators import IdentityFeatureGenerator
 from sklearn.svm import SVR, SVC
+from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 import numpy as np
 from sklearn.metrics import mean_squared_error, accuracy_score
@@ -66,9 +67,34 @@ class SVMModel():
         X = df.drop([self.label], axis=1)
         y = df[self.label]
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=self.test_size, random_state=1)
-        # print(self.y_train.head(10)) 
+
         self.predictor.fit(self.X_train, self.y_train)
         self.y_pred = self.predictor.predict(self.X_test)
+
+    def grid_search(self, df, dataset_name):
+        param_grid = {
+            'C': [0.1, 1, 10, 100, 1000], 
+            'gamma': [1, 0.1, 0.01, 0.001, 'scale', 'auto'],
+            'kernel': ['rbf', 'poly', 'sigmoid', 'linear']
+            }
+
+        X = df.drop([self.label], axis=1)
+        y = df[self.label]
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=self.test_size, random_state=1)
+        model = SVR() if self.problem_type == 'regression' else SVC()
+
+        print(model.get_params())
+        
+        grid = GridSearchCV(model , param_grid, refit = True, verbose = 3)
+        grid.fit(self.X_train, self.y_train)
+
+        print(grid.best_params_)
+        print(grid.best_estimator_)
+
+        file = 'models/grid_searches/' + str(dataset_name) + 'svm_hyperparameters' + '.txt'
+        print(file)
+        with open(file, 'a+') as f:
+            f.write(str(grid.best_params_) + '\n')
 
     def evaluate(self):
         if self.problem_type == 'regression':

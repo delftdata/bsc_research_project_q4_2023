@@ -79,17 +79,24 @@ class SVMModel():
         self.y_pred = self.predictor.predict(self.X_test)
 
     def grid_search(self, df, dataset_name):
-        param_grid = [{
-            'C': [0.1, 1, 10, 100, 1000],
-            'gamma': [1, 0.1, 0.01, 0.001, 'scale', 'auto'],
-            'kernel': ['rbf', 'sigmoid', 'linear']
-        },
+        param_grid = [
+            #     {
+            #     'C': [0.1, 1, 10, 100, 1000],
+            #     'gamma': [1, 0.1, 0.01, 0.001, 'scale', 'auto'],
+            #     'kernel': ['rbf', 'sigmoid', 'linear']
+            # },
+            # {
+            #     'C': [0.1, 1, 10, 100, 1000],
+            #     'gamma': [1, 0.1, 0.01, 0.001, 'scale', 'auto'],
+            #     'kernel': ['poly'],
+            #     'degree': [4, 5, 6, 7]
+            # }
             {
-            'C': [0.1, 1, 10, 100, 1000],
-            'gamma': [1, 0.1, 0.01, 0.001, 'scale', 'auto'],
-            'kernel': ['poly'],
-            'degree': [1, 2, 3, 4, 5, 6, 7]
-        }
+                'C': [0.1, 1, 10, 100, 1000],
+                'gamma': [1, 0.1, 0.01, 0.001, 'scale', 'auto'],
+                'kernel': ['poly'],
+                'degree': [6, 7, 8, 9]
+            }
         ]
 
         X = df.drop([self.label], axis=1)
@@ -100,7 +107,7 @@ class SVMModel():
 
         print(model.get_params())
 
-        grid = GridSearchCV(model, param_grid, refit=True, verbose=3)
+        grid = GridSearchCV(model, param_grid, refit=True, verbose=3, cv=2)
         grid.fit(self.X_train, self.y_train)
 
         print(grid.best_params_)

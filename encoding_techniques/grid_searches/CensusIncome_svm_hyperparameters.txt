@@ -1,0 +1,8 @@
+SVC(C=1000, degree=6, gamma=1, kernel='poly')
+SVC(C=1000, degree=5, gamma=1, kernel='poly') 10% dataset
+SVC(C=10, degree=7, gamma=1, kernel='poly') - full dataset - onehot
+SVC(C=10, degree=7, gamma='scale',kernel='poly') - full dataset - ordinal
+SVC(C=10, degree=7, kernel='poly') - full dataset - target
+SVC(C=10, degree=7, kernel='poly') - full dataset  - catboost
+SVC(C=1000, degree=7, kernel='poly') - full dataset - count
+SVC(C=1000, degree=9, kernel='poly') - full dataset - count 0.02 better

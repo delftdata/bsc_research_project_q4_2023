@@ -162,5 +162,5 @@ cython_debug/
 # Autogluon Models
 AutogluonModels
 
-# Grid Search Results
-models/grid_searches
+# Local datasets for research question 5
+encoding_techniques/datasets/

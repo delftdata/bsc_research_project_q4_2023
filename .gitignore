@@ -164,3 +164,6 @@ AutogluonModels
 
 # Local datasets for research question 5
 encoding_techniques/datasets/
+.vscode/
+
+AutogluonModels/

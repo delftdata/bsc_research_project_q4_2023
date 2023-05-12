@@ -1,24 +1,40 @@
 import encoders.encoders as encoders
 import pandas as pd
-import sys
-sys.path.append('../models')
-from models import AutogluonModel, SVMModel  # nopep8
+from models.models import AutogluonModel, SVMModel
 
-file = 'datasets/CensusIncome.csv'
+file = '../datasets/CensusIncome/CensusIncome.csv'
 dataset_name = 'CensusIncome'
 df = pd.read_csv(file)
 label = 'income_label'
+problemType = 'binary'
 
-hyperparameters = {
-    'LR': {},
-    # 'XGB': {}
-}
+algorithms = [{
+    'LR': {}
+},
+    {
+    'XGB': {},
+},
+    {
+    'GBM': {},
+},
+    {
+    'RF': {},
+}]
 
+encoders = [encoders.OneHotEncoder(), encoders.OrdinalEncoder(
+), encoders.TargetEncoder(), encoders.CatBoostEncoder(), encoders.CatBoostEncoder()]
 
-# AutogluonModel = AutogluonModel(
-#     problem_type='binary', label=label, data_preprocessing=False, test_size=0.2, hyperparameters=hyperparameters)
-# AutogluonModel.fit(encoders.OneHotEncoder().encode(df.head(10000), label))
-# print(AutogluonModel.evaluate())
+for algorithm in algorithms:
+    manualEncodingModel = AutogluonModel(
+        problem_type=problemType, label=label, data_preprocessing=False, test_size=0.2, hyperparameters=algorithm)
+    autoEncodingModel = AutogluonModel(
+        problem_type=problemType, label=label, data_preprocessing=True, test_size=0.2, hyperparameters=algorithm)
+    
+    for encoder in encoders:
+        manualEncodingModel.fit(encoders.OneHotEncoder().encode(df, label))
+        manualEncodingModel.evaluate()
+        autoEncodingModel.fit(encoders.OneHotEncoder().encode(df, label))
+        autoEncodingModel.evaluate()
 
 
 svmModel = SVMModel(problem_type='binary', label=label,

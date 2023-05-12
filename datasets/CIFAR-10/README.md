@@ -1,0 +1,2 @@
+This dataset was to big to push to git. Here is a link to the data: [Link](https://www.kaggle.com/datasets/fedesoriano/cifar10-python-in-csv)
+I could not find answers to the test data so I decided to splite the training data into test and training data.

@@ -6,12 +6,14 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 from sklearn.metrics import mean_squared_error, accuracy_score
 
+
 def writeToFile(file="", content=""):
     if file != "":
         with open(file, 'a+') as f:
             f.write(str(content) + '\n')
     else:
         print(content)
+
 
 class AutogluonModel():
 
@@ -46,17 +48,24 @@ class AutogluonModel():
 
         if not self.data_preprocessing:
             self.predictor.fit(self.df_train, presets='best_quality', hyperparameters=self.hyperparameters,
-                               feature_generator=IdentityFeatureGenerator())
+                               feature_generator=IdentityFeatureGenerator(), ag_args_fit={'num_gpus': 1})
         else:
             self.predictor.fit(self.df_train, presets='best_quality',
-                               hyperparameters=self.hyperparameters)
+                               hyperparameters=self.hyperparameters, ag_args_fit={'num_gpus': 1})
 
-    def evaluate(self, datasetName):
+    def evaluate(self, datasetName, modelName, encoderName, duration, encodeDuration):
         """
         Evaluates machine learning models and returns the results of the best performing one.
         """
-        writeToFile('../results/' + datasetName + '/AutoGluonResults.txt', self.predictor.evaluate(self.df_test))
-        writeToFile('../results/' + datasetName + '/AutoGluonResults.txt', self.predictor.info())
+
+        runtimeInfo = f'Encode Duration: {encodeDuration}. Total Duration: {duration}'
+        writeToFile('results/' + datasetName + '/' + encoderName +
+                    '/metrics/' + modelName + 'AutoGluon.txt', self.predictor.evaluate(self.df_test))
+        writeToFile('results/' + datasetName + '/' + encoderName +
+                    '/metrics/' + modelName + 'AutoGluon.txt', runtimeInfo)
+        writeToFile('results/' + datasetName + '/' + encoderName + '/hyperparameters/' + modelName + '-AutoGluon.json',
+                    self.predictor.info())
+
         return self.predictor.evaluate(self.df_test)
 
 
@@ -97,7 +106,7 @@ class SVMModel():
         self.predictor.fit(self.X_train, self.y_train)
         self.y_pred = self.predictor.predict(self.X_test)
 
-    def grid_search(self, df, param_grid: list[dict[str, any]], file=""):
+    def grid_search(self, df, datasetName, encoderName, param_grid: list[dict[str, any]]):
         """
         Performs grid search to find best hyperparameters for SVMs.
 
@@ -115,18 +124,22 @@ class SVMModel():
 
         grid = GridSearchCV(model, param_grid, refit=True, verbose=3, cv=5)
         grid.fit(self.X_train, self.y_train)
-
-        if file != "":
-            with open(file, 'a+') as f:
-                f.write(str(grid.best_estimator_) + '\n')
-        else:
-            print(grid.best_params_)
-            print(grid.best_estimator_)
-
-    def evaluate(self):
+        
+        writeToFile('results/' + datasetName + '/' + encoderName + '/hyperparameters/SVM.json',
+        grid.best_estimator_)
+        
+    def evaluate(self, datasetName, encoderName, duration, encodeDuration):
         """
         Evaluates machine learning models and returns the MSE (for regression) and accuracy (for classification).
         """
+        content = ""
         if self.problem_type == 'regression':
-            return np.sqrt(mean_squared_error(self.y_test, self.y_pred))
-        return accuracy_score(self.y_test, self.y_pred)
+            score =  np.sqrt(mean_squared_error(self.y_test, self.y_pred))
+            content = f'RMSE: {score} '
+        else:
+            score =  accuracy_score(self.y_test, self.y_pred)
+            content = f'Accuracy: {score} '
+        
+        content = content + '\n' + f'Encode time: {encodeDuration}' + '\n' + f'Total time: {duration}'
+        writeToFile('results/' + datasetName + '/' + encoderName +
+                    '/metrics/' + 'SVM' + 'AutoGluon.txt', content)

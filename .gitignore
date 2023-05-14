@@ -159,6 +159,14 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+# Autogluon Models
+AutogluonModels
+
+# Local datasets for research question 5
+encoding_techniques/datasets/
 .vscode/
 
 AutogluonModels/
+
+# PyCharm files
+.idea

@@ -6,6 +6,8 @@ from autogluon.features.generators import AutoMLPipelineFeatureGenerator
 from sklearn.model_selection import train_test_split
 
 from multiprocessing import Pool, cpu_count
+from itertools import repeat
+
 from warnings import filterwarnings
 import logging
 
@@ -16,7 +18,8 @@ from skfeature.utility.experiments import select_jmi, select_cife, select_mrmr, 
 filterwarnings("ignore", category=UserWarning)
 
 
-def auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n, fs_algorithm):
+def auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n_features, fs_algorithm):
+    print(n_features)
     results = []
 
     # Encode features
@@ -37,41 +40,44 @@ def auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n, fs_algorithm
     test = X_test
     test[y_label] = y_test
 
-    # Run feature selection
-    for n_features in range(1, n+1):
-        train_data = TabularDataset(train)
-        idx, _, _ = fs_algorithm(train.drop(y_label, axis=1).to_numpy(), train[y_label].to_numpy(), n_selected_features=n_features)
+    train_data = TabularDataset(train)
+    idx, _, _ = fs_algorithm(train.drop(y_label, axis=1).to_numpy(), train[y_label].to_numpy(), n_selected_features=n_features)
 
-        # obtain the dataset on the selected features
-        picked_columns = [list(train.drop(y_label, axis=1).columns)[i] for i in idx[0:n_features]]
-        picked_columns.append(y_label)
-        features = train_data[picked_columns]
+    # obtain the dataset on the selected features
+    picked_columns = [list(train.drop(y_label, axis=1).columns)[i] for i in idx[0:n_features]]
+    picked_columns.append(y_label)
+    features = train_data[picked_columns]
 
-        # Train model on the smaller dataset with tuned hyper-parameters
-        linear_predictor = TabularPredictor(label=y_label,
-                                            eval_metric=eval_metric,
-                                            verbosity=0) \
-            .fit(train_data=features, hyperparameters={algorithm: hyperparameters})
+    # Train model on the smaller dataset with tuned hyper-parameters
+    linear_predictor = TabularPredictor(label=y_label,
+                                        eval_metric=eval_metric,
+                                        verbosity=0) \
+        .fit(train_data=features, hyperparameters={algorithm: hyperparameters})
 
-        # Get accuracy on test data
-        test_data = TabularDataset(test)
-        accuracy = linear_predictor.evaluate(test_data)['accuracy']
-        print(accuracy)
-        results.append(accuracy)
+    # Get accuracy on test data
+    test_data = TabularDataset(test)
+    accuracy = linear_predictor.evaluate(test_data)['accuracy']
+    print(accuracy)
+    results.append(accuracy)
 
-    return results
+    return accuracy
 
 
 def run_all(mat, y_label, eval_metric, algorithm, model_name, n):
-    mrmr = auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n, select_mrmr)
-    logging.error(mrmr)
-    mifs = auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n, select_mifs)
-    logging.error(mifs)
-    jmi = auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n, select_jmi)
-    logging.error(jmi)
-    cife = auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n, select_cife)
-    logging.error(cife)
+    
+    with Pool(n) as p:
+        mrmr = p.starmap(auto_gluon, zip(repeat(mat), repeat(y_label), repeat(eval_metric), repeat(algorithm), repeat(model_name), list(range(1, n + 1)), repeat(select_mrmr)))
+    with Pool(n) as p:
+        mifs = p.starmap(auto_gluon, zip(repeat(mat), repeat(y_label), repeat(eval_metric), repeat(algorithm), repeat(model_name), list(range(1, n + 1)), repeat(select_mifs)))
+    with Pool(n) as p:
+        jmi = p.starmap(auto_gluon, zip(repeat(mat), repeat(y_label), repeat(eval_metric), repeat(algorithm), repeat(model_name), list(range(1, n + 1)), repeat(select_jmi)))
+    with Pool(n) as p:
+        cife = p.starmap(auto_gluon, zip(repeat(mat), repeat(y_label), repeat(eval_metric), repeat(algorithm), repeat(model_name), list(range(1, n + 1)), repeat(select_cife)))
 
+    logging.error(mrmr)
+    logging.error(mifs)
+    logging.error(jmi)
+    logging.error(cife)
     return mrmr, mifs, jmi, cife
 
 

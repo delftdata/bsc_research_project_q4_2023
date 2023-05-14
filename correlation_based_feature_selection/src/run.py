@@ -12,7 +12,7 @@ class DatasetEvaluator:
         self.dataset_name = dataset_name
         self.target_label = target_label
         self.dataframe = pd.read_csv(dataset_file)
-        # specify the models to use; choose between:
+        # Specify the models to use; choose between:
         # GBM (LightGBM), RF (random forest), LR (linear regression), XGB (XGBoost)
         self.hyperparameters = {'RF': {}, 'GBM': {}, 'XGB': {}, 'LR': {}}
 
@@ -21,11 +21,14 @@ def evaluate_census_income_dataset():
     dataset_evaluator = DatasetEvaluator(
         '../datasets/CensusIncome/CensusIncome.csv', 'CensusIncome', 'income_label')
 
-    autogluon_model = AutogluonModel(
-        problem_type='binary', label=dataset_evaluator.target_label, data_preprocessing=False,
-        test_size=0.2, hyperparameters=dataset_evaluator.hyperparameters)
-    autogluon_model.fit(dataset_evaluator.dataframe)
-    print(autogluon_model.evaluate())
+    print(dataset_evaluator.dataframe['income_label'].dtypes)
+
+    # # Run the models with feature generator
+    # autogluon_model = AutogluonModel(
+    #     problem_type='binary', label=dataset_evaluator.target_label, data_preprocessing=False,
+    #     test_size=0.2, hyperparameters=dataset_evaluator.hyperparameters)
+    # autogluon_model.fit(dataset_evaluator.dataframe)
+    # print(autogluon_model.evaluate())
 
 
 if __name__ == '__main__':

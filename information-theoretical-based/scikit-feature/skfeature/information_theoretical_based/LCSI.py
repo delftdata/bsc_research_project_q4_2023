@@ -64,7 +64,7 @@ def lcsi(X, y, **kwargs):
     t3 = np.zeros(n_features)
     for i in range(n_features):
         f = X[:, i]
-        t1[i] = midd(f, y)
+        t1[i] = mi(f, y)
 
     # make sure that j_cmi is positive at the very beginning
     j_cmi = 1
@@ -96,8 +96,8 @@ def lcsi(X, y, **kwargs):
         for i in range(n_features):
             if i not in F:
                 f = X[:, i]
-                t2[i] += midd(f_select, f)
-                t3[i] += cmidd(f_select, f, y)
+                t2[i] += mi(f_select, f)
+                t3[i] += cmi(f_select, f, y)
                 # calculate j_cmi for feature i (not in F)
                 t = t1[i] - beta*t2[i] + gamma*t3[i]
                 # record the largest j_cmi and the corresponding feature index

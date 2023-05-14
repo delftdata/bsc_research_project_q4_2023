@@ -10,6 +10,7 @@ from itertools import repeat
 
 from warnings import filterwarnings
 import logging
+import time
 
 from skfeature.utility.data_preparation import prepare_data_for_ml, get_hyperparameters
 from skfeature.utility.plotting import plot_over_features
@@ -41,7 +42,10 @@ def auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n_features, fs_
     test[y_label] = y_test
 
     train_data = TabularDataset(train)
+
+    time_now = time.time()
     idx, _, _ = fs_algorithm(train.drop(y_label, axis=1).to_numpy(), train[y_label].to_numpy(), n_selected_features=n_features)
+    time_after = time.time()
 
     # obtain the dataset on the selected features
     picked_columns = [list(train.drop(y_label, axis=1).columns)[i] for i in idx[0:n_features]]
@@ -60,24 +64,27 @@ def auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n_features, fs_
     print(accuracy)
     results.append(accuracy)
 
-    return accuracy
+    return accuracy, time_after - time_now
 
 
 def run_all(mat, y_label, eval_metric, algorithm, model_name, n):
-    
+
     with Pool(n) as p:
         mrmr = p.starmap(auto_gluon, zip(repeat(mat), repeat(y_label), repeat(eval_metric), repeat(algorithm), repeat(model_name), list(range(1, n + 1)), repeat(select_mrmr)))
+    logging.error(mrmr)
+
     with Pool(n) as p:
         mifs = p.starmap(auto_gluon, zip(repeat(mat), repeat(y_label), repeat(eval_metric), repeat(algorithm), repeat(model_name), list(range(1, n + 1)), repeat(select_mifs)))
+    logging.error(mifs)
+
     with Pool(n) as p:
         jmi = p.starmap(auto_gluon, zip(repeat(mat), repeat(y_label), repeat(eval_metric), repeat(algorithm), repeat(model_name), list(range(1, n + 1)), repeat(select_jmi)))
+    logging.error(jmi)
+
     with Pool(n) as p:
         cife = p.starmap(auto_gluon, zip(repeat(mat), repeat(y_label), repeat(eval_metric), repeat(algorithm), repeat(model_name), list(range(1, n + 1)), repeat(select_cife)))
-
-    logging.error(mrmr)
-    logging.error(mifs)
-    logging.error(jmi)
     logging.error(cife)
+
     return mrmr, mifs, jmi, cife
 
 
@@ -87,16 +94,25 @@ def main():
     y_label = 'Class'
     eval_metric = 'accuracy'
     algorithm = 'XGB'
-    n = 10
+    n = 2
     model_name = 'XGBoost'
 
     mrmr, mifs, jmi, cife = run_all(mat, y_label, eval_metric, algorithm, model_name, n)
+    mrmr = [i[0] for i in mrmr]
+    mifs = [i[0] for i in mifs]
+    jmi = [i[0] for i in jmi]
+    cife = [i[0] for i in cife]
     plot_over_features(model_name, n, mrmr, mifs, jmi, cife)
 
     algorithm = 'LR'
     model_name = 'LinearModel'
 
     mrmr, mifs, jmi, cife = run_all(mat, y_label, eval_metric, algorithm, model_name, n)
+
+    mrmr = [i[0] for i in mrmr]
+    mifs = [i[0] for i in mifs]
+    jmi = [i[0] for i in jmi]
+    cife = [i[0] for i in cife]
     plot_over_features(model_name, n, mrmr, mifs, jmi, cife)
 
 

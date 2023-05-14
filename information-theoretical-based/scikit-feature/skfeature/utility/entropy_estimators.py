@@ -33,6 +33,7 @@ def mi(x, y, k=3, base=2):
     if x is a one-dimensional scalar and we have four samples
     """
 
+    np.random.seed(42)
     assert len(x) == len(y), "Lists should have same length"
     assert k <= len(x) - 1, "Set k smaller than num. samples - 1"
     intens = 1e-10  # small noise to break degeneracy, see doc.
@@ -56,6 +57,7 @@ def cmi(x, y, z, k=3, base=2):
     if x is a one-dimensional scalar and we have four samples
     """
 
+    np.random.seed(42)
     assert len(x) == len(y), "Lists should have same length"
     assert k <= len(x) - 1, "Set k smaller than num. samples - 1"
     intens = 1e-10  # small noise to break degeneracy, see doc.

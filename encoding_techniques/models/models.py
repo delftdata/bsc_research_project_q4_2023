@@ -71,7 +71,7 @@ class AutogluonModel():
 
 class SVMModel():
 
-    def __init__(self,  label: str, problem_type: str, data_preprocessing: bool = False, test_size: float = 0.2):
+    def __init__(self,  label: str, problem_type: str, data_preprocessing: bool = False, test_size: float = 0.2, hyperparameters: dict = []):
         """_summary_
 
         Args:
@@ -83,7 +83,7 @@ class SVMModel():
         self.data_preprocessing = data_preprocessing
         self.test_size = test_size
         self.problem_type = problem_type
-        self.predictor = SVR() if problem_type == 'regression' else SVC()
+        self.predictor = SVR(C=hyperparameters['C'], gamma=hyperparameters['gamma'], kernel=hyperparameters['kernel'], degree=hyperparameters['degree']) if problem_type == 'regression' else SVC(C=hyperparameters['C'], gamma=hyperparameters['gamma'], kernel=hyperparameters['kernel'], degree=hyperparameters['degree'])
         self.label = label
         self.X_train = []
         self.X_test = []
@@ -142,4 +142,4 @@ class SVMModel():
         
         content = content + '\n' + f'Encode time: {encodeDuration}' + '\n' + f'Total time: {duration}'
         writeToFile('results/' + datasetName + '/' + encoderName +
-                    '/metrics/' + 'SVM' + 'AutoGluon.txt', content)
+                    '/metrics/' + 'SVM' + '.txt', content)

@@ -17,6 +17,7 @@ encoderNames = ['onehot', 'ordinal', 'target', 'catboost', 'count']
 encoders = [encoders.OneHotEncoder(), encoders.OrdinalEncoder(
     ), encoders.TargetEncoder(), encoders.CatBoostEncoder(), encoders.CountEncoder()]
 
+
 def runAutoGluonTests():
     algorithms = [
     {
@@ -86,42 +87,64 @@ def runAutoGluonTests():
                 dataset_name, 'auto-' + algorithmNames[i], encoderName, durationAuto, 0)
         
 param_grid = [
-    #     {
-    #     'C': [0.1, 1, 10, 100, 1000],
-    #     'gamma': [1, 0.1, 0.01, 0.001, 'scale', 'auto'],
-    #     'kernel': ['rbf', 'sigmoid', 'Autogluon']
-    # },
-    # {
-    #     'C': [0.1, 1, 10, 100, 1000],
-    #     'gamma': [1, 0.1, 0.01, 0.001, 'scale', 'auto'],
-    #     'kernel': ['poly'],
-    #     'degree': [4, 5, 6, 7]
-    # }
+        {
+        'C': [0.1, 10, 1000],
+        'gamma': [1, 'scale'],
+        'kernel': ['rbf', 'sigmoid', 'linear']
+    },
     {
-        'C': [0.1, 1, 10, 100, 1000],
-        'gamma': [1, 0.1, 0.01, 0.001, 'scale', 'auto'],
+        'C': [0.1, 10, 1000],
+        'gamma': [1, 'scale'],
         'kernel': ['poly'],
         'degree': [6, 7, 8, 9]
     }
 ]
 
+
+svm_hyperparameters = [{
+        'C': 10,
+        'gamma': 1,
+        'kernel': 'poly',
+        'degree': 8
+    },
+    {
+        'C': 10,
+        'gamma': 1,
+        'kernel': 'poly',
+        'degree': 8
+    },
+    {
+        'C': 10,
+        'gamma': 1,
+        'kernel': 'poly',
+        'degree': 8
+    },
+    {
+        'C': 10,
+        'gamma': 1,
+        'kernel': 'poly',
+        'degree': 8
+    },
+    {
+        'C': 1000,
+        'gamma': 'scale',
+        'kernel': 'poly',
+        'degree': 9
+    },
+    ]
 def run_svm_grid():
     for j, encoder in enumerate(encoders):
         svmModel = SVMModel(problem_type=problemType, label=label,
                         data_preprocessing=False, test_size=0.2)
 
-        file = 'grid_searches/' + dataset_name + '/' + encoderNames[j] + '/svm_hyperparameters' + '.txt'
-
-        svmModel.grid_search(encoder.encode(df, label), dataset_name, encoderNames[j], param_grid)
+        svmModel.grid_search(encoder.encode(df.head(), label), dataset_name, encoderNames[j], param_grid)
 
 
     
 def run_svm_model():
     for j, encoder in enumerate(encoders):
         svmModel = SVMModel(problem_type=problemType, label=label,
-                        data_preprocessing=False, test_size=0.2)
-
-        file = 'grid_searches/' + dataset_name + '/' + encoderNames[j] + '/svm_hyperparameters' + '.txt'
+                        data_preprocessing=False, test_size=0.2, hyperparameters = svm_hyperparameters[j])
 
         startTime = time.time()
         encoded_df = encoder.encode(df, label)
@@ -133,4 +156,5 @@ def run_svm_model():
         svmModel.evaluate(dataset_name, encoderNames[j], svmTime, encodeTime)
 
 
-run_svm_grid()
+# run_svm_grid()
+run_svm_model()

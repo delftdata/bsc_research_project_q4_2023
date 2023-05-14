@@ -167,3 +167,6 @@ encoding_techniques/datasets/
 .vscode/
 
 AutogluonModels/
+
+# PyCharm files
+.idea

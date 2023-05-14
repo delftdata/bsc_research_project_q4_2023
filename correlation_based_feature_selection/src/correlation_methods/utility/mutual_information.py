@@ -1,5 +1,6 @@
 """
-Module for computing the mutual information gain.
+Module for computing the mutual information gain. Source of the code is:
+https://github.com/jundongl/scikit-feature.
 """
 from .entropy_estimators import calculate_entropy, midd
 

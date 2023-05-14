@@ -21,22 +21,20 @@ def evaluate_census_income_dataset():
     dataset_evaluator = DatasetEvaluator(
         '../datasets/CensusIncome/CensusIncome.csv', 'CensusIncome', 'income_label')
 
-    print(dataset_evaluator.dataframe['income_label'].dtypes)
-
-    # # Run the models with feature generator
-    # autogluon_model = AutogluonModel(
-    #     problem_type='binary', label=dataset_evaluator.target_label, data_preprocessing=False,
-    #     test_size=0.2, hyperparameters=dataset_evaluator.hyperparameters)
-    # autogluon_model.fit(dataset_evaluator.dataframe)
-    # print(autogluon_model.evaluate())
+    # Run the models with feature generator
+    autogluon_model = AutogluonModel(
+        problem_type='binary', label=dataset_evaluator.target_label, data_preprocessing=False,
+        test_size=0.2, hyperparameters=dataset_evaluator.hyperparameters)
+    autogluon_model.fit(dataset_evaluator.dataframe)
+    print(autogluon_model.evaluate())
 
 
 if __name__ == '__main__':
-    a = [1, 2, 3, 3]
-    b = [1000, 7, 6, 1000]
-    print(PearsonFeatureSelection.compute_correlation(a, b))
-    print(SpearmanFeatureSelection.compute_correlation(a, b))
-    print(CramersVFeatureSelection.compute_correlation(a, b))
-    print(SymmetricUncertaintyFeatureSelection.compute_correlation(a, b))
+    # a = [1, 2, 3, 3]
+    # b = [1000, 7, 6, 1000]
+    # print(PearsonFeatureSelection.compute_correlation(a, b))
+    # print(SpearmanFeatureSelection.compute_correlation(a, b))
+    # print(CramersVFeatureSelection.compute_correlation(a, b))
+    # print(SymmetricUncertaintyFeatureSelection.compute_correlation(a, b))
 
     evaluate_census_income_dataset()

@@ -37,7 +37,7 @@ def main(num_fea):
     correct = 0
     for train, test in ss.split(X):
         # obtain the index of each feature on the training set
-        idx, _, _ = CIFE.select(X[train], y[train], n_selected_features=num_fea)
+        idx, _, _ = CIFE.cife(X[train], y[train], n_selected_features=num_fea)
 
         # obtain the dataset on the selected features
         features = X[:, idx[0:num_fea]]

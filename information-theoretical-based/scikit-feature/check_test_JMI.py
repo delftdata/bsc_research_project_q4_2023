@@ -3,7 +3,7 @@ import scipy.io
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import KFold
 from sklearn import svm
-from skfeature.function.information_theoretical_based import JMI
+from skfeature.information_theoretical_based import JMI
 
 
 def main():

@@ -3,7 +3,7 @@ import scipy.io
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import KFold
 from sklearn import svm
-from skfeature.function.information_theoretical_based import CIFE
+from skfeature.information_theoretical_based import CIFE
 
 from multiprocessing import Pool
 

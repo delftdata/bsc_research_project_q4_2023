@@ -13,10 +13,7 @@ from multiprocessing import Pool, cpu_count
 from warnings import filterwarnings
 from itertools import repeat
 
-from skfeature.function.information_theoretical_based import JMI
-from skfeature.function.information_theoretical_based import MRMR
-from skfeature.function.information_theoretical_based import MIFS
-from skfeature.function.information_theoretical_based import CIFE
+from skfeature.information_theoretical_based import JMI, MIFS, CIFE, MRMR
 
 filterwarnings("ignore", category=UserWarning)
 

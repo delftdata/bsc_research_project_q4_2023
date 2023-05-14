@@ -5,7 +5,7 @@ from autogluon.tabular import TabularDataset, TabularPredictor
 from autogluon.features.generators import AutoMLPipelineFeatureGenerator
 
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, train_test_split
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -17,10 +17,11 @@ from itertools import repeat
 import logging
 
 from skfeature.information_theoretical_based import JMI, MIFS, CIFE, MRMR
-from skfeature.utility.data_preparation import prepare_data_for_ml
+from skfeature.utility.data_preparation import prepare_data_for_ml, get_hyperparameters
 from skfeature.utility.plotting import plot_over_features
 
 filterwarnings("ignore", category=UserWarning)
+
 
 def select_mifs(X, y, n_selected_features):
     return MIFS.mifs(X, y, n_selected_features=n_selected_features)
@@ -120,12 +121,21 @@ def auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n, fs_algorithm
     # Tune hyperparameters
     hyperparameters = get_hyperparameters(train_data, y_label, eval_metric, algorithm, model_name)
 
+    X_train, X_test, y_train, y_test = train_test_split(train_data.drop(columns=[y_label]), train_data[y_label],
+                                                        test_size=0.2,
+                                                        random_state=42)
+    train = X_train
+    train[y_label] = y_train
+
+    test = X_test
+    test[y_label] = y_test
     # Run feature selection
     for n_features in range(1, n+1):
-        idx, _, _ = fs_algorithm(train_data.drop(y_label, axis=1).to_numpy(), train_data[y_label].to_numpy(), n_selected_features=n_features)
+        train_data = TabularDataset(train)
+        idx, _, _ = fs_algorithm(train.drop(y_label, axis=1).to_numpy(), train[y_label].to_numpy(), n_selected_features=n_features)
 
         # obtain the dataset on the selected features
-        picked_columns = [list(train_data.drop(y_label, axis=1).columns)[i] for i in idx[0:n_features]]
+        picked_columns = [list(train.drop(y_label, axis=1).columns)[i] for i in idx[0:n_features]]
         picked_columns.append(y_label)
         features = train_data[picked_columns]
 
@@ -136,8 +146,8 @@ def auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n, fs_algorithm
             .fit(train_data=features, hyperparameters={algorithm: hyperparameters})
 
         # Get accuracy
-        training_results = linear_predictor.info()
-        accuracy = training_results["model_info"][model_name]['val_score']
+        test_data = TabularDataset(test)
+        accuracy = linear_predictor.evaluate(test)['accuracy']
         print(accuracy)
         results.append(accuracy)
 

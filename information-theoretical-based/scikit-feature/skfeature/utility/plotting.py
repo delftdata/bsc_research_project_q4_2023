@@ -5,7 +5,7 @@ import matplotlib.ticker as mticker
 from matplotlib.pyplot import figure
 
 
-def plot_over_features(model_name, n_features, mrmr, mifs, jmi, cife):
+def plot_over_features(model_name, n_features, mrmr, mifs, jmi, cife, save=True):
     features = list(range(1, n_features+1))
 
     font_color = '#017188'
@@ -24,6 +24,7 @@ def plot_over_features(model_name, n_features, mrmr, mifs, jmi, cife):
     plt.legend(['MRMR', 'MIFS', 'JMI', 'CIFE'], fontsize=14, labelcolor=font_color)
     plt.title(f'Steel plates\' faults dataset accuracy with {model_name}', fontsize=16, color=font_color)
 
-    plt.savefig(f'result_{model_name}.png')
+    if save:
+        plt.savefig(f'./results/result_{model_name}.png')
     plt.show()
     plt.clf()

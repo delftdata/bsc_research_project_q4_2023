@@ -117,14 +117,8 @@ def auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n, fs_algorithm
     train_data = AutoMLPipelineFeatureGenerator(enable_text_special_features=False,
                                                 enable_text_ngram_features=False).fit_transform(X=train_data)
 
-    # Train model on entire dataset
-    initial_linear_predictor = TabularPredictor(label=y_label,
-                                       eval_metric=eval_metric,
-                                       verbosity=0)\
-        .fit(train_data=train_data, hyperparameters={algorithm: {}})
-    initial_training_results = initial_linear_predictor.info()
-    # Get tuned hyper-parameters
-    hyperparameters = initial_training_results['model_info'][model_name]['hyperparameters']
+    # Tune hyperparameters
+    hyperparameters = get_hyperparameters(train_data, y_label, eval_metric, algorithm, model_name)
 
     # Run feature selection
     for n_features in range(1, n+1):
@@ -170,7 +164,7 @@ if __name__ == '__main__':
     cife = auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n, select_cife)
     logging.error(cife)
 
-    plot_over_features("XGB", n, mrmr, mifs, jmi, cife)
+    plot_over_features(model_name, n, mrmr, mifs, jmi, cife)
 
     algorithm = 'LR'
     model_name = 'LinearModel'
@@ -183,4 +177,6 @@ if __name__ == '__main__':
     logging.error(jmi)
     cife = auto_gluon(mat, y_label, eval_metric, algorithm, model_name, n, select_cife)
     logging.error(cife)
+
+    plot_over_features(model_name, n, mrmr, mifs, jmi, cife)
 

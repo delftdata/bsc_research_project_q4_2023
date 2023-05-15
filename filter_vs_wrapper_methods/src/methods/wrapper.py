@@ -9,18 +9,17 @@ class Wrapper:
 
     @staticmethod
     def perform_feature_selection(df: pd.DataFrame, target_index: int, estimator,
-                                  direction: Literal["forward", "backward"] = "forward", scoring="accuracy", tol=0.01,
-                                  n_jobs=-1, n_features_to_select="auto") -> pd.DataFrame:
-        X, y = FeatureSelection.split_input_target(df, target_index)
+                                  direction: Literal["forward", "backward"] = "forward", scoring="accuracy",
+                                  n_jobs=-1, n_features_to_select=0.6) -> pd.DataFrame:
+        X, y, df = FeatureSelection.split_input_target(df, target_index)
 
+        print(f"Started wrapper feature selection, direction: {direction}.")
         sequential_selector = SequentialFeatureSelector(
-            estimator, direction=direction, scoring=scoring, tol=tol, n_jobs=n_jobs,
+            estimator, direction=direction, scoring=scoring, n_jobs=n_jobs,
             n_features_to_select=n_features_to_select)
-
         sequential_selector.fit(X, y)
-
-        selected_features_indices = FeatureSelection.get_selected_features_indices(
-            sequential_selector, target_index)
+        print(f"Finished wrapper feature selection.")
+        selected_features_indices = FeatureSelection.get_selected_features_indices(sequential_selector)
 
         return df.iloc[:, selected_features_indices]
 

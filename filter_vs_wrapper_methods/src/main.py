@@ -1,56 +1,120 @@
 import os
 import warnings
 
-import numpy as np
 import pandas as pd
 from methods.filter import Filter
 from methods.wrapper import Wrapper
+from ML_models.models import AutogluonModel
 from sklearn.calibration import LinearSVC
-from utility.feature_selection import FeatureSelection
 
 warnings.filterwarnings("ignore")
 os.environ["PYTHONWARNINGS"] = "ignore"
 
 
-def perform_feature_selection_on_arrhythmia_dataset():
-    file_dataset = "data/arrhythmia/arrhythmia.data"
-    file_labels = "data/arrhythmia/labels.names"
-
-    df = pd.read_csv(file_dataset, header=None, low_memory=False)
-    df_column_names = pd.read_csv(file_labels, header=None)
-
-    df = df.rename(columns=dict([(i, df_column_names[0][i]) for i in range(df.shape[1])]))
-    df = df.replace("?", np.nan)
-    df = FeatureSelection.impute_missing_values(df)
-
+def perform_feature_selection_on_steel_plates_faults_dataset(df: pd.DataFrame, target_index=0, preprocessing=False):
     chi2, anova, forward_selection, backward_elimination = None, None, None, None
 
     try:
-        chi2 = Filter.perform_feature_selection(df, df.shape[1] - 1, "chi2")
+        chi2 = Filter.perform_feature_selection(df, target_index, "chi2")
     except Exception as e:
         print("Chi2:", e)
 
     try:
-        anova = Filter.perform_feature_selection(df, df.shape[1] - 1, "anova")
+        anova = Filter.perform_feature_selection(df, target_index, "anova")
     except Exception as e:
         print("Anova:", e)
 
     try:
-        forward_selection = Wrapper.perform_feature_selection(df, df.shape[1] - 1, LinearSVC(), direction="forward")
+        forward_selection = Wrapper.perform_feature_selection(df, target_index, LinearSVC(), direction="forward")
     except Exception as e:
         print("Forward Selection: ", e)
 
     try:
-        backward_elimination = Wrapper.perform_feature_selection(df, df.shape[1] - 1, LinearSVC(), direction="backward")
+        backward_elimination = Wrapper.perform_feature_selection(df, target_index, LinearSVC(), direction="backward")
     except Exception as e:
         print("Forward Selection: ", e)
 
     return chi2, anova, forward_selection, backward_elimination
 
 
+def write_to_file(path: str, file_name: str, content: str):
+    path_to_file = f"{path}/{file_name}"
+    try:
+        os.makedirs(path)
+        with open(path_to_file, "a+") as file:
+            file.write(content + "\n")
+        print(f"Updated -{path_to_file}- with content -{content}-")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
 if __name__ == "__main__":
-    chi2, anova, forward_selection, backward_elimination = perform_feature_selection_on_arrhythmia_dataset()
-    print("Chi2:", chi2.shape if chi2 is not None else None)
-    print("ANOVA:", anova.shape if anova is not None else None)
-    print("Forward Selection:", forward_selection.shape if forward_selection is not None else None)
-    print("Backward Elimination:", backward_elimination.shape if backward_elimination is not None else None)
+    hyperparameters = [
+        {
+            'LR': {}
+        },
+        {
+            'XGB': {},
+        },
+        {
+            'GBM': {},
+        },
+        {
+            'RF': {},
+        }]
+    hyperparameters_names = [
+        'LR', 'XGB',
+        'GBM', 'RF']
+
+    param_grid = [
+        {
+            'C': [0.1, 10, 1000],
+            'gamma': [1, 'scale'],
+            'kernel': ['rbf', 'sigmoid', 'linear']
+        },
+        {
+            'C': [0.1, 10, 1000],
+            'gamma': [1, 'scale'],
+            'kernel': ['poly'],
+            'degree': [6, 7, 8, 9]
+        }
+    ]
+
+    file_dataset = "data/steel_plates_faults/steel_plates_faults.csv"
+    df_plates = pd.read_csv(file_dataset)
+    df_plates = df_plates.iloc[:, [df_plates.shape[1] - 1] + [i for i in range(df_plates.shape[1] - 1)]]
+
+    chi2, anova, forward_selection, backward_elimination = perform_feature_selection_on_steel_plates_faults_dataset(
+        df_plates)
+
+    data_frames: list[tuple[str, pd.DataFrame]] = [
+        ("chi2", chi2),
+        ("anova", anova),
+        ("forward_selection", forward_selection),
+        ("backward_elimination", backward_elimination),
+        ("original", df_plates)]
+
+    selected_data_frames = [(method_name, df) for (method_name, df) in data_frames if df is not None]
+    for (method_name, df) in selected_data_frames:
+        print(method_name)
+        print(df.head())
+
+    results_path = "results/breast_cancer"
+    file_name = "metrics.txt"
+
+    for (method_name, df) in selected_data_frames:
+        for i, hyperparameter in enumerate(hyperparameters):
+            autogluon_model = AutogluonModel(label=df.columns[0],
+                                             problem_type="binary", data_preprocessing=False,
+                                             hyperparameters=hyperparameter)
+            autogluon_model.fit(df)
+
+            write_to_file(f"results/breast_cancer/{method_name}/{hyperparameters_names[i]}", file_name,
+                          str(autogluon_model.evaluate()))
+
+        # svm_model = SVMModel(label=df.columns[0], problem_type="binary",
+        #                      data_preprocessing=False)
+        # svm_model.grid_search(df, param_grid=param_grid)
+
+        # write_to_file(f"results/breast_cancer/{method_name}/SVM", file_name,
+        #               str(svm_model.evaluate()))

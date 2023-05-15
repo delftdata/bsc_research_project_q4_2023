@@ -9,21 +9,21 @@ from sklearn.impute import SimpleImputer
 class FeatureSelection:
 
     @staticmethod
-    def split_input_target(df: pd.DataFrame, target_index: int) -> tuple[pd.DataFrame, pd.DataFrame]:
+    def split_input_target(df: pd.DataFrame, target_index: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
         input_indices = [j for j in range(df.shape[1]) if j != target_index]
+        df = df.iloc[:, [target_index] + input_indices]
 
-        X = df.iloc[:, input_indices]
-        y = df.iloc[:, [target_index]]
+        X = df.iloc[:, 1:]
+        y = df.iloc[:, :1]
 
-        return X, y
+        return X, y, df
 
     @staticmethod
     def get_selected_features_indices(
-            selector: SelectFdr or SequentialFeatureSelector,
-            target_index: int) -> list[int]:
+            selector: SelectFdr or SequentialFeatureSelector) -> list[int]:
 
         selected_features_mask = selector.get_support()
-        selected_features_indices = [target_index] + [i for (i, x) in enumerate(selected_features_mask) if x]
+        selected_features_indices = [0] + [i + 1 for (i, x) in enumerate(selected_features_mask) if x]
         return selected_features_indices
 
     @staticmethod

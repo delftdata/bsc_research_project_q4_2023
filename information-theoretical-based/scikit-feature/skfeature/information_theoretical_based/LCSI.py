@@ -1,5 +1,7 @@
-from skfeature.utility.entropy_estimators import *
+import numpy as np
 
+from skfeature.utility.entropy_estimators import *
+import time
 
 def lcsi(X, y, **kwargs):
     """
@@ -38,6 +40,8 @@ def lcsi(X, y, **kwargs):
     """
 
     n_samples, n_features = X.shape
+    # total time it took to calculate
+    times = []
     # index of selected features, initialized to be empty
     F = []
     # Objective function value for selected features
@@ -69,6 +73,7 @@ def lcsi(X, y, **kwargs):
     # make sure that j_cmi is positive at the very beginning
     j_cmi = 1
 
+    time_before = time.time()
     while True:
         if len(F) == 0:
             # select the feature whose mutual information is the largest
@@ -77,6 +82,7 @@ def lcsi(X, y, **kwargs):
             J_CMI.append(t1[idx])
             MIfy.append(t1[idx])
             f_select = X[:, idx]
+            times.append(time.time() - time_before)
 
         if is_n_selected_features_specified:
             if len(F) == n_selected_features:
@@ -96,10 +102,16 @@ def lcsi(X, y, **kwargs):
         for i in range(n_features):
             if i not in F:
                 f = X[:, i]
-                t2[i] += mi(f_select, f)
-                t3[i] += cmi(f_select, f, y)
+
                 # calculate j_cmi for feature i (not in F)
-                t = t1[i] - beta*t2[i] + gamma*t3[i]
+                t = t1[i]
+                if beta != 0:
+                    t2[i] += mi(f_select, f)
+                    t -= beta*t2[i]
+                if gamma != 0:
+                    t3[i] += cmi(f_select, f, y)
+                    t += gamma*t3[i]
+
                 # record the largest j_cmi and the corresponding feature index
                 if t > j_cmi:
                     j_cmi = t
@@ -108,8 +120,8 @@ def lcsi(X, y, **kwargs):
         J_CMI.append(j_cmi)
         MIfy.append(t1[idx])
         f_select = X[:, idx]
-
-    return np.array(F), np.array(J_CMI), np.array(MIfy)
+        times.append(time.time() - time_before)
+    return np.array(F), np.array(J_CMI), np.array(MIfy), np.array(times)
 
 
 

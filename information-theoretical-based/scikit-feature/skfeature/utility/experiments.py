@@ -12,6 +12,8 @@ from multiprocessing import Pool, cpu_count
 from itertools import repeat
 
 from skfeature.information_theoretical_based import JMI, MIFS, CIFE, MRMR
+from skfeature.utility.plotting import plot_over_features
+
 
 def run_parallel_results(n_features, X, y, model, fs_algorithm):
     # Parallelize over the number of features to compare against

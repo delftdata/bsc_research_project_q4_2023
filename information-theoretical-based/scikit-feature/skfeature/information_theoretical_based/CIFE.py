@@ -31,7 +31,7 @@ def cife(X, y, **kwargs):
     
     if 'n_selected_features' in kwargs.keys():
         n_selected_features = kwargs['n_selected_features']
-        F, J_CMI, MIfy = LCSI.lcsi(X, y, beta=1, gamma=1, n_selected_features=n_selected_features)
+        F, J_CMI, MIfy, times = LCSI.lcsi(X, y, beta=1, gamma=1, n_selected_features=n_selected_features)
     else:
-        F, J_CMI, MIfy = LCSI.lcsi(X, y, beta=1, gamma=1)
-    return F, J_CMI, MIfy
+        F, J_CMI, MIfy, times = LCSI.lcsi(X, y, beta=1, gamma=1)
+    return F, J_CMI, MIfy, times

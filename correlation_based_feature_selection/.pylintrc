@@ -337,7 +337,7 @@ indent-after-paren=4
 indent-string='    '
 
 # Maximum number of characters on a single line.
-max-line-length=180
+max-line-length=120
 
 # Maximum number of lines in a module.
 max-module-lines=1000
@@ -629,3 +629,7 @@ init-import=no
 # List of qualified module names which can have objects that can redefine
 # builtins.
 redefining-builtins-modules=six.moves,past.builtins,future.builtins,builtins,io
+
+[MASTER]
+
+disable=relative-beyond-top-level

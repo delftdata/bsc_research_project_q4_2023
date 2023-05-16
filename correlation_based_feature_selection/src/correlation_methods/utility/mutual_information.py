@@ -1,38 +1,17 @@
-from .entropy_estimators import entropyd, midd
+"""
+Module for computing the mutual information gain. Source of the code is:
+https://github.com/jundongl/scikit-feature.
+"""
+from .entropy_estimators import calculate_entropy, midd
 
 
-def information_gain(f1, f2):
-    """
-    This function calculates the information gain, where ig(f1,f2) = H(f1) - H(f1|f2)
+def calculate_information_gain(feature, target_feature):
+    information_gain = calculate_entropy(feature) - calculate_conditional_entropy(feature, target_feature)
 
-    Input
-    -----
-    f1: {numpy array}, shape (n_samples,)
-    f2: {numpy array}, shape (n_samples,)
-
-    Output
-    ------
-    ig: {float}
-    """
-
-    ig = entropyd(f1) - conditional_entropy(f1, f2)
-    return ig
+    return information_gain
 
 
-def conditional_entropy(f1, f2):
-    """
-    This function calculates the conditional entropy, where ce = H(f1) - I(f1;f2)
+def calculate_conditional_entropy(feature, target_feature):
+    conditional_entropy = calculate_entropy(feature) - midd(feature, target_feature)
 
-    Input
-    -----
-    f1: {numpy array}, shape (n_samples,)
-    f2: {numpy array}, shape (n_samples,)
-
-    Output
-    ------
-    ce: {float}
-        ce is conditional entropy of f1 and f2
-    """
-
-    ce = entropyd(f1) - midd(f1, f2)
-    return ce
+    return conditional_entropy

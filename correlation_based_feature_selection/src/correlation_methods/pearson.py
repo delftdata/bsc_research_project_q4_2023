@@ -61,6 +61,4 @@ class PearsonFeatureSelection:
 
         # Select the top features with the highest absolute correlation
         sorted_correlations = pearson_correlations.abs().sort_values(ascending=False)
-        selected_features = sorted_correlations[:number_features].index.tolist()
-
-        return selected_features
+        return sorted_correlations[:number_features].index.tolist()

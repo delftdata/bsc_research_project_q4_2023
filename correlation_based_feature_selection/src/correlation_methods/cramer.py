@@ -38,6 +38,30 @@ class CramersVFeatureSelection:
         return cramers_v
 
     @staticmethod
-    def feature_selection(dataframe, target_feature):
-        # TODO: add the functionality
-        return dataframe, target_feature
+    def feature_selection(train_dataframe, target_feature, number_features):
+        """
+        Performs feature selection using the Cramer's V correlation-based method.
+
+        Parameters
+        ----------
+        train_dataframe (DataFrame): Dataframe containing the features
+        target_feature (str): Name of the target feature column
+        number_features (int): Number of best-performing features to select
+
+        Returns
+        -------
+        selected_features (list): List of selected feature names based on Cramer's V correlation
+        """
+        target_column = train_dataframe[target_feature]
+        train_dataframe = train_dataframe.drop(columns=[target_feature])
+
+        # Calculate the Cramer's V correlation between each feature and the target feature
+        cramersv_correlations = train_dataframe\
+            .apply(func=lambda feature: CramersVFeatureSelection.
+                   compute_correlation(feature, target_column),
+                   axis=0)
+
+        # Select the top features with the highest correlation
+        sorted_correlations = cramersv_correlations.sort_values(ascending=False)
+
+        return sorted_correlations[:number_features].index.tolist()

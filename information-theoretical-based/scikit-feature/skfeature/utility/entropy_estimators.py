@@ -36,6 +36,10 @@ def mi(x, y, k=3, base=2):
     assert len(x) == len(y), "Lists should have same length"
     assert k <= len(x) - 1, "Set k smaller than num. samples - 1"
     intens = 1e-10  # small noise to break degeneracy, see doc.
+    if x.ndim == 1:
+        x = x.reshape(-1, 1)
+    if y.ndim == 1:
+        y = y.reshape(-1, 1)
     x = [list(p + intens * nr.rand(len(x[0]))) for p in x]
     y = [list(p + intens * nr.rand(len(y[0]))) for p in y]
     points = zip2(x, y)
@@ -55,6 +59,14 @@ def cmi(x, y, z, k=3, base=2):
     assert len(x) == len(y), "Lists should have same length"
     assert k <= len(x) - 1, "Set k smaller than num. samples - 1"
     intens = 1e-10  # small noise to break degeneracy, see doc.
+
+    if x.ndim == 1:
+        x = x.reshape(-1, 1)
+    if y.ndim == 1:
+        y = y.reshape(-1, 1)
+    if z.ndim == 1:
+        z = z.reshape(-1, 1)
+
     x = [list(p + intens * nr.rand(len(x[0]))) for p in x]
     y = [list(p + intens * nr.rand(len(y[0]))) for p in y]
     z = [list(p + intens * nr.rand(len(z[0]))) for p in z]

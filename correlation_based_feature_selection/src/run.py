@@ -1,7 +1,7 @@
 import pandas as pd
 from warnings import filterwarnings
 from sklearn.model_selection import train_test_split
-from autogluon.features.generators import AutoMLPipelineFeatureGenerator
+from autogluon.features.generators import AutoMLPipelineFeatureGenerator, FillNaFeatureGenerator
 from autogluon.tabular import TabularDataset
 from autogluon.tabular import TabularPredictor
 from .correlation_methods.pearson import PearsonFeatureSelection
@@ -17,11 +17,7 @@ class DatasetEvaluator:
         self.dataset_name = dataset_name
         self.target_label = target_label
         self.dataframe = pd.read_csv(dataset_file)
-        # How should we handle the missing values?
-        self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
-            enable_text_special_features=False,
-            enable_text_ngram_features=False)\
-            .fit_transform(X=TabularDataset(self.dataframe))
+        self.auxiliary_dataframe = pd.read_csv(dataset_file)
         # Specify the models to use
         # GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
         self.algorithms_model_names = {
@@ -56,6 +52,13 @@ class DatasetEvaluator:
         print(performance)
 
     def evaluate_all_models(self):
+        # Should we handle missing values?
+        data_filled = FillNaFeatureGenerator().fit_transform(TabularDataset(self.dataframe))
+        self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
+            enable_text_special_features=False,
+            enable_text_ngram_features=False) \
+            .fit_transform(data_filled)
+
         x_train, x_test, y_train, y_test = \
             train_test_split(self.auxiliary_dataframe.drop(columns=[self.target_label]),
                              self.auxiliary_dataframe[self.target_label],

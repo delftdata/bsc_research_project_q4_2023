@@ -2,7 +2,7 @@ from typing import Literal, Union
 
 import numpy as np
 import pandas as pd
-from sklearn.feature_selection import SelectFdr, SequentialFeatureSelector
+from sklearn.feature_selection import SelectKBest, SequentialFeatureSelector
 from sklearn.impute import SimpleImputer
 
 
@@ -20,7 +20,7 @@ class FeatureSelection:
 
     @staticmethod
     def get_selected_features_indices(
-            selector: SelectFdr or SequentialFeatureSelector) -> list[int]:
+            selector: Union[SelectKBest, SequentialFeatureSelector]) -> list[int]:
 
         selected_features_mask = selector.get_support()
         selected_features_indices = [0] + [i + 1 for (i, x) in enumerate(selected_features_mask) if x]

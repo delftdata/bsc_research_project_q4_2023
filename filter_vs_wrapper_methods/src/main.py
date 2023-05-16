@@ -11,28 +11,33 @@ warnings.filterwarnings("ignore")
 os.environ["PYTHONWARNINGS"] = "ignore"
 
 
-def perform_feature_selection_on_steel_plates_faults_dataset(df: pd.DataFrame, target_index=0, preprocessing=False):
+def perform_feature_selection_on_steel_plates_faults_dataset(
+        df: pd.DataFrame, target_index=0, selected_features_size=0.6):
     chi2, anova, forward_selection, backward_elimination = None, None, None, None
 
     try:
-        chi2 = Filter.perform_feature_selection(df, target_index, "chi2")
+        chi2 = Filter.perform_feature_selection(
+            df, target_index, "chi2", selected_features_size=selected_features_size)
     except Exception as e:
         print("Chi2:", e)
 
     try:
-        anova = Filter.perform_feature_selection(df, target_index, "anova")
+        anova = Filter.perform_feature_selection(
+            df, target_index, "anova", selected_features_size=selected_features_size)
     except Exception as e:
         print("Anova:", e)
 
     try:
-        forward_selection = Wrapper.perform_feature_selection(df, target_index, LinearSVC(), direction="forward")
+        forward_selection = Wrapper.perform_feature_selection(
+            df, target_index, LinearSVC(), direction="forward", selected_features_size=selected_features_size)
     except Exception as e:
         print("Forward Selection: ", e)
 
     try:
-        backward_elimination = Wrapper.perform_feature_selection(df, target_index, LinearSVC(), direction="backward")
+        backward_elimination = Wrapper.perform_feature_selection(
+            df, target_index, LinearSVC(), direction="backward", selected_features_size=selected_features_size)
     except Exception as e:
-        print("Forward Selection: ", e)
+        print("Backward Elimination: ", e)
 
     return chi2, anova, forward_selection, backward_elimination
 
@@ -40,7 +45,8 @@ def perform_feature_selection_on_steel_plates_faults_dataset(df: pd.DataFrame, t
 def write_to_file(path: str, file_name: str, content: str):
     path_to_file = f"{path}/{file_name}"
     try:
-        os.makedirs(path)
+        if not os.path.isdir(path):
+            os.makedirs(path)
         with open(path_to_file, "a+") as file:
             file.write(content + "\n")
         print(f"Updated -{path_to_file}- with content -{content}-")
@@ -51,32 +57,32 @@ def write_to_file(path: str, file_name: str, content: str):
 if __name__ == "__main__":
     hyperparameters = [
         {
-            'LR': {}
+            "LR": {}
         },
         {
-            'XGB': {},
+            "XGB": {},
         },
         {
-            'GBM': {},
+            "GBM": {},
         },
         {
-            'RF': {},
+            "RF": {},
         }]
     hyperparameters_names = [
-        'LR', 'XGB',
-        'GBM', 'RF']
+        "LR", "XGB",
+        "GBM", "RF"]
 
     param_grid = [
         {
-            'C': [0.1, 10, 1000],
-            'gamma': [1, 'scale'],
-            'kernel': ['rbf', 'sigmoid', 'linear']
+            "C": [0.1, 10, 1000],
+            "gamma": [1, "scale"],
+            "kernel": ["rbf", "sigmoid", "linear"]
         },
         {
-            'C': [0.1, 10, 1000],
-            'gamma': [1, 'scale'],
-            'kernel': ['poly'],
-            'degree': [6, 7, 8, 9]
+            "C": [0.1, 10, 1000],
+            "gamma": [1, "scale"],
+            "kernel": ["poly"],
+            "degree": [6, 7, 8, 9]
         }
     ]
 
@@ -109,12 +115,12 @@ if __name__ == "__main__":
                                              hyperparameters=hyperparameter)
             autogluon_model.fit(df)
 
-            write_to_file(f"results/breast_cancer/{method_name}/{hyperparameters_names[i]}", file_name,
+            write_to_file(f"{results_path}/{method_name}/{hyperparameters_names[i]}", file_name,
                           str(autogluon_model.evaluate()))
 
         # svm_model = SVMModel(label=df.columns[0], problem_type="binary",
         #                      data_preprocessing=False)
         # svm_model.grid_search(df, param_grid=param_grid)
 
-        # write_to_file(f"results/breast_cancer/{method_name}/SVM", file_name,
+        # write_to_file(f"{results_path}/{method_name}/SVM", file_name,
         #               str(svm_model.evaluate()))

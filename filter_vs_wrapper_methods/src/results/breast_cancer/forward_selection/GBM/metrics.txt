@@ -1,0 +1,2 @@
+{'accuracy': 1.0, 'balanced_accuracy': 1.0, 'mcc': 1.0, 'roc_auc': 1.0, 'f1': 1.0, 'precision': 1.0, 'recall': 1.0}
+{'accuracy': 0.9845758354755784, 'balanced_accuracy': 0.9864166522316531, 'mcc': 0.966767818180679, 'roc_auc': 0.997690397828974, 'f1': 0.9785714285714285, 'precision': 0.9647887323943662, 'recall': 0.9927536231884058}

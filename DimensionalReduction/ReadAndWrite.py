@@ -58,27 +58,31 @@ class Handle:
     def __init__(self):
         self.variance_to_keep = 0.95
 
-    def readAll(self, data_set, data_to_use):
-        label = []
-        matrix = []
-        file_to_read = self.fileToRead(data_set, data_to_use);
+    def readAll(self, data_set):
+        file_to_read = self.fileToRead(data_set)
 
         if data_set == DataSet.BCWD:
             df = pd.read_csv(file_to_read)
-            label = df['diagnosis']
-            matrix = df.drop(['id', 'diagnosis'], axis=1)
+            train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
+            train_label = train_df['diagnosis']
+            train_matrix = train_df.drop(['id', 'diagnosis'], axis=1)
+            test_label = test_df['diagnosis']
+            test_matrix = test_df.drop(['id', 'diagnosis'], axis=1)
+
         elif data_set == DataSet.CIFAR_10:
             df = pd.read_csv(file_to_read, dtype=np.uint8)
-            label = df['label']
-            matrix = df.drop('label', axis=1)
-        elif data_set == DataSet.FONTS:
-            df = pd.read_csv(file_to_read)
-            label = df['font']
-            matrix = df.drop(['font', 'fontVariant'], asix=1)
+            train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
+            train_df = train_df.head(100)
+            test_df = test_df.head(10)
+            train_label = train_df['label']
+            train_matrix = train_df.drop('label', axis=1)
+            test_label = test_df['label']
+            test_matrix = test_df.drop('label', axis=1)
 
         header = df.columns
 
-        return header, matrix, label
+
+        return header, train_matrix, train_label, test_matrix, test_label
 
 
     def split(self, data_set):
@@ -88,7 +92,8 @@ class Handle:
             # df = df.iloc[:1000]
             train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
             train_df.to_csv('data/CIFAR-10/data_train.csv', index=False)
-            test_df.to_csv('data/CIFAR-10/data_test.csv', index=False)
+            test_df.to_csv('data/CIFAR-10/data.csv', index=False)
+
         elif data_set == DataSet.FONTS:
             map_to_read = "data/Fonts/"
             df = []
@@ -99,7 +104,8 @@ class Handle:
             df = pd.concat(df)
             train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
             train_df.to_csv('data/Fonts/data_train.csv', index=False)
-            test_df.to_csv('data/Fonts/data_test.csv', index=False)
+            test_df.to_csv('data/Fonts/data.csv', index=False)
+
         elif data_set == DataSet.BCWD:
             map_to_read = "data/BCWD/"
             df = []
@@ -109,44 +115,37 @@ class Handle:
                     df.append(pd.read_csv(file_to_read))
             train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
             train_df.to_csv('data/BCWD/data_train.csv', index=False)
-            test_df.to_csv('data/BCWD/data_test.csv', index=False)
+            test_df.to_csv('data/BCWD/data.csv', index=False)
 
 
 
-    def fileToRead (self, data_set, data_to_use):
-        file_to_read = "data"
+    def fileToRead (self, data_set):
+        file_to_read = "../datasets"
 
         if data_set == DataSet.BCWD:
-            file_to_read += "/BCWD"
+            file_to_read += "/breast-cancer"
         elif data_set == DataSet.CIFAR_10:
             file_to_read += "/CIFAR-10"
         elif data_set == DataSet.FONTS:
             file_to_read += "/Fonts"
 
-        if data_to_use == DataToUse.ALL:
-            file_to_read += "/data"
-        elif data_to_use == DataToUse.TRAIN:
-            file_to_read += "/data_train"
-        elif data_to_use == DataToUse.TEST:
-            file_to_read += "/data_test"
-
-        file_to_read += ".csv"
+        file_to_read += "/data.csv"
         return file_to_read
 
 
     def dimensionalReduce (self, training_data, training_label, test_data, drMethod, scale_lasso=False):
+        training_data_result = []
+        test_data_result =[]
+
         if drMethod == DRMethod.NONE:
             return training_data, test_data
 
-        training_data_result = []
-        test_data_result =[]
-        total_variance = np.mean(np.var(training_data))
-
-        if drMethod == DRMethod.PCA:
+        elif drMethod == DRMethod.PCA:
             pca = PCA(n_components= self.variance_to_keep)
             pca.fit(training_data)
             training_data_result = pca.transform(training_data)
             test_data_result = pca.transform(test_data)
+
         elif drMethod == DRMethod.LDA:
             lda = LinearDiscriminantAnalysis()
             lda.fit(training_data, training_label)
@@ -154,13 +153,9 @@ class Handle:
 
             n_components = 0
             new_total_variance = 0.0
-            print()
-            print("total var: ",  self.variance_to_keep)
-            print(explained_variances)
             while new_total_variance < self.variance_to_keep:
                 new_total_variance += explained_variances[n_components]
                 n_components += 1
-            print("n comp: ",n_components)
             lda.n_components = (n_components -1)
 
             training_data_result = lda.transform(training_data)
@@ -207,61 +202,21 @@ class Handle:
 
             new_test_data = np.transpose(test_data.to_numpy())
             new_training_data = np.transpose(training_data.to_numpy())
-            le = preprocessing.LabelEncoder()
             new_training_label =training_label.to_numpy()
+            le = preprocessing.LabelEncoder()
             le.fit(new_training_label)
             new_training_label = le.transform(new_training_label)
             new_training_label += 1
 
-
-            print(type(new_test_data), new_test_data.shape)
-            print(type(new_training_data), new_training_data.shape)
-            print(type(new_training_label), new_training_label.shape)
-            # options = {'KernelType': 'linear'}
-            # data = eng.gda(test_data.to_numpy(), training_data.to_numpy(), training_label.to_numpy().reshape(-1,1), 9, options)
-            # Generate some example data
-            p = 10  # Number of dimensions in the high-dimensional space
-            n = 100  # Number of data samples to be projected
-            m = 50  # Number of training samples
-            c = 5  # Number of classes
-            data = np.random.rand(p, n)
-            trainData = np.random.rand(p, m)
-            trainLabel = np.random.randint(1, c + 1, size=m)
-            print("data shape: ", type(data), data.shape)
-            print("train data shape: ", type(trainData), trainData.shape)
-            print("train label: ", type(trainLabel), trainLabel.shape)
-
-            # Call eng.gda
-            nDim = 3  # Number of dimensions to be retained
-            options = {'KernelType': 'linear'}  # Options for kernel function
-            new_test_data = matlab.double(new_test_data.tolist())
-            new_training_data = matlab.double(new_training_data.tolist())
-            new_training_label = matlab.double(new_training_label.tolist())
-            data = matlab.double(data.tolist())
-            trainData = matlab.double(trainData.tolist())
-            trainLabel = matlab.double(trainLabel.tolist())
-
-            # print("chat GPT: ", training_data)
-            # print("mine: ", new_training_data)
-
-            print(type(new_training_data), " ", type(new_test_data), " ", type(new_training_label))
-
-            mappedData = eng.gda(data, trainData,
-                                 trainLabel)
-
-            mappedData = eng.gda(new_test_data, new_training_data,
+            mappedData2 =eng.gda(new_training_data, new_training_data,
                                  new_training_label)
+            training_data_result = np.transpose(np.array(mappedData2))
+            mappedData2 = eng.gda(new_test_data, new_training_data,
+                                 new_training_label)
+            test_data_result = np.transpose(np.array(mappedData2))
 
-
-
-
-            print("'mapped data: ",mappedData)
-            scipy.io.savemat('result.mat', {'mappedData': data})
-            result = scipy.io.loadmat('result.mat')
-            mappedData = result['mappedData']
             eng.quit()
-            print("check 2: ", mappedData)
-            breakpoint()
+
         return training_data_result, test_data_result
 
 

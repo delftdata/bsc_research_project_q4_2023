@@ -50,7 +50,6 @@ function mappedData = gda(data,trainData,trainLabel,nDim,options)
 
 
 disp("start matlab")
-disp("train data: "+ size(trainData))
 if(size(data,1) ~= size(trainData,1))
    error('DATA and TRAINDATA must be in the same space with equal dimensions.');
 end
@@ -70,7 +69,6 @@ c = max(trainLabel);
 dataCell = cell(1,c);
 nSample = zeros(1,c);
 for i = 1:c
-    disp("i: "+i)
     ind = find(trainLabel==i);
     nSample(i) = length(ind);
     dataCell{1,i} = trainData(:,ind);
@@ -102,7 +100,6 @@ clear kTrainCell
 
 [~,n] = size(trainData);
 One = (1/n) * ones(n,n);
-disp(size(kTrain))
 %error("n = "+ mat2str(kTrain))
 zeroMeanKtrain =  kTrain - One*kTrain - kTrain*One+One*kTrain*One;
 clear trainData
@@ -219,3 +216,6 @@ clear kTrain kData
 % Project all data points non-linearly onto a new lower-dimensional subspace (w):
 
 mappedData = (w.') * (zeroMeanKdata);
+disp("ending matlab")
+end
+%mappedData

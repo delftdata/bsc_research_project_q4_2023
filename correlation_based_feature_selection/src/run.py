@@ -1,5 +1,4 @@
 import pandas as pd
-from warnings import filterwarnings
 from sklearn.model_selection import train_test_split
 from autogluon.features.generators import AutoMLPipelineFeatureGenerator, FillNaFeatureGenerator
 from autogluon.tabular import TabularDataset
@@ -9,7 +8,6 @@ from .correlation_methods.spearman import SpearmanFeatureSelection
 from .correlation_methods.cramer import CramersVFeatureSelection
 from .correlation_methods.su import SymmetricUncertaintyFeatureSelection
 
-filterwarnings("ignore", category=UserWarning)
 
 class DatasetEvaluator:
     def __init__(self, dataset_file, dataset_name, target_label, evaluation_metric):

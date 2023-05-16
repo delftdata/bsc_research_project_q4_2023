@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.model_selection import train_test_split
 from autogluon.features.generators import AutoMLPipelineFeatureGenerator
 from autogluon.tabular import TabularDataset
 from .correlation_methods.pearson import PearsonFeatureSelection
@@ -20,38 +21,43 @@ class DatasetEvaluator:
         # Specify the models to use
         # GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
         self.algorithms_model_names = {
-            'GBM': 'LightGBM',
-            'RF': 'RandomForest',
-            'LR': 'LinearModel',
+            #'GBM': 'LightGBM',
+            #'RF': 'RandomForest',
+            #'LR': 'LinearModel',
             'XGB': 'XGBoost'
         }
+        self.number_of_features_to_select = 20
         self.evaluation_metric = evaluation_metric
 
     def get_hyperparameters_no_feature_selection(self, algorithm, model_name):
-        predictor = AutogluonModel(dataframe=self.auxiliary_dataframe,
+        predictor = AutogluonModel(algorithm=algorithm, model_name=model_name,
                                    target_label=self.target_label,
                                    evaluation_metric=self.evaluation_metric,
-                                   test_size=0.0,
-                                   hyperparameters={algorithm: {}})
-        fitting_results = predictor.fit()
-
+                                   hyperparameters={})
         # Get tuned hyperparameters
-        return fitting_results['model_info'][model_name]['hyperparameters']
+        return predictor.get_hyperparameters(self.auxiliary_dataframe)
 
-    def evaluate_model(self, algorithm, model_name, hyperparameters):
-        predictor = AutogluonModel(dataframe=self.auxiliary_dataframe,
+    def evaluate_model(self, algorithm, model_name, hyperparameters, df_train, df_test):
+        predictor = AutogluonModel(algorithm=algorithm, model_name=model_name,
                                    target_label=self.target_label,
                                    evaluation_metric=self.evaluation_metric,
-                                   test_size=0.2,
-                                   hyperparameters={algorithm: hyperparameters})
-        fitting_results = predictor.fit()
-
+                                   hyperparameters=hyperparameters)
+        fitting_results = predictor.fit(df_train)
 
     def evaluate_all_models(self):
+        x_train, x_test, y_train, y_test = \
+            train_test_split(self.auxiliary_dataframe.drop(columns=[self.target_label]),
+                             self.auxiliary_dataframe[self.target_label],
+                             test_size=0.2, random_state=1)
+        train_dataframe = pd.concat([x_train, y_train], axis=1)
+        test_dataframe = pd.concat([x_test, y_test], axis=1)
+        train_data = TabularDataset(train_dataframe)
+
         for algorithm, model_name in self.algorithms_model_names.items():
             # Get the hyperparameters on the data set with all features
             hyperparameters = self.get_hyperparameters_no_feature_selection(algorithm, model_name)
-            self.evaluate_model(algorithm, model_name, hyperparameters)
+            # TODO
+            self.evaluate_model(algorithm, hyperparameters, model_name, 1, 1)
 
 
 def evaluate_census_income_dataset():

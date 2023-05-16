@@ -1,7 +1,5 @@
 import numpy as np
-import pandas as pd
 from autogluon.tabular import TabularPredictor
-from autogluon.features.generators import AutoMLPipelineFeatureGenerator
 from sklearn.svm import SVR, SVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
@@ -9,29 +7,27 @@ from sklearn.metrics import mean_squared_error, accuracy_score
 
 
 class AutogluonModel:
-    def __init__(self, dataframe: pd.DataFrame, target_label: str,
-                 evaluation_metric: str = None, test_size: float = 0.0,
-                 hyperparameters: dict[str, dict] = None):
-        self.dataframe = dataframe
-        self.df_train = []
-        self.df_test = []
-        self.test_size = test_size
-        # TODO: Consider specifying the problem type
+    def __init__(self, algorithm: str, model_name: str, target_label: str,
+                 evaluation_metric: str = None, hyperparameters: dict = None):
+        # TODO: Consider specifying the problem type?
         self.predictor = TabularPredictor(label=target_label,
                                           eval_metric=evaluation_metric,
                                           verbosity=0)
+        self.algorithm = algorithm
+        self.model_name = model_name
         self.hyperparameters = hyperparameters
 
-    def fit(self):
-        self.df_train, self.df_test = train_test_split(self.dataframe,
-                                                       test_size=self.test_size,
-                                                       random_state=1)
+    def fit(self, df_train):
         # TODO: Consider specifying presets='best_quality' when fitting
-        self.predictor.fit(self.df_train, hyperparameters=self.hyperparameters)
-        return self.predictor.info()
+        self.predictor.fit(df_train, hyperparameters={self.algorithm: self.hyperparameters})
 
-    def evaluate(self):
-        return self.predictor.evaluate(self.df_test)
+    def get_hyperparameters(self, df_train):
+        self.predictor.fit(df_train, hyperparameters=self.hyperparameters)
+        fitting_results = self.predictor.info()
+        return fitting_results['model_info'][self.model_name]['hyperparameters']
+
+    def evaluate(self, df_test):
+        return self.predictor.evaluate(df_test)
 
 
 class SVMModel:

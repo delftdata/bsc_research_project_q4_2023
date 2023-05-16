@@ -51,11 +51,11 @@ class DatasetEvaluator:
 
     def evaluate_all_models(self):
         # Should we handle missing values?
-        data_filled = FillNaFeatureGenerator().fit_transform(TabularDataset(self.dataframe))
+        filled_dataframe = FillNaFeatureGenerator().fit_transform(TabularDataset(self.dataframe))
         self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
             enable_text_special_features=False,
             enable_text_ngram_features=False) \
-            .fit_transform(data_filled)
+            .fit_transform(filled_dataframe)
 
         x_train, x_test, y_train, y_test = \
             train_test_split(self.auxiliary_dataframe.drop(columns=[self.target_label]),
@@ -68,8 +68,10 @@ class DatasetEvaluator:
         #                                                                       self.target_label,
         #                                                                       self.number_of_features_to_select)
         # pearson_selected_features.append(self.target_label)
-
-        # spearman_selected_features = []
+        #
+        # spearman_selected_features = SpearmanFeatureSelection.feature_selection(train_dataframe,
+        #                                                                         self.target_label,
+        #                                                                         self.number_of_features_to_select)
         # spearman_selected_features.append(self.target_label)
 
         cramersv_selected_features = CramersVFeatureSelection.feature_selection(train_dataframe,

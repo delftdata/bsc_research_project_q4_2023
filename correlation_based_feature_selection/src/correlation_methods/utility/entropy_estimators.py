@@ -1,5 +1,6 @@
 """
-Module for computing the discrete estimators.
+Module for computing the discrete estimators. Source of the code is:
+https://github.com/jundongl/scikit-feature.
 """
 from math import log
 

@@ -1,59 +1,8 @@
 import numpy as np
-from autogluon.tabular import TabularPredictor
-from autogluon.features.generators import AutoMLPipelineFeatureGenerator
 from sklearn.svm import SVR, SVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, accuracy_score
-
-
-class AutogluonModel:
-    def __init__(self, label: str, problem_type: str = None, data_preprocessing: bool = True,
-                 test_size: float = 0.2, hyperparameters: dict[str, dict] = None):
-        """
-        Autogluon model constructor. It creates a TabularPredictor instance that runs models
-        supported by AutoGluon. Supported algorithms are available in AutoGluon's documentation:
-        https://auto.gluon.ai/0.1.0/api/autogluon.task.html
-        Args:
-            label (str): Label of the target column.
-            problem_type (str, optional): Type of problem: 'binary', 'multiclass' or 'regression'.
-                                          If None, Autogluon will infer it automatically.
-            data_preprocessing (bool, optional): Whether to do automatic data preprocessing or not.
-                                                 Defaults to True.
-            test_size (float, optional): Percentage (between 0 and 1) of the dataset size to
-                                         allocate for testing. Defaults to 0.2.
-            hyperparameters (dict[str, dict], optional): Defines which algorithms AutoGluon should run.
-                                                         Defaults to all the supported algorithms.
-        """
-        self.data_preprocessing = data_preprocessing
-        self.test_size = test_size
-        self.predictor = TabularPredictor(problem_type=problem_type, label=label)
-        self.hyperparameters = hyperparameters
-        self.df_train = []
-        self.df_test = []
-
-    def fit(self, dataframe):
-        """
-        Fits machine learning models.
-
-        Args:
-            dataframe (Pandas Dataframe): Dataframe to train and test the models on.
-        """
-        self.df_train, self.df_test = train_test_split(dataframe,
-                                                       test_size=self.test_size, random_state=1)
-
-        if not self.data_preprocessing:
-            self.predictor.fit(self.df_train, presets='best_quality', hyperparameters=self.hyperparameters,
-                               feature_generator=AutoMLPipelineFeatureGenerator(
-                                   enable_text_special_features=False, enable_text_ngram_features=False))
-        else:
-            self.predictor.fit(self.df_train, presets='best_quality', hyperparameters=self.hyperparameters)
-
-    def evaluate(self):
-        """
-        Evaluates machine learning models and returns the results of the best performing one.
-        """
-        return self.predictor.evaluate(self.df_test)
 
 
 class SVMModel:

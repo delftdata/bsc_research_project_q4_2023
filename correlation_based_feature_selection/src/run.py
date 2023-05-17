@@ -8,6 +8,7 @@ from .correlation_methods.spearman import SpearmanFeatureSelection
 from .correlation_methods.cramer import CramersVFeatureSelection
 from .correlation_methods.su import SymmetricUncertaintyFeatureSelection
 from .plots.number_of_features_plot import plot_over_number_of_features
+from .encoding.encoding import OneHotEncoder
 
 
 class DatasetEvaluator:
@@ -81,6 +82,8 @@ class DatasetEvaluator:
         train_dataframe = pd.concat([x_train, y_train], axis=1)
         test_dataframe = pd.concat([x_test, y_test], axis=1)
 
+        one_hot_encoder = OneHotEncoder()
+        dataframe_not_categorical = one_hot_encoder.encode(train_dataframe, self.target_label)
         pearson_selected_features = PearsonFeatureSelection.feature_selection(train_dataframe,
                                                                               self.target_label,
                                                                               self.number_of_features_to_select)
@@ -134,6 +137,7 @@ def evaluate_census_income_dataset():
         target_label='income_label',
         evaluation_metric='accuracy')
 
+    # TODO: Pearson and Spearman will fail unless encoding is done
     dataset_evaluator.evaluate_all_models()
 
 
@@ -148,5 +152,5 @@ def evaluate_breast_cancer_dataset():
 
 
 if __name__ == '__main__':
-    # evaluate_census_income_dataset()
-    evaluate_breast_cancer_dataset()
+    evaluate_census_income_dataset()
+    # evaluate_breast_cancer_dataset()

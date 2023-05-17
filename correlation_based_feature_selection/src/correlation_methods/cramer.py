@@ -40,11 +40,12 @@ class CramersVFeatureSelection:
     @staticmethod
     def feature_selection(train_dataframe, target_feature, number_features):
         """
-        Performs feature selection using the Cramer's V correlation-based method.
+        Performs feature selection using the Cramer's V correlation-based method. Selects
+        a specified number of top-performing features.
 
         Parameters
         ----------
-        train_dataframe (DataFrame): Dataframe containing the features
+        train_dataframe (DataFrame): Training data containing the features
         target_feature (str): Name of the target feature column
         number_features (int): Number of best-performing features to select
 

@@ -38,17 +38,18 @@ class PearsonFeatureSelection:
     @staticmethod
     def feature_selection(train_dataframe, target_feature, number_features):
         """
-        Performs feature selection using the Pearson correlation-based method.
+        Performs feature selection using the Pearson correlation-based method. Selects
+        a specified number of top-performing features.
 
         Parameters
         ----------
-        train_dataframe (DataFrame): Dataframe containing the features
+        train_dataframe (DataFrame): Training data containing the features
         target_feature (str): Name of the target feature column
         number_features (int): Number of best-performing features to select
 
         Returns
         -------
-        selected_features (list): List of selected feature names based on Pearson correlation
+        selected_features (list): List of selected features based on the Pearson correlation
         """
         target_column = train_dataframe[target_feature]
         train_dataframe = train_dataframe.drop(columns=[target_feature])

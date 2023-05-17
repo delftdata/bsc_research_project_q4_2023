@@ -9,7 +9,7 @@ class Filter:
 
     @staticmethod
     def perform_feature_selection(
-            df: pd.DataFrame, target_index: int, filter_method: Literal["chi2", "anova"] = "chi2",
+            df: pd.DataFrame, filter_method: Literal["chi2", "anova"] = "chi2", target_index=0,
             selected_features_size=0.6) -> pd.DataFrame:
         X, y, df = FeatureSelection.split_input_target(df, target_index)
 

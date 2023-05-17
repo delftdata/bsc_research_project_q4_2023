@@ -22,13 +22,13 @@ def plot_over_number_of_features(algorithm, number_of_features, evaluation_metri
 
     # TODO: Consider using the percentage (e.g. for accuracy)
     plt.plot(number_of_features_iteration, np.array(pearson_performance),
-             marker='o', color='#10A5D6')
+             marker='D', color='#10A5D6')
     plt.plot(number_of_features_iteration, np.array(spearman_performance),
-             marker='o', color='#C6209B')
+             marker='*', color='#C6209B')
     plt.plot(number_of_features_iteration, np.array(cramersv_performance),
-             marker='o', color='#4361A3')
+             marker='>', color='#D3B813')
     plt.plot(number_of_features_iteration, np.array(su_performance),
-             marker='o', color='#8A5C7E')
+             marker='s', color='#2EB835')
 
     plt.xlabel('Number of Features')
     plt.ylabel(str(evaluation_metric_name))
@@ -36,6 +36,6 @@ def plot_over_number_of_features(algorithm, number_of_features, evaluation_metri
     plt.title('The change of the ' + str(evaluation_metric_name)
               + f' metric for {algorithm} with the increase of the selected features')
 
-    # plt.savefig(f'./results/result_{algorithm} (1).png')
+    plt.savefig(f'./results/result_{algorithm}.png')
     plt.show()
     plt.clf()

@@ -1,4 +1,5 @@
 import pandas as pd
+import math
 from sklearn.model_selection import train_test_split
 from autogluon.features.generators import AutoMLPipelineFeatureGenerator, FillNaFeatureGenerator
 from autogluon.tabular import TabularDataset
@@ -7,6 +8,7 @@ from .correlation_methods.pearson import PearsonFeatureSelection
 from .correlation_methods.spearman import SpearmanFeatureSelection
 from .correlation_methods.cramer import CramersVFeatureSelection
 from .correlation_methods.su import SymmetricUncertaintyFeatureSelection
+from .plots.number_of_features_plot import plot_over_number_of_features
 
 
 class DatasetEvaluator:
@@ -24,7 +26,8 @@ class DatasetEvaluator:
             'LR': 'LinearModel',
             'XGB': 'XGBoost'
         }
-        self.number_of_features_to_select = 20
+        # TODO: Experiment with other values for the number of features to select
+        self.number_of_features_to_select = math.ceil((self.dataframe.shape[1] - 1) / 2)
         self.evaluation_metric = evaluation_metric
 
     def get_hyperparameters_no_feature_selection(self, algorithm, model_name):
@@ -38,19 +41,34 @@ class DatasetEvaluator:
         training_results = fitted_predictor.info()
         return training_results['model_info'][model_name]['hyperparameters']
 
-    def evaluate_model(self, algorithm, model_name, hyperparameters, train_dataframe, test_dataframe):
-        train_data = TabularDataset(train_dataframe)
-        fitted_predictor = TabularPredictor(label=self.target_label,
-                                     eval_metric=self.evaluation_metric,
-                                     verbosity=0) \
-            .fit(train_data=train_data, hyperparameters={algorithm: hyperparameters})
+    def evaluate_model_varying_features(self, algorithm, hyperparameters, train_dataframe,
+                       feature_subset, target_label, test_dataframe):
+        performances = []
 
-        test_data = TabularDataset(test_dataframe)
-        performance = fitted_predictor.evaluate(test_data)[self.evaluation_metric]
-        print(performance)
+        for subset_length in range(1, len(feature_subset)):
+            print(subset_length)
+            # Get the current feature subset
+            current_subset = feature_subset[:subset_length]
+            current_subset.append(target_label)
+            print(current_subset)
+
+            train_data = TabularDataset(train_dataframe[current_subset])
+            fitted_predictor = TabularPredictor(label=self.target_label,
+                                         eval_metric=self.evaluation_metric,
+                                         verbosity=0) \
+                .fit(train_data=train_data, hyperparameters={algorithm: hyperparameters})
+
+            # Evaluate the model with feature selection applied
+            test_data = TabularDataset(test_dataframe)
+            current_performance = fitted_predictor.evaluate(test_data)[self.evaluation_metric]
+            print(current_performance)
+            print('\n')
+            performances.append(current_performance)
+
+        return performances
 
     def evaluate_all_models(self):
-        # Should we handle missing values?
+        # TODO: Should we handle missing values?
         filled_dataframe = FillNaFeatureGenerator().fit_transform(TabularDataset(self.dataframe))
         self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
             enable_text_special_features=False,
@@ -67,23 +85,19 @@ class DatasetEvaluator:
         # pearson_selected_features = PearsonFeatureSelection.feature_selection(train_dataframe,
         #                                                                       self.target_label,
         #                                                                       self.number_of_features_to_select)
-        # pearson_selected_features.append(self.target_label)
         #
         # spearman_selected_features = SpearmanFeatureSelection.feature_selection(train_dataframe,
         #                                                                         self.target_label,
         #                                                                         self.number_of_features_to_select)
-        # spearman_selected_features.append(self.target_label)
 
         cramersv_selected_features = CramersVFeatureSelection.feature_selection(train_dataframe,
                                                                                 self.target_label,
                                                                                 self.number_of_features_to_select)
-        cramersv_selected_features.append(self.target_label)
 
         su_selected_features = \
             SymmetricUncertaintyFeatureSelection.feature_selection(train_dataframe,
                                                                    self.target_label,
                                                                    self.number_of_features_to_select)
-        su_selected_features.append(self.target_label)
 
         # Compare the feature selection methods for each algorithm
         for algorithm, model_name in self.algorithms_model_names.items():
@@ -91,15 +105,24 @@ class DatasetEvaluator:
             # Get the hyperparameters on the data set with all features
             hyperparameters = self.get_hyperparameters_no_feature_selection(algorithm, model_name)
 
+            # TODO: Add all methods (+ figure out the necessary encoding)
             # Evaluate model on the features selected by the different correlation-based methods
-            methods = ['Cramers V', 'SU']
+            methods = ['Cramer\'s V', 'SU']
+            all_performances_methods = []
             for feature_subset, method in zip([cramersv_selected_features, su_selected_features], methods):
                 print(method)
-                self.evaluate_model(algorithm=algorithm,
-                                    hyperparameters=hyperparameters,
-                                    model_name=model_name,
-                                    train_dataframe=train_dataframe[feature_subset],
-                                    test_dataframe=test_dataframe)
+                algorithm_performances = self.evaluate_model_varying_features(algorithm=algorithm,
+                                                                              hyperparameters=hyperparameters,
+                                                                              train_dataframe=train_dataframe,
+                                                                              feature_subset=feature_subset,
+                                                                              target_label=self.target_label,
+                                                                              test_dataframe=test_dataframe)
+                all_performances_methods.append(algorithm_performances)
+
+            plot_over_number_of_features(algorithm=algorithm, number_of_features=self.number_of_features_to_select,
+                                         evaluation_metric=self.evaluation_metric, pearson_performance=[],
+                                         spearman_performance=[], cramersv_performance=all_performances_methods[0],
+                                         su_performance=all_performances_methods[1])
 
 
 def evaluate_census_income_dataset():
@@ -113,18 +136,4 @@ def evaluate_census_income_dataset():
 
 
 if __name__ == '__main__':
-    # a = [1, 2, 3, 3]
-    # b = [1000, 7, 6, 1000]
-    # dataset_evaluator = DatasetEvaluator(
-    #     dataset_file='../datasets/CensusIncome/CensusIncome.csv',
-    #     dataset_name='CensusIncome',
-    #     target_label='income_label',
-    #     evaluation_metric='accuracy')
-    # print(CramersVFeatureSelection.compute_correlation(a, b))
-    # print(CramersVFeatureSelection.feature_selection(dataset_evaluator.auxiliary_dataframe,
-    #       dataset_evaluator.target_label,5))
-    # print(SpearmanFeatureSelection.compute_correlation(a, b))
-    # print(CramersVFeatureSelection.compute_correlation(a, b))
-    # print(SymmetricUncertaintyFeatureSelection.compute_correlation(a, b))
-
     evaluate_census_income_dataset()

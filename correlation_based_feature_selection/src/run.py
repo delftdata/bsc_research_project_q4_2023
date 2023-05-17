@@ -1,5 +1,4 @@
 import pandas as pd
-import math
 from sklearn.model_selection import train_test_split
 from autogluon.features.generators import AutoMLPipelineFeatureGenerator, FillNaFeatureGenerator
 from autogluon.tabular import TabularDataset
@@ -27,7 +26,7 @@ class DatasetEvaluator:
             'XGB': 'XGBoost'
         }
         # TODO: Experiment with other values for the number of features to select
-        self.number_of_features_to_select = math.ceil((self.dataframe.shape[1] - 1) / 2)
+        self.number_of_features_to_select = self.dataframe.shape[1] - 1
         self.evaluation_metric = evaluation_metric
 
     def get_hyperparameters_no_feature_selection(self, algorithm, model_name):
@@ -82,13 +81,13 @@ class DatasetEvaluator:
         train_dataframe = pd.concat([x_train, y_train], axis=1)
         test_dataframe = pd.concat([x_test, y_test], axis=1)
 
-        # pearson_selected_features = PearsonFeatureSelection.feature_selection(train_dataframe,
-        #                                                                       self.target_label,
-        #                                                                       self.number_of_features_to_select)
-        #
-        # spearman_selected_features = SpearmanFeatureSelection.feature_selection(train_dataframe,
-        #                                                                         self.target_label,
-        #                                                                         self.number_of_features_to_select)
+        pearson_selected_features = PearsonFeatureSelection.feature_selection(train_dataframe,
+                                                                              self.target_label,
+                                                                              self.number_of_features_to_select)
+
+        spearman_selected_features = SpearmanFeatureSelection.feature_selection(train_dataframe,
+                                                                                self.target_label,
+                                                                                self.number_of_features_to_select)
 
         cramersv_selected_features = CramersVFeatureSelection.feature_selection(train_dataframe,
                                                                                 self.target_label,
@@ -107,9 +106,10 @@ class DatasetEvaluator:
 
             # TODO: Add all methods (+ figure out the necessary encoding)
             # Evaluate model on the features selected by the different correlation-based methods
-            methods = ['Cramer\'s V', 'SU']
+            methods = ['Pearson', 'Spearman', 'Cramer\'s V', 'SU']
             all_performances_methods = []
-            for feature_subset, method in zip([cramersv_selected_features, su_selected_features], methods):
+            for feature_subset, method in zip([pearson_selected_features, spearman_selected_features,
+                                               cramersv_selected_features, su_selected_features], methods):
                 print(method)
                 algorithm_performances = self.evaluate_model_varying_features(algorithm=algorithm,
                                                                               hyperparameters=hyperparameters,
@@ -120,9 +120,11 @@ class DatasetEvaluator:
                 all_performances_methods.append(algorithm_performances)
 
             plot_over_number_of_features(algorithm=algorithm, number_of_features=self.number_of_features_to_select,
-                                         evaluation_metric=self.evaluation_metric, pearson_performance=[],
-                                         spearman_performance=[], cramersv_performance=all_performances_methods[0],
-                                         su_performance=all_performances_methods[1])
+                                         evaluation_metric=self.evaluation_metric,
+                                         pearson_performance=all_performances_methods[0],
+                                         spearman_performance=all_performances_methods[1],
+                                         cramersv_performance=all_performances_methods[2],
+                                         su_performance=all_performances_methods[3])
 
 
 def evaluate_census_income_dataset():
@@ -135,5 +137,16 @@ def evaluate_census_income_dataset():
     dataset_evaluator.evaluate_all_models()
 
 
+def evaluate_breast_cancer_dataset():
+    dataset_evaluator = DatasetEvaluator(
+        dataset_file='../datasets/breast-cancer/data.csv',
+        dataset_name='BreastCancer',
+        target_label='diagnosis',
+        evaluation_metric='accuracy')
+
+    dataset_evaluator.evaluate_all_models()
+
+
 if __name__ == '__main__':
-    evaluate_census_income_dataset()
+    # evaluate_census_income_dataset()
+    evaluate_breast_cancer_dataset()

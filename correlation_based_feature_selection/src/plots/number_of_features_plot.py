@@ -21,14 +21,14 @@ def plot_over_number_of_features(algorithm, number_of_features, evaluation_metri
     plt.gca().xaxis.set_major_locator(mticker.MultipleLocator(2))
 
     # TODO: Consider using the percentage (e.g. for accuracy)
-    # plt.plot(number_of_features_iteration, np.array(pearson_performance),
-    #          marker='o', color='red')
-    # plt.plot(number_of_features_iteration, np.array(spearman_performance),
-    #          marker='o', color='green')
+    plt.plot(number_of_features_iteration, np.array(pearson_performance),
+             marker='o', color='#10A5D6')
+    plt.plot(number_of_features_iteration, np.array(spearman_performance),
+             marker='o', color='#C6209B')
     plt.plot(number_of_features_iteration, np.array(cramersv_performance),
-             marker='o', color='blue')
+             marker='o', color='#4361A3')
     plt.plot(number_of_features_iteration, np.array(su_performance),
-             marker='o', color='orange')
+             marker='o', color='#8A5C7E')
 
     plt.xlabel('Number of Features')
     plt.ylabel(str(evaluation_metric_name))

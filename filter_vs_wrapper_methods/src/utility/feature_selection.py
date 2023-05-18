@@ -2,7 +2,6 @@ from typing import Literal, Union
 
 import numpy as np
 import pandas as pd
-from sklearn.feature_selection import SelectKBest, SequentialFeatureSelector
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import (KBinsDiscretizer, MinMaxScaler,
                                    OrdinalEncoder)
@@ -11,7 +10,7 @@ from sklearn.preprocessing import (KBinsDiscretizer, MinMaxScaler,
 class FeatureSelection:
 
     @staticmethod
-    def split_input_target(df: pd.DataFrame, target_label: str) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    def split_input_target(df: pd.DataFrame, target_label: str) -> tuple[pd.DataFrame, pd.DataFrame]:
         target_index = df.columns.get_loc(key=target_label)
 
         X = df.iloc[:, [j for j in range(df.shape[1]) if j != target_index]]
@@ -61,9 +60,7 @@ class FeatureSelection:
                     df[column] = min_max_scaler.fit_transform(df[[column]])
 
         if feature_type == "continuous":
-            k_bins_discretizer = KBinsDiscretizer(
-                n_bins=df.shape[1],
-                encode="ordinal", strategy="uniform", dtype=np.float64)
+            k_bins_discretizer = KBinsDiscretizer(n_bins=df.shape[1], encode="ordinal", strategy="uniform")
             for column in df.columns:
                 if any([str(x).isnumeric() and not float(str(x)).is_integer() for x in df[column]]) or \
                         df[column].dtype == "float":

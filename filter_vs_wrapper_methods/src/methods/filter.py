@@ -1,29 +1,36 @@
 from typing import Literal
 
 import pandas as pd
-from sklearn.feature_selection import SelectKBest, chi2, f_classif
+from sklearn.feature_selection import chi2, f_classif
 from utility.feature_selection import FeatureSelection
 
 
 class Filter:
+    def __init__(self, df: pd.DataFrame, method: Literal["Chi2", "ANOVA"], target_label: str):
+        self.df = df
+        self.method = method
+        self.target_label = target_label
+        X, y = FeatureSelection.split_input_target(self.df, self.target_label)
 
-    @staticmethod
-    def perform_feature_selection(
-            df: pd.DataFrame, filter_method: Literal["chi2", "anova"], target_label: str,
-            selected_features_size=0.6) -> pd.DataFrame:
-        X, y = FeatureSelection.split_input_target(df, target_label)
+        if self.method == "Chi2":
+            score_func = chi2
+        else:
+            score_func = f_classif
 
-        print(f"Started filter feature selection, {filter_method}.")
-        k_best_selector = SelectKBest(f_classif if filter_method == "anova" else chi2,
-                                      k=int(selected_features_size * X.shape[1]))
-        k_best_selector.fit(X, y)
+        print(f"Started filter feature selection, {self.method}.")
+        statistic_value, _ = score_func(X, y)
         print(f"Finished filter feature selection.")
-        selected_features_names = k_best_selector.get_feature_names_out()
-        selected_features_indices = [i for i in range(df.shape[1])
-                                     if df.columns[i] in selected_features_names or df.columns[i] == target_label]
 
-        return df.iloc[:, selected_features_indices]
+        sorted_indices = sorted([i for i in range(X.columns.size)],
+                                key=lambda i: statistic_value[i], reverse=True)
+        self.sorted_features = [str(column) for column in X.columns[sorted_indices]]
 
-    # @staticmethod
-    # def perform_optimized_feature_selection(df: pd.DataFrame, target_index: int) -> pd.DataFrame:
-    #     pass
+    def perform_feature_selection(self, selected_features_size=0.6) -> pd.DataFrame:
+        k = int(selected_features_size * len(self.sorted_features))
+        selected_k_features_names = self.sorted_features[0:k]
+
+        selected_k_features_indices = [
+            i for i in range(self.df.shape[1])
+            if self.df.columns[i] in selected_k_features_names or self.df.columns[i] == self.target_label]
+
+        return self.df.iloc[:, selected_k_features_indices]

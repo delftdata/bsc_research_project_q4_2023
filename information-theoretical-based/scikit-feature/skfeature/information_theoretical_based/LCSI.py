@@ -85,6 +85,7 @@ def lcsi(X, y, **kwargs):
             times.append(time.time() - time_before)
 
         if is_n_selected_features_specified:
+            print(len(F))
             if len(F) == n_selected_features:
                 break
         else:

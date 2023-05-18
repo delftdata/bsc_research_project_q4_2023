@@ -21,27 +21,23 @@ def main():
     eval_metrics = ["accuracy"]
 
     for i in range(len(dataset_files)):
-        dataset_file, target_label, results_path, eval_metric = dataset_files[
-            i], target_labels[i],  results_paths[i], eval_metrics[i]
+        dataset_file, target_label, results_path, eval_metric = \
+            dataset_files[i], target_labels[i],  results_paths[i], eval_metrics[i]
 
-        df = read_from_file_to_data_frame(dataset_file, target_label)
-        selected_data_frames = Evaluator.perform_feature_selection_methods(df, scoring=eval_metric)
+        df = pd.read_csv(dataset_file, low_memory=False)
+        selected_data_frames = Evaluator.perform_feature_selection_methods(
+            df, target_label=target_label, scoring=eval_metric)
 
         for (method_name, df) in selected_data_frames:
             print(method_name)
             print(df.head())
 
-        results = Evaluator.evaluate_models(selected_data_frames, algorithms_names, eval_metric)
+        results = Evaluator.evaluate_models(
+            selected_data_frames=selected_data_frames, target_label=target_label, algorithms_names=algorithms_names,
+            eval_metric=eval_metric)
 
         for (method_name, algorithm, performance) in results:
             write_to_file(f"{results_path}/{method_name}/{algorithm}", results_file_name, performance)
-
-
-def read_from_file_to_data_frame(dataset_file: str, target_label: str):
-    df = pd.read_csv(dataset_file)
-    target_index = df.columns.get_loc(target_label)
-    df = df.iloc[:, [target_index] + [i for i in range(df.shape[1]) if i != target_index]]
-    return df
 
 
 def write_to_file(path: str, results_file_name: str, content: str):

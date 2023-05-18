@@ -22,7 +22,7 @@ Experiment 2: Preprocess the data by converting it to the appropriate type for e
 
 -   Discrete -> Continuous: MixMax Scaling
 -   Continuous -> Nominal: KBinsDiscretizer
--   Nominal -> Discrete: OneHotEncoding
+-   Nominal -> Discrete: OrdinalEncoding
 -   Ordinal -> Discrete: OrdinalEncoding
 
 Experiment 3: Drop the features from the data if they do not match the desired type. For this experiment you can

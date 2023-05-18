@@ -3,3 +3,4 @@
 {'accuracy': 0.9357326478149101, 'balanced_accuracy': 0.9318908393396884, 'mcc': 0.8595206171357567, 'roc_auc': 0.9846837944664031, 'f1': 0.909090909090909, 'precision': 0.8992805755395683, 'recall': 0.9191176470588235}
 {'accuracy': 1.0, 'balanced_accuracy': 1.0, 'mcc': 1.0, 'roc_auc': 1.0, 'f1': 1.0, 'precision': 1.0, 'recall': 1.0}
 {'accuracy': 1.0, 'balanced_accuracy': 1.0, 'mcc': 1.0, 'roc_auc': 1.0, 'f1': 1.0, 'precision': 1.0, 'recall': 1.0}
+{'accuracy': 1.0, 'balanced_accuracy': 1.0, 'mcc': 1.0, 'roc_auc': 1.0, 'f1': 1.0, 'precision': 1.0, 'recall': 1.0}

@@ -13,32 +13,32 @@ class Evaluator:
 
     @staticmethod
     def perform_feature_selection_methods(
-            df: pd.DataFrame, scoring: str, selected_features_size=0.6) -> list[tuple[str, pd.DataFrame]]:
+            df: pd.DataFrame, target_label: str, scoring: str, selected_features_size=0.6) -> list[tuple[str, pd.DataFrame]]:
 
         chi2, anova, forward_selection, backward_elimination = None, None, None, None
 
         try:
             chi2 = Filter.perform_feature_selection(
-                df=df, filter_method="chi2", selected_features_size=selected_features_size)
+                df=df, filter_method="chi2", target_label=target_label, selected_features_size=selected_features_size)
         except Exception as e:
             print("Chi2:", e)
 
         try:
             anova = Filter.perform_feature_selection(
-                df=df, filter_method="anova", selected_features_size=selected_features_size)
+                df=df, filter_method="anova", target_label=target_label, selected_features_size=selected_features_size)
         except Exception as e:
             print("Anova:", e)
 
         try:
             forward_selection = Wrapper.perform_feature_selection(
-                df=df, estimator=LinearSVC(), scoring=scoring, direction="forward",
+                df=df, estimator=LinearSVC(), target_label=target_label, scoring=scoring, direction="forward",
                 selected_features_size=selected_features_size)
         except Exception as e:
             print("Forward Selection:", e)
 
         try:
             backward_elimination = Wrapper.perform_feature_selection(
-                df=df, estimator=LinearSVR(), scoring=scoring, direction="backward",
+                df=df, estimator=LinearSVR(), target_label=target_label, scoring=scoring, direction="backward",
                 selected_features_size=selected_features_size)
         except Exception as e:
             print("Backward Elimination:", e)
@@ -55,12 +55,12 @@ class Evaluator:
 
     @staticmethod
     def evaluate_models(selected_data_frames: list[tuple[str, pd.DataFrame]],
+                        target_label: str,
                         algorithms_names: list[tuple[str, str]],
                         eval_metric: str,
                         test_size=0.2) -> list[tuple[str, str, str]]:
 
         original_df = selected_data_frames[len(selected_data_frames) - 1][1]
-        target_label = original_df.columns[0]
         rows = original_df.shape[0]
 
         sample_training_indices = random.sample(population=range(rows), k=int((1 - test_size) * rows))
@@ -74,7 +74,8 @@ class Evaluator:
 
             for (algorithm, algorithm_name) in algorithms_names:
                 hyperparameters = Evaluator.get_hyperparameters(
-                    original_df, target_label, algorithm, algorithm_name, eval_metric)
+                    df=original_df, target_label=target_label, algorithm=algorithm, algorithm_name=algorithm_name,
+                    eval_metric=eval_metric)
 
                 performance = Evaluator.evaluate_model(train_data_frame, test_data_frame, target_label,
                                                        algorithm, hyperparameters, eval_metric)

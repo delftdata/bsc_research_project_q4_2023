@@ -121,15 +121,9 @@ def visualize_results(dataset_name, model_names, n, mrmrs, mifss, jmis, cifes):
 
 
 def main():
-    mat = pd.read_csv('skfeature/data/gisette/gisette_train_x.csv', names=[f'V{i}' for i in range(1, 5000+1)], sep=';')
-    y = pd.read_csv('skfeature/data/gisette/gisette_train_y.csv', names=['Class'])
-    y.columns.names = ['Class']
-    mat['Class'] = y['Class']
-
-    mat.to_csv('skfeature/data/gisette/gisette_train.csv', index=False)
-
     datasets = []
     datasets.append({'path': 'skfeature/data/housing_train.csv', 'y_label': 'SalePrice', 'n_features': 40})
+    datasets.append({'path': 'skfeature/data/gisette/gisette_train.csv', 'y_label': 'Class', 'n_features': 250})
 
     for dataset in datasets:
         mat = pd.read_csv(dataset['path'])

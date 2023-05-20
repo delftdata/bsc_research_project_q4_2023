@@ -17,8 +17,8 @@ filterwarnings("ignore", category=UserWarning)
 filterwarnings("ignore", category=RuntimeWarning)
 filterwarnings("ignore", category=FutureWarning)
 
-def perform_feature_selection(fs_algorithm, n_features, train, y_label):
 
+def perform_feature_selection_single(fs_algorithm, n_features, train, y_label):
     # Perform feature selection
     train_data = TabularDataset(train)
     np.random.seed(42)
@@ -27,6 +27,18 @@ def perform_feature_selection(fs_algorithm, n_features, train, y_label):
     result = list(zip(result, times))
     print(result)
     return result
+
+
+def perform_feature_selection_all(n_features, train, y_label):
+    mrmr_result = perform_feature_selection_single(select_mrmr, n_features, train, y_label)
+    logging.error(mrmr_result)
+    mifs_result = perform_feature_selection_single(select_mifs, n_features, train, y_label)
+    logging.error(mifs_result)
+    jmi_result = perform_feature_selection_single(select_jmi, n_features, train, y_label)
+    logging.error(jmi_result)
+    cife_result = perform_feature_selection_single(select_cife, n_features, train, y_label)
+    logging.error(cife_result)
+    return cife_result, jmi_result, mifs_result, mrmr_result
 
 
 def evaluate_model(train, test, fs_results, y_label, eval_metric, algorithms, hyperparameters, n_features):
@@ -73,14 +85,7 @@ def run_pipeline(mat, y_label, eval_metric, algorithm, model_name, n_features):
     test[y_label] = y_test
 
     # Perform feature selection
-    mrmr_result = perform_feature_selection(select_mrmr, n_features, train, y_label)
-    logging.error(mrmr_result)
-    mifs_result = perform_feature_selection(select_mifs, n_features, train, y_label)
-    logging.error(mifs_result)
-    jmi_result = perform_feature_selection(select_jmi, n_features, train, y_label)
-    logging.error(jmi_result)
-    cife_result = perform_feature_selection(select_cife, n_features, train, y_label)
-    logging.error(cife_result)
+    cife_result, jmi_result, mifs_result, mrmr_result = perform_feature_selection_all(n_features, train, y_label)
 
     # Perform evaluation
     mrmr = evaluate_model(train, test, mrmr_result, y_label, eval_metric, algorithm, hyperparameters, n_features)
@@ -88,38 +93,65 @@ def run_pipeline(mat, y_label, eval_metric, algorithm, model_name, n_features):
     jmi = evaluate_model(train, test, jmi_result, y_label, eval_metric, algorithm, hyperparameters, n_features)
     cife = evaluate_model(train, test, cife_result, y_label, eval_metric, algorithm, hyperparameters, n_features)
 
+    logging.error(mrmr)
+    logging.error(mifs)
+    logging.error(jmi)
+    logging.error(cife)
+
     return mrmr, mifs, jmi, cife
 
 
+def visualize_results(dataset_name, model_names, n, mrmrs, mifss, jmis, cifes):
+    i = 0
+    for mrmr, mifs, jmi, cife in zip(mrmrs, mifss, jmis, cifes):
+        model_name = model_names[i]
+
+        mrmr_one = [i[0] for i in mrmr]
+        mifs_one = [i[0] for i in mifs]
+        jmi_one = [i[0] for i in jmi]
+        cife_one = [i[0] for i in cife]
+        plot_over_features(dataset_name, model_name, n, mrmr_one, mifs_one, jmi_one, cife_one)
+
+        mrmr_one = [i[1] for i in mrmr]
+        mifs_one = [i[1] for i in mifs]
+        jmi_one = [i[1] for i in jmi]
+        cife_one = [i[1] for i in cife]
+        plot_performance(dataset_name, model_name + '_time', n, mrmr_one, mifs_one, jmi_one, cife_one)
+        i += 1
+
+
 def main():
-    mat = pd.read_csv('skfeature/data/steel_faults_train.csv')
-    # mat = prepare_data_for_ml(mat)
-    y_label = 'Class'
-    eval_metric = 'accuracy'
-    algorithm = 'XGB'
-    n = 20
-    model_name = 'XGBoost'
+    mat = pd.read_csv('skfeature/data/gisette/gisette_train_x.csv', names=[f'V{i}' for i in range(1, 5000+1)], sep=';')
+    y = pd.read_csv('skfeature/data/gisette/gisette_train_y.csv', names=['Class'])
+    y.columns.names = ['Class']
+    mat['Class'] = y['Class']
 
-    mrmr, mifs, jmi, cife = run_pipeline(mat, y_label, eval_metric, algorithm, model_name, n)
-    mrmr = [i[0] for i in mrmr]
-    mifs = [i[0] for i in mifs]
-    jmi = [i[0] for i in jmi]
-    cife = [i[0] for i in cife]
-    plot_over_features(model_name, n, mrmr, mifs, jmi, cife)
+    mat.to_csv('skfeature/data/gisette/gisette_train.csv', index=False)
 
-    algorithm = 'LR'
-    model_name = 'LinearModel'
+    datasets = []
+    datasets.append({'path': 'skfeature/data/housing_train.csv', 'y_label': 'SalePrice', 'n_features': 40})
 
-    mrmr, mifs, jmi, cife = run_pipeline(mat, y_label, eval_metric, algorithm, model_name, n)
+    for dataset in datasets:
+        mat = pd.read_csv(dataset['path'])
+        y_label = dataset['y_label']
+        n_features = dataset['n_features']
 
-    mrmr = [i[0] for i in mrmr]
-    mifs = [i[0] for i in mifs]
-    jmi = [i[0] for i in jmi]
-    cife = [i[0] for i in cife]
-    plot_over_features(model_name, n, mrmr, mifs, jmi, cife)
+        # Encode features
+        train_data = TabularDataset(mat)
+        train_data = AutoMLPipelineFeatureGenerator(enable_text_special_features=False,
+                                                    enable_text_ngram_features=False).fit_transform(X=train_data)
+
+        # Split data
+        X_train, X_test, y_train, y_test = train_test_split(train_data.drop(columns=[y_label]), train_data[y_label],
+                                                            test_size=0.2, random_state=42)
+        train = X_train.copy()
+        train[y_label] = y_train
+
+        # Perform feature selection
+        logging.error(dataset['path'])
+        perform_feature_selection_all(n_features, train, y_label)
 
 
 if __name__ == '__main__':
-    logging.basicConfig(filename='app.log', filemode='w', level=logging.ERROR, format='%(message)s')
-    np.random.seed(42)
+    logging.basicConfig(filename='app.log', filemode='a', level=logging.ERROR, format='%(message)s')
     main()

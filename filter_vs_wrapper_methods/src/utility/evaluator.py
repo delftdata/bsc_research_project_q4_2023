@@ -1,4 +1,5 @@
 import random
+from typing import Literal
 
 import pandas as pd
 from autogluon.features.generators import (AutoMLPipelineFeatureGenerator,
@@ -6,93 +7,121 @@ from autogluon.features.generators import (AutoMLPipelineFeatureGenerator,
 from autogluon.tabular import TabularDataset, TabularPredictor
 from methods.filter import Filter
 from methods.wrapper import Wrapper
-from sklearn.svm import LinearSVC, LinearSVR
 
 
 class Evaluator:
+    def __init__(self, df: pd.DataFrame, target_label: str,
+                 scoring: Literal["accuracy", "neg_mean_squared_error"],
+                 algorithms_names: list[tuple[str, str]] = [
+                     ("GBM", "LightGBM"), ("RF", "RandomForest"), ("LR", "LinearModel"), ("XGB", "XGBoost")],
+                 filter_methods: list[Literal["Chi2", "ANOVA"]] = ["Chi2", "ANOVA"],
+                 wrapper_methods:
+                 list[Literal["Forward Selection", "Backward Elimination"]] = ["Forward Selection",
+                                                                               "Backward Elimination"]):
+        self.df = df
+        self.target_label = target_label
+        self.scoring: Literal['accuracy', 'neg_mean_squared_error'] = scoring
+        self.algorithms_names = algorithms_names
 
-    @staticmethod
-    def perform_feature_selection_methods(
-            df: pd.DataFrame, scoring: str, selected_features_size=0.6) -> list[tuple[str, pd.DataFrame]]:
+        self.filter_methods: list[Filter] = []
+        self.wrapper_methods: list[Wrapper] = []
 
-        chi2, anova, forward_selection, backward_elimination = None, None, None, None
+        for filter_method in filter_methods:
+            try:
+                filter_method_instance = Filter(df=self.df, method=filter_method, target_label=self.target_label)
+                self.filter_methods.append(filter_method_instance)
+            except Exception as e:
+                print(f"{filter_method}: {e}")
 
-        try:
-            chi2 = Filter.perform_feature_selection(
-                df=df, filter_method="chi2", selected_features_size=selected_features_size)
-        except Exception as e:
-            print("Chi2:", e)
+        for wrapper_method in wrapper_methods:
+            try:
+                wrapper_method_instance = Wrapper(df=self.df, method=wrapper_method,
+                                                  target_label=self.target_label, scoring=self.scoring)
+                self.wrapper_methods.append(wrapper_method_instance)
+            except Exception as e:
+                print(f"{wrapper_method}: {e}")
 
-        try:
-            anova = Filter.perform_feature_selection(
-                df=df, filter_method="anova", selected_features_size=selected_features_size)
-        except Exception as e:
-            print("Anova:", e)
+    def perform_experiments(self, percentage_key="Percentage of selected features"
+                            ) -> dict[str, dict[str, list[float]]]:
 
-        try:
-            forward_selection = Wrapper.perform_feature_selection(
-                df=df, estimator=LinearSVC(), scoring=scoring, direction="forward",
-                selected_features_size=selected_features_size)
-        except Exception as e:
-            print("Forward Selection:", e)
+        performances: dict[str, dict[str, list[float]]] = dict()
+        percentage_range = [percentage / 100.0 for percentage in range(10, 110, 10)]
 
-        try:
-            backward_elimination = Wrapper.perform_feature_selection(
-                df=df, estimator=LinearSVR(), scoring=scoring, direction="backward",
-                selected_features_size=selected_features_size)
-        except Exception as e:
-            print("Backward Elimination:", e)
+        for selected_feature_size in percentage_range:
+            selected_filter_data_frames = self.perform_filter_feature_selection_methods(
+                selected_features_size=selected_feature_size)
+            selected_wrapper_data_frames = self.perform_wrapper_feature_selection_methods(
+                selected_features_size=selected_feature_size)
+            selected_data_frames = selected_filter_data_frames + selected_wrapper_data_frames
 
-        data_frames: list[tuple[str, pd.DataFrame]] = [
-            ("chi2", chi2),
-            ("anova", anova),
-            ("forward_selection", forward_selection),
-            ("backward_elimination", backward_elimination),
-            ("original", df)]
+            for (method_name, df) in selected_data_frames:
+                print(method_name)
+                print(df.head())
 
-        selected_data_frames = [(method_name, df) for (method_name, df) in data_frames if df is not None]
-        return selected_data_frames
+            try:
+                results = self.evaluate_models(selected_data_frames=selected_data_frames)
 
-    @staticmethod
-    def evaluate_models(selected_data_frames: list[tuple[str, pd.DataFrame]],
-                        algorithms_names: list[tuple[str, str]],
-                        eval_metric: str,
-                        test_size=0.2) -> list[tuple[str, str, str]]:
+                for (method_name, algorithm, performance) in results:
+                    if algorithm not in performances.keys():
+                        performances[algorithm] = dict()
+                    if method_name not in performances[algorithm].keys():
+                        performances[algorithm][method_name] = []
+                    if percentage_key not in performances[algorithm].keys():
+                        performances[algorithm][percentage_key] = []
+                    performances[algorithm][method_name].append(float(performance[self.scoring]))
+                    if selected_feature_size not in performances[algorithm][percentage_key]:
+                        performances[algorithm][percentage_key].append(selected_feature_size)
 
-        original_df = selected_data_frames[len(selected_data_frames) - 1][1]
-        target_label = original_df.columns[0]
-        rows = original_df.shape[0]
+            except Exception as e:
+                print(f"Autogluon: {e}")
 
+        return performances
+
+    def perform_filter_feature_selection_methods(self, selected_features_size: float) -> list[tuple[str, pd.DataFrame]]:
+        return [(filter_method.method,
+                 filter_method.perform_feature_selection(selected_features_size=selected_features_size))
+                for filter_method in self.filter_methods]
+
+    def perform_wrapper_feature_selection_methods(self, selected_features_size: float) -> list[tuple
+                                                                                               [str, pd.DataFrame]]:
+        return [(wrapper_method.method,
+                 wrapper_method.perform_feature_selection(selected_features_size=selected_features_size))
+                for wrapper_method in self.wrapper_methods]
+
+    def evaluate_models(self, selected_data_frames: list[tuple[str, pd.DataFrame]],
+                        test_size=0.2) -> list[tuple[str, str, dict]]:
+
+        rows = self.df.shape[0]
         sample_training_indices = random.sample(population=range(rows), k=int((1 - test_size) * rows))
         sample_testing_indices = [i for i in range(rows) if i not in sample_training_indices]
 
-        results: list[tuple[str, str, str]] = []
+        results: list[tuple[str, str, dict]] = []
 
-        for (method_name, df) in selected_data_frames:
-            train_data_frame = df.iloc[sample_training_indices, :]
-            test_data_frame = df.iloc[sample_testing_indices, :]
+        for (method_name, selected_df) in selected_data_frames:
+            train_data = TabularDataset(selected_df.iloc[sample_training_indices, :])
+            test_data = TabularDataset(selected_df.iloc[sample_testing_indices, :])
 
-            for (algorithm, algorithm_name) in algorithms_names:
-                hyperparameters = Evaluator.get_hyperparameters(
-                    original_df, target_label, algorithm, algorithm_name, eval_metric)
+            for (algorithm, algorithm_name) in self.algorithms_names:
+                hyperparameters = self.get_hyperparameters(
+                    df=self.df, algorithm=algorithm, algorithm_name=algorithm_name)
 
-                performance = Evaluator.evaluate_model(train_data_frame, test_data_frame, target_label,
-                                                       algorithm, hyperparameters, eval_metric)
+                predictor = TabularPredictor(label=self.target_label, eval_metric=self.scoring, verbosity=0)
+                predictor.fit(train_data=train_data, presets="best_quality",
+                              feature_generator=IdentityFeatureGenerator(),
+                              hyperparameters={algorithm: hyperparameters})
 
-                results.append((method_name, algorithm, str(performance)))
+                performance = predictor.evaluate(test_data)
+                results.append((method_name, algorithm, performance))
 
             # svm_model = SVMModel(label=df.columns[0], problem_type="binary",
             #                      data_preprocessing=False)
             # svm_model.grid_search(df, param_grid=param_grid)
 
-            # results.append((method_name, "SVM", str(performance)))
+            # results.append((method_name, "SVM", performance))
 
         return results
 
-    @staticmethod
-    def get_hyperparameters(
-            df: pd.DataFrame, target_label: str, algorithm: str,
-            algorithm_name: str, eval_metric: str) -> dict:
+    def get_hyperparameters(self, df: pd.DataFrame, algorithm: str, algorithm_name: str) -> dict:
 
         auxiliary_data_frame = AutoMLPipelineFeatureGenerator(
             enable_text_special_features=False, enable_text_ngram_features=False)
@@ -100,22 +129,8 @@ class Evaluator:
 
         train_data = TabularDataset(auxiliary_data_frame)
 
-        predictor = TabularPredictor(label=target_label, eval_metric=eval_metric, verbosity=0)
+        predictor = TabularPredictor(label=self.target_label, eval_metric=self.scoring, verbosity=0)
         predictor.fit(train_data=train_data, hyperparameters={algorithm: {}})
 
         training_results = predictor.info()
         return training_results["model_info"][algorithm_name]["hyperparameters"]
-
-    @staticmethod
-    def evaluate_model(
-            train_data_frame: pd.DataFrame, test_data_frame: pd.DataFrame, target_label: str, algorithm: str,
-            hyperparameters: dict, eval_metric: str) -> dict:
-
-        train_data = TabularDataset(train_data_frame)
-        test_data = TabularDataset(test_data_frame)
-
-        predictor = TabularPredictor(label=target_label, eval_metric=eval_metric, verbosity=0)
-        predictor.fit(train_data=train_data, presets="best_quality",
-                      feature_generator=IdentityFeatureGenerator(), hyperparameters={algorithm: hyperparameters})
-
-        return predictor.evaluate(test_data)

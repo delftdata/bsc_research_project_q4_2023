@@ -30,15 +30,22 @@ class DatasetEvaluator:
         self.number_of_features_to_select = self.dataframe.shape[1] - 1
         self.evaluation_metric = evaluation_metric
 
-    def get_hyperparameters_no_feature_selection(self, algorithm, model_name):
+    def get_hyperparameters_no_feature_selection(self, algorithm, model_name, train_dataframe,
+                                                 test_dataframe):
         train_data = TabularDataset(self.auxiliary_dataframe)
         fitted_predictor = TabularPredictor(label=self.target_label,
                                      eval_metric=self.evaluation_metric,
                                      verbosity=0) \
-            .fit(train_data=train_data, hyperparameters={algorithm: {}})
+            .fit(train_data=train_dataframe, hyperparameters={algorithm: {}})
 
         # Get tuned hyperparameters
         training_results = fitted_predictor.info()
+        print("FEATURE IMPORTANCE")
+        importance = fitted_predictor.feature_importance(data=test_dataframe, feature_stage='original')
+        print(importance)
+        print(" ")
+        current_performance = fitted_predictor.evaluate(test_dataframe)[self.evaluation_metric]
+        print(current_performance)
         return training_results['model_info'][model_name]['hyperparameters']
 
     def evaluate_model_varying_features(self, algorithm, hyperparameters, train_dataframe,
@@ -82,8 +89,8 @@ class DatasetEvaluator:
         train_dataframe = pd.concat([x_train, y_train], axis=1)
         test_dataframe = pd.concat([x_test, y_test], axis=1)
 
-        one_hot_encoder = OneHotEncoder()
-        dataframe_not_categorical = one_hot_encoder.encode(train_dataframe, self.target_label)
+        #one_hot_encoder = OneHotEncoder()
+        #dataframe_not_categorical = one_hot_encoder.encode(train_dataframe, self.target_label)
         pearson_selected_features = PearsonFeatureSelection.feature_selection(train_dataframe,
                                                                               self.target_label,
                                                                               self.number_of_features_to_select)
@@ -105,7 +112,9 @@ class DatasetEvaluator:
         for algorithm, model_name in self.algorithms_model_names.items():
             print(algorithm)
             # Get the hyperparameters on the data set with all features
-            hyperparameters = self.get_hyperparameters_no_feature_selection(algorithm, model_name)
+            hyperparameters = self.get_hyperparameters_no_feature_selection(algorithm, model_name,
+                                                                            train_dataframe,
+                                                                            test_dataframe)
 
             # TODO: Add all methods (+ figure out the necessary encoding)
             # Evaluate model on the features selected by the different correlation-based methods
@@ -152,5 +161,5 @@ def evaluate_breast_cancer_dataset():
 
 
 if __name__ == '__main__':
-    evaluate_census_income_dataset()
-    # evaluate_breast_cancer_dataset()
+    # evaluate_census_income_dataset()
+    evaluate_breast_cancer_dataset()

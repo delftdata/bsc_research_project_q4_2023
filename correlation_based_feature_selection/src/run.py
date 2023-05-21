@@ -22,9 +22,9 @@ class DatasetEvaluator:
         # GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
         self.algorithms_model_names = {
             'GBM': 'LightGBM',
-            'RF': 'RandomForest',
-            'LR': 'LinearModel',
-            'XGB': 'XGBoost'
+            # 'RF': 'RandomForest',
+            # 'LR': 'LinearModel',
+            # 'XGB': 'XGBoost'
         }
         # TODO: Experiment with other values for the number of features to select
         self.number_of_features_to_select = self.dataframe.shape[1] - 1
@@ -44,9 +44,10 @@ class DatasetEvaluator:
         importance = fitted_predictor.feature_importance(data=test_dataframe, feature_stage='original')
         print(importance)
         print(" ")
-        current_performance = fitted_predictor.evaluate(test_dataframe)[self.evaluation_metric]
-        print(current_performance)
-        return training_results['model_info'][model_name]['hyperparameters']
+        hyperparameters = training_results['model_info'][model_name]['hyperparameters']
+        baseline_performance = fitted_predictor.evaluate(test_dataframe)[self.evaluation_metric]
+        print(baseline_performance)
+        return hyperparameters, baseline_performance
 
     def evaluate_model_varying_features(self, algorithm, hyperparameters, train_dataframe,
                        feature_subset, target_label, test_dataframe):
@@ -112,9 +113,9 @@ class DatasetEvaluator:
         for algorithm, model_name in self.algorithms_model_names.items():
             print(algorithm)
             # Get the hyperparameters on the data set with all features
-            hyperparameters = self.get_hyperparameters_no_feature_selection(algorithm, model_name,
-                                                                            train_dataframe,
-                                                                            test_dataframe)
+            hyperparameters, baseline_performance = \
+                self.get_hyperparameters_no_feature_selection(algorithm, model_name,
+                                                              train_dataframe, test_dataframe)
 
             # TODO: Add all methods (+ figure out the necessary encoding)
             # Evaluate model on the features selected by the different correlation-based methods
@@ -136,7 +137,8 @@ class DatasetEvaluator:
                                          pearson_performance=all_performances_methods[0],
                                          spearman_performance=all_performances_methods[1],
                                          cramersv_performance=all_performances_methods[2],
-                                         su_performance=all_performances_methods[3])
+                                         su_performance=all_performances_methods[3],
+                                         baseline_performance=baseline_performance)
 
 
 def evaluate_census_income_dataset():
@@ -160,6 +162,17 @@ def evaluate_breast_cancer_dataset():
     dataset_evaluator.evaluate_all_models()
 
 
+def evaluate_steel_plates_fault_dataset():
+    dataset_evaluator = DatasetEvaluator(
+        dataset_file='../datasets/steel-plates-faults/steel_faults_train.csv',
+        dataset_name='SteelPlatesFaults',
+        target_label='Class',
+        evaluation_metric='accuracy')
+
+    dataset_evaluator.evaluate_all_models()
+
+
 if __name__ == '__main__':
     # evaluate_census_income_dataset()
-    evaluate_breast_cancer_dataset()
+    # evaluate_breast_cancer_dataset()
+    evaluate_steel_plates_fault_dataset()

@@ -13,7 +13,8 @@ evaluation_metrics_options = {
 
 def plot_over_number_of_features(algorithm, number_of_features, evaluation_metric,
                                  pearson_performance, spearman_performance,
-                                 cramersv_performance, su_performance):
+                                 cramersv_performance, su_performance,
+                                 baseline_performance):
     evaluation_metric_name = evaluation_metrics_options.get(evaluation_metric)
     number_of_features_iteration = list(range(1, number_of_features))
 
@@ -29,10 +30,12 @@ def plot_over_number_of_features(algorithm, number_of_features, evaluation_metri
              marker='>', color='#D3B813')
     plt.plot(number_of_features_iteration, np.array(su_performance),
              marker='s', color='#2EB835')
+    plt.plot(number_of_features_iteration[-1], baseline_performance,
+             marker='o', color='#D9D9D9')
 
     plt.xlabel('Number of Features')
     plt.ylabel(str(evaluation_metric_name))
-    plt.legend(['Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty'])
+    plt.legend(['Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty', 'Baseline'])
     plt.title('The change of the ' + str(evaluation_metric_name)
               + f' metric for {algorithm} with the increase of the selected features')
 

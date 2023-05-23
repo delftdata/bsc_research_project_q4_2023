@@ -3,21 +3,18 @@ from typing import Literal
 import pandas as pd
 from sklearn.feature_selection import SequentialFeatureSelector
 from sklearn.linear_model import LinearRegression, LogisticRegression
-from utility.feature_selection import FeatureSelection
+from splitting.splitter import Splitter
 
 
 class Wrapper:
-    def __init__(
-            self,
-            df: pd.DataFrame, method: Literal["Forward Selection", "Backward Elimination"],
-            target_label: str, scoring: Literal["accuracy", "neg_mean_squared_error"],
-            n_jobs=-1):
-        self.df = df
+    def __init__(self, df: pd.DataFrame, method: Literal["Forward Selection", "Backward Elimination"],
+                 target_label: str, scoring: Literal["accuracy", "neg_mean_squared_error"], n_jobs=-1):
+        preprocessed_df = df.copy()
         self.method = method
         self.target_label = target_label
         self.scoring = scoring
 
-        X, y = FeatureSelection.split_input_target(self.df, self.target_label)
+        X, y = Splitter.split_input_target(preprocessed_df, self.target_label)
 
         if self.scoring == "accuracy":
             estimator = LogisticRegression()
@@ -53,12 +50,12 @@ class Wrapper:
         if self.method == "Backward Elimination":
             self.sorted_features.reverse()
 
-    def perform_feature_selection(self, selected_features_size=0.6) -> pd.DataFrame:
+    def perform_feature_selection(self, df: pd.DataFrame, selected_features_size=0.6) -> pd.DataFrame:
         k = int(selected_features_size * len(self.sorted_features))
         selected_k_features_names = self.sorted_features[0:k]
 
         selected_k_features_indices = [
-            i for i in range(self.df.shape[1])
-            if self.df.columns[i] in selected_k_features_names or self.df.columns[i] == self.target_label]
+            i for i in range(df.shape[1])
+            if df.columns[i] in selected_k_features_names or df.columns[i] == self.target_label]
 
-        return self.df.iloc[:, selected_k_features_indices]
+        return df.iloc[:, selected_k_features_indices]

@@ -12,7 +12,7 @@ import logging
 from ast import literal_eval
 
 from skfeature.utility.data_preparation import prepare_data_for_ml, get_hyperparameters
-from skfeature.utility.plotting import plot_over_features, plot_performance, plot_performance_8
+from skfeature.utility.plotting import *
 from skfeature.utility.experiments import select_jmi, select_cife, select_mrmr, select_mifs
 
 filterwarnings("ignore", category=UserWarning)
@@ -49,6 +49,8 @@ def evaluate_model(train, test, fs_results, y_label, algorithms, hyperparameters
         result = []
         for idx, duration in fs_results:
             # obtain the dataset on the selected features
+            idx = list(set(idx))
+            n_features = len(idx)
             picked_columns = [list(train.drop(y_label, axis=1).columns)[i] for i in idx[0:n_features]]
             picked_columns.append(y_label)
             features = train[picked_columns]
@@ -177,6 +179,35 @@ def plot_feature_selection_performance():
             j += 1
 
 
+def plot_feature_selection_two_side_by_side():
+    with open('results/22-5-2023/performance_simple.txt', "r") as file:
+        data = file.readlines()
+    with open('results/22-5-2023/performance_complex.txt', "r") as file:
+        data_complex = file.readlines()
+
+    datasets = [data[i:i + 5] for i in range(0, len(data), 5)]
+    datasets_complex = [data_complex[i:i + 5] for i in range(0, len(data_complex), 5)]
+
+    temp = []
+    for i in range(len(datasets)):
+        dataset = datasets[i]
+        if 'steel' in dataset[0]:
+            temp.append(dataset)
+
+    for i in range(len(datasets_complex)):
+        dataset = datasets_complex[i]
+        if 'steel' in dataset[0]:
+            temp.append(dataset)
+
+    mrmr = [literal_eval(temp[0][1].replace('array', ''))[1], literal_eval(temp[1][1].replace('array', ''))[1]]
+    mifs = [literal_eval(temp[0][2].replace('array', ''))[1], literal_eval(temp[1][2].replace('array', ''))[1]]
+    jmi = [literal_eval(temp[0][3].replace('array', ''))[1], literal_eval(temp[1][3].replace('array', ''))[1]]
+    cife = [literal_eval(temp[0][4].replace('array', ''))[1], literal_eval(temp[1][4].replace('array', ''))[1]]
+
+    plot_over_features_2('steel', 'Steel Plate Faults dataset performance on Linear Regression model',
+                         len(mrmr[0]), mrmr, mifs, jmi, cife)
+
+
 def plot_feature_selection_runtime():
     with open('results/22-5-2023/fs_simple.txt', "r") as file:
         data = file.readlines()
@@ -211,18 +242,18 @@ def plot_feature_selection_runtime():
 
 
         print(dataset_name)
-        print(round(mrmr_one[-1], 2))
         print(round(mifs_one[-1], 2))
-        print(round(jmi_one[-1], 2))
+        print(round(mrmr_one[-1], 2))
         print(round(cife_one[-1], 2))
-        print(round(mrmr_complex_one[-1], 2))
+        print(round(jmi_one[-1], 2))
         print(round(mifs_complex_one[-1], 2))
-        print(round(jmi_complex_one[-1], 2))
+        print(round(mrmr_complex_one[-1], 2))
         print(round(cife_complex_one[-1], 2))
-        plot_performance(dataset_name, len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one, False)
+        print(round(jmi_complex_one[-1], 2))
+        # plot_performance(dataset_name, len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one, False)
 
         plot_performance_8(dataset_name, len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one, mrmr_complex_one, mifs_complex_one, jmi_complex_one, cife_complex_one)
-
+        # plot_performance_two('Breast cancer dataset runtime performance', len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one, mrmr_complex_one, mifs_complex_one, jmi_complex_one, cife_complex_one)
 
 def perform_feature_selection_for_multiple_datasets():
 

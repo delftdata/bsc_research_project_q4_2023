@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 from autogluon.tabular import TabularDataset, TabularPredictor
 from autogluon.features.generators import AutoMLPipelineFeatureGenerator
@@ -8,9 +9,10 @@ from sklearn.model_selection import train_test_split
 
 from warnings import filterwarnings
 import logging
+from ast import literal_eval
 
 from skfeature.utility.data_preparation import prepare_data_for_ml, get_hyperparameters
-from skfeature.utility.plotting import plot_over_features, plot_performance
+from skfeature.utility.plotting import plot_over_features, plot_performance, plot_performance_8
 from skfeature.utility.experiments import select_jmi, select_cife, select_mrmr, select_mifs
 
 filterwarnings("ignore", category=UserWarning)
@@ -41,7 +43,7 @@ def perform_feature_selection_all(n_features, train, y_label):
     return cife_result, jmi_result, mifs_result, mrmr_result
 
 
-def evaluate_model(train, test, fs_results, y_label, eval_metric, algorithms, hyperparameters, n_features):
+def evaluate_model(train, test, fs_results, y_label, algorithms, hyperparameters, n_features):
     results = []
     for algorithm, hyperparameter in zip(algorithms, hyperparameters):
         result = []
@@ -53,13 +55,16 @@ def evaluate_model(train, test, fs_results, y_label, eval_metric, algorithms, hy
 
             # Train model on the smaller dataset with tuned hyperparameters
             linear_predictor = TabularPredictor(label=y_label,
-                                                eval_metric=eval_metric,
                                                 verbosity=0) \
                 .fit(train_data=features, hyperparameters={algorithm: hyperparameter})
 
             # Get accuracy on test data
             test_data = TabularDataset(test)
-            accuracy = linear_predictor.evaluate(test_data)[eval_metric]
+            accuracy = linear_predictor.evaluate(test_data)
+            if 'accuracy' in accuracy:
+                accuracy = accuracy['accuracy']
+            else:
+                accuracy = -1 * accuracy['root_mean_squared_error']
             print(accuracy)
             result.append((accuracy, duration))
 
@@ -67,14 +72,14 @@ def evaluate_model(train, test, fs_results, y_label, eval_metric, algorithms, hy
     return results
 
 
-def run_pipeline(mat, y_label, eval_metric, algorithm, model_name, n_features):
+def run_pipeline(mat, y_label, algorithm, model_name, n_features):
     # Encode features
     train_data = TabularDataset(mat)
     train_data = AutoMLPipelineFeatureGenerator(enable_text_special_features=False,
                                                 enable_text_ngram_features=False).fit_transform(X=train_data)
 
     # Tune hyperparameters
-    hyperparameters = get_hyperparameters(train_data, y_label, eval_metric, algorithm, model_name)
+    hyperparameters = get_hyperparameters(train_data, y_label, algorithm, model_name)
 
     # Split data
     X_train, X_test, y_train, y_test = train_test_split(train_data.drop(columns=[y_label]), train_data[y_label],
@@ -88,10 +93,10 @@ def run_pipeline(mat, y_label, eval_metric, algorithm, model_name, n_features):
     cife_result, jmi_result, mifs_result, mrmr_result = perform_feature_selection_all(n_features, train, y_label)
 
     # Perform evaluation
-    mrmr = evaluate_model(train, test, mrmr_result, y_label, eval_metric, algorithm, hyperparameters, n_features)
-    mifs = evaluate_model(train, test, mifs_result, y_label, eval_metric, algorithm, hyperparameters, n_features)
-    jmi = evaluate_model(train, test, jmi_result, y_label, eval_metric, algorithm, hyperparameters, n_features)
-    cife = evaluate_model(train, test, cife_result, y_label, eval_metric, algorithm, hyperparameters, n_features)
+    mrmr = evaluate_model(train, test, mrmr_result, y_label, algorithm, hyperparameters, n_features)
+    mifs = evaluate_model(train, test, mifs_result, y_label, algorithm, hyperparameters, n_features)
+    jmi = evaluate_model(train, test, jmi_result, y_label, algorithm, hyperparameters, n_features)
+    cife = evaluate_model(train, test, cife_result, y_label, algorithm, hyperparameters, n_features)
 
     logging.error(mrmr)
     logging.error(mifs)
@@ -116,19 +121,115 @@ def visualize_results(dataset_name, model_names, n, mrmrs, mifss, jmis, cifes):
         mifs_one = [i[1] for i in mifs]
         jmi_one = [i[1] for i in jmi]
         cife_one = [i[1] for i in cife]
-        plot_performance(dataset_name, model_name + '_time', n, mrmr_one, mifs_one, jmi_one, cife_one)
+        plot_performance(dataset_name, n, mrmr_one, mifs_one, jmi_one, cife_one)
         i += 1
 
 
-def main():
-    datasets = []
-    datasets.append({'path': 'skfeature/data/housing_train.csv', 'y_label': 'SalePrice', 'n_features': 40})
-    datasets.append({'path': 'skfeature/data/gisette/gisette_train.csv', 'y_label': 'Class', 'n_features': 250})
+def plot_feature_selection_performance():
+    with open('results/22-5-2023/performance_simple.txt', "r") as file:
+        data = file.readlines()
+    with open('results/22-5-2023/performance_complex.txt', "r") as file:
+        data_complex = file.readlines()
+
+    datasets = [data[i:i + 5] for i in range(0, len(data), 5)]
+    datasets_complex = [data_complex[i:i + 5] for i in range(0, len(data_complex), 5)]
+    for i in range(len(datasets)):
+        dataset = datasets[i]
+        dataset_name = dataset[0].split('datasets/')[1].split('/')[0]
+        mrmr_result = literal_eval(dataset[1].replace('array', ''))
+        mifs_result = literal_eval(dataset[2].replace('array', ''))
+        jmi_result = literal_eval(dataset[3].replace('array', ''))
+        cife_result = literal_eval(dataset[4].replace('array', ''))
+
+        model_names = ['XGBoost', 'LinearModel']
+        j = 0
+        for mrmr, mifs, jmi, cife in zip(mrmr_result, mifs_result, jmi_result, cife_result):
+            mrmr_one = [i[0] for i in mrmr]
+            mifs_one = [i[0] for i in mifs]
+            jmi_one = [i[0] for i in jmi]
+            cife_one = [i[0] for i in cife]
+
+            model_name = model_names[j]
+
+            plot_over_features(dataset_name, model_name, len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one)
+            j += 1
+
+    for i in range(len(datasets_complex)):
+        dataset_complex = datasets_complex[i]
+        dataset_name = dataset_complex[0].split('datasets/')[1].split('/')[0]
+        mrmr_result_complex = literal_eval(dataset_complex[1].replace('array', ''))
+        mifs_result_complex = literal_eval(dataset_complex[2].replace('array', ''))
+        jmi_result_complex = literal_eval(dataset_complex[3].replace('array', ''))
+        cife_result_complex = literal_eval(dataset_complex[4].replace('array', ''))
+
+        model_names = ['XGBoost', 'LinearModel']
+
+        j = 0
+        for mrmr, mifs, jmi, cife in zip(mrmr_result_complex, mifs_result_complex, jmi_result_complex, cife_result_complex):
+            mrmr_one = [i[0] for i in mrmr]
+            mifs_one = [i[0] for i in mifs]
+            jmi_one = [i[0] for i in jmi]
+            cife_one = [i[0] for i in cife]
+
+            model_name = model_names[j]
+
+            plot_over_features(dataset_name + '_complex_', model_name, len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one)
+            j += 1
+
+
+def plot_feature_selection_runtime():
+    with open('results/22-5-2023/fs_simple.txt', "r") as file:
+        data = file.readlines()
+    with open('results/22-5-2023/fs_complex.txt', "r") as file:
+        data_complex = file.readlines()
+
+    datasets = [data[i:i + 5] for i in range(0, len(data), 5)]
+    datasets_complex = [data_complex[i:i + 5] for i in range(0, len(data_complex), 5)]
+    for i in range(len(datasets_complex)):
+        dataset = datasets[i]
+        dataset_name = dataset[0].split('datasets/')[1].split('/')[0]
+        mrmr_result = literal_eval(dataset[1].replace('array', ''))
+        mifs_result = literal_eval(dataset[2].replace('array', ''))
+        jmi_result = literal_eval(dataset[3].replace('array', ''))
+        cife_result = literal_eval(dataset[4].replace('array', ''))
+
+        mrmr_one = [i[1] for i in mrmr_result]
+        mifs_one = [i[1] for i in mifs_result]
+        jmi_one = [i[1] for i in jmi_result]
+        cife_one = [i[1] for i in cife_result]
+
+        dataset_complex = datasets_complex[i]
+        mrmr_result_complex = literal_eval(dataset_complex[1].replace('array', ''))
+        mifs_result_complex = literal_eval(dataset_complex[2].replace('array', ''))
+        jmi_result_complex = literal_eval(dataset_complex[3].replace('array', ''))
+        cife_result_complex = literal_eval(dataset_complex[4].replace('array', ''))
+
+        mrmr_complex_one = [i[1] for i in mrmr_result_complex]
+        mifs_complex_one = [i[1] for i in mifs_result_complex]
+        jmi_complex_one = [i[1] for i in jmi_result_complex]
+        cife_complex_one = [i[1] for i in cife_result_complex]
+
+
+        print(dataset_name)
+        print(round(mrmr_one[-1], 2))
+        print(round(mifs_one[-1], 2))
+        print(round(jmi_one[-1], 2))
+        print(round(cife_one[-1], 2))
+        print(round(mrmr_complex_one[-1], 2))
+        print(round(mifs_complex_one[-1], 2))
+        print(round(jmi_complex_one[-1], 2))
+        print(round(cife_complex_one[-1], 2))
+        plot_performance(dataset_name, len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one, False)
+
+        plot_performance_8(dataset_name, len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one, mrmr_complex_one, mifs_complex_one, jmi_complex_one, cife_complex_one)
+
+
+def perform_feature_selection_for_multiple_datasets():
 
     for dataset in datasets:
         mat = pd.read_csv(dataset['path'])
         y_label = dataset['y_label']
-        n_features = dataset['n_features']
+        n_features = len(mat.columns) - 1
 
         # Encode features
         train_data = TabularDataset(mat)
@@ -142,10 +243,75 @@ def main():
         train[y_label] = y_train
 
         # Perform feature selection
+        print(dataset['path'])
         logging.error(dataset['path'])
         perform_feature_selection_all(n_features, train, y_label)
 
 
+def evaluate_performance():
+    with open('logs/all_logs.txt', "r") as file:
+        data = file.readlines()
+
+    data = [data[i:i + 5] for i in range(0, len(data), 5)]
+    for i in range(len(data)):
+        dataset = data[i]
+
+        mrmr_result = literal_eval(dataset[1].replace('array', ''))
+        mifs_result = literal_eval(dataset[2].replace('array', ''))
+        jmi_result = literal_eval(dataset[3].replace('array', ''))
+        cife_result = literal_eval(dataset[4].replace('array', ''))
+
+        mat = pd.read_csv('../.' + [x['path'] for x in datasets if x['path'] == dataset[0].strip()][0])
+        y_label = [x['y_label'] for x in datasets if x['path'] == dataset[0].strip()][0]
+        n_features = len(mat.columns) - 1
+
+        algorithm = ['XGB', 'LR']
+        model_name = ['XGBoost', 'LinearModel']
+        train_data = TabularDataset(mat)
+        train_data = AutoMLPipelineFeatureGenerator(enable_text_special_features=False,
+                                                    enable_text_ngram_features=False).fit_transform(X=train_data)
+
+        logging.error(f'{dataset[0]}, {algorithm}')
+        hyperparameters = get_hyperparameters(train_data, y_label, algorithm, model_name)
+        print(hyperparameters)
+
+        # Split data
+        X_train, X_test, y_train, y_test = train_test_split(train_data.drop(columns=[y_label]), train_data[y_label],
+                                                            test_size=0.2, random_state=42)
+        train = X_train.copy()
+        train[y_label] = y_train
+        test = X_test.copy()
+        test[y_label] = y_test
+
+        # Perform evaluation
+        mrmr = evaluate_model(train, test, mrmr_result, y_label, algorithm, hyperparameters, n_features)
+        mifs = evaluate_model(train, test, mifs_result, y_label, algorithm, hyperparameters, n_features)
+        jmi = evaluate_model(train, test, jmi_result, y_label, algorithm, hyperparameters, n_features)
+        cife = evaluate_model(train, test, cife_result, y_label, algorithm, hyperparameters, n_features)
+
+        print(mrmr)
+        logging.error(mrmr)
+        print(mifs)
+        logging.error(mifs)
+        print(jmi)
+        logging.error(jmi)
+        print(cife)
+        logging.error(cife)
+
+
 if __name__ == '__main__':
     logging.basicConfig(filename='app.log', filemode='a', level=logging.ERROR, format='%(message)s')
-    main()
+
+    datasets = []
+    datasets.append({'path': '../../datasets/bike-sharing/hour.csv', 'y_label': 'cnt', 'n_features': 15})
+    datasets.append({'path': '../../datasets/BankMarketing/bank.csv', 'y_label': 'y', 'n_features': 20})
+    datasets.append({'path': '../../datasets/CensusIncome/CensusIncome.csv', 'y_label': 'income_label', 'n_features': 15})
+    datasets.append({'path': '../../datasets/breast-cancer/data.csv', 'y_label': 'diagnosis', 'n_features': 30})
+    datasets.append({'path': '../../datasets/housing-prices/train.csv', 'y_label': 'SalePrice', 'n_features': 80})
+    datasets.append({'path': '../../datasets/steel-plates-faults/steel_faults_train.csv', 'y_label': 'Class', 'n_features': 33})
+    # datasets.append({'path': '../../datasets/gisette/gisette_train.csv', 'y_label': 'Class', 'n_features': 250})
+
+    # perform_feature_selection_for_multiple_datasets()
+    # evaluate_performance()
+    plot_feature_selection_runtime()
+    # plot_feature_selection_performance()

@@ -1,0 +1,65 @@
+MSZoning: 5
+Street: 2
+Alley: 3
+LotShape: 4
+LandContour: 4
+Utilities: 2
+LotConfig: 5
+LandSlope: 3
+Neighborhood: 25
+Condition1: 9
+Condition2: 6
+BldgType: 5
+HouseStyle: 8
+RoofStyle: 5
+RoofMatl: 6
+Exterior1st: 11
+Exterior2nd: 15
+MasVnrType: 5
+ExterQual: 4
+ExterCond: 5
+Foundation: 6
+BsmtQual: 5
+BsmtCond: 5
+BsmtExposure: 5
+BsmtFinType1: 7
+BsmtFinType2: 7
+Heating: 4
+HeatingQC: 5
+CentralAir: 2
+Electrical: 5
+KitchenQual: 4
+Functional: 7
+FireplaceQu: 6
+GarageType: 7
+GarageFinish: 4
+GarageQual: 6
+GarageCond: 6
+PavedDrive: 3
+PoolQC: 3
+Fence: 5
+MiscFeature: 4
+SaleType: 9
+SaleCondition: 6
+# For column MSZoning and algorithm LR => encoder onehot is the best: -33208.73476664271
+# For column MSZoning and algorithm XGB => encoder onehot is the best: -38843.677102527065
+# For column MSZoning and algorithm GBM => encoder onehot is the best: -37183.22699908603
+# For column MSZoning and algorithm RF => encoder onehot is the best: -40180.5154323726
+# For column Street and algorithm XGB => encoder onehot is the best: -38918.84955271302
+# For column Street and algorithm GBM => encoder onehot is the best: -37381.90379092969
+# For column Street and algorithm RF => encoder onehot is the best: -39749.38506610811
+# For column Alley and algorithm XGB => encoder onehot is the best: -39663.596438421526
+# For column Alley and algorithm GBM => encoder onehot is the best: -37473.495051499514
+# For column Alley and algorithm RF => encoder onehot is the best: -40106.50483855466
+# For column LotShape and algorithm XGB => encoder onehot is the best: -39883.708116475
+# For column Neighborhood and algorithm XGB => encoder onehot is the best: -38108.98817430461
+# For column Neighborhood and algorithm GBM => encoder onehot is the best: -37354.939773087935
+# For column Neighborhood and algorithm RF => encoder onehot is the best: -39885.369625308114
+# For column Exterior2nd and algorithm XGB => encoder onehot is the best: -39101.47431027207
+# For column Exterior2nd and algorithm GBM => encoder onehot is the best: -36363.21495893648
+# For column Exterior2nd and algorithm RF => encoder onehot is the best: -40210.63167836706
+# For column BsmtFinType1 and algorithm XGB => encoder onehot is the best: -39096.227862766194
+# For column BsmtFinType1 and algorithm GBM => encoder onehot is the best: -37778.01959411932
+# For column BsmtFinType1 and algorithm RF => encoder onehot is the best: -41138.01348186336
+For column Neighborhood and algorithm LR => encoder onehot is the best: 32076.40561138552
+For column Neighborhood and algorithm XGB => encoder onehot is the best: 38108.98817430461

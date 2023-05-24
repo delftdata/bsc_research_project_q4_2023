@@ -16,14 +16,16 @@ def prepare_data_for_ml(dataframe):
     return normalized_X
 
 
-def get_hyperparameters(train_data, y_label, eval_metric, algorithm, model_name):
+def get_hyperparameters(train_data, y_label, eval_metric, algorithms, model_names):
+    hyperparameters = []
+    for algorithm, model_name in zip(algorithms, model_names):
+        # Train model on entire dataset
+        initial_linear_predictor = TabularPredictor(label=y_label,
+                                                    eval_metric=eval_metric,
+                                                    verbosity=0) \
+            .fit(train_data=train_data, hyperparameters={algorithm: {}})
+        initial_training_results = initial_linear_predictor.info()
+        # Get tuned hyper-parameters
+        hyperparameters.append(initial_training_results['model_info'][model_name]['hyperparameters'])
 
-
-    # Train model on entire dataset
-    initial_linear_predictor = TabularPredictor(label=y_label,
-                                                eval_metric=eval_metric,
-                                                verbosity=0) \
-        .fit(train_data=train_data, hyperparameters={algorithm: {}})
-    initial_training_results = initial_linear_predictor.info()
-    # Get tuned hyper-parameters
-    return initial_training_results['model_info'][model_name]['hyperparameters']
+    return hyperparameters

@@ -1,0 +1,14 @@
+capital-gain
+capital-loss
+age
+fnlwgt
+hours-per-week
+relationship
+education-num
+marital-status
+occupation
+sex
+education
+workclass
+race
+native-country

@@ -1,9 +1,9 @@
 | Method / Feature type | Discrete | Continuous | Ordinal | Nominal |
 | --------------------- | -------- | ---------- | ------- | ------- |
-| Chi2                  | x        |            | x       | x       |
-| ANOVA                 | x        | x          |         |         |
-| Forward Selection     | x        | x          | x       | x       |
-| Backward Elimination  | x        | x          | x       | x       |
+| chi2                  | x        |            | x       | x       |
+| anova                 | x        | x          |         |         |
+| forward_selection     | x        | x          | x       | x       |
+| backward_elimination  | x        | x          | x       | x       |
 
 For each of the following experiments imputation strategies for missing values may be applied.
 Mean/Median/Mode/Constant imputation replaces missing values with with the mean, median, mode of the corresponding

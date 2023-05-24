@@ -23,3 +23,15 @@ class Splitter:
         sample_training_indices = [i for i in range(rows) if i not in sample_testing_indices]
 
         return sample_training_indices, sample_testing_indices
+
+    @staticmethod
+    def select_k_best_features_from_data_frame(df: pd.DataFrame, target_label: str, sorted_features: list[str],
+                                               selected_feature_size=0.6):
+        k = int(selected_feature_size * len(sorted_features))
+        selected_k_features_names = sorted_features[0:k]
+
+        selected_k_features_indices = [
+            i for i in range(df.shape[1])
+            if df.columns[i] in selected_k_features_names or df.columns[i] == target_label]
+
+        return df.iloc[:, selected_k_features_indices]

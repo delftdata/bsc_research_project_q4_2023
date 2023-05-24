@@ -1,11 +1,7 @@
-from typing import Union
-
 import pandas as pd
 from autogluon.features.generators import (AutoMLPipelineFeatureGenerator,
                                            IdentityFeatureGenerator)
 from autogluon.tabular import TabularDataset, TabularPredictor
-from methods.filter import Filter
-from methods.wrapper import Wrapper
 from splitting.splitter import Splitter
 
 
@@ -16,26 +12,27 @@ class Evaluator:
         self.scoring = scoring
         self.algorithm_names = algorithm_names
 
-    def perform_experiments(self, method: Union[Filter, Wrapper]) -> dict[str, list[tuple[float, float]]]:
+    def perform_experiments(self, sorted_features: list[str]) -> dict[str, list[float]]:
         percentage_range = [percentage / 100.0 for percentage in range(10, 110, 10)]
-        performances: dict[str, list[tuple[float, float]]] = dict()
+        performance: dict[str, list[float]] = dict()
 
         for selected_feature_size in percentage_range:
-            df = method.perform_feature_selection(self.df, selected_feature_size)
+            df = Splitter.select_k_best_features_from_data_frame(
+                self.df, self.target_label, sorted_features, selected_feature_size)
             print(df.head())
 
             try:
                 results = self.evaluate_models(df)
 
-                for (algorithm, performance) in results:
-                    if algorithm not in performances.keys():
-                        performances[algorithm] = []
-                    performances[algorithm].append((float(performance[self.scoring]), selected_feature_size))
+                for (algorithm, performance_algorithm) in results:
+                    if algorithm not in performance.keys():
+                        performance[algorithm] = []
+                    performance[algorithm].append(float(performance_algorithm[self.scoring]))
 
             except Exception as e:
                 print(f"Autogluon: {e}")
 
-        return performances
+        return performance
 
     def evaluate_models(self, df: pd.DataFrame, test_size=0.2) -> list[tuple[str, dict]]:
         results: list[tuple[str, dict]] = []

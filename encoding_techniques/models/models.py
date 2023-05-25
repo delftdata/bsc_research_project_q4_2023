@@ -79,7 +79,7 @@ class AutogluonModel():
             mcc = round(metrics['mcc'],2)
             content = f'& {modelName} & {score} & {mcc} &  &  & {int(duration)} \n'
         else:
-            score = metrics['root_mean_squared_error']
+            score = round(metrics['root_mean_squared_error'],2)
             content = f'& {modelName} & {score} &  &  &  & {int(duration)} \n'
             # mse = metrics['mean_squared_error']
 
@@ -170,7 +170,7 @@ class SVMModel():
         if self.problem_type == 'regression':
             mse = mean_squared_error(self.y_test, self.y_pred)
             rmse =  np.sqrt(mse)
-            content = f'SVM & {encoderName} &{int(abs(rmse))} &  & & & {int(duration)}\n'
+            content = f'& SVM & {encoderName} &{int(abs(rmse))} &  & & & {int(duration)}\n'
 
         elif self.problem_type == 'binary':
             score =  round(accuracy_score(self.y_test, self.y_pred)*100,2)
@@ -178,12 +178,12 @@ class SVMModel():
             f1 = round(f1_score(self.y_test, self.y_pred),2)
             precision = round(precision_score(self.y_test, self.y_pred),2)
             recall = round(recall_score(self.y_test, self.y_pred),2)
-            content = f'SVM & {encoderName} & {score} & {auc} & {f1} & {precision}/{recall} & {int(duration)} \n'
+            content = f'& SVM & {encoderName} & {score} & {auc} & {f1} & {precision}/{recall} & {int(duration)} \n'
                 
         else:
             score =  round(accuracy_score(self.y_test, self.y_pred)*100,2)
             mcc = round(matthews_corrcoef(self.y_test, self.y_pred),2)
-            content = f'SVM & {encoderName} & {score} & {mcc} &  &  & {int(duration)} \n'
+            content = f'& SVM & {encoderName} & {score} & {mcc} &  &  & {int(duration)} \n'
 
         folder = 'results/' if test_type == 'normal' else 'results_combined/'
 

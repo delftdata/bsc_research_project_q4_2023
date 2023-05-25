@@ -14,19 +14,19 @@ def getCategoricalColumns(df):
     return df.select_dtypes(include=['object']).columns
 
 
-autogluon = np.array([
-    [84.55, 87.55, 87.62, 86.11, 79.88], 
-    [88.99, 90.27, 90.12, 90.24, 88.39],
-    [78.01, 98.96, 98.88, 97.49, 89.0],
-    [65.97, 86.55, 86.43, 82.9, 83.05]         
-    ])
+# autogluon = np.array([
+#     [84.55, 87.55, 87.62, 86.11, 79.88], 
+#     [88.99, 90.27, 90.12, 90.24, 88.39],
+#     [78.01, 98.96, 98.88, 97.49, 89.0],
+#     [65.97, 86.55, 86.43, 82.9, 83.05]         
+#     ])
 
-onehot = np.array([
-    [84.81, 85.78, 85.91, 84.24, 79.88],
-    [89.77, 90.77, 90.51, 90.41, 88.39],
-    [92.4, 99.96, 100, 99.61, 100],
-    [77.51, 86.89, 87.06, 84.51, 88.85]
-])
+# onehot = np.array([
+#     [84.81, 85.78, 85.91, 84.24, 79.88],
+#     [89.77, 90.77, 90.51, 90.41, 88.39],
+#     [92.4, 99.96, 100, 99.61, 100],
+#     [77.51, 86.89, 87.06, 84.51, 88.85]
+# ])
 
 no_features = ['0-2', '3', '4', '5-10', '10-15', '15+']
 
@@ -60,8 +60,6 @@ def calculate_feature_distribution(file, dataset_name):
     for i, a in enumerate(columns):
         columns[i] = columns[i][0:2]
     
-
-
     plt.clf()
     plt.scatter(columns, values)
     plt.xlabel("feature")
@@ -71,19 +69,22 @@ def calculate_feature_distribution(file, dataset_name):
     plt.title(dataset_name)
     plt.savefig(f'dark/feature-distribution/{dataset_name}.png')
 
-# def baseline_algorithm(index):
+def combined_encoders_results( ):
     
+    for i, algorithm_name in enumerate(algorithm_names):
+        plt.errorbar(algorithm_name, column_means[i], column_std[i],
+                     linestyle='None', marker='^', capsize=3)
+    
+    plt.errorbar('mean of algs', mean, std,
+                     linestyle='None', marker='^', capsize=3)
+        
+    plt.xlabel('algorithm')
+    plt.ylabel('accuracy')
 
-#     plt.scatter(
-#     ['onehot', 'ordinal', 'target', 'catboost', 'count'], [onehot_mean-autogluon_mean, ordinal_mean-autogluon_mean, target_mean-autogluon_mean, catboost_mean-autogluon_mean, count_mean-autogluon_mean])
-#     plt.xlabel('encoder')
-#     # plt.yticks([-5, -4, -3, -2, -1, 0, 1, 2, 3], [-5, -4, -3, -2, -1, 'AutoGluon\nEncoding', 1, 2, 3])
-#     plt.ylabel('deviation in accuracy from baseline')
-
-#     plt.title(f"Accuracy Mean on {algorithm_names[index]}")
-#     # plt.show()
-#     plt.savefig(f'dark/accuracy/{algorithm_names[index]}_baseline_mean_deviation.png')
-#     plt.clf()
+    plt.title(f"Accuracy Mean - combining encoders")
+    # plt.show()
+    plt.savefig(f'dark/accuracy/m-combined-encoders_baseline_mean_deviation.png')
+    plt.clf()
 
 plt.style.use('ggplot')
 
@@ -104,14 +105,20 @@ dataset_names = ['Housing Prices',
     'Nursery'
 ]
 
-for i, file in enumerate(dataset_files):
-    calculate_feature_distribution(file, dataset_names[i])
-
-# baseline_all_encoders()
-# for i, algorithm in enumerate(algorithm_names):
-#     baseline_algorithm(i)
+# for i, file in enumerate(dataset_files):
+#     calculate_feature_distribution(file, dataset_names[i])
 
 
-# time_baseline_all_encoders()
-# for i, algorithm in enumerate(algorithm_names):
-#     time_baseline_algorithm(i)
+results =  np.array([
+    [76.63, 76.63, 76.63, 76.63, 76.63],
+    [82.83, 85.49, 84.8, 92.94, 82.53],
+    [89.34, 89.4, 89.26, 89.27, 89.43],
+    [75.75, 86.89, 87.01, 84.51, 81.62]
+])
+
+column_means = np.mean(results, axis=0)
+column_std = np.std(results, axis = 0)
+print(column_means)
+mean = np.mean(results)
+std = np.std(results)
+combined_encoders_results()

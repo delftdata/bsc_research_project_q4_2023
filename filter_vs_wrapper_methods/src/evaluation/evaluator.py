@@ -2,7 +2,7 @@ import pandas as pd
 from autogluon.features.generators import (AutoMLPipelineFeatureGenerator,
                                            IdentityFeatureGenerator)
 from autogluon.tabular import TabularDataset, TabularPredictor
-from splitting.splitter import Splitter
+from processing.splitter import Splitter
 
 
 class Evaluator:

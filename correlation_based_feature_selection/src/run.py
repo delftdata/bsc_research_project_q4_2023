@@ -10,6 +10,8 @@ from .correlation_methods.su import SymmetricUncertaintyFeatureSelection
 from .plots.number_of_features_plot import plot_over_number_of_features
 from .encoding.encoding import OneHotEncoder
 
+import numpy as np
+
 
 class DatasetEvaluator:
     def __init__(self, dataset_file, dataset_name, target_label, evaluation_metric):
@@ -17,14 +19,14 @@ class DatasetEvaluator:
         self.dataset_name = dataset_name
         self.target_label = target_label
         self.dataframe = pd.read_csv(dataset_file)
-        self.auxiliary_dataframe = pd.read_csv(dataset_file)
+        self.auxiliary_dataframe = pd.read_csv(dataset_file).fillna(self.dataframe.mode().iloc[0])
         # Specify the models to use
         # GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
         self.algorithms_model_names = {
             'GBM': 'LightGBM',
-            # 'RF': 'RandomForest',
-            # 'LR': 'LinearModel',
-            # 'XGB': 'XGBoost'
+            'RF': 'RandomForest',
+            'LR': 'LinearModel',
+            'XGB': 'XGBoost'
         }
         # TODO: Experiment with other values for the number of features to select
         self.number_of_features_to_select = self.dataframe.shape[1] - 1
@@ -35,7 +37,7 @@ class DatasetEvaluator:
         train_data = TabularDataset(self.auxiliary_dataframe)
         fitted_predictor = TabularPredictor(label=self.target_label,
                                      eval_metric=self.evaluation_metric,
-                                     verbosity=0) \
+                                     verbosity=1) \
             .fit(train_data=train_dataframe, hyperparameters={algorithm: {}})
 
         # Get tuned hyperparameters
@@ -77,11 +79,16 @@ class DatasetEvaluator:
 
     def evaluate_all_models(self):
         # TODO: Should we handle missing values?
-        filled_dataframe = FillNaFeatureGenerator().fit_transform(TabularDataset(self.dataframe))
+        #print(self.dataframe.head(10))
+        #print(self.dataframe.mode().iloc[0])
+        self.dataframe = self.dataframe.fillna(value=np.nan)
+        print(self.dataframe)
+        self.dataframe = TabularDataset(self.dataframe)
+        #print(self.dataframe.head(10))
         self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
             enable_text_special_features=False,
             enable_text_ngram_features=False) \
-            .fit_transform(filled_dataframe)
+            .fit_transform(self.dataframe)
 
         x_train, x_test, y_train, y_test = \
             train_test_split(self.auxiliary_dataframe.drop(columns=[self.target_label]),
@@ -90,22 +97,23 @@ class DatasetEvaluator:
         train_dataframe = pd.concat([x_train, y_train], axis=1)
         test_dataframe = pd.concat([x_test, y_test], axis=1)
 
-        #one_hot_encoder = OneHotEncoder()
-        #dataframe_not_categorical = one_hot_encoder.encode(train_dataframe, self.target_label)
-        pearson_selected_features = PearsonFeatureSelection.feature_selection(train_dataframe,
-                                                                              self.target_label,
-                                                                              self.number_of_features_to_select)
+        one_hot_encoder = OneHotEncoder()
+        encoded_train_dataframe = one_hot_encoder.encode(train_dataframe, self.target_label)
+        encoded_test_dataframe = one_hot_encoder.encode(test_dataframe, self.target_label)
+        pearson_selected_features = [] # PearsonFeatureSelection.feature_selection(encoded_train_dataframe,
+                                          #                                    self.target_label,
+                                           #                                   self.number_of_features_to_select)
 
-        spearman_selected_features = SpearmanFeatureSelection.feature_selection(train_dataframe,
-                                                                                self.target_label,
-                                                                                self.number_of_features_to_select)
+        spearman_selected_features = [] # SpearmanFeatureSelection.feature_selection(encoded_train_dataframe,
+                                            #                                    self.target_label,
+                                             #                                   self.number_of_features_to_select)
 
-        cramersv_selected_features = CramersVFeatureSelection.feature_selection(train_dataframe,
+        cramersv_selected_features = CramersVFeatureSelection.feature_selection(encoded_train_dataframe,
                                                                                 self.target_label,
                                                                                 self.number_of_features_to_select)
 
         su_selected_features = \
-            SymmetricUncertaintyFeatureSelection.feature_selection(train_dataframe,
+            SymmetricUncertaintyFeatureSelection.feature_selection(encoded_train_dataframe,
                                                                    self.target_label,
                                                                    self.number_of_features_to_select)
 
@@ -115,24 +123,26 @@ class DatasetEvaluator:
             # Get the hyperparameters on the data set with all features
             hyperparameters, baseline_performance = \
                 self.get_hyperparameters_no_feature_selection(algorithm, model_name,
-                                                              train_dataframe, test_dataframe)
+                                                              encoded_train_dataframe, encoded_test_dataframe)
 
             # TODO: Add all methods (+ figure out the necessary encoding)
             # Evaluate model on the features selected by the different correlation-based methods
-            methods = ['Pearson', 'Spearman', 'Cramer\'s V', 'SU']
+            methods = ['Pearson', 'Spearman',
+                       'Cramer\'s V', 'SU']
             all_performances_methods = []
             for feature_subset, method in zip([pearson_selected_features, spearman_selected_features,
                                                cramersv_selected_features, su_selected_features], methods):
                 print(method)
                 algorithm_performances = self.evaluate_model_varying_features(algorithm=algorithm,
                                                                               hyperparameters=hyperparameters,
-                                                                              train_dataframe=train_dataframe,
+                                                                              train_dataframe=encoded_train_dataframe,
                                                                               feature_subset=feature_subset,
                                                                               target_label=self.target_label,
-                                                                              test_dataframe=test_dataframe)
+                                                                              test_dataframe=encoded_test_dataframe)
                 all_performances_methods.append(algorithm_performances)
 
-            plot_over_number_of_features(algorithm=algorithm, number_of_features=self.number_of_features_to_select,
+            plot_over_number_of_features(algorithm=algorithm, dataset_name=self.dataset_name,
+                                         number_of_features=self.number_of_features_to_select,
                                          evaluation_metric=self.evaluation_metric,
                                          pearson_performance=all_performances_methods[0],
                                          spearman_performance=all_performances_methods[1],
@@ -172,7 +182,40 @@ def evaluate_steel_plates_fault_dataset():
     dataset_evaluator.evaluate_all_models()
 
 
+def evaluate_connect4_dataset():
+    dataset_evaluator = DatasetEvaluator(
+        dataset_file='../datasets/Connect-4/Connect-4.csv',
+        dataset_name='Connect4',
+        target_label='winner',
+        evaluation_metric='accuracy')
+
+    # nan_columns = dataset_evaluator.auxiliary_dataframe.columns[dataset_evaluator.auxiliary_dataframe.isna().any()].tolist()
+    #
+    # # Find columns with infinite (inf) values
+    # inf_columns = dataset_evaluator.auxiliary_dataframe.columns[np.isinf(dataset_evaluator.auxiliary_dataframe).any()].tolist()
+    #
+    # print(nan_columns)
+    # print(inf_columns)
+    #
+    # nan_rows = dataset_evaluator.auxiliary_dataframe[dataset_evaluator.auxiliary_dataframe.isna().any(axis=1)]
+    # print(nan_rows)
+
+    dataset_evaluator.evaluate_all_models()
+
+
+def evaluate_housing_prices_dataset():
+    dataset_evaluator = DatasetEvaluator(
+        dataset_file='../datasets/housing-prices/train.csv',
+        dataset_name='Housing Prices',
+        target_label='SalePrice',
+        evaluation_metric='accuracy')
+
+    dataset_evaluator.evaluate_all_models()
+
+
 if __name__ == '__main__':
     # evaluate_census_income_dataset()
     # evaluate_breast_cancer_dataset()
-    evaluate_steel_plates_fault_dataset()
+    # evaluate_steel_plates_fault_dataset()
+    evaluate_connect4_dataset()
+    #evaluate_housing_prices_dataset()

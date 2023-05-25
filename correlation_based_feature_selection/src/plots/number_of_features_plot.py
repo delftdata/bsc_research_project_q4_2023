@@ -6,15 +6,15 @@ from matplotlib.pyplot import figure
 
 # TODO: Add all metrics
 evaluation_metrics_options = {
-    'accuracy': 'Accuracy',
-    'rmse': 'Root Mean Square Error',
+    'accuracy': 'accuracy',
+    'rmse': 'root mean square error',
 }
 
 
-def plot_over_number_of_features(algorithm, number_of_features, evaluation_metric,
-                                 pearson_performance, spearman_performance,
-                                 cramersv_performance, su_performance,
-                                 baseline_performance):
+def plot_over_number_of_features(dataset_name, algorithm, number_of_features,
+                                 evaluation_metric, pearson_performance,
+                                 spearman_performance, cramersv_performance,
+                                 su_performance, baseline_performance):
     evaluation_metric_name = evaluation_metrics_options.get(evaluation_metric)
     number_of_features_iteration = list(range(1, number_of_features))
 
@@ -36,9 +36,10 @@ def plot_over_number_of_features(algorithm, number_of_features, evaluation_metri
     plt.xlabel('Number of Features')
     plt.ylabel(str(evaluation_metric_name))
     plt.legend(['Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty', 'Baseline'])
-    plt.title('The change of the ' + str(evaluation_metric_name)
-              + f' metric for {algorithm} with the increase of the selected features')
+    plt.title('Change of ' + str(evaluation_metric_name)
+              + f' for {algorithm} on {dataset_name} dataset '
+              + 'with the increase of selected features')
 
-    plt.savefig(f'./results/result_{algorithm}.png')
+    plt.savefig(f'./results/result_{dataset_name}_{algorithm}.png')
     plt.show()
     plt.clf()

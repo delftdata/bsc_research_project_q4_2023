@@ -3,12 +3,14 @@ import os
 from dataclasses import dataclass
 from typing import Literal
 
-import numpy as np
 import pandas as pd
 from evaluation.evaluator import Evaluator
-from methods.filter import Filter
-from methods.wrapper import Wrapper
-from processing.imputer import Imputer
+from methods.filter import rank_features_descending_filter
+from methods.wrapper import rank_features_descending_wrapper
+from numpy import nan
+from processing.imputer import impute_mean_or_median, impute_most_frequent
+from processing.preprocessing import convert_to_actual_type
+from processing.splitter import split_categorical_discrete_continuous_features
 
 # warnings.filterwarnings("ignore")
 # os.environ["PYTHONWARNINGS"] = "ignore"
@@ -17,8 +19,8 @@ from processing.imputer import Imputer
 def main():
     algorithm_names: list[tuple[str, str]] = [
         ("GBM", "LightGBM"), ("RF", "RandomForest"), ("LR", "LinearModel"), ("XGB", "XGBoost")]
-    runner = Runner(algorithm_names)
-    runner.run_bike_sharing()
+    runner = Runner(algorithm_names, "experiment4")
+    runner.run_bank_marketing()
 
 
 @dataclass
@@ -31,21 +33,59 @@ class DatasetInfo:
 
 
 class Runner:
-    def __init__(self, algorithm_names: list[tuple[str, str]],
-                 preprocessing=True, imputation_strategy: Literal["mean", "median"] = "mean",
-                 experiment_name="experiment2"):
+    def __init__(self, algorithm_names: list[tuple[str, str]], experiment_name: str,
+                 preprocessing=True, imputation_strategy: Literal["mean", "median"] = "mean"):
         self.algorithm_names = algorithm_names
         self.preprocessing = preprocessing
         self.imputation_strategy: Literal["mean", "median"] = imputation_strategy
         self.experiment_name = experiment_name
 
+    def run_experiment4(self, df: pd.DataFrame, dataset_info: DatasetInfo):
+        df_categorical, df_discrete, df_continuous = \
+            split_categorical_discrete_continuous_features(df, target_label=dataset_info.target_label)
+        dataset_info_categorical = DatasetInfo(dataset_info.dataset_file, dataset_info.target_label,
+                                               f"{dataset_info.results_path}/categorical")
+        dataset_info_discrete = DatasetInfo(dataset_info.dataset_file, dataset_info.target_label,
+                                            f"{dataset_info.results_path}/discrete")
+        dataset_info_continuous = DatasetInfo(dataset_info.dataset_file, dataset_info.target_label,
+                                              f"{dataset_info.results_path}/continuous")
+
+        print(df_categorical.dtypes)
+        print(df_categorical)
+        print(df_discrete.dtypes)
+        print(df_discrete)
+        print(df_continuous.dtypes)
+        print(df_continuous)
+
+        if df_categorical.columns.size > 1:
+            self.evaluate_feature_selection(df_categorical, dataset_info_categorical)
+        if df_discrete.columns.size > 1:
+            self.evaluate_feature_selection(df_discrete, dataset_info_discrete)
+        if df_continuous.columns.size > 1:
+            self.evaluate_feature_selection(df_continuous, dataset_info_continuous)
+
+    def run_bank_marketing(self):
+        bank = DatasetInfo("data/bank_marketing/bank.csv", "y",
+                           f"results/{self.experiment_name}/bank_marketing")
+        df_bank = pd.read_csv(bank.dataset_file, low_memory=False)
+        df_bank = df_bank.replace("unknown", nan)
+        df_bank = impute_mean_or_median(df=df_bank, strategy=self.imputation_strategy)
+        df_bank = impute_most_frequent(df=df_bank)
+        df_bank = convert_to_actual_type(df=df_bank)
+        print(df_bank.dtypes)
+        print(df_bank)
+        if self.experiment_name == "experiment4":
+            self.run_experiment4(df=df_bank, dataset_info=bank)
+        else:
+            self.evaluate_feature_selection(df_bank, bank)
+
     def run_arrhythmia(self):
         arrhythmia = DatasetInfo("data/arrhythmia/arrhythmia.csv", "Class",
                                  f"results/{self.experiment_name}/arrhythmia")
         df_arrhythmia = pd.read_csv(arrhythmia.dataset_file, low_memory=False)
-        df_arrhythmia = df_arrhythmia.replace("?", np.nan)
-        df_arrhythmia = Imputer.impute_mean_or_median(df=df_arrhythmia, strategy=self.imputation_strategy)
-        df_arrhythmia = Imputer.impute_most_frequent(df=df_arrhythmia)
+        df_arrhythmia = df_arrhythmia.replace("?", nan)
+        df_arrhythmia = impute_mean_or_median(df=df_arrhythmia, strategy=self.imputation_strategy)
+        df_arrhythmia = impute_most_frequent(df=df_arrhythmia)
         self.evaluate_feature_selection(df_arrhythmia, arrhythmia)
 
     def run_crop(self):
@@ -61,14 +101,6 @@ class Runner:
                                           "Class", f"results/{self.experiment_name}/steel_plates_faults")
         df_steel_plates_faults = pd.read_csv(steel_plates_faults.dataset_file, low_memory=False)
         self.evaluate_feature_selection(df_steel_plates_faults, steel_plates_faults)
-
-    def run_bank(self):
-        bank = DatasetInfo("data/bank_marketing/bank.csv", "y", f"results/{self.experiment_name}/bank_marketing")
-        df_bank = pd.read_csv(bank.dataset_file, low_memory=False)
-        df_bank = df_bank.replace("unknown", np.nan)
-        df_bank = Imputer.impute_mean_or_median(df=df_bank, strategy=self.imputation_strategy)
-        df_bank = Imputer.impute_most_frequent(df=df_bank)
-        self.evaluate_feature_selection(df_bank, bank)
 
     def run_breast_cancer(self):
         breast_cancer = DatasetInfo("data/breast_cancer/breast_cancer.csv", "diagnosis",
@@ -105,9 +137,9 @@ class Runner:
     def run_connect_4(self):
         connect_4 = DatasetInfo("data/connect-4/connect-4.csv", "winner", f"results/{self.experiment_name}/connect-4")
         df_connect_4 = pd.read_csv(connect_4.dataset_file, low_memory=False)
-        df_connect_4.fillna(np.nan)
-        df_connect_4 = Imputer.impute_mean_or_median(df_connect_4, self.imputation_strategy)
-        df_connect_4 = Imputer.impute_most_frequent(df_connect_4)
+        df_connect_4 = df_connect_4.fillna(nan)
+        df_connect_4 = impute_mean_or_median(df_connect_4, self.imputation_strategy)
+        df_connect_4 = impute_most_frequent(df_connect_4)
         self.evaluate_feature_selection(df_connect_4, connect_4)
 
     def run_housing_prices(self):
@@ -115,9 +147,9 @@ class Runner:
             "data/housing_prices/housing_prices.csv", "SalePrice", f"results/{self.experiment_name}/housing_prices",
             eval_metric="neg_root_mean_squared_error")
         df_housing_prices = pd.read_csv(housing_prices.dataset_file, low_memory=False)
-        df_housing_prices = df_housing_prices.fillna(np.nan)
-        df_housing_prices = Imputer.impute_mean_or_median(df_housing_prices, self.imputation_strategy)
-        df_housing_prices = Imputer.impute_most_frequent(df_housing_prices)
+        df_housing_prices = df_housing_prices.fillna(nan)
+        df_housing_prices = impute_mean_or_median(df_housing_prices, self.imputation_strategy)
+        df_housing_prices = impute_most_frequent(df_housing_prices)
         self.evaluate_feature_selection(df_housing_prices, housing_prices)
 
     def run_nasa_numeric(self):
@@ -134,23 +166,23 @@ class Runner:
         self.evaluate_feature_selection(df_bike_sharing, bike_sharing)
 
     def evaluate_feature_selection(self, df: pd.DataFrame, dataset: DatasetInfo):
-        filter_methods: list[Literal["chi2", "anova"]] = ["chi2", "anova"]
-        wrapper_methods: list[Literal["forward_selection", "backward_elimination"]] = [
-            "forward_selection", "backward_elimination"]
+        methods: list[Literal["chi2", "anova", "forward_selection", "backward_elimination"]] = \
+            ["chi2", "anova", "forward_selection", "backward_elimination"]
         selected_features_path = f"{dataset.results_path}/selected_features"
 
-        for method in filter_methods:
+        for method in methods:
             if not os.path.isfile(f"{selected_features_path}/{method}.txt"):
-                sorted_features = Filter.rank_features_descending(df, method, dataset.target_label, self.preprocessing)
+
+                if method == "chi2" or method == "anova":
+                    sorted_features, runtime = rank_features_descending_filter(
+                        df, method, dataset.target_label, self.preprocessing)
+                else:
+                    sorted_features, runtime = rank_features_descending_wrapper(
+                        df, method, dataset.target_label, dataset.eval_metric, self.preprocessing)
+
+                write_runtime(dataset, runtime, method)
                 write_selected_features(dataset, sorted_features, method)
 
-        for method in wrapper_methods:
-            if not os.path.isfile(f"{selected_features_path}/{method}.txt"):
-                sorted_features = Wrapper.rank_features_descending(df, method, dataset.target_label,
-                                                                   dataset.eval_metric, self.preprocessing)
-                write_selected_features(dataset, sorted_features, method)
-
-        methods = filter_methods + wrapper_methods
         evaluator = Evaluator(df, dataset.target_label, "root_mean_squared_error" if dataset.eval_metric ==
                               "neg_root_mean_squared_error" else dataset.eval_metric, self.algorithm_names)
 
@@ -164,6 +196,11 @@ def write_selected_features(dataset: DatasetInfo, selected_features: list[str], 
     print(f"{method}: {selected_features}")
     for selected_feature in selected_features:
         write_to_file(f"{dataset.results_path}/selected_features", f"{method}.txt", selected_feature)
+
+
+def write_runtime(dataset: DatasetInfo, runtime: float, method: str):
+    print(f"Runtime: {method} - {runtime}")
+    write_to_file(f"{dataset.results_path}/runtime", f"{method}.txt", str(runtime))
 
 
 def write_performance(dataset: DatasetInfo, performance: dict[str, list[float]], method):

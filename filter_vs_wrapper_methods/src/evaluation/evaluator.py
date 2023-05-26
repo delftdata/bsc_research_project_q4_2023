@@ -2,7 +2,8 @@ import pandas as pd
 from autogluon.features.generators import (AutoMLPipelineFeatureGenerator,
                                            IdentityFeatureGenerator)
 from autogluon.tabular import TabularDataset, TabularPredictor
-from processing.splitter import Splitter
+from processing.splitter import (select_k_best_features_from_data_frame,
+                                 split_train_test_df_indices)
 
 
 class Evaluator:
@@ -17,7 +18,7 @@ class Evaluator:
         performance: dict[str, list[float]] = dict()
 
         for selected_feature_size in percentage_range:
-            df = Splitter.select_k_best_features_from_data_frame(
+            df = select_k_best_features_from_data_frame(
                 self.df, self.target_label, sorted_features, selected_feature_size)
             print(df.head())
 
@@ -36,7 +37,7 @@ class Evaluator:
 
     def evaluate_models(self, df: pd.DataFrame, test_size=0.2) -> list[tuple[str, dict]]:
         results: list[tuple[str, dict]] = []
-        sample_training_indices, sample_testing_indices = Splitter.split_train_test_df_indices(self.df, test_size)
+        sample_training_indices, sample_testing_indices = split_train_test_df_indices(self.df, test_size)
 
         train_data = TabularDataset(df.iloc[sample_training_indices, :])
         test_data = TabularDataset(df.iloc[sample_testing_indices, :])

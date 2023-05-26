@@ -1,16 +1,29 @@
+from typing import Literal
+
 import matplotlib.pyplot as plt
-from plotting.plotter import Plotter
+from plotting.plotter import plot_metrics_matplotlib
 
 
 def main():
     # plot_results("experiment2", "breast_cancer")
     # plot_results("experiment2", "steel_plates_faults")
     # plot_results("experiment2", "bank_marketing")
-    plot_results("experiment2", "bike_sharing", y_label="Root Mean Squared Error")
+    # plot_experiments("experiment2", "bike_sharing", y_label="Root Mean Squared Error")
+    plot_experiments("experiment4", "bank_marketing")
 
 
-def plot_results(experiment: str, dataset: str, y_label="Accuracy"):
-    results_path = f"results/{experiment}/{dataset}"
+def plot_experiments(experiment: str, dataset: str, y_label="Accuracy"):
+    if experiment == "experiment4":
+        plot_results(experiment, dataset, y_label, data_type="categorical")
+        plot_results(experiment, dataset, y_label, data_type="discrete")
+        # plot_results(experiment, dataset, y_label, data_type="continuous")
+    else:
+        plot_results(experiment, dataset, y_label)
+
+
+def plot_results(experiment: str, dataset: str, y_label="Accuracy",
+                 data_type: Literal["", "categorical", "discrete", "continuous"] = ""):
+    results_path = f"results/{experiment}/{dataset}/{data_type}" if data_type else f"results/{experiment}/{dataset}"
     models = ["GBM", "LR", "RF", "XGB"]
 
     for model in models:
@@ -21,7 +34,7 @@ def plot_results(experiment: str, dataset: str, y_label="Accuracy"):
         raw_metrics_backward_elimination = [line.strip() for line in open(
             f"{results_path}/backward_elimination/{model}.txt", "r")]
 
-        algorithm_plot = Plotter.plot_metric_matplotlib(
+        algorithm_plot = plot_metrics_matplotlib(
             raw_metrics_chi2, raw_metrics_anova, raw_metrics_forward_selection, raw_metrics_backward_elimination, model,
             y_label=y_label)
 
@@ -33,7 +46,7 @@ def plot_results(experiment: str, dataset: str, y_label="Accuracy"):
 #     try:
 #         if not os.path.isdir(path):
 #             os.makedirs(path)
-#         algorithm_plot = Plotter.plot_metric_sea_born(performance=performance_algorithm, scoring=scoring)
+#         algorithm_plot = plot_metrics_sea_born(performance=performance_algorithm, scoring=scoring)
 #         figure = algorithm_plot.get_figure()
 #         figure.savefig(f"{path}/{algorithm}.png")
 #         figure.clf()

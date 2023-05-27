@@ -1,4 +1,4 @@
-import time
+from time import perf_counter
 from typing import Literal
 
 import pandas as pd
@@ -33,7 +33,7 @@ def rank_features_descending_wrapper(df: pd.DataFrame, method: Literal["forward_
 
     try:
         print(f"Started wrapper feature selection, {method}.")
-        start = time.perf_counter()
+        start = perf_counter()
         for i in range_selection:
             sequential_selector.set_params(n_features_to_select=i)
             sequential_selector.fit(X, y)
@@ -49,7 +49,7 @@ def rank_features_descending_wrapper(df: pd.DataFrame, method: Literal["forward_
                         sorted_features.append(str(feature))
 
             print(f"Number of features: {len(sorted_features)}")
-        end = time.perf_counter()
+        end = perf_counter()
         print(f"Finished wrapper feature selection.")
 
         runtime = end - start

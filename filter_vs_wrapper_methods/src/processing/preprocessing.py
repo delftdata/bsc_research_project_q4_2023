@@ -62,8 +62,13 @@ def drop_constant_feature(df: pd.DataFrame, excluded_columns: list[str]) -> pd.D
 def convert_to_actual_type(df: pd.DataFrame) -> pd.DataFrame:
     def is_float(value: str) -> bool:
         try:
-            float(value)
-            return True
+            return not float(value).is_integer()
+        except:
+            return False
+
+    def is_int(value: str) -> bool:
+        try:
+            return float(value).is_integer()
         except:
             return False
 
@@ -71,7 +76,7 @@ def convert_to_actual_type(df: pd.DataFrame) -> pd.DataFrame:
         if df[column].dtype == "object":
             if all([is_float(str(value)) for value in df[column].values]):
                 df[column] = df[column].astype("float64")
-            elif all([str(value).isnumeric() for value in df[column].values]):
+            elif all([is_int(str(value)) for value in df[column].values]):
                 df[column] = df[column].astype("int64")
             else:
                 df[column] = df[column].astype("category")

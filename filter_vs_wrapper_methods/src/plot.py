@@ -9,14 +9,28 @@ def main():
     # plot_results("experiment2", "steel_plates_faults")
     # plot_results("experiment2", "bank_marketing")
     # plot_experiments("experiment2", "bike_sharing", y_label="Root Mean Squared Error")
-    plot_experiments("experiment4", "bank_marketing")
+    # plot_experiments("experiment4", "bank_marketing")
+    # plot_experiments("experiment4", "breast_cancer")
+    # plot_experiments("experiment4", "steel_plates_faults")
+    # plot_experiments("experiment4", "housing_prices")
+    # plot_experiments("experiment4", "bike_sharing")
+    plot_experiments("experiment4", "census_income")
 
 
 def plot_experiments(experiment: str, dataset: str, y_label="Accuracy"):
     if experiment == "experiment4":
-        plot_results(experiment, dataset, y_label, data_type="categorical")
-        plot_results(experiment, dataset, y_label, data_type="discrete")
-        # plot_results(experiment, dataset, y_label, data_type="continuous")
+        try:
+            plot_results(experiment, dataset, y_label, data_type="categorical")
+        except Exception as e:
+            print(f"Categorical: {e}")
+        try:
+            plot_results(experiment, dataset, y_label, data_type="discrete")
+        except Exception as e:
+            print(f"Discrete: {e}")
+        try:
+            plot_results(experiment, dataset, y_label, data_type="continuous")
+        except Exception as e:
+            print(f"Continuous: {e}")
     else:
         plot_results(experiment, dataset, y_label)
 

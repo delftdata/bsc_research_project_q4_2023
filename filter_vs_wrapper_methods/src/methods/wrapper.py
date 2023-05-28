@@ -32,7 +32,7 @@ def rank_features_descending_wrapper(df: pd.DataFrame, method: Literal["forward_
         range_selection.reverse()
 
     try:
-        print(f"Started wrapper feature selection, {method}.")
+        # print(f"Started wrapper feature selection, {method}.")
         start = perf_counter()
         for i in range_selection:
             sequential_selector.set_params(n_features_to_select=i)
@@ -48,9 +48,9 @@ def rank_features_descending_wrapper(df: pd.DataFrame, method: Literal["forward_
                             str(feature) not in sorted_features:
                         sorted_features.append(str(feature))
 
-            print(f"Number of features: {len(sorted_features)}")
+            # print(f"Number of features: {len(sorted_features)}")
         end = perf_counter()
-        print(f"Finished wrapper feature selection.")
+        # print(f"Finished wrapper feature selection.")
 
         runtime = end - start
     except Exception as e:

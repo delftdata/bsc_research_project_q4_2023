@@ -1,5 +1,5 @@
 import os
-# import warnings
+import warnings
 from dataclasses import dataclass
 from typing import Literal
 
@@ -12,8 +12,8 @@ from processing.imputer import impute_mean_or_median, impute_most_frequent
 from processing.preprocessing import convert_to_actual_type
 from processing.splitter import split_categorical_discrete_continuous_features
 
-# warnings.filterwarnings("ignore")
-# os.environ["PYTHONWARNINGS"] = "ignore"
+warnings.filterwarnings("ignore")
+os.environ["PYTHONWARNINGS"] = "ignore"
 
 
 def main():
@@ -53,12 +53,12 @@ class Runner:
             dataset_info.dataset_file, dataset_info.target_label, f"{dataset_info.results_path}/continuous",
             eval_metric=dataset_info.eval_metric)
 
-        print(df_categorical.dtypes)
-        print(df_categorical)
-        print(df_discrete.dtypes)
-        print(df_discrete)
-        print(df_continuous.dtypes)
-        print(df_continuous)
+        # print(df_categorical.dtypes)
+        # print(df_categorical)
+        # print(df_discrete.dtypes)
+        # print(df_discrete)
+        # print(df_continuous.dtypes)
+        # print(df_continuous)
 
         if df_categorical.columns.size > min_columns:
             self.evaluate_feature_selection(df_categorical, dataset_info_categorical)
@@ -75,8 +75,8 @@ class Runner:
         df_bank = impute_mean_or_median(df=df_bank, strategy=self.imputation_strategy)
         df_bank = impute_most_frequent(df=df_bank)
         df_bank = convert_to_actual_type(df=df_bank)
-        print(df_bank.dtypes)
-        print(df_bank)
+        # print(df_bank.dtypes)
+        # print(df_bank)
         if self.experiment_name == "experiment4":
             self.run_experiment4(df=df_bank, dataset_info=bank)
         else:
@@ -87,8 +87,8 @@ class Runner:
                                     f"results/{self.experiment_name}/breast_cancer")
         df_breast_cancer = pd.read_csv(breast_cancer.dataset_file, low_memory=False)
         df_breast_cancer = convert_to_actual_type(df=df_breast_cancer)
-        print(df_breast_cancer.dtypes)
-        print(df_breast_cancer)
+        # print(df_breast_cancer.dtypes)
+        # print(df_breast_cancer)
         if self.experiment_name == "experiment4":
             self.run_experiment4(df=df_breast_cancer, dataset_info=breast_cancer)
         else:
@@ -99,8 +99,8 @@ class Runner:
                                           "Class", f"results/{self.experiment_name}/steel_plates_faults")
         df_steel_plates_faults = pd.read_csv(steel_plates_faults.dataset_file, low_memory=False)
         df_steel_plates_faults = convert_to_actual_type(df=df_steel_plates_faults)
-        print(df_steel_plates_faults.dtypes)
-        print(df_steel_plates_faults)
+        # print(df_steel_plates_faults.dtypes)
+        # print(df_steel_plates_faults)
         if self.experiment_name == "experiment4":
             self.run_experiment4(df=df_steel_plates_faults, dataset_info=steel_plates_faults)
         else:
@@ -115,8 +115,8 @@ class Runner:
         df_housing_prices = impute_mean_or_median(df_housing_prices, self.imputation_strategy)
         df_housing_prices = impute_most_frequent(df_housing_prices)
         df_housing_prices = convert_to_actual_type(df=df_housing_prices)
-        print(df_housing_prices.dtypes)
-        print(df_housing_prices)
+        # print(df_housing_prices.dtypes)
+        # print(df_housing_prices)
         if self.experiment_name == "experiment4":
             self.run_experiment4(df=df_housing_prices, dataset_info=housing_prices)
         else:
@@ -127,8 +127,8 @@ class Runner:
                                    eval_metric="neg_root_mean_squared_error")
         df_bike_sharing = pd.read_csv(bike_sharing.dataset_file, low_memory=False)
         df_bike_sharing = convert_to_actual_type(df_bike_sharing)
-        print(df_bike_sharing.dtypes)
-        print(df_bike_sharing)
+        # print(df_bike_sharing.dtypes)
+        # print(df_bike_sharing)
         if self.experiment_name == "experiment4":
             self.run_experiment4(df=df_bike_sharing, dataset_info=bike_sharing)
         else:
@@ -142,8 +142,8 @@ class Runner:
         df_census_income = impute_mean_or_median(df_census_income, self.imputation_strategy)
         df_census_income = impute_most_frequent(df_census_income)
         df_census_income = convert_to_actual_type(df_census_income)
-        print(df_census_income.dtypes)
-        print(df_census_income)
+        # print(df_census_income.dtypes)
+        # print(df_census_income)
         if self.experiment_name == "experiment4":
             self.run_experiment4(df=df_census_income, dataset_info=census_income)
         else:
@@ -164,8 +164,8 @@ class Runner:
         df_connect_4 = impute_most_frequent(df_connect_4)
         df_connect_4[connect_4.target_label] = df_connect_4[connect_4.target_label].apply(lambda x: map_game(x))
         df_connect_4 = convert_to_actual_type(df=df_connect_4)
-        print(df_connect_4.dtypes)
-        print(df_connect_4)
+        # print(df_connect_4.dtypes)
+        # print(df_connect_4)
         if self.experiment_name == "experiment4":
             self.run_experiment4(df=df_connect_4, dataset_info=connect_4)
         else:
@@ -195,7 +195,7 @@ class Runner:
         df_file_names = pd.read_csv(character_font_images.file_names, low_memory=False, header=None)
         frames = []
         for i, file_name in enumerate(df_file_names[0]):
-            print(file_name)
+            # print(file_name)
             frames.append(pd.read_csv(f"{character_font_images.dataset_file}/{file_name}"))
             if i == 1:
                 break
@@ -243,19 +243,19 @@ class Runner:
 
 
 def write_selected_features(dataset_info: DatasetInfo, selected_features: list[str], method: str):
-    print(f"{method}: {selected_features}")
+    # print(f"{method}: {selected_features}")
     for selected_feature in selected_features:
         write_to_file(f"{dataset_info.results_path}/selected_features", f"{method}.txt", selected_feature)
 
 
 def write_runtime(dataset_info: DatasetInfo, runtime: float, method: str):
-    print(f"Runtime: {method} - {runtime}")
+    # print(f"Runtime: {method} - {runtime}")
     write_to_file(f"{dataset_info.results_path}/runtime", f"{method}.txt", str(runtime))
 
 
 def write_performance(dataset_info: DatasetInfo, performance: dict[str, list[float]], method):
     for (algorithm, performance_algorithm) in performance.items():
-        print(f"{algorithm}: {performance_algorithm}")
+        # print(f"{algorithm}: {performance_algorithm}")
         content = ",".join([str(x) for x in performance_algorithm])
         write_to_file(f"{dataset_info.results_path}/{method}", f"{algorithm}.txt", content)
 
@@ -267,7 +267,7 @@ def write_to_file(path: str, results_file_name: str, content: str, mode="a+"):
             os.makedirs(path)
         with open(path_to_file, mode=mode) as file:
             file.write(content + "\n")
-        print(f"Updated -{path_to_file}- with content -{content}-")
+        # print(f"Updated -{path_to_file}- with content -{content}-")
     except Exception as e:
         print(f"An error occurred: {e}")
 

@@ -8,7 +8,7 @@ from processing.preprocessing import (discretize_columns_k_bins,
 def preprocess_chi2(df: pd.DataFrame, excluded_columns: list[str]) -> pd.DataFrame:
     df = discretize_columns_ordinal_encoder(df, excluded_columns)
     df = scale_columns_min_max(df, excluded_columns)
-    df = discretize_columns_k_bins(df, excluded_columns)
+    df = discretize_columns_k_bins(df, [])
     df = drop_constant_feature(df, excluded_columns)
     return df
 

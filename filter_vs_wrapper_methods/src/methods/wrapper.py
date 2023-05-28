@@ -50,7 +50,7 @@ def rank_features_descending_wrapper(df: pd.DataFrame, method: Literal["forward_
 
             # print(f"Number of features: {len(sorted_features)}")
         end = perf_counter()
-        # print(f"Finished wrapper feature selection.")
+        # print(f"Finished wrapper feature selection, {method}.")
 
         runtime = end - start
     except Exception as e:

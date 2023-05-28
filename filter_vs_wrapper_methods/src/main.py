@@ -1,4 +1,5 @@
 import os
+import sys
 import warnings
 from dataclasses import dataclass
 from typing import Literal
@@ -19,8 +20,14 @@ os.environ["PYTHONWARNINGS"] = "ignore"
 def main():
     algorithm_names: list[tuple[str, str]] = [
         ("GBM", "LightGBM"), ("RF", "RandomForest"), ("LR", "LinearModel"), ("XGB", "XGBoost")]
-    runner = Runner(algorithm_names, "experiment4")
-    runner.run_census_income()
+    experiment_name = sys.argv[1]
+    print(f"Experiment_name: {experiment_name}")
+    preprocessing = True
+    imputation_strategy: Literal["mean", "median"] = "mean"
+    runner = Runner(algorithm_names, experiment_name, preprocessing, imputation_strategy)
+    dataset = sys.argv[2]
+    print(f"Dataset: {dataset}")
+    runner.run_experiment_on_dataset(dataset)
 
 
 @dataclass
@@ -39,6 +46,24 @@ class Runner:
         self.preprocessing = preprocessing
         self.imputation_strategy: Literal["mean", "median"] = imputation_strategy
         self.experiment_name = experiment_name
+
+    def run_experiment_on_dataset(self, dataset: str):
+        runner_dictionary = {
+            "bank_marketing": self.run_bank_marketing,
+            "breast_cancer": self.run_breast_cancer,
+            "steel_plates_faults": self.run_steel_plates_faults,
+            "housing_prices": self.run_housing_prices,
+            "bike_sharing": self.run_bike_sharing,
+            "census_income": self.run_census_income,
+            "connect_4": self.run_connect_4,
+            "arrhythmia": self.run_arrhythmia,
+            "crop": self.run_crop,
+            "character_font_images": self.run_character_font_images,
+            "internet_ads": self.run_internet_ads,
+            "nasa_numeric": self.run_nasa_numeric,
+        }
+
+        runner_dictionary[dataset]()
 
     def run_experiment4(self, df: pd.DataFrame, dataset_info: DatasetInfo, min_columns=2):
         df_categorical, df_discrete, df_continuous = \
@@ -61,11 +86,17 @@ class Runner:
         # print(df_continuous)
 
         if df_categorical.columns.size > min_columns:
+            print(f"Evaluating categorical features: {df_categorical.shape}.")
             self.evaluate_feature_selection(df_categorical, dataset_info_categorical)
+            print(f"Finished evaluating categorical features.")
         if df_discrete.columns.size > min_columns:
+            print(f"Evaluating discrete features: {df_discrete.shape}.")
             self.evaluate_feature_selection(df_discrete, dataset_info_discrete)
+            print(f"Finished evaluating discrete features.")
         if df_continuous.columns.size > min_columns:
+            print(f"Evaluating continuous features: {df_continuous.shape}.")
             self.evaluate_feature_selection(df_continuous, dataset_info_continuous)
+            print(f"Finished evaluating continuous features.")
 
     def run_bank_marketing(self):
         bank = DatasetInfo("data/bank_marketing/bank.csv", "y",
@@ -169,7 +200,21 @@ class Runner:
         if self.experiment_name == "experiment4":
             self.run_experiment4(df=df_connect_4, dataset_info=connect_4)
         else:
-            self.evaluate_feature_selection(df_connect_4, connect_4)
+            self.evaluate_feature_selection(df=df_connect_4, dataset_info=connect_4)
+
+    def run_nasa_numeric(self):
+        nasa_numeric = DatasetInfo(
+            "data/nasa_numeric/nasa_numeric.csv", "act_effort", f"results/{self.experiment_name}/nasa_numeric",
+            eval_metric="neg_root_mean_squared_error")
+        df_nasa_numeric = pd.read_csv(nasa_numeric.dataset_file, low_memory=False)
+        df_nasa_numeric = df_nasa_numeric.fillna(nan)
+        df_nasa_numeric = impute_mean_or_median(df_nasa_numeric, self.imputation_strategy)
+        df_nasa_numeric = impute_most_frequent(df_nasa_numeric)
+        df_nasa_numeric = convert_to_actual_type(df=df_nasa_numeric)
+        if self.experiment_name == "experiment4":
+            self.run_experiment4(df=df_nasa_numeric, dataset_info=nasa_numeric)
+        else:
+            self.evaluate_feature_selection(df=df_nasa_numeric, dataset_info=nasa_numeric)
 
     def run_arrhythmia(self):
         arrhythmia = DatasetInfo("data/arrhythmia/arrhythmia.csv", "Class",
@@ -178,7 +223,11 @@ class Runner:
         df_arrhythmia = df_arrhythmia.replace("?", nan)
         df_arrhythmia = impute_mean_or_median(df=df_arrhythmia, strategy=self.imputation_strategy)
         df_arrhythmia = impute_most_frequent(df=df_arrhythmia)
-        self.evaluate_feature_selection(df_arrhythmia, arrhythmia)
+        df_arrhythmia = convert_to_actual_type(df=df_arrhythmia)
+        if self.experiment_name == "experiment4":
+            self.run_experiment4(df=df_arrhythmia, dataset_info=arrhythmia)
+        else:
+            self.evaluate_feature_selection(df=df_arrhythmia, dataset_info=arrhythmia)
 
     def run_crop(self):
         crop = DatasetInfo("data/crop", "label", f"results/{self.experiment_name}/crop")
@@ -186,7 +235,11 @@ class Runner:
         for i in range(2):
             frames.append(pd.read_csv(f"{crop.dataset_file}/crop{i}.csv", low_memory=False))
         df_crop = pd.concat(frames)
-        self.evaluate_feature_selection(df_crop, crop)
+        df_crop = convert_to_actual_type(df=df_crop)
+        if self.experiment_name == "experiment4":
+            self.run_experiment4(df=df_crop, dataset_info=crop)
+        else:
+            self.evaluate_feature_selection(df=df_crop, dataset_info=crop)
 
     def run_character_font_images(self):
         character_font_images = DatasetInfo("data/character_font_images", "font",
@@ -200,20 +253,21 @@ class Runner:
             if i == 1:
                 break
         df_character_font_images = pd.concat(frames)
-        self.evaluate_feature_selection(df_character_font_images, character_font_images)
+        df_character_font_images = convert_to_actual_type(df=df_character_font_images)
+        if self.experiment_name == "experiment4":
+            self.run_experiment4(df=df_character_font_images, dataset_info=character_font_images)
+        else:
+            self.evaluate_feature_selection(df=df_character_font_images, dataset_info=character_font_images)
 
     def run_internet_ads(self):
         internet_ads = DatasetInfo("data/internet_advertisements/internet_advertisements.csv",
                                    "class", f"results/{self.experiment_name}/internet_advertisements")
         df_internet_ads = pd.read_csv(internet_ads.dataset_file, low_memory=False)
-        self.evaluate_feature_selection(df_internet_ads, internet_ads)
-
-    def run_nasa_numeric(self):
-        nasa_numeric = DatasetInfo(
-            "data/nasa_numeric/nasa_numeric.csv", "cat2", f"results/{self.experiment_name}/nasa_numeric",
-            eval_metric="neg_root_mean_squared_error")
-        df_nasa_numeric = pd.read_csv(nasa_numeric.dataset_file, low_memory=False)
-        self.evaluate_feature_selection(df_nasa_numeric, nasa_numeric)
+        df_internet_ads = convert_to_actual_type(df=df_internet_ads)
+        if self.experiment_name == "experiment4":
+            self.run_experiment4(df=df_internet_ads, dataset_info=internet_ads)
+        else:
+            self.evaluate_feature_selection(df=df_internet_ads, dataset_info=internet_ads)
 
     def evaluate_feature_selection(self, df: pd.DataFrame, dataset_info: DatasetInfo):
         methods: list[Literal["chi2", "anova", "forward_selection", "backward_elimination"]] = \
@@ -232,6 +286,7 @@ class Runner:
 
                 write_runtime(dataset_info, runtime, method)
                 write_selected_features(dataset_info, sorted_features, method)
+            print(f"Finished feature selection, {method}.")
 
         evaluator = Evaluator(df, dataset_info.target_label, "root_mean_squared_error" if dataset_info.eval_metric ==
                               "neg_root_mean_squared_error" else dataset_info.eval_metric, self.algorithm_names)
@@ -239,6 +294,7 @@ class Runner:
         for method in methods:
             sorted_features = [line.strip() for line in open(f"{selected_features_path}/{method}.txt", "r")]
             performance = evaluator.perform_experiments(sorted_features)
+            print(f"Autogluon finished evaluating the features selected by: {method}")
             write_performance(dataset_info, performance, method)
 
 

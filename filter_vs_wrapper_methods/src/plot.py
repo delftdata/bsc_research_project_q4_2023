@@ -14,7 +14,8 @@ def main():
     # plot_experiments("experiment4", "steel_plates_faults")
     # plot_experiments("experiment4", "housing_prices")
     # plot_experiments("experiment4", "bike_sharing")
-    plot_experiments("experiment4", "census_income")
+    # plot_experiments("experiment4", "census_income")
+    plot_experiments("experiment4", "nasa_numeric")
 
 
 def plot_experiments(experiment: str, dataset: str, y_label="Accuracy"):

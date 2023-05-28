@@ -29,7 +29,7 @@ def rank_features_descending_filter(df: pd.DataFrame, method: Literal["chi2", "a
         start = perf_counter()
         statistic_value, _ = score_func(X, y)
         end = perf_counter()
-        # print(f"Finished filter feature selection.")
+        # print(f"Finished filter feature selection, {method}.")
         runtime = end - start
     except Exception as e:
         print(f"Finished filter feature selection with error, {method}: {e}.")

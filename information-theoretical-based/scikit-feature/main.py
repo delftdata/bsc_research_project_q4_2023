@@ -293,6 +293,28 @@ def plot_feature_selection_performance():
             j += 1
 
 
+def plot_feature_selection_three_models():
+    with open('results/logs/performance_complex.txt', "r") as file:
+        data = file.readlines()
+
+    data = [data[i:i + 5] for i in range(0, len(data), 5)]
+
+    for i in range(len(data)):
+        dataset = data[i]
+        dataset_name = dataset[0].split('datasets/')[1].split('/')[0]
+        mrmr_result = [[entry[0] for entry in model] for model in literal_eval(dataset[1].replace('array', ''))]
+        mifs_result = [[entry[0] for entry in model] for model in literal_eval(dataset[2].replace('array', ''))]
+        jmi_result = [[entry[0] for entry in model] for model in literal_eval(dataset[3].replace('array', ''))]
+        cife_result = [[entry[0] for entry in model] for model in literal_eval(dataset[4].replace('array', ''))]
+
+        is_classification = [x for x in datasets if x['path'] == '../.' + dataset[0].strip()][0]['is_classification']
+        name = [x for x in datasets if x['path'] == '../.' + dataset[0].strip()][0]['name']
+        title = f'Performance on {name} dataset'
+        plot_over_features_3(dataset_name, title, len(mrmr_result[0]),
+                             mrmr_result, mifs_result, jmi_result, cife_result,
+                             is_classification)
+
+
 def plot_feature_selection_two_side_by_side():
     with open('results/22-5-2023/performance_simple.txt', "r") as file:
         data = file.readlines()
@@ -448,14 +470,13 @@ if __name__ == '__main__':
     # logging.basicConfig(filename='app.log', filemode='a', level=logging.ERROR, format='%(message)s')
 
     datasets = []
-    datasets.append({'path': '../../datasets/bike-sharing/hour.csv', 'y_label': 'cnt', 'n_features': 15})
-    datasets.append({'path': '../../datasets/BankMarketing/bank.csv', 'y_label': 'y', 'n_features': 20})
-    datasets.append({'path': '../../datasets/CensusIncome/CensusIncome.csv', 'y_label': 'income_label', 'n_features': 15})
-    datasets.append({'path': '../../datasets/breast-cancer/data.csv', 'y_label': 'diagnosis', 'n_features': 30})
-    datasets.append({'path': '../../datasets/housing-prices/train.csv', 'y_label': 'SalePrice', 'n_features': 80})
-    datasets.append({'path': '../../datasets/steel-plates-faults/steel_faults_train.csv', 'y_label': 'Class', 'n_features': 33})
-    datasets.append({'path': '../../datasets/gisette/gisette_train.csv', 'y_label': 'Class', 'n_features': 250})
-    datasets.append({'path': '../../datasets/internet_advertisements/internet_advertisements.csv', 'y_label': 'class', 'n_features': 200})
+    datasets.append({'name': 'Bike sharing', 'path': '../../datasets/bike-sharing/hour.csv', 'y_label': 'cnt', 'n_features': 15, 'is_classification': False})
+    datasets.append({'name': 'Census Income', 'path': '../../datasets/CensusIncome/CensusIncome.csv', 'y_label': 'income_label', 'n_features': 15, 'is_classification': True})
+    datasets.append({'name': 'Breast cancer', 'path': '../../datasets/breast-cancer/data.csv', 'y_label': 'diagnosis', 'n_features': 30, 'is_classification': True})
+    datasets.append({'name': 'Housing prices', 'path': '../../datasets/housing-prices/train.csv', 'y_label': 'SalePrice', 'n_features': 80, 'is_classification': False})
+    datasets.append({'name': 'Steel plates faults', 'path': '../../datasets/steel-plates-faults/steel_faults_train.csv', 'y_label': 'Class', 'n_features': 33, 'is_classification': True})
+    datasets.append({'name': 'Gisette', 'path': '../../datasets/gisette/gisette_train.csv', 'y_label': 'Class', 'n_features': 250, 'is_classification': True})
+    datasets.append({'name': 'Internet advertisements', 'path': '../../datasets/internet_advertisements/internet_advertisements.csv', 'y_label': 'class', 'n_features': 200, 'is_classification': True})
 
     # perform_feature_selection_for_multiple_datasets()
     # evaluate_performance()
@@ -463,4 +484,5 @@ if __name__ == '__main__':
     # plot_feature_selection_performance()
     # plot_two_side_by_side()
     # evaluate_performance_SVM()
-    plot_feature_selection_performance_svm()
+    # plot_feature_selection_performance_svm()
+    plot_feature_selection_three_models()

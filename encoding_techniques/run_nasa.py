@@ -14,7 +14,8 @@ print(df.columns)
 df = df.drop(['recordnumber'], axis = 1)
 label = 'act_effort'
 problemType = 'regression'
-df = df.fillna(0)
+# df = df.fillna(0)
+df = df.fillna(df.mode(axis=1)[0])
 
 encoderNames = ['autogluon', 'onehot', 'ordinal', 'target', 'catboost', 'count']
 
@@ -138,7 +139,7 @@ def run_svm_model():
 
 
 
-# runAutoGluonTests()
+runAutoGluonTests()
 # run_svm_grid()
-run_svm_model()
+# run_svm_model()
 

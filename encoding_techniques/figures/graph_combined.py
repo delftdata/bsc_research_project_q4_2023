@@ -69,21 +69,28 @@ def calculate_feature_distribution(file, dataset_name):
     plt.title(dataset_name)
     plt.savefig(f'dark/feature-distribution/{dataset_name}.png')
 
-def combined_encoders_results( ):
+def combined_encoders_results(results):
     
-    for i, algorithm_name in enumerate(algorithm_names):
-        plt.errorbar(algorithm_name, column_means[i], column_std[i],
-                     linestyle='None', marker='^', capsize=3)
+    # for i, algorithm_name in enumerate(algorithm_names):
+    #     plt.errorbar(algorithm_name, column_means[i], column_std[i],
+    #                  linestyle='None', marker='^', capsize=3)
     
-    plt.errorbar('mean of algs', mean, std,
-                     linestyle='None', marker='^', capsize=3)
-        
-    plt.xlabel('algorithm')
+    # plt.errorbar('mean of algs', mean, std,
+    #                  linestyle='None', marker='^', capsize=3)
+    my_dict = {
+        'Linear': results.T[0],
+        'XGB': results.T[1],
+        'GBM': results.T[2],
+        'RF': results.T[3],
+        'SVM': results.T[4],
+    }
+    plt.boxplot(my_dict.values(), labels=my_dict.keys())
+    plt.xlabel('model')
     plt.ylabel('accuracy')
 
-    plt.title(f"Accuracy Mean - combining encoders")
+    # plt.title(f"Accuracy Mean - combining encoders")
     # plt.show()
-    plt.savefig(f'dark/accuracy/m-combined-encoders_baseline_mean_deviation.png')
+    plt.savefig(f'dark/accuracy/boxplot-accuracy-combined.png')
     plt.clf()
 
 plt.style.use('ggplot')
@@ -121,4 +128,4 @@ column_std = np.std(results, axis = 0)
 print(column_means)
 mean = np.mean(results)
 std = np.std(results)
-combined_encoders_results()
+combined_encoders_results(results)

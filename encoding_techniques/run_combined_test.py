@@ -6,7 +6,16 @@ from models.models import writeToFile
 import multiprocessing
 n_jobs = multiprocessing.cpu_count()-1
 import time
+from random import randint
 
+def encode_randomly(df, label):
+    number = randint(0, 5)
+    if(number == 0): return encoders.OneHotEncoder().encode(df, label)
+    elif(number == 1): return encoders.OrdinalEncoder().encode(df, label)
+    elif(number == 2): return encoders.TargetEncoder().encode(df, label)
+    elif(number == 3): return encoders.CatBoostEncoder().encode(df, label)
+    else: return encoders.CountEncoder().encode(df, label)
+    
 def run_combined_test(df, dataset_name, label, problemType):
     algorithms = [
         {
@@ -44,15 +53,13 @@ def run_combined_test(df, dataset_name, label, problemType):
             this_encoded = encoders.OrdinalEncoder().encode(this_column, target_column = label)
         else:
             this_encoded = encoders.TargetEncoder().encode(this_column, label) 
-
+        # this_encoded = encode_randomly(this_column, label)
         this_encoded = this_encoded.drop(label, axis = 1)
         
         encodedDf = pd.concat([encodedDf, this_encoded], axis = 1)
 
     encodeTime = time.time() - startTime
     encodedDf = pd.DataFrame(encodedDf)
-
-    # print(encodedDf.head(10))
 
     for i, algorithm in enumerate(algorithms):
         startTime = time.time()

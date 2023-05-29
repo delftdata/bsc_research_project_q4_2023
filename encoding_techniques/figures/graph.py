@@ -134,6 +134,53 @@ def baseline_algorithm(index):
     plt.savefig(f'dark/accuracy/{algorithm_names[index]}_baseline_mean_deviation.png')
     plt.clf()
 
+def baseline_algorithm_boxplot():
+    autogluon_mean = round(autogluon.flatten().mean(),2)
+    my_dict = {'autogluon': autogluon.flatten(),
+            'onehot': onehot.flatten(),
+            'ordinal': ordinal.flatten(),
+            'target':target.flatten(),
+            'catboost':catboost.flatten(),
+            'count':count.flatten()
+            }
+    plt.axhline(y=autogluon_mean, color='r', linestyle='dotted')
+    plt.boxplot(my_dict.values(), labels=my_dict.keys())
+    plt.xlabel('encoder')
+    plt.yticks([65, 70, 75, 80, autogluon_mean, 85, 90, 95, 100], ['65', '70', '75', '80', f'autogluon\n{autogluon_mean}', '85', '90', '95', '100'])
+    # plt.yticks([-5, -4, -3, -2, -1, 0, 1, 2, 3], [-5, -4, -3, -2, -1, 'AutoGluon\nEncoding', 1, 2, 3])
+    plt.ylabel('accuracy')
+    plt.subplots_adjust(bottom=.15, left=.20)
+    # plt.show()
+    plt.savefig(f'dark/accuracy/boxplot_accuracy.png')
+    plt.clf()
+
+
+def baseline_algorithm_time_boxplot():
+    autogluon_mean = round(autogluon_time.flatten().mean(),2)
+    my_dict = {'autogluon': autogluon_time.flatten(),
+            'onehot': onehot_time.flatten(),
+            'ordinal': ordinal_time.flatten(),
+            'target':target_time.flatten(),
+            'catboost':catboost_time.flatten(),
+            'count':count_time.flatten()
+            }
+    plt.axhline(y=autogluon_mean, color='r', linestyle='dotted')
+    plt.boxplot(my_dict.values(), labels=my_dict.keys(), meanline=True)
+    plt.xlabel('encoder')
+    plt.ylabel('time')
+    plt.subplots_adjust(bottom=.15, left=.20)
+    plt.yticks([0, 100, 180, autogluon_mean, 300, 400, 500], 
+               ['0', '100', '180', f'autogluon\n{autogluon_mean}', '300', '400', '500' ])
+    ax = plt.gca()
+    # ax.set_xlim([xmin, xmax])
+    ax.set_ylim([0, 500])
+    # plt.yticks([-5, -4, -3, -2, -1, 0, 1, 2, 3], [-5, -4, -3, -2, -1, 'AutoGluon\nEncoding', 1, 2, 3])
+
+
+    # plt.show()
+    plt.savefig(f'dark/accuracy/boxplot_time.png')
+    plt.clf()
+
 def baseline_algorithm_mean(index):
     """
     Args:
@@ -299,6 +346,10 @@ plt.style.use('ggplot')
 
 
 
-baseline_all_encoders_mean()
-for i, algorithm in enumerate(algorithm_names):
-    baseline_algorithm_mean(i)
+# baseline_all_encoders_mean()
+# for i, algorithm in enumerate(algorithm_names):
+#     baseline_algorithm_mean(i)
+
+
+baseline_algorithm_boxplot()
+# baseline_algorithm_time_boxplot()

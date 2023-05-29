@@ -18,6 +18,7 @@ def normalizeColumns(df, target_column):
     normalizer = preprocessing.Normalizer()
     train_columns = df.drop([target_column], axis=1).columns
     
+    # NA imputation is handled before encoding the categorical variables.  There should be no 'na' values before executing this line of code.
     df = df.fillna(0)
     df[train_columns] = normalizer.fit_transform(df[train_columns])
 

@@ -4,7 +4,7 @@ from sklearn.svm import SVR, SVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 import numpy as np
-from sklearn.metrics import mean_squared_error, accuracy_score, roc_auc_score, precision_score, recall_score, f1_score, matthews_corrcoef
+from sklearn.metrics import mean_absolute_error, mean_squared_error, accuracy_score, roc_auc_score, precision_score, recall_score, f1_score, matthews_corrcoef, r2_score
 from sklearn.preprocessing import LabelBinarizer
 
 
@@ -77,20 +77,25 @@ class AutogluonModel():
         elif(self.problem_type == 'multiclass'):
             score =  round(metrics['accuracy']*100,2)
             mcc = round(metrics['mcc'],2)
-            content = f'& {modelName} & {score} & {mcc} &  &  & {int(duration)} \n'
+            f1 = round(metrics['f1'],2)
+            precision = round(metrics['precision'],2)
+            recall = round(metrics['recall'],2)
+            content = f'& {modelName} & {score} & {mcc} & {f1} & {precision}  & {recall} & {int(duration)} \n'
         else:
-            score = round(metrics['root_mean_squared_error'],2)
-            content = f'& {modelName} & {score} &  &  &  & {int(duration)} \n'
+            rmse = int(abs((metrics['root_mean_squared_error'])))
+            mse =  int(abs((metrics['mean_squared_error'])))
+            mae = round(metrics['mean_absolute_error'],2)
+            r2 = round(metrics['r2'],2)           
+            content = f'& {modelName} & {rmse} & {mse}  & {mae} & {r2} & {int(duration)} \n'
             # mse = metrics['mean_squared_error']
 
         folder = 'results/' if test_type == 'normal' else 'results_combined/'
         
         
         if test_type == 'normal':
-            writeToFile(folder  + datasetName + '/' + encoderName +
-                    '/metrics/' + modelName , content)
-            writeToFile(folder + datasetName + '/' + encoderName + '/hyperparameters/' + modelName + '-AutoGluon.json',
-                    self.predictor.info())
+            writeToFile(folder  + datasetName + '/' + encoderName + '.txt' , content)
+            # writeToFile(folder + datasetName + '/' + encoderName + '/hyperparameters/' + modelName + '-AutoGluon.json',
+            #         self.predictor.info())
         elif test_type == 'combinedFinal':
             writeToFile(folder  + datasetName + '/' + 'combined-results.txt' , content)
         else:
@@ -170,7 +175,9 @@ class SVMModel():
         if self.problem_type == 'regression':
             mse = mean_squared_error(self.y_test, self.y_pred)
             rmse =  np.sqrt(mse)
-            content = f'& SVM & {encoderName} &{int(abs(rmse))} &  & & & {int(duration)}\n'
+            mae = mean_absolute_error(self.y_test, self.y_pred)
+            r2 = r2_score(self.y_test, self.y_pred)
+            content = f'& {encoderName} & SVM &{int(abs(rmse))} & {int(abs(mse))} & {round(mae, 2)}& {round(r2, 2)} & {int(duration)}\n'
 
         elif self.problem_type == 'binary':
             score =  round(accuracy_score(self.y_test, self.y_pred)*100,2)
@@ -188,19 +195,13 @@ class SVMModel():
         folder = 'results/' if test_type == 'normal' else 'results_combined/'
 
         if test_type == 'normal':
-            writeToFile(folder  + datasetName + '/' + encoderName +
-                    '/metrics/' + 'svm' , content)
-            writeToFile(folder + datasetName + '/' + encoderName + '/hyperparameters/' + 'svm' + '-AutoGluon.json',
-                    self.predictor.info())
+            writeToFile(folder  + datasetName + '/' + encoderName + '.txt', content)
+            # writeToFile(folder + datasetName + '/' + encoderName + '/hyperparameters/' + 'svm' + '-AutoGluon.json',
+            #         self.predictor.info())
         elif test_type == 'combinedFinal':
             writeToFile(folder  + datasetName + '/' + 'combined-results.txt' , content)
         else:
             return score
-
-        return self.predictor.evaluate(self.df_test)
-
-        writeToFile('results/' + datasetName + '/' + encoderName +
-                    '/metrics/' + 'SVM' + '.txt', content)
         
 
 def multiclass_roc_auc_score(truth, pred, average="macro"):

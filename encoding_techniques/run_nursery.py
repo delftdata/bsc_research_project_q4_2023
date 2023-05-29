@@ -15,7 +15,8 @@ df = pd.read_csv(file)
 
 label = 'label'
 problemType = 'multiclass'
-df = df.fillna(0)
+# df = df.fillna(0)
+df = df.fillna(df.mode(axis=1)[0])
 
 df[label] = df[label].replace('not_recom', 0)
 df[label] = df[label].replace('spec_prior', 1)
@@ -156,7 +157,7 @@ def run_svm_model():
 
 
 
-# runAutoGluonTests()
+runAutoGluonTests()
 # run_svm_grid()
 run_svm_model()
 

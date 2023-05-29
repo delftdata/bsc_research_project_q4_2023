@@ -11,16 +11,9 @@ file = '../datasets/housing-prices/train.csv'
 dataset_name = 'HousingPrices'
 df = pd.read_csv(file)
 
-# print(df.columns)
-
 label = 'SalePrice'
 problemType = 'regression'
-# df = df.fillna(0)
-
-
-# print(df[label].unique())
-
-# df[label] = df[label].astype('int')
+df = df.fillna(df.mode(axis=1)[0])
 
 encoderNames = ['autogluon', 'onehot', 'ordinal', 'target', 'catboost', 'count']
 
@@ -29,13 +22,6 @@ encoders_list = [encoders.AutoGluonEncoder(), encoders.OneHotEncoder(), encoders
 
 encoded_dataframes = [encoders.AutoGluonEncoder().encode(df, label), encoders.OneHotEncoder().encode(df, label), encoders.OrdinalEncoder(
     ).encode(df, label), encoders.TargetEncoder().encode(df, label), encoders.CatBoostEncoder().encode(df, label), encoders.CountEncoder().encode(df, label)]
-
-
-# encoderNames = [ 'catboost', 'count']
-
-# encoders_list = [ encoders.CatBoostEncoder(), encoders.CountEncoder()]
-
-# encoded_dataframes = [ encoders.CatBoostEncoder().encode(df, label), encoders.CountEncoder().encode(df, label)]
 
 
 def runAutoGluonTests():
@@ -150,7 +136,7 @@ def run_svm_model():
 
 
 
-# runAutoGluonTests()
+runAutoGluonTests()
 # run_svm_grid()
 run_svm_model()
 

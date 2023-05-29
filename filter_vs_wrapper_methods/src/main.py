@@ -232,7 +232,7 @@ class Runner:
     def run_crop(self):
         crop = DatasetInfo("data/crop", "label", f"results/{self.experiment_name}/crop")
         frames = []
-        for i in range(2):
+        for i in range(10):
             frames.append(pd.read_csv(f"{crop.dataset_file}/crop{i}.csv", low_memory=False))
         df_crop = pd.concat(frames)
         df_crop = convert_to_actual_type(df=df_crop)
@@ -250,8 +250,6 @@ class Runner:
         for i, file_name in enumerate(df_file_names[0]):
             # print(file_name)
             frames.append(pd.read_csv(f"{character_font_images.dataset_file}/{file_name}"))
-            if i == 1:
-                break
         df_character_font_images = pd.concat(frames)
         df_character_font_images = convert_to_actual_type(df=df_character_font_images)
         if self.experiment_name == "experiment4":

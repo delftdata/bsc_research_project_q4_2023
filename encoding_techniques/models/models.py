@@ -4,10 +4,12 @@ from sklearn.svm import SVR, SVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 import numpy as np
-from sklearn.metrics import mean_squared_error, accuracy_score
+from sklearn.metrics import mean_absolute_error, mean_squared_error, accuracy_score, roc_auc_score, precision_score, recall_score, f1_score, matthews_corrcoef, r2_score
+from sklearn.preprocessing import LabelBinarizer
 
 
 def writeToFile(file="", content=""):
+    print(file)
     if file != "":
         with open(file, 'a+') as f:
             f.write(str(content) + '\n')
@@ -35,6 +37,7 @@ class AutogluonModel():
         self.hyperparameters = hyperparameters
         self.df_train = []
         self.df_test = []
+        self.problem_type = problem_type
 
     def fit(self, df):
         """
@@ -53,25 +56,57 @@ class AutogluonModel():
             self.predictor.fit(self.df_train, presets='best_quality',
                                hyperparameters=self.hyperparameters, ag_args_fit={'num_gpus': 1})
 
-    def evaluate(self, datasetName, modelName, encoderName, duration, encodeDuration):
+    def evaluate(self, datasetName, modelName, encoderName, duration, encodeDuration, test_type = 'normal', additional_content = ""):
         """
         Evaluates machine learning models and returns the results of the best performing one.
         """
 
-        runtimeInfo = f'Encode Duration: {encodeDuration}. Total Duration: {duration}'
-        writeToFile('results/' + datasetName + '/' + encoderName +
-                    '/metrics/' + modelName + 'AutoGluon.txt', self.predictor.evaluate(self.df_test))
-        writeToFile('results/' + datasetName + '/' + encoderName +
-                    '/metrics/' + modelName + 'AutoGluon.txt', runtimeInfo)
-        writeToFile('results/' + datasetName + '/' + encoderName + '/hyperparameters/' + modelName + '-AutoGluon.json',
-                    self.predictor.info())
+        runtimeInfo = f'Encode Duration: {encodeDuration}. Total Duration: {duration}\n'
+        metrics = self.predictor.evaluate(self.df_test)
+
+        
+        
+        
+        if(self.problem_type == 'binary'):
+            score =  round(metrics['accuracy']*100,2)
+            auc = round(metrics['roc_auc'],2)
+            f1 = round(metrics['f1'],2)
+            precision = round(metrics['precision'],2)
+            recall = round(metrics['recall'],2)    
+            content = f'& {modelName} & {score} & {auc} & {f1} & {precision}/{recall} & {int(duration)} \n'
+        elif(self.problem_type == 'multiclass'):
+            score =  round(metrics['accuracy']*100,2)
+            mcc = round(metrics['mcc'],2)
+            f1 = round(metrics['f1'],2)
+            precision = round(metrics['precision'],2)
+            recall = round(metrics['recall'],2)
+            content = f'& {modelName} & {score} & {mcc} & {f1} & {precision}  & {recall} & {int(duration)} \n'
+        else:
+            rmse = int(abs((metrics['root_mean_squared_error'])))
+            mse =  int(abs((metrics['mean_squared_error'])))
+            mae = round(metrics['mean_absolute_error'],2)
+            r2 = round(metrics['r2'],2)           
+            content = f'& {modelName} & {rmse} & {mse}  & {mae} & {r2} & {int(duration)} \n'
+            # mse = metrics['mean_squared_error']
+
+        folder = 'results/' if test_type == 'normal' else 'results_combined/'
+        
+        
+        if test_type == 'normal':
+            writeToFile(folder  + datasetName + '/' + encoderName + '.txt' , content)
+            # writeToFile(folder + datasetName + '/' + encoderName + '/hyperparameters/' + modelName + '-AutoGluon.json',
+            #         self.predictor.info())
+        elif test_type == 'combinedFinal':
+            writeToFile(folder  + datasetName + '/' + 'combined-results.txt' , content)
+        else:
+            return score
 
         return self.predictor.evaluate(self.df_test)
 
 
 class SVMModel():
 
-    def __init__(self,  label: str, problem_type: str, data_preprocessing: bool = False, test_size: float = 0.2, hyperparameters: dict = []):
+    def __init__(self,  label: str, problem_type: str, data_preprocessing: bool = False, test_size: float = 0.2, hyperparameters: dict = dict()):
         """_summary_
 
         Args:
@@ -83,7 +118,11 @@ class SVMModel():
         self.data_preprocessing = data_preprocessing
         self.test_size = test_size
         self.problem_type = problem_type
-        self.predictor = SVR(C=hyperparameters['C'], gamma=hyperparameters['gamma'], kernel=hyperparameters['kernel'], degree=hyperparameters['degree']) if problem_type == 'regression' else SVC(C=hyperparameters['C'], gamma=hyperparameters['gamma'], kernel=hyperparameters['kernel'], degree=hyperparameters['degree'])
+        if len(hyperparameters) > 0:
+            # self.predictor = SVR() if problem_type == 'regression' else SVC(decision_function_shape='ovo')
+            self.predictor = SVR(C=hyperparameters['C'], gamma=hyperparameters['gamma'], kernel=hyperparameters['kernel'], degree=hyperparameters['degree']) if problem_type == 'regression' else SVC(C=hyperparameters['C'], gamma=hyperparameters['gamma'], kernel=hyperparameters['kernel'], degree=hyperparameters['degree'])
+        else: 
+            self.predictor = SVR() if problem_type == 'regression' else SVC()
         self.label = label
         self.X_train = []
         self.X_test = []
@@ -128,18 +167,49 @@ class SVMModel():
         writeToFile('results/' + datasetName + '/' + encoderName + '/hyperparameters/SVM.json',
         grid.best_estimator_)
         
-    def evaluate(self, datasetName, encoderName, duration, encodeDuration):
+    def evaluate(self, datasetName, encoderName, duration, encodeDuration, test_type = 'normal'):
         """
         Evaluates machine learning models and returns the MSE (for regression) and accuracy (for classification).
         """
         content = ""
         if self.problem_type == 'regression':
-            score =  np.sqrt(mean_squared_error(self.y_test, self.y_pred))
-            content = f'RMSE: {score} '
+            mse = mean_squared_error(self.y_test, self.y_pred)
+            rmse =  np.sqrt(mse)
+            mae = mean_absolute_error(self.y_test, self.y_pred)
+            r2 = r2_score(self.y_test, self.y_pred)
+            content = f'& {encoderName} & SVM &{int(abs(rmse))} & {int(abs(mse))} & {round(mae, 2)}& {round(r2, 2)} & {int(duration)}\n'
+
+        elif self.problem_type == 'binary':
+            score =  round(accuracy_score(self.y_test, self.y_pred)*100,2)
+            auc = round(roc_auc_score(self.y_test, self.y_pred),2)
+            f1 = round(f1_score(self.y_test, self.y_pred),2)
+            precision = round(precision_score(self.y_test, self.y_pred),2)
+            recall = round(recall_score(self.y_test, self.y_pred),2)
+            content = f'& SVM & {encoderName} & {score} & {auc} & {f1} & {precision}/{recall} & {int(duration)} \n'
+                
         else:
-            score =  accuracy_score(self.y_test, self.y_pred)
-            content = f'Accuracy: {score} '
+            score =  round(accuracy_score(self.y_test, self.y_pred)*100,2)
+            mcc = round(matthews_corrcoef(self.y_test, self.y_pred),2)
+            content = f'& SVM & {encoderName} & {score} & {mcc} &  &  & {int(duration)} \n'
+
+        folder = 'results/' if test_type == 'normal' else 'results_combined/'
+
+        if test_type == 'normal':
+            writeToFile(folder  + datasetName + '/' + encoderName + '.txt', content)
+            # writeToFile(folder + datasetName + '/' + encoderName + '/hyperparameters/' + 'svm' + '-AutoGluon.json',
+            #         self.predictor.info())
+        elif test_type == 'combinedFinal':
+            writeToFile(folder  + datasetName + '/' + 'combined-results.txt' , content)
+        else:
+            return score
         
-        content = content + '\n' + f'Encode time: {encodeDuration}' + '\n' + f'Total time: {duration}'
-        writeToFile('results/' + datasetName + '/' + encoderName +
-                    '/metrics/' + 'SVM' + '.txt', content)
+
+def multiclass_roc_auc_score(truth, pred, average="macro"):
+
+    lb = LabelBinarizer()
+    lb.fit(truth)
+
+    truth = lb.transform(truth)
+    pred = lb.transform(pred)
+
+    return roc_auc_score(truth, pred, average=average)

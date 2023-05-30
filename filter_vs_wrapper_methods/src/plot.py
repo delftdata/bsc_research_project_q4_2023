@@ -5,10 +5,11 @@ from plotting.plotter import Plotter
 def main():
     # plot_results("experiment2", "breast_cancer")
     # plot_results("experiment2", "steel_plates_faults")
-    plot_results("experiment2", "bank_marketing")
+    # plot_results("experiment2", "bank_marketing")
+    plot_results("experiment2", "bike_sharing", y_label="Root Mean Squared Error")
 
 
-def plot_results(experiment: str, dataset: str):
+def plot_results(experiment: str, dataset: str, y_label="Accuracy"):
     results_path = f"results/{experiment}/{dataset}"
     models = ["GBM", "LR", "RF", "XGB"]
 
@@ -21,7 +22,8 @@ def plot_results(experiment: str, dataset: str):
             f"{results_path}/backward_elimination/{model}.txt", "r")]
 
         algorithm_plot = Plotter.plot_metric_matplotlib(
-            raw_metrics_chi2, raw_metrics_anova, raw_metrics_forward_selection, raw_metrics_backward_elimination, model)
+            raw_metrics_chi2, raw_metrics_anova, raw_metrics_forward_selection, raw_metrics_backward_elimination, model,
+            y_label=y_label)
 
         algorithm_plot.savefig(f"{results_path}/{model}.png")
         plt.close(algorithm_plot)

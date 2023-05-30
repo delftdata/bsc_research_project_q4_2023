@@ -2,8 +2,8 @@ from typing import Literal
 
 import pandas as pd
 from processing.filter_preprocessing import preprocess_anova, preprocess_chi2
+from processing.splitter import Splitter
 from sklearn.feature_selection import chi2, f_classif
-from splitting.splitter import Splitter
 
 
 class Filter:
@@ -22,11 +22,7 @@ class Filter:
                 preprocessed_df = preprocess_anova(preprocessed_df, [target_label])
 
         X, y = Splitter.split_input_target(preprocessed_df, target_label)
-
-        if method == "chi2":
-            score_func = chi2
-        else:
-            score_func = f_classif
+        score_func = chi2 if method == "chi2" else f_classif
 
         statistic_value = []
 

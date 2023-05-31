@@ -2,6 +2,7 @@ import os
 import sys
 import warnings
 from dataclasses import dataclass
+from multiprocessing import Pool
 from typing import Literal
 
 import pandas as pd
@@ -9,9 +10,12 @@ from evaluation.evaluator import Evaluator
 from methods.filter import rank_features_descending_filter
 from methods.wrapper import rank_features_descending_wrapper
 from numpy import nan
-from processing.imputer import impute_mean_or_median, impute_most_frequent
+from processing.imputer import (drop_missing_values, impute_mean_or_median,
+                                impute_most_frequent)
 from processing.preprocessing import convert_to_actual_type
-from processing.splitter import split_categorical_discrete_continuous_features
+from processing.splitter import (
+    drop_features, drop_features_with_negative_values,
+    split_categorical_discrete_continuous_features)
 
 warnings.filterwarnings("ignore")
 os.environ["PYTHONWARNINGS"] = "ignore"
@@ -22,12 +26,17 @@ def main():
         ("GBM", "LightGBM"), ("RF", "RandomForest"), ("LR", "LinearModel"), ("XGB", "XGBoost")]
     experiment_name = sys.argv[1]
     print(f"Experiment_name: {experiment_name}")
-    preprocessing = True
+    preprocessing = experiment_name != "experiment1" and experiment_name != "experiment3"
     imputation_strategy: Literal["mean", "median"] = "mean"
     runner = Runner(algorithm_names, experiment_name, preprocessing, imputation_strategy)
     dataset = sys.argv[2]
     print(f"Dataset: {dataset}")
-    runner.run_experiment_on_dataset(dataset)
+    if dataset == "small":
+        runner.run_experiment_on_small_datasets_in_parallel()
+    elif dataset == "big":
+        runner.run_experiment_on_big_datasets_sequentially()
+    else:
+        runner.run_experiment_on_dataset(dataset)
 
 
 @dataclass
@@ -46,9 +55,7 @@ class Runner:
         self.preprocessing = preprocessing
         self.imputation_strategy: Literal["mean", "median"] = imputation_strategy
         self.experiment_name = experiment_name
-
-    def run_experiment_on_dataset(self, dataset: str):
-        runner_dictionary = {
+        self.runner_dictionary = {
             "bank_marketing": self.run_bank_marketing,
             "breast_cancer": self.run_breast_cancer,
             "steel_plates_faults": self.run_steel_plates_faults,
@@ -63,7 +70,54 @@ class Runner:
             "nasa_numeric": self.run_nasa_numeric,
         }
 
-        runner_dictionary[dataset]()
+    def prepare_data_frame(self, df: pd.DataFrame, missing_values=False):
+        if missing_values:
+            if self.experiment_name == "experiment2" or self.experiment_name == "experiment4":
+                df = impute_mean_or_median(df, strategy=self.imputation_strategy)
+                df = impute_most_frequent(df)
+            elif self.experiment_name == "experiment3":
+                df = drop_missing_values(df)
+        df = convert_to_actual_type(df)
+        return df
+
+    def run_experiment_on_dataset(self, dataset: str):
+        self.runner_dictionary[dataset]()
+
+    def run_experiment_on_small_datasets_in_parallel(self):
+        with Pool() as pool:
+            small_datasets = ["bank_marketing", "breast_cancer", "steel_plates_faults",
+                              "housing_prices", "bike_sharing", "census_income", "connect_4"]
+            pool.map(self.run_experiment_on_dataset, small_datasets)
+
+    def run_experiment_on_big_datasets_sequentially(self):
+        big_datasets = ["arrhythmia", "crop", "character_font_images", "internet_ads", "nasa_numeric"]
+        for big_dataset in big_datasets:
+            self.run_experiment_on_dataset(dataset=big_dataset)
+
+    def run_experiment3(self, df: pd.DataFrame, dataset_info: DatasetInfo, min_columns=2):
+        df_chi2 = df.copy()
+        df_anova = df.copy()
+        df_forward_selection = df.copy()
+        df_backward_elimination = df.copy()
+
+        df_chi2 = drop_features(df_chi2, dataset_info.target_label, "string")
+        df_chi2 = drop_features_with_negative_values(df_chi2, dataset_info.target_label)
+
+        df_anova = drop_features(df_anova, dataset_info.target_label, "string")
+        df_anova = drop_features(df_anova, dataset_info.target_label, "int64")
+
+        df_forward_selection = drop_features(df_forward_selection, dataset_info.target_label, "string")
+
+        df_backward_elimination = drop_features(df_backward_elimination, dataset_info.target_label, "string")
+
+        if df_chi2.columns.size > min_columns:
+            self.evaluate_feature_selection(df_chi2, dataset_info, methods=["chi2"])
+        if df_anova.columns.size > min_columns:
+            self.evaluate_feature_selection(df_anova, dataset_info, methods=["anova"])
+        if df_forward_selection.columns.size > min_columns:
+            self.evaluate_feature_selection(df_forward_selection, dataset_info, methods=["forward_selection"])
+        if df_backward_elimination.columns.size > min_columns:
+            self.evaluate_feature_selection(df_backward_elimination, dataset_info, methods=["backward_elimination"])
 
     def run_experiment4(self, df: pd.DataFrame, dataset_info: DatasetInfo, min_columns=2):
         df_categorical, df_discrete, df_continuous = \
@@ -103,12 +157,12 @@ class Runner:
                            f"results/{self.experiment_name}/bank_marketing")
         df_bank = pd.read_csv(bank.dataset_file, low_memory=False)
         df_bank = df_bank.replace("unknown", nan)
-        df_bank = impute_mean_or_median(df=df_bank, strategy=self.imputation_strategy)
-        df_bank = impute_most_frequent(df=df_bank)
-        df_bank = convert_to_actual_type(df=df_bank)
+        df_bank = self.prepare_data_frame(df=df_bank, missing_values=True)
         # print(df_bank.dtypes)
         # print(df_bank)
-        if self.experiment_name == "experiment4":
+        if self.experiment_name == "experiment3":
+            self.run_experiment3(df=df_bank, dataset_info=bank)
+        elif self.experiment_name == "experiment4":
             self.run_experiment4(df=df_bank, dataset_info=bank)
         else:
             self.evaluate_feature_selection(df=df_bank, dataset_info=bank)
@@ -117,10 +171,12 @@ class Runner:
         breast_cancer = DatasetInfo("data/breast_cancer/breast_cancer.csv", "diagnosis",
                                     f"results/{self.experiment_name}/breast_cancer")
         df_breast_cancer = pd.read_csv(breast_cancer.dataset_file, low_memory=False)
-        df_breast_cancer = convert_to_actual_type(df=df_breast_cancer)
+        df_breast_cancer = self.prepare_data_frame(df=df_breast_cancer)
         # print(df_breast_cancer.dtypes)
         # print(df_breast_cancer)
-        if self.experiment_name == "experiment4":
+        if self.experiment_name == "experiment3":
+            self.run_experiment3(df=df_breast_cancer, dataset_info=breast_cancer)
+        elif self.experiment_name == "experiment4":
             self.run_experiment4(df=df_breast_cancer, dataset_info=breast_cancer)
         else:
             self.evaluate_feature_selection(df=df_breast_cancer, dataset_info=breast_cancer)
@@ -129,10 +185,12 @@ class Runner:
         steel_plates_faults = DatasetInfo("data/steel_plates_faults/steel_plates_faults.csv",
                                           "Class", f"results/{self.experiment_name}/steel_plates_faults")
         df_steel_plates_faults = pd.read_csv(steel_plates_faults.dataset_file, low_memory=False)
-        df_steel_plates_faults = convert_to_actual_type(df=df_steel_plates_faults)
+        df_steel_plates_faults = self.prepare_data_frame(df=df_steel_plates_faults)
         # print(df_steel_plates_faults.dtypes)
         # print(df_steel_plates_faults)
-        if self.experiment_name == "experiment4":
+        if self.experiment_name == "experiment3":
+            self.run_experiment3(df=df_steel_plates_faults, dataset_info=steel_plates_faults)
+        elif self.experiment_name == "experiment4":
             self.run_experiment4(df=df_steel_plates_faults, dataset_info=steel_plates_faults)
         else:
             self.evaluate_feature_selection(df=df_steel_plates_faults, dataset_info=steel_plates_faults)
@@ -143,12 +201,12 @@ class Runner:
             eval_metric="neg_root_mean_squared_error")
         df_housing_prices = pd.read_csv(housing_prices.dataset_file, low_memory=False)
         df_housing_prices = df_housing_prices.fillna(nan)
-        df_housing_prices = impute_mean_or_median(df_housing_prices, self.imputation_strategy)
-        df_housing_prices = impute_most_frequent(df_housing_prices)
-        df_housing_prices = convert_to_actual_type(df=df_housing_prices)
+        df_housing_prices = self.prepare_data_frame(df=df_housing_prices, missing_values=True)
         # print(df_housing_prices.dtypes)
         # print(df_housing_prices)
-        if self.experiment_name == "experiment4":
+        if self.experiment_name == "experiment3":
+            self.run_experiment3(df=df_housing_prices, dataset_info=housing_prices)
+        elif self.experiment_name == "experiment4":
             self.run_experiment4(df=df_housing_prices, dataset_info=housing_prices)
         else:
             self.evaluate_feature_selection(df=df_housing_prices, dataset_info=housing_prices)
@@ -157,10 +215,12 @@ class Runner:
         bike_sharing = DatasetInfo("data/bike_sharing/hour.csv", "cnt", f"results/{self.experiment_name}/bike_sharing",
                                    eval_metric="neg_root_mean_squared_error")
         df_bike_sharing = pd.read_csv(bike_sharing.dataset_file, low_memory=False)
-        df_bike_sharing = convert_to_actual_type(df_bike_sharing)
+        df_bike_sharing = self.prepare_data_frame(df=df_bike_sharing)
         # print(df_bike_sharing.dtypes)
         # print(df_bike_sharing)
-        if self.experiment_name == "experiment4":
+        if self.experiment_name == "experiment3":
+            self.run_experiment3(df=df_bike_sharing, dataset_info=bike_sharing)
+        elif self.experiment_name == "experiment4":
             self.run_experiment4(df=df_bike_sharing, dataset_info=bike_sharing)
         else:
             self.evaluate_feature_selection(df=df_bike_sharing, dataset_info=bike_sharing)
@@ -170,12 +230,12 @@ class Runner:
                                     f"results/{self.experiment_name}/census_income")
         df_census_income = pd.read_csv(census_income.dataset_file, low_memory=False)
         df_census_income = df_census_income.fillna(nan)
-        df_census_income = impute_mean_or_median(df_census_income, self.imputation_strategy)
-        df_census_income = impute_most_frequent(df_census_income)
-        df_census_income = convert_to_actual_type(df_census_income)
+        df_census_income = self.prepare_data_frame(df=df_census_income, missing_values=True)
         # print(df_census_income.dtypes)
         # print(df_census_income)
-        if self.experiment_name == "experiment4":
+        if self.experiment_name == "experiment3":
+            self.run_experiment3(df=df_census_income, dataset_info=census_income)
+        elif self.experiment_name == "experiment4":
             self.run_experiment4(df=df_census_income, dataset_info=census_income)
         else:
             self.evaluate_feature_selection(df=df_census_income, dataset_info=census_income)
@@ -191,13 +251,14 @@ class Runner:
         connect_4 = DatasetInfo("data/connect-4/connect-4.csv", "winner", f"results/{self.experiment_name}/connect-4")
         df_connect_4 = pd.read_csv(connect_4.dataset_file, low_memory=False)
         df_connect_4 = df_connect_4.fillna(nan)
-        df_connect_4 = impute_mean_or_median(df_connect_4, self.imputation_strategy)
-        df_connect_4 = impute_most_frequent(df_connect_4)
+        df_connect_4 = self.prepare_data_frame(df=df_connect_4, missing_values=True)
         df_connect_4[connect_4.target_label] = df_connect_4[connect_4.target_label].apply(lambda x: map_game(x))
-        df_connect_4 = convert_to_actual_type(df=df_connect_4)
+        df_connect_4[connect_4.target_label] = df_connect_4[connect_4.target_label].astype("category")
         # print(df_connect_4.dtypes)
         # print(df_connect_4)
-        if self.experiment_name == "experiment4":
+        if self.experiment_name == "experiment3":
+            self.run_experiment3(df=df_connect_4, dataset_info=connect_4)
+        elif self.experiment_name == "experiment4":
             self.run_experiment4(df=df_connect_4, dataset_info=connect_4)
         else:
             self.evaluate_feature_selection(df=df_connect_4, dataset_info=connect_4)
@@ -208,10 +269,10 @@ class Runner:
             eval_metric="neg_root_mean_squared_error")
         df_nasa_numeric = pd.read_csv(nasa_numeric.dataset_file, low_memory=False)
         df_nasa_numeric = df_nasa_numeric.fillna(nan)
-        df_nasa_numeric = impute_mean_or_median(df_nasa_numeric, self.imputation_strategy)
-        df_nasa_numeric = impute_most_frequent(df_nasa_numeric)
-        df_nasa_numeric = convert_to_actual_type(df=df_nasa_numeric)
-        if self.experiment_name == "experiment4":
+        df_nasa_numeric = self.prepare_data_frame(df=df_nasa_numeric, missing_values=True)
+        if self.experiment_name == "experiment3":
+            self.run_experiment3(df=df_nasa_numeric, dataset_info=nasa_numeric)
+        elif self.experiment_name == "experiment4":
             self.run_experiment4(df=df_nasa_numeric, dataset_info=nasa_numeric)
         else:
             self.evaluate_feature_selection(df=df_nasa_numeric, dataset_info=nasa_numeric)
@@ -221,10 +282,10 @@ class Runner:
                                  f"results/{self.experiment_name}/arrhythmia")
         df_arrhythmia = pd.read_csv(arrhythmia.dataset_file, low_memory=False)
         df_arrhythmia = df_arrhythmia.replace("?", nan)
-        df_arrhythmia = impute_mean_or_median(df=df_arrhythmia, strategy=self.imputation_strategy)
-        df_arrhythmia = impute_most_frequent(df=df_arrhythmia)
-        df_arrhythmia = convert_to_actual_type(df=df_arrhythmia)
-        if self.experiment_name == "experiment4":
+        df_arrhythmia = self.prepare_data_frame(df=df_arrhythmia, missing_values=True)
+        if self.experiment_name == "experiment3":
+            self.run_experiment3(df=df_arrhythmia, dataset_info=arrhythmia)
+        elif self.experiment_name == "experiment4":
             self.run_experiment4(df=df_arrhythmia, dataset_info=arrhythmia)
         else:
             self.evaluate_feature_selection(df=df_arrhythmia, dataset_info=arrhythmia)
@@ -235,8 +296,10 @@ class Runner:
         for i in range(10):
             frames.append(pd.read_csv(f"{crop.dataset_file}/crop{i}.csv", low_memory=False))
         df_crop = pd.concat(frames)
-        df_crop = convert_to_actual_type(df=df_crop)
-        if self.experiment_name == "experiment4":
+        df_crop = self.prepare_data_frame(df=df_crop)
+        if self.experiment_name == "experiment3":
+            self.run_experiment3(df=df_crop, dataset_info=crop)
+        elif self.experiment_name == "experiment4":
             self.run_experiment4(df=df_crop, dataset_info=crop)
         else:
             self.evaluate_feature_selection(df=df_crop, dataset_info=crop)
@@ -251,8 +314,10 @@ class Runner:
             # print(file_name)
             frames.append(pd.read_csv(f"{character_font_images.dataset_file}/{file_name}"))
         df_character_font_images = pd.concat(frames)
-        df_character_font_images = convert_to_actual_type(df=df_character_font_images)
-        if self.experiment_name == "experiment4":
+        df_character_font_images = self.prepare_data_frame(df=df_character_font_images)
+        if self.experiment_name == "experiment3":
+            self.run_experiment3(df=df_character_font_images, dataset_info=character_font_images)
+        elif self.experiment_name == "experiment4":
             self.run_experiment4(df=df_character_font_images, dataset_info=character_font_images)
         else:
             self.evaluate_feature_selection(df=df_character_font_images, dataset_info=character_font_images)
@@ -261,15 +326,19 @@ class Runner:
         internet_ads = DatasetInfo("data/internet_advertisements/internet_advertisements.csv",
                                    "class", f"results/{self.experiment_name}/internet_advertisements")
         df_internet_ads = pd.read_csv(internet_ads.dataset_file, low_memory=False)
-        df_internet_ads = convert_to_actual_type(df=df_internet_ads)
-        if self.experiment_name == "experiment4":
+        df_internet_ads = self.prepare_data_frame(df=df_internet_ads)
+        if self.experiment_name == "experiment3":
+            self.run_experiment3(df=df_internet_ads, dataset_info=internet_ads)
+        elif self.experiment_name == "experiment4":
             self.run_experiment4(df=df_internet_ads, dataset_info=internet_ads)
         else:
             self.evaluate_feature_selection(df=df_internet_ads, dataset_info=internet_ads)
 
-    def evaluate_feature_selection(self, df: pd.DataFrame, dataset_info: DatasetInfo):
-        methods: list[Literal["chi2", "anova", "forward_selection", "backward_elimination"]] = \
-            ["chi2", "anova", "forward_selection", "backward_elimination"]
+    def evaluate_feature_selection(
+        self, df: pd.DataFrame, dataset_info: DatasetInfo,
+        methods: list[Literal["chi2", "anova", "forward_selection", "backward_elimination"]] =
+            ["chi2", "anova", "forward_selection", "backward_elimination"]):
+
         selected_features_path = f"{dataset_info.results_path}/selected_features"
 
         for method in methods:

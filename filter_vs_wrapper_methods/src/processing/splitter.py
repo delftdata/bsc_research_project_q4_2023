@@ -1,4 +1,5 @@
 import random
+from typing import Literal
 
 import numpy as np
 import pandas as pd
@@ -32,6 +33,29 @@ def select_k_best_features_from_data_frame(df: pd.DataFrame, target_label: str, 
         if df.columns[i] in selected_k_features_names or df.columns[i] == target_label]
 
     return df.iloc[:, selected_k_features_indices]
+
+
+def drop_features(
+        df: pd.DataFrame, target_label: str, feature_type: Literal["string", "int64", "float64"]) -> pd.DataFrame:
+    target_index = df.columns.get_loc(key=target_label)
+    actual_feature_type = "category" if feature_type == "string" else feature_type
+
+    column_indices = [i for i, column in enumerate(
+        df.columns) if df[column].dtype != actual_feature_type or i == target_index]
+
+    return df.iloc[:, column_indices]
+
+
+def drop_features_with_negative_values(df: pd.DataFrame, target_label: str) -> pd.DataFrame:
+    def is_number(column_type) -> bool: return column_type == "int64" or column_type == "float64"
+    def is_positive(column) -> bool: return all([x >= 0 for x in column])
+
+    target_index = df.columns.get_loc(key=target_label)
+
+    positive_column_indices = [i for i, column in enumerate(df.columns)
+                               if is_number(df[column].dtype) and is_positive(df[column]) or i == target_index]
+
+    return df.iloc[:, positive_column_indices]
 
 
 def split_categorical_discrete_continuous_features(

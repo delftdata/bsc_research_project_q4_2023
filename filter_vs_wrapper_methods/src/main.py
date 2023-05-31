@@ -86,11 +86,11 @@ class Runner:
     def run_experiment_on_small_datasets_in_parallel(self):
         with Pool() as pool:
             small_datasets = ["bank_marketing", "breast_cancer", "steel_plates_faults",
-                              "housing_prices", "bike_sharing", "census_income", "connect_4"]
+                              "housing_prices", "bike_sharing", "census_income", "connect_4", "nasa_numeric"]
             pool.map(self.run_experiment_on_dataset, small_datasets)
 
     def run_experiment_on_big_datasets_sequentially(self):
-        big_datasets = ["arrhythmia", "crop", "character_font_images", "internet_ads", "nasa_numeric"]
+        big_datasets = ["arrhythmia", "crop", "character_font_images", "internet_ads"]
         for big_dataset in big_datasets:
             self.run_experiment_on_dataset(dataset=big_dataset)
 

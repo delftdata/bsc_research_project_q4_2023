@@ -63,8 +63,7 @@ class SymmetricUncertaintyFeatureSelection:
 
         # Calculate the Symmetric Uncertainty correlation between each feature and the target feature
         su_correlations = train_dataframe\
-            .apply(func=lambda feature: SymmetricUncertaintyFeatureSelection.
-                   compute_correlation(feature, target_column),
+            .apply(func=lambda feature: SymmetricUncertaintyFeatureSelection.compute_correlation(feature, target_column),
                    axis=0)
 
         # Select the top features with the highest correlation

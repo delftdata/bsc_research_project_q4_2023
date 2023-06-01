@@ -19,7 +19,7 @@ class DatasetEvaluator:
         self.dataset_name = dataset_name
         self.target_label = target_label
         self.dataframe = pd.read_csv(dataset_file)
-        self.auxiliary_dataframe = pd.read_csv(dataset_file).fillna(self.dataframe.mode().iloc[0])
+        self.auxiliary_dataframe = pd.read_csv(dataset_file)
         # Specify the models to use
         # GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
         self.algorithms_model_names = {
@@ -29,6 +29,7 @@ class DatasetEvaluator:
             'XGB': 'XGBoost'
         }
         # TODO: Experiment with other values for the number of features to select
+        # TODO: Experiment with a threshold when selecting features
         self.number_of_features_to_select = self.dataframe.shape[1] - 1
         self.evaluation_metric = evaluation_metric
 
@@ -78,13 +79,9 @@ class DatasetEvaluator:
         return performances
 
     def evaluate_all_models(self):
-        # TODO: Should we handle missing values?
-        #print(self.dataframe.head(10))
-        #print(self.dataframe.mode().iloc[0])
+        # .fillna(self.dataframe.mode().iloc[0])
         self.dataframe = self.dataframe.fillna(value=np.nan)
-        print(self.dataframe)
         self.dataframe = TabularDataset(self.dataframe)
-        #print(self.dataframe.head(10))
         self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
             enable_text_special_features=False,
             enable_text_ngram_features=False) \
@@ -100,13 +97,13 @@ class DatasetEvaluator:
         one_hot_encoder = OneHotEncoder()
         encoded_train_dataframe = one_hot_encoder.encode(train_dataframe, self.target_label)
         encoded_test_dataframe = one_hot_encoder.encode(test_dataframe, self.target_label)
-        pearson_selected_features = [] # PearsonFeatureSelection.feature_selection(encoded_train_dataframe,
-                                          #                                    self.target_label,
-                                           #                                   self.number_of_features_to_select)
+        pearson_selected_features = PearsonFeatureSelection.feature_selection(encoded_train_dataframe,
+                                                                              self.target_label,
+                                                                              self.number_of_features_to_select)
 
-        spearman_selected_features = [] # SpearmanFeatureSelection.feature_selection(encoded_train_dataframe,
-                                            #                                    self.target_label,
-                                             #                                   self.number_of_features_to_select)
+        spearman_selected_features = SpearmanFeatureSelection.feature_selection(encoded_train_dataframe,
+                                                                                self.target_label,
+                                                                                self.number_of_features_to_select)
 
         cramersv_selected_features = CramersVFeatureSelection.feature_selection(encoded_train_dataframe,
                                                                                 self.target_label,
@@ -125,10 +122,8 @@ class DatasetEvaluator:
                 self.get_hyperparameters_no_feature_selection(algorithm, model_name,
                                                               encoded_train_dataframe, encoded_test_dataframe)
 
-            # TODO: Add all methods (+ figure out the necessary encoding)
             # Evaluate model on the features selected by the different correlation-based methods
-            methods = ['Pearson', 'Spearman',
-                       'Cramer\'s V', 'SU']
+            methods = ['Pearson', 'Spearman', 'Cramer\'s V', 'SU']
             all_performances_methods = []
             for feature_subset, method in zip([pearson_selected_features, spearman_selected_features,
                                                cramersv_selected_features, su_selected_features], methods):
@@ -158,7 +153,6 @@ def evaluate_census_income_dataset():
         target_label='income_label',
         evaluation_metric='accuracy')
 
-    # TODO: Pearson and Spearman will fail unless encoding is done
     dataset_evaluator.evaluate_all_models()
 
 

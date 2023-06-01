@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from DimensionalReduction.src import generalMethods
 from generalMethods import *
 from models.models import *
 

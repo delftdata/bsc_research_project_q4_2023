@@ -131,7 +131,7 @@ class Handle:
 
 
     def fileToRead (self, data_set):
-        file_to_read = "../../datasets"
+        file_to_read = "../datasets"
 
         if data_set == DataSet.BCWD:
             file_to_read += "/breast-cancer"

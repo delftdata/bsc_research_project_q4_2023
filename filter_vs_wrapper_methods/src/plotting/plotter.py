@@ -45,7 +45,9 @@ def plot_metrics_matplotlib(
     ax.plot(percentage_features, metrics_forward_selection, label="forward_selection", marker="^")
     ax.plot(percentage_features, metrics_backward_elimination, label="backward elimination", marker="s")
 
-    plt.xticks(percentage_features)
+    font_size_ticks = 7
+    plt.xticks(percentage_features, fontsize=font_size_ticks)
+    plt.yticks(fontsize=font_size_ticks)
     # plt.yticks(
     #     np.unique(
     #         np.concatenate(

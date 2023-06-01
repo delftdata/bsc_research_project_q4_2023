@@ -1,0 +1,146 @@
+V3 Average width: Q wave
+V2 Average width: Q wave
+V1 Average width: R' wave
+Heart rate
+V5 Existence of diphasic derivation of Average width: R wave
+V1 Number of intrinsic deflections
+V4 Average width: Q wave
+V3 Average width: S wave
+V3 Average width: R wave
+V3 Existence of diphasic derivation of P wave
+V2 Average width: R' wave
+DII Average width: Q wave
+V6 Average width: R wave
+V3 Number of intrinsic deflections
+QRS duration
+V4 Average width: R wave
+V5 Average width: R wave
+Q-T interval
+V1 Average width: Q wave
+V2 Average width: R wave
+V2 Existence of ragged P wave
+V3 Existence of diphasic derivation of T wave
+V2 Average width: S wave
+AVF Average width: Q wave
+DII Number of intrinsic deflections
+V1 Average width: R wave
+V6 Number of intrinsic deflections
+DII Average width: R' wave
+V2 Number of intrinsic deflections
+AVR Average width: R wave
+DII Average width: R wave
+DI Average width: R wave
+V4 Number of intrinsic deflections
+DI Average width: S wave
+AVR Average width: Q wave
+V4 Existence of ragged Average width: R wave
+V1 Average width: S wave
+V1 Existence of ragged Average width: R wave
+V1 Existence of diphasic derivation of Average width: R wave
+AVR Number of intrinsic deflections
+V6 Average width: Q wave
+V4 Existence of diphasic derivation of T wave
+T interval
+DI Existence of diphasic derivation of T wave
+AVF Number of intrinsic deflections
+V4 Average width: S wave
+DII Average width: S wave
+V3 Existence of ragged P wave
+Gender
+AVR Existence of diphasic derivation of T wave
+QRST
+Age
+J
+QRS
+AVF Existence of diphasic derivation of T wave
+DIII Average width: Q wave
+V5 Number of intrinsic deflections
+DIII Number of intrinsic deflections
+AVL Average width: S wave
+AVF Average width: S wave
+V5 Average width: Q wave
+V6 Average width: S wave
+DI Number of intrinsic deflections
+Weight
+DIII Average width: S wave
+DI Existence of ragged T wave
+P interval
+AVL Average width: Q wave
+V6 Existence of diphasic derivation of T wave
+AVR Average width: S wave
+V2 Existence of diphasic derivation of P wave
+V3 Existence of ragged Average width: R wave
+AVL Existence of diphasic derivation of T wave
+AVL Number of intrinsic deflections
+V2 Existence of ragged T wave
+P-R interval
+DI Average width: Q wave
+V5 Existence of diphasic derivation of T wave
+AVF Average width: R wave
+AVR Average width: R' wave
+V1 Existence of ragged P wave
+AVL Existence of diphasic derivation of P wave
+V6 Existence of diphasic derivation of Average width: R wave
+DI Existence of diphasic derivation of Average width: R wave
+V3 Existence of ragged T wave
+Height
+P
+T
+AVL Average width: R wave
+V2 Average width: S' wave
+V5 Average width: R' wave
+DII Existence of diphasic derivation of Average width: R wave
+V2 Existence of diphasic derivation of Average width: R wave
+AVR Existence of ragged T wave
+AVL Existence of diphasic derivation of Average width: R wave
+V3 Average width: R' wave
+DII Existence of diphasic derivation of T wave
+DIII Existence of diphasic derivation of T wave
+V5 Average width: S wave
+AVR Existence of diphasic derivation of P wave
+V3 Existence of diphasic derivation of Average width: R wave
+DII Existence of diphasic derivation of P wave
+V4 Existence of ragged T wave
+V2 Existence of ragged Average width: R wave
+AVF Average width: S' wave
+V6 Existence of ragged P wave
+DII Average width: S' wave
+V3 Average width: S' wave
+AVF Existence of diphasic derivation of Average width: R wave
+DIII Average width: R' wave
+AVF Average width: R' wave
+V4 Existence of diphasic derivation of Average width: R wave
+DI Average width: R' wave
+V1 Existence of diphasic derivation of P wave
+DIII Average width: R wave
+V1 Existence of diphasic derivation of T wave
+DIII Existence of ragged T wave
+V2 Existence of diphasic derivation of T wave
+V1 Average width: S' wave
+DI Existence of ragged Average width: R wave
+DII Existence of ragged P wave
+V4 Average width: R' wave
+V1 Existence of ragged T wave
+AVR Existence of diphasic derivation of Average width: R wave
+DI Existence of diphasic derivation of P wave
+AVF Existence of ragged Average width: R wave
+AVL Average width: R' wave
+DI Existence of ragged P wave
+V6 Average width: R' wave
+DIII Existence of diphasic derivation of Average width: R wave
+V4 Average width: S' wave
+DIII Existence of diphasic derivation of P wave
+DII Existence of ragged Average width: R wave
+DII Existence of ragged T wave
+AVR Existence of ragged P wave
+AVR Existence of ragged Average width: R wave
+DIII Average width: S' wave
+AVL Existence of ragged T wave
+AVL Existence of ragged P wave
+AVF Existence of ragged T wave
+V5 Existence of diphasic derivation of P wave
+V6 Existence of ragged Average width: R wave
+DIII Existence of ragged Average width: R wave
+AVR Average width: S' wave
+AVF Existence of diphasic derivation of P wave
+DIII Existence of ragged P wave

@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-from generalMethods import *
+from DimensionalReduction.src.generalMethods import *
 from models.models import *
 
 def compare_models(drMethods, algorithmsToTest, matrix_train, label_train, matrix_test, label_test):

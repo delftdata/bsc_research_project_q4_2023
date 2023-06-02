@@ -57,7 +57,7 @@ def plotModelParameter (drMethod, algorithmToTest, matrix_train, label_train, ma
             df_train["label"] = new_label_train
             df_test["label"] = new_label_test
 
-            predictor = TabularPredictor(label='label', problem_type='binary', verbosity=0)
+            predictor = TabularPredictor(label='label', problem_type='multiclass', verbosity=0)
             predictor.fit(train_data=df_train, hyperparameters=algorithmToTest)
             performance = predictor.evaluate(df_test)
             print("results: ", var, ": ", performance)

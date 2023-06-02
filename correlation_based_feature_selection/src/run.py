@@ -33,27 +33,31 @@ class DatasetEvaluator:
         self.number_of_features_to_select = self.dataframe.shape[1] - 1
         self.evaluation_metric = evaluation_metric
 
-    def get_hyperparameters_no_feature_selection(self, algorithm, model_name, train_dataframe,
-                                                 test_dataframe):
-        train_data = TabularDataset(self.auxiliary_dataframe)
+    def run_model_no_feature_selection(self, algorithm, model_name, train_dataframe, test_dataframe):
         fitted_predictor = TabularPredictor(label=self.target_label,
                                      eval_metric=self.evaluation_metric,
                                      verbosity=1) \
             .fit(train_data=train_dataframe, hyperparameters={algorithm: {}})
 
-        # Get tuned hyperparameters
+        # Get the tuned hyperparameters
         training_results = fitted_predictor.info()
-        print("FEATURE IMPORTANCE")
+        hyperparameters = training_results['model_info'][model_name]['hyperparameters']
+
+        # Get the performance and the feature importance given by the baseline model
         importance = fitted_predictor.feature_importance(data=test_dataframe, feature_stage='original')
+        baseline_performance = fitted_predictor.evaluate(test_dataframe)[self.evaluation_metric]
+
+        print("Feature importance")
         print(importance)
         print(" ")
-        hyperparameters = training_results['model_info'][model_name]['hyperparameters']
-        baseline_performance = fitted_predictor.evaluate(test_dataframe)[self.evaluation_metric]
+        print("Baseline performance")
         print(baseline_performance)
+        print(" ")
+
         return hyperparameters, baseline_performance
 
     def evaluate_model_varying_features(self, algorithm, hyperparameters, train_dataframe,
-                       feature_subset, target_label, test_dataframe):
+                                        feature_subset, target_label, test_dataframe):
         performances = []
 
         for subset_length in range(1, len(feature_subset)):
@@ -79,9 +83,8 @@ class DatasetEvaluator:
         return performances
 
     def evaluate_all_models(self):
-        # .fillna(self.dataframe.mode().iloc[0])
-        self.dataframe = self.dataframe.fillna(value=np.nan)
         self.dataframe = TabularDataset(self.dataframe)
+        self.dataframe = FillNaFeatureGenerator(inplace=True).fit_transform(self.dataframe)
         self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
             enable_text_special_features=False,
             enable_text_ngram_features=False) \
@@ -119,8 +122,8 @@ class DatasetEvaluator:
             print(algorithm)
             # Get the hyperparameters on the data set with all features
             hyperparameters, baseline_performance = \
-                self.get_hyperparameters_no_feature_selection(algorithm, model_name,
-                                                              encoded_train_dataframe, encoded_test_dataframe)
+                self.run_model_no_feature_selection(algorithm, model_name,
+                                                    encoded_train_dataframe, encoded_test_dataframe)
 
             # Evaluate model on the features selected by the different correlation-based methods
             methods = ['Pearson', 'Spearman', 'Cramer\'s V', 'SU']

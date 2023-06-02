@@ -29,7 +29,7 @@ def compare_models(drMethods, algorithmsToTest, matrix_train, label_train, matri
 
 
         for hyper in algorithmsToTest:
-            predictor = TabularPredictor(label='label', problem_type='binary', verbosity=0)
+            predictor = TabularPredictor(label='label', problem_type='multiclass', verbosity=0)
             predictor.fit(train_data=df_train, hyperparameters=hyper)
             performance = predictor.evaluate(df_test)
             print("results: ", hyper, ": ", performance)

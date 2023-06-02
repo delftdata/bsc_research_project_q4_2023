@@ -88,10 +88,6 @@ class Handle:
             train_matrix = train_df.drop(['font', 'fontVariant'], axis=1)
             test_label = test_df['font']
             test_matrix = test_df.drop(['font', 'fontVariant'], axis=1)
-            print("train label:", train_label)
-            print("train matrix: ", train_matrix)
-            print("test label : ", test_label)
-            print("test matrix: ", test_matrix)
 
 
         header = df.columns

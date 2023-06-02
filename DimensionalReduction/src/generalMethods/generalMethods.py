@@ -13,7 +13,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 import sklearn
 from sklearn.preprocessing import OneHotEncoder
-import matlab.engine
+# import matlab.engine
 from sklearn import preprocessing
 from sklearn import datasets, cluster
 import time
@@ -70,6 +70,29 @@ class Handle:
             train_matrix = train_df.drop('label', axis=1)
             test_label = test_df['label']
             test_matrix = test_df.drop('label', axis=1)
+
+        elif data_set == DataSet.FONTS:
+            map_to_read = "../datasets/CharacterFontImages/"
+            df = []
+            i =0
+            for file in os.listdir(map_to_read):
+                print(file)
+                if file.endswith(".csv") and not file.startswith("data"):
+                    i += 1
+                    file_to_read = map_to_read + file
+                    df.append(pd.read_csv(file_to_read))
+            df = pd.concat(df)
+            print(df)
+            train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
+            train_label = train_df['font']
+            train_matrix = train_df.drop(['font', 'fontVariant'], axis=1)
+            test_label = test_df['font']
+            test_matrix = test_df.drop(['font', 'fontVariant'], axis=1)
+            print("train label:", train_label)
+            print("train matrix: ", train_matrix)
+            print("test label : ", test_label)
+            print("test matrix: ", test_matrix)
+
 
         header = df.columns
 
@@ -159,6 +182,7 @@ class Handle:
         elif drMethod == DRMethod.PCA:
             pca = PCA(n_components= self.variance_to_keep)
             start_time = time.time()
+            # print(training_data)
             pca.fit(training_data)
             training_data_result = pca.transform(training_data)
             test_data_result = pca.transform(test_data)
@@ -227,27 +251,27 @@ class Handle:
             test_data_result = agglo.transform(test_data)
             end_time = time.time()
 
-        elif drMethod == DRMethod.GDA:
-            eng = matlab.engine.start_matlab()
-
-            new_test_data = np.transpose(test_data.to_numpy())
-            new_training_data = np.transpose(training_data.to_numpy())
-            new_training_label =training_label.to_numpy()
-            le = preprocessing.LabelEncoder()
-            le.fit(new_training_label)
-            new_training_label = le.transform(new_training_label)
-            new_training_label += 1
-
-            start_time = time.time()
-            mappedData_train = eng.gda(new_training_data, new_training_data,
-                                 new_training_label)
-            mappedData_test = eng.gda(new_test_data, new_training_data,
-                                 new_training_label)
-            end_time = time.time()
-
-            training_data_result = np.transpose(np.array(mappedData_train))
-            test_data_result = np.transpose(np.array(mappedData_test))
-            eng.quit()
+        # elif drMethod == DRMethod.GDA:
+        #     eng = matlab.engine.start_matlab()
+        #
+        #     new_test_data = np.transpose(test_data.to_numpy())
+        #     new_training_data = np.transpose(training_data.to_numpy())
+        #     new_training_label =training_label.to_numpy()
+        #     le = preprocessing.LabelEncoder()
+        #     le.fit(new_training_label)
+        #     new_training_label = le.transform(new_training_label)
+        #     new_training_label += 1
+        #
+        #     start_time = time.time()
+        #     mappedData_train = eng.gda(new_training_data, new_training_data,
+        #                          new_training_label)
+        #     mappedData_test = eng.gda(new_test_data, new_training_data,
+        #                          new_training_label)
+        #     end_time = time.time()
+        #
+        #     training_data_result = np.transpose(np.array(mappedData_train))
+        #     test_data_result = np.transpose(np.array(mappedData_test))
+        #     eng.quit()
 
         hours, rem = divmod(end_time - start_time, 3600)
         minutes, seconds = divmod(rem, 60)

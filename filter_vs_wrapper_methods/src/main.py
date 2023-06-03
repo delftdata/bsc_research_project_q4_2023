@@ -28,7 +28,7 @@ def main():
     print(f"Experiment_name: {experiment_name}")
     preprocessing = experiment_name != "experiment1" and experiment_name != "experiment3"
     imputation_strategy: Literal["mean", "median"] = "mean"
-    normalization = False
+    normalization = True
     runner = Runner(algorithm_names, experiment_name, preprocessing, imputation_strategy, normalization)
     dataset = sys.argv[2]
     print(f"Dataset: {dataset}")

@@ -12,12 +12,12 @@ from sklearn.linear_model import LinearRegression, LogisticRegression
 
 def rank_features_descending_wrapper(df: pd.DataFrame, method: Literal["forward_selection", "backward_elimination"],
                                      target_label: str, scoring: Literal["accuracy", "neg_root_mean_squared_error"],
-                                     preprocessing=False, n_jobs=-1) -> tuple[list[str], float]:
+                                     preprocessing=False, normalization=True, n_jobs=-1) -> tuple[list[str], float]:
 
     preprocessed_df = df.copy()
 
     if preprocessing:
-        preprocessed_df = preprocess_sequential_feature_selection(preprocessed_df, [target_label])
+        preprocessed_df = preprocess_sequential_feature_selection(preprocessed_df, [target_label], normalization)
 
     X, y = split_input_target(preprocessed_df, target_label)
     estimator = LogisticRegression() if scoring == "accuracy" else LinearRegression()

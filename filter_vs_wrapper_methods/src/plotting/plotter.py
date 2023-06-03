@@ -30,22 +30,26 @@ def plot_metrics_matplotlib(
         raw_metrics_backward_elimination: list[str],
         model: str, x_label="Percentage of selected features", y_label="Accuracy"):
 
-    metrics_chi2 = postprocess_results(raw_metrics_chi2)
-    metrics_anova = postprocess_results(raw_metrics_anova)
-    metrics_forward_selection = postprocess_results(raw_metrics_forward_selection)
-    metrics_backward_elimination = postprocess_results(raw_metrics_backward_elimination)
+    metrics_chi2 = postprocess_results(raw_metrics_chi2) if raw_metrics_chi2 else []
+    metrics_anova = postprocess_results(raw_metrics_anova) if raw_metrics_anova else []
+    metrics_forward_selection = postprocess_results(
+        raw_metrics_forward_selection) if raw_metrics_forward_selection else []
+    metrics_backward_elimination = postprocess_results(
+        raw_metrics_backward_elimination) if raw_metrics_backward_elimination else []
 
     percentage_features = [i for i in range(10, 110, 10)]
     percentage_features = percentage_features[len(percentage_features) - len(metrics_chi2):]
 
     fig, ax = plt.subplots()
 
-    ax.plot(percentage_features, metrics_chi2, label="chi2", marker="o")
-    ax.plot(percentage_features, metrics_anova, label="anova", marker="*")
-    ax.plot(percentage_features, metrics_forward_selection, label="forward_selection", marker="^")
-    ax.plot(percentage_features, metrics_backward_elimination, label="backward elimination", marker="s")
+    ax.plot(percentage_features, metrics_chi2, label="chi2", marker="o") if raw_metrics_chi2 else None
+    ax.plot(percentage_features, metrics_anova, label="anova", marker="*") if raw_metrics_anova else None
+    ax.plot(percentage_features, metrics_forward_selection, label="forward_selection",
+            marker="^") if raw_metrics_forward_selection else None
+    ax.plot(percentage_features, metrics_backward_elimination, label="backward elimination",
+            marker="s") if raw_metrics_backward_elimination else None
 
-    font_size_ticks = 7
+    font_size_ticks = 10
     plt.xticks(percentage_features, fontsize=font_size_ticks)
     plt.yticks(fontsize=font_size_ticks)
     # plt.yticks(

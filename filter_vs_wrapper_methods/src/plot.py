@@ -8,25 +8,25 @@ def main():
     # plot_results("experiment2", "breast_cancer")
     # plot_results("experiment2", "steel_plates_faults")
     # plot_results("experiment2", "bank_marketing")
-    # plot_experiments("experiment2", "bike_sharing", y_label="Root Mean Squared Error")
-    # plot_experiments("experiment4", "bank_marketing")
-    # plot_experiments("experiment4", "breast_cancer")
-    # plot_experiments("experiment4", "steel_plates_faults")
-    # plot_experiments("experiment4", "housing_prices")
-    # plot_experiments("experiment4", "bike_sharing", y_label="Root Mean Squared Error")
-    # plot_experiments("experiment4", "census_income")
-    # plot_experiments("experiment4", "nasa_numeric", y_label="Root Mean Squared Error")
-    plot_experiments("experiment4", "arrhythmia")
-    classification_datasets = ["arrhythmia", "bank_marketing", "breast_cancer", "census_income", "steel_plates_faults"]
-    regression_datasets = ["housing_prices", "bike_sharing", "nasa_numeric"]
-    y_label_regression = "Average Root Mean Squared Error"
-    # plot_average_results_experiment2(classification_datasets)
-    # plot_average_results_experiment2(regression_datasets, y_label=y_label_regression)
-    plot_average_results_experiment4(classification_datasets)
-    plot_average_results_experiment4(regression_datasets, y_label=y_label_regression)
+    plot_experiments("experiment3", "bank_marketing")
+    plot_experiments("experiment3", "bike_sharing", y_label="Root Mean Squared Error")
+    plot_experiments("experiment3", "breast_cancer")
+    plot_experiments("experiment3", "census_income")
+    plot_experiments("experiment3", "connect-4")
+    plot_experiments("experiment3", "housing_prices", y_label="Root Mean Squared Error")
+    plot_experiments("experiment3", "steel_plates_faults")
+    plot_experiments("experiment3", "arrhythmia")
+    # plot_experiments("experiment3", "nasa_numeric", y_label="Root Mean Squared Error")
+    # classification_datasets = ["arrhythmia", "bank_marketing", "breast_cancer", "census_income", "steel_plates_faults"]
+    # regression_datasets = ["housing_prices", "bike_sharing", "nasa_numeric"]
+    # y_label_regression = "Average Root Mean Squared Error"
+    # # plot_average_results_experiment2(classification_datasets)
+    # # plot_average_results_experiment2(regression_datasets, y_label=y_label_regression)
+    # plot_average_results_experiment4(classification_datasets)
+    # plot_average_results_experiment4(regression_datasets, y_label=y_label_regression)
 
 
-def plot_average_results_experiment2(datasets: list[str], y_label="Average Accuracy"):
+def plot_average_results_experiment2(datasets: list[str], y_label="Average Accuracy", dpi=2500):
     results_path_experiment = "results/experiment2"
     models = ["GBM", "LR", "RF", "XGB"]
     for model in models:
@@ -54,11 +54,11 @@ def plot_average_results_experiment2(datasets: list[str], y_label="Average Accur
             raw_metrics_chi2, raw_metrics_anova, raw_metrics_forward_selection, raw_metrics_backward_elimination,
             model, y_label=y_label)
 
-        algorithm_plot.savefig(f"{plot_path}/{model}.png")
+        algorithm_plot.savefig(f"{plot_path}/{model}.png", dpi=dpi)
         plt.close(algorithm_plot)
 
 
-def plot_average_results_experiment4(datasets: list[str], y_label="Average Accuracy"):
+def plot_average_results_experiment4(datasets: list[str], y_label="Average Accuracy", dpi=2500):
     results_path_experiment = "results/experiment4"
     models = ["GBM", "LR", "RF", "XGB"]
     data_types = ["categorical", "discrete", "continuous"]
@@ -89,7 +89,7 @@ def plot_average_results_experiment4(datasets: list[str], y_label="Average Accur
                 raw_metrics_chi2, raw_metrics_anova, raw_metrics_forward_selection, raw_metrics_backward_elimination,
                 model, y_label=y_label)
 
-            algorithm_plot.savefig(f"{plot_path}/{model}.png")
+            algorithm_plot.savefig(f"{plot_path}/{model}.png", dpi=dpi)
             plt.close(algorithm_plot)
 
 
@@ -112,23 +112,33 @@ def plot_experiments(experiment: str, dataset: str, y_label="Accuracy"):
         plot_results(results_path, y_label)
 
 
-def plot_results(results_path: str, y_label="Accuracy"):
+def plot_results(results_path: str, y_label="Accuracy", dpi=2500):
     models = ["GBM", "LR", "RF", "XGB"]
 
     for model in models:
-        raw_metrics_chi2 = [line.strip() for line in open(f"{results_path}/chi2/{model}.txt", "r")]
-        raw_metrics_anova = [line.strip() for line in open(f"{results_path}/anova/{model}.txt", "r")]
-        raw_metrics_forward_selection = [line.strip() for line in open(
-            f"{results_path}/forward_selection/{model}.txt", "r")]
-        raw_metrics_backward_elimination = [line.strip() for line in open(
-            f"{results_path}/backward_elimination/{model}.txt", "r")]
+        try:
+            raw_metrics_chi2 = try_reading(results_path, "chi2", model)
+            raw_metrics_anova = try_reading(results_path, "anova", model)
+            raw_metrics_forward_selection = try_reading(results_path, "forward_selection", model)
+            raw_metrics_backward_elimination = try_reading(results_path, "backward_elimination", model)
 
-        algorithm_plot = plot_metrics_matplotlib(
-            raw_metrics_chi2, raw_metrics_anova, raw_metrics_forward_selection, raw_metrics_backward_elimination, model,
-            y_label=y_label)
+            algorithm_plot = plot_metrics_matplotlib(
+                raw_metrics_chi2, raw_metrics_anova, raw_metrics_forward_selection, raw_metrics_backward_elimination,
+                model, y_label=y_label)
 
-        algorithm_plot.savefig(f"{results_path}/{model}.png")
-        plt.close(algorithm_plot)
+            algorithm_plot.savefig(f"{results_path}/{model}.png", dpi=dpi)
+            plt.close(algorithm_plot)
+        except Exception as e:
+            print(f"Failed plotting or reading: {e}")
+
+
+def try_reading(results_path: str, method: str, model: str):
+    raw_metrics = []
+    try:
+        raw_metrics = [line.strip() for line in open(f"{results_path}/{method}/{model}.txt", "r")]
+    except Exception as e:
+        print(e)
+    return raw_metrics
 
 
 # def plot_results(path: str, performance_algorithm: dict[str, list[float]], scoring, algorithm: str):
@@ -141,7 +151,6 @@ def plot_results(results_path: str, y_label="Accuracy"):
 #         figure.clf()
 #     except Exception as e:
 #         print(f"An error occurred: {e}")
-
 
 if __name__ == '__main__':
     main()

@@ -20,7 +20,6 @@ class Evaluator:
         for selected_feature_size in percentage_range:
             df = select_k_best_features_from_data_frame(
                 self.df, self.target_label, sorted_features, selected_feature_size)
-            # print(df.head())
 
             try:
                 results = self.evaluate_models(df)

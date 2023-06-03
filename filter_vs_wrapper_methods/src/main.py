@@ -27,8 +27,9 @@ def main():
     experiment_name = sys.argv[1]
     print(f"Experiment_name: {experiment_name}")
     preprocessing = experiment_name != "experiment1" and experiment_name != "experiment3"
-    imputation_strategy: Literal["mean", "median"] = "mean"
-    runner = Runner(algorithm_names, experiment_name, preprocessing, imputation_strategy)
+    imputation_strategy: Literal["mean", "median"] = "median"
+    normalization = True
+    runner = Runner(algorithm_names, experiment_name, preprocessing, imputation_strategy, normalization)
     dataset = sys.argv[2]
     print(f"Dataset: {dataset}")
     if dataset == "small":
@@ -50,11 +51,12 @@ class DatasetInfo:
 
 class Runner:
     def __init__(self, algorithm_names: list[tuple[str, str]], experiment_name: str,
-                 preprocessing=True, imputation_strategy: Literal["mean", "median"] = "mean"):
+                 preprocessing=True, imputation_strategy: Literal["mean", "median"] = "mean", normalization=True):
         self.algorithm_names = algorithm_names
+        self.experiment_name = experiment_name
         self.preprocessing = preprocessing
         self.imputation_strategy: Literal["mean", "median"] = imputation_strategy
-        self.experiment_name = experiment_name
+        self.normalization = normalization
         self.runner_dictionary = {
             "bank_marketing": self.run_bank_marketing,
             "breast_cancer": self.run_breast_cancer,

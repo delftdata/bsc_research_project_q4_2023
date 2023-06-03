@@ -9,7 +9,7 @@ from sklearn.feature_selection import chi2, f_classif
 
 
 def rank_features_descending_filter(df: pd.DataFrame, method: Literal["chi2", "anova"],
-                                    target_label: str, preprocessing=False) -> tuple[list[str], float]:
+                                    target_label: str, preprocessing=False, normalization=True) -> tuple[list[str], float]:
 
     preprocessed_df = df.copy()
 
@@ -17,7 +17,7 @@ def rank_features_descending_filter(df: pd.DataFrame, method: Literal["chi2", "a
         if method == "chi2":
             preprocessed_df = preprocess_chi2(preprocessed_df, [target_label])
         else:
-            preprocessed_df = preprocess_anova(preprocessed_df, [target_label])
+            preprocessed_df = preprocess_anova(preprocessed_df, [target_label], normalization)
 
     X, y = split_input_target(preprocessed_df, target_label)
     score_func = chi2 if method == "chi2" else f_classif

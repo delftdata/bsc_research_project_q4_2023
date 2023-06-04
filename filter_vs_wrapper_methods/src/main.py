@@ -3,7 +3,7 @@ import sys
 import warnings
 from dataclasses import dataclass
 from multiprocessing import Pool
-from typing import Literal
+from typing import Literal, Union
 
 import pandas as pd
 from evaluation.evaluator import Evaluator
@@ -24,12 +24,20 @@ os.environ["PYTHONWARNINGS"] = "ignore"
 def main():
     algorithm_names: list[tuple[str, str]] = [
         ("GBM", "LightGBM"), ("RF", "RandomForest"), ("LR", "LinearModel"), ("XGB", "XGBoost")]
+    svm_param_grid: list[dict[str, list[Union[str, int, float]]]] = [
+        {
+            "C": [0.1, 100, 10, 1000],
+            "gamma": [1, "scale"],
+            "kernel": ["rbf", "sigmoid", "linear"]
+        }]
     experiment_name = sys.argv[1]
     print(f"Experiment_name: {experiment_name}")
     preprocessing = experiment_name != "experiment1" and experiment_name != "experiment3"
     imputation_strategy: Literal["mean", "median"] = "mean"
     normalization = True
-    runner = Runner(algorithm_names, experiment_name, preprocessing, imputation_strategy, normalization)
+    svm = True
+    runner = Runner(algorithm_names, svm_param_grid, experiment_name,
+                    preprocessing, imputation_strategy, normalization, svm)
     dataset = sys.argv[2]
     print(f"Dataset: {dataset}")
     if dataset == "small":
@@ -50,13 +58,18 @@ class DatasetInfo:
 
 
 class Runner:
-    def __init__(self, algorithm_names: list[tuple[str, str]], experiment_name: str,
-                 preprocessing=True, imputation_strategy: Literal["mean", "median"] = "mean", normalization=True):
+    def __init__(
+            self, algorithm_names: list[tuple[str, str]],
+            svm_param_grid: list[dict[str, list[Union[str, int, float]]]],
+            experiment_name: str, preprocessing=True, imputation_strategy: Literal["mean", "median"] = "mean",
+            normalization=True, svm=False):
         self.algorithm_names = algorithm_names
+        self.svm_param_grid = svm_param_grid
         self.experiment_name = experiment_name
         self.preprocessing = preprocessing
         self.imputation_strategy: Literal["mean", "median"] = imputation_strategy
         self.normalization = normalization
+        self.svm = svm
         self.runner_dictionary = {
             "bank_marketing": self.run_bank_marketing,
             "breast_cancer": self.run_breast_cancer,
@@ -87,8 +100,8 @@ class Runner:
 
     def run_experiment_on_small_datasets_in_parallel(self):
         with Pool() as pool:
-            small_datasets = ["bank_marketing", "breast_cancer", "steel_plates_faults",
-                              "housing_prices", "bike_sharing", "census_income", "connect_4", "nasa_numeric"]
+            small_datasets = ["bank_marketing", "bike_sharing", "breast_cancer", "steel_plates_faults",
+                              "census_income", "housing_prices", "nasa_numeric", "connect_4"]
             pool.map(self.run_experiment_on_dataset, small_datasets)
 
     def run_experiment_on_big_datasets_sequentially(self):
@@ -357,12 +370,13 @@ class Runner:
                 write_selected_features(dataset_info, sorted_features, method)
             print(f"Finished feature selection, {method}.")
 
-        evaluator = Evaluator(df, dataset_info.target_label, "root_mean_squared_error" if dataset_info.eval_metric ==
-                              "neg_root_mean_squared_error" else dataset_info.eval_metric, self.algorithm_names)
+        evaluator = Evaluator(df, dataset_info.target_label, "root_mean_squared_error"
+                              if dataset_info.eval_metric == "neg_root_mean_squared_error" else dataset_info.eval_metric,
+                              self.algorithm_names, self.svm_param_grid)
 
         for method in methods:
             sorted_features = [line.strip() for line in open(f"{selected_features_path}/{method}.txt", "r")]
-            performance = evaluator.perform_experiments(sorted_features)
+            performance = evaluator.perform_experiments(sorted_features, svm=self.svm)
             print(f"Autogluon finished evaluating the features selected by: {method}")
             write_performance(dataset_info, performance, method)
 

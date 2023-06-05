@@ -11,10 +11,11 @@ from sklearn.decomposition import PCA
 from sklearn import tree
 from sklearn.model_selection import train_test_split
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 import sklearn
 from sklearn.preprocessing import OneHotEncoder
 # import matlab.engine
-import oct2py
+# import oct2py
 from sklearn import preprocessing
 from sklearn import datasets, cluster
 import time
@@ -78,7 +79,7 @@ class Handle:
             i =0
             for file in os.listdir(map_to_read):
                 print(file)
-                if file.endswith(".csv") and not file.startswith("data"):
+                if file.endswith(".csv") and not file.startswith("data") :
                     i += 1
                     file_to_read = map_to_read + file
                     df.append(pd.read_csv(file_to_read))
@@ -248,35 +249,42 @@ class Handle:
             test_data_result = agglo.transform(test_data)
             end_time = time.time()
 
-        elif drMethod == DRMethod.GDA:
-            oc = oct2py.Oct2Py()
-            oc.eval("gda.m")
-            # eng = matlab.engine.start_matlab()
-            #
-            new_test_data = np.transpose(test_data.to_numpy())
-            new_training_data = np.transpose(training_data.to_numpy())
-            new_training_label =training_label.to_numpy()
-            le = preprocessing.LabelEncoder()
-            le.fit(new_training_label)
-            new_training_label = le.transform(new_training_label)
-            new_training_label += 1
-
-
-            #
-            start_time = time.time()
-            # mappedData_train = eng.gda(new_training_data, new_training_data,
-            #                      new_training_label)
-            # mappedData_test = eng.gda(new_test_data, new_training_data,
-            #                      new_training_label)
-
-            mappedData_train = oc.gda(new_training_data, new_training_label, new_training_label)
-            mappedData_test = oc.gda( new_test_data, new_training_data, new_training_label)
-            end_time = time.time()
-            #
-            training_data_result = np.transpose(np.array(mappedData_train))
-            test_data_result = np.transpose(np.array(mappedData_test))
-            oc.exit()
-            # eng.quit()
+        # elif drMethod == DRMethod.GDA:
+        #     eng = matlab.engine.start_matlab()
+        #     folder_path = '.\src'
+        #     eng.cd(folder_path, nargout=0)
+        #
+        #     new_test_data = np.transpose(test_data.to_numpy())
+        #     new_training_data = np.transpose(training_data.to_numpy())
+        #     new_training_label = training_label.to_numpy()
+        #     le = preprocessing.LabelEncoder()
+        #     le.fit(new_training_label)
+        #     new_training_label = le.transform(new_training_label)
+        #     new_training_label += 1
+        #     print("new train: ", new_training_data)
+        #     print(type(new_training_data))
+        #     print("new label: ", new_training_label)
+        #     print(type(new_training_label))
+        #     print("new test: ", new_test_data)
+        #     print(type(new_test_data))
+        #
+        #
+        #
+        #     #
+        #     start_time = time.time()
+        #     mappedData_train = eng.gda(new_training_data, new_training_data,
+        #                          new_training_label)
+        #     mappedData_test = eng.gda(new_test_data, new_training_data,
+        #                          new_training_label)
+        #
+        #     # mappedData_train = oc.gda(new_training_data, new_training_label, new_training_label)
+        #     # mappedData_test = oc.gda( new_test_data, new_training_data, new_training_label)
+        #     end_time = time.time()
+        #     #
+        #     training_data_result = np.transpose(np.array(mappedData_train))
+        #     test_data_result = np.transpose(np.array(mappedData_test))
+        #     # oc.exit()
+        #     eng.quit()
 
         hours, rem = divmod(end_time - start_time, 3600)
         minutes, seconds = divmod(rem, 60)

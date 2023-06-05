@@ -1,4 +1,7 @@
+import datasets.formatting
 import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn import preprocessing
 
 
 from .generalMethods.generalMethods import *
@@ -31,8 +34,6 @@ def compare_models(drMethods, algorithmsToTest, matrix_train, label_train, matri
         for hyper in algorithmsToTest:
             predictor = TabularPredictor(label='label', problem_type='multiclass', verbosity=0)
             predictor.fit(train_data=df_train, hyperparameters=hyper)
-            print("df-train: ", df_train)
-            print("df_test ; ", df_test)
             performance = predictor.evaluate(df_test)
             print("results: ", hyper, ": ", performance)
             accuracyOfMethods[handle.enumToName(x)] = performance.get("accuracy")
@@ -61,12 +62,11 @@ def plotModelParameter (drMethod, algorithmToTest, matrix_train, label_train, ma
 
             predictor = TabularPredictor(label='label', problem_type='multiclass', verbosity=0)
             predictor.fit(train_data=df_train, hyperparameters=algorithmToTest)
-            print(df_test)
             performance = predictor.evaluate(df_test)
             print("results: ", var, ": ", performance)
-            print(performance)
+            print(performance.get("accuracy"))
             varValues.append(var)
-            varResults.append(performance)
+            varResults.append(performance.get("accuracy"))
             numberOfFeatures.append(df_train.shape[1] - 1)
 
             var += 0.05
@@ -118,12 +118,23 @@ def plotModelParameter (drMethod, algorithmToTest, matrix_train, label_train, ma
 
 if __name__ == '__main__':
     handle = Handle()
-    header, matrix_train, label_train, matrix_test, label_test = handle.readSplit(DataSet.BCWD)
+    header, matrix_train, label_train, matrix_test, label_test = handle.readSplit(DataSet.FONTS)
+
+    scaler = preprocessing.StandardScaler().fit(matrix_train)
+    matrix_train = pd.DataFrame(scaler.transform(matrix_train))
+    matrix_test = pd.DataFrame(scaler.transform(matrix_test))
+
+    le = preprocessing.LabelEncoder()
+    le.fit(label_train)
+    label_train = pd.DataFrame(le.transform(label_train))
+    label_train += 1
+    label_test = pd.DataFrame(le.transform(label_test))
+    label_test += 1
 
     # matrix_test = (matrix_test-matrix_test.mean())/matrix_test.std()
     # matrix_train = (matrix_train-matrix_train.mean())/matrix_train.std()
 
-    # drMethods = [DRMethod.PCA, DRMethod.LDA, DRMethod.GDA, DRMethod.LASSO, DRMethod.NONE]
+    # drMethods = [DRMethod.PCA, DRMethod.GDA, DRMethod.LDA, DRMethod.LASSO, DRMethod.NONE]
     # hyperparameters = [{'LR': {}}]
     # compare_models(drMethods, hyperparameters, matrix_train, label_train, matrix_test, label_test)
     plotModelParameter(DRMethod.PCA, {'LR': {}}, matrix_train, label_train, matrix_test, label_test)

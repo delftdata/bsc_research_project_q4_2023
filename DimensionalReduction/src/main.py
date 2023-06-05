@@ -31,6 +31,8 @@ def compare_models(drMethods, algorithmsToTest, matrix_train, label_train, matri
         for hyper in algorithmsToTest:
             predictor = TabularPredictor(label='label', problem_type='multiclass', verbosity=0)
             predictor.fit(train_data=df_train, hyperparameters=hyper)
+            print("df-train: ", df_train)
+            print("df_test ; ", df_test)
             performance = predictor.evaluate(df_test)
             print("results: ", hyper, ": ", performance)
             accuracyOfMethods[handle.enumToName(x)] = performance.get("accuracy")
@@ -54,16 +56,17 @@ def plotModelParameter (drMethod, algorithmToTest, matrix_train, label_train, ma
             new_label_test = np.reshape(np.array(label_test), (-1, 1))
             df_train = pd.DataFrame(new_matrix_train)
             df_test = pd.DataFrame(new_matrix_test)
-            df_train["label"] = new_label_train
-            df_test["label"] = new_label_test
+            df_train['label'] = new_label_train
+            df_test['label'] = new_label_test
 
             predictor = TabularPredictor(label='label', problem_type='multiclass', verbosity=0)
             predictor.fit(train_data=df_train, hyperparameters=algorithmToTest)
+            print(df_test)
             performance = predictor.evaluate(df_test)
             print("results: ", var, ": ", performance)
-            print(performance.get("accuracy"))
+            print(performance)
             varValues.append(var)
-            varResults.append(performance.get("accuracy"))
+            varResults.append(performance)
             numberOfFeatures.append(df_train.shape[1] - 1)
 
             var += 0.05
@@ -115,7 +118,7 @@ def plotModelParameter (drMethod, algorithmToTest, matrix_train, label_train, ma
 
 if __name__ == '__main__':
     handle = Handle()
-    header, matrix_train, label_train, matrix_test, label_test = handle.readSplit(DataSet.FONTS)
+    header, matrix_train, label_train, matrix_test, label_test = handle.readSplit(DataSet.BCWD)
 
     # matrix_test = (matrix_test-matrix_test.mean())/matrix_test.std()
     # matrix_train = (matrix_train-matrix_train.mean())/matrix_train.std()

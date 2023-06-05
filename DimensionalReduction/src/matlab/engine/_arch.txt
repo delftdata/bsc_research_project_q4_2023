@@ -1,0 +1,4 @@
+win64
+C:\Program Files\MATLAB\R2023a\bin\win64
+C:\Program Files\MATLAB\R2023a\extern\engines\python\dist\matlab\engine\win64
+C:\Program Files\MATLAB\R2023a\extern\bin\win64

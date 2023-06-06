@@ -219,3 +219,4 @@ mappedData = (w.') * (zeroMeanKdata);
 disp("ending matlab")
 end
 %mappedData
+

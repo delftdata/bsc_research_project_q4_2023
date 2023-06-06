@@ -4,8 +4,8 @@ import pandas as pd
 from sklearn import preprocessing
 
 
-from .generalMethods.generalMethods import *
-from .models.models import *
+from generalMethods.generalMethods import *
+from models.models import *
 
 def compare_models(drMethods, algorithmsToTest, matrix_train, label_train, matrix_test, label_test):
 
@@ -118,7 +118,7 @@ def plotModelParameter (drMethod, algorithmToTest, matrix_train, label_train, ma
 
 if __name__ == '__main__':
     handle = Handle()
-    header, matrix_train, label_train, matrix_test, label_test = handle.readSplit(DataSet.FONTS)
+    header, matrix_train, label_train, matrix_test, label_test = handle.readSplit(DataSet.BCWD)
 
     scaler = preprocessing.StandardScaler().fit(matrix_train)
     matrix_train = pd.DataFrame(scaler.transform(matrix_train))

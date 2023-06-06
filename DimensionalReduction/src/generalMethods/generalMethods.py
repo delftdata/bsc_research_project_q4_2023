@@ -78,13 +78,14 @@ class Handle:
             df = []
             i =0
             for file in os.listdir(map_to_read):
-                print(file)
-                if file.endswith(".csv") and not file.startswith("data") :
+                if file.endswith(".csv"):
+                    print(file)
                     i += 1
                     file_to_read = map_to_read + file
                     df.append(pd.read_csv(file_to_read))
             df = pd.concat(df)
             print(df)
+            print(df.shape)
             train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
             train_label = train_df['font']
             train_matrix = train_df.drop(['font', 'fontVariant'], axis=1)
@@ -150,9 +151,17 @@ class Handle:
             test_df.to_csv('data/BCWD/data.csv', index=False)
 
 
+    def print_files_in_path(self, path):
+        files = os.listdir(path)
+        for file in files:
+            print(file)
 
     def fileToRead (self, data_set):
-        file_to_read = "../datasets"
+        file_to_read = "/datasets"
+
+        # directory_path = '/datasets'
+        # self.print_files_in_path(directory_path)
+        # print("_________________________________________")
 
         if data_set == DataSet.BCWD:
             file_to_read += "/breast-cancer"
@@ -163,6 +172,7 @@ class Handle:
 
         file_to_read += "/data.csv"
         return file_to_read
+
 
 
     def dimensionalReduce (self, training_data, training_label, test_data, drMethod, scale_lasso=False, var: float = 0.95, alpha = 0.01):

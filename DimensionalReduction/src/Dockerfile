@@ -1,8 +1,21 @@
 FROM pytorch/pytorch
 
-COPY requirements.txt /
-RUN #pip3 install -r /requirements.txt
+# Copy the requirements file first
+COPY requirements.txt /requirements.txt
 
-RUN #apt-get update && apt-get install nano -y
+# Install requirements only if they have changed
+RUN set -e; \
+    if [ -f /requirements.txt ]; then \
+        pip3 install -r /requirements.txt; \
+    fi
 
-COPY . ./src
+# Install nano text editor
+RUN apt-get update && apt-get install nano -y
+
+# Copy the application code
+COPY . /src
+
+# Set the working directory
+WORKDIR /src
+
+# ...

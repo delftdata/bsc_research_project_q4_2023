@@ -74,7 +74,7 @@ class Handle:
             test_matrix = test_df.drop('label', axis=1)
 
         elif data_set == DataSet.FONTS:
-            map_to_read = "../datasets/CharacterFontImages/"
+            map_to_read = "/datasets/CharacterFontImages/"
             df = []
             i =0
             for file in os.listdir(map_to_read):

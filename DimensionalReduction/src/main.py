@@ -118,7 +118,7 @@ def plotModelParameter (drMethod, algorithmToTest, matrix_train, label_train, ma
 
 if __name__ == '__main__':
     handle = Handle()
-    header, matrix_train, label_train, matrix_test, label_test = handle.readSplit(DataSet.BCWD)
+    header, matrix_train, label_train, matrix_test, label_test = handle.readSplit(DataSet.FONTS)
 
     scaler = preprocessing.StandardScaler().fit(matrix_train)
     matrix_train = pd.DataFrame(scaler.transform(matrix_train))

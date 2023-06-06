@@ -7,7 +7,8 @@ services:
             - "8090:8090"
         volumes:
             - ./src:/src
+            - ../datasets:/datasets
         restart: always
         tty: true
         privileged: true
-        command: bash
+        command: python /src/main.py

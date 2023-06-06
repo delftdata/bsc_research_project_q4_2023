@@ -3,6 +3,14 @@ import pandas as pd
 from pandas.api.types import is_object_dtype
 
 
+def getContinuousColumns(df):
+    for col in df.dtypes.items():
+        if is_object_dtype(col):
+            df[col] = df[col].apply(lambda x: x.decode("utf-8"))
+
+    df = df.astype(df.infer_objects().dtypes)
+    return df.select_dtypes(include=['int64', 'float64']).columns
+
 def getCategoricalColumns(df):
     for col in df.dtypes.items():
         if is_object_dtype(col):
@@ -17,7 +25,8 @@ def normalizeColumns(df, target_column):
     train_columns = df.drop([target_column], axis=1).columns
 
     # NA imputation is handled before encoding the categorical variables.  There should be no 'na' values before executing this line of code.
-    df = df.fillna(0)
+    print("0AAAA")
+    df = df.fillna(df.mode().iloc[0])
     df[train_columns] = normalizer.fit_transform(df[train_columns])
 
     return df
@@ -37,6 +46,7 @@ class OneHotEncoder:
         self.encoder = preprocessing.OneHotEncoder()
 
     def encode(self, df, target_column):
+        print(df)
         categoricalColumns = getCategoricalColumns(
             df.drop([target_column], axis=1))
 
@@ -47,11 +57,36 @@ class OneHotEncoder:
 
         onehot_df = pd.DataFrame(
             onehot, columns=self.encoder.get_feature_names_out(categoricalColumns))
+        print(onehot_df)
+        print('BOBITA')
+        print(self.encoder.get_feature_names_out(categoricalColumns))
         df = df.drop(categoricalColumns, axis=1)
         df = pd.concat([df, onehot_df], axis=1)
 
         df = normalizeColumns(df, target_column)
 
         # df = pd.concat([df, target_df], axis = 1)
+
+        print('hello')
+        print(df)
+        return df
+
+class KBinsDiscretizer:
+    def __init__(self):
+        self.discretizer = preprocessing.KBinsDiscretizer(n_bins=3, encode='ordinal', strategy='uniform')
+
+    def encode(self, df, target_column):
+        continuousColumns = getContinuousColumns(df.drop([target_column], axis=1))
+
+        target_df = df[target_column]
+
+        dis = self.discretizer.fit_transform(df[continuousColumns])
+
+        dis_df = pd.DataFrame(dis, columns=self.discretizer.get_feature_names_out(continuousColumns))
+        df = df.drop(continuousColumns, axis=1)
+        df = pd.concat([df, dis_df], axis=1)
+
+        df = normalizeColumns(df, target_column)
+        df = pd.concat([df, target_df], axis=1)
 
         return df

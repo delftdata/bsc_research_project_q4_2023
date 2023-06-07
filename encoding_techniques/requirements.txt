@@ -1,0 +1,6 @@
+category_encoders==2.6.0
+matplotlib==3.6.3
+numpy==1.22.3
+pandas==1.4.1
+scikit_learn==1.0.2
+autogluon==0.7.0

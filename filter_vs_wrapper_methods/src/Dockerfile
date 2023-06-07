@@ -12,4 +12,5 @@ COPY ./data ./data
 COPY ./evaluation ./evaluation
 COPY ./methods ./methods
 COPY ./processing ./processing
+COPY arguments_main.json .
 COPY main.py .

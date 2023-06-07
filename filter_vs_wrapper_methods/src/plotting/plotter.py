@@ -3,7 +3,8 @@ from typing import Literal
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-from processing.postprocessing import postprocess_results
+
+from processing.postprocessing import postprocess_results, postprocess_runtime
 
 
 def plot_metrics_sea_born(performance: dict[str, list[float]],
@@ -21,6 +22,36 @@ def plot_metrics_sea_born(performance: dict[str, list[float]],
     df_melt.rename(columns={"value": scoring, "variable": legend}, inplace=True)
 
     return sns.lineplot(x=x_axis, y=scoring, hue=legend, data=df_melt)
+
+
+def plot_runtime_matplotlib(
+        raw_runtime_chi2: list[str],
+        raw_runtime_anova: list[str],
+        raw_runtime_forward_selection: list[str],
+        raw_runtime_backward_elimination: list[str],
+        x_label="Feature selection techniques", y_label="Runtime in minutes",
+        title="Average runtime of feature selection techniques"):
+    runtime_chi2 = postprocess_runtime(raw_runtime_chi2)
+    runtime_anova = postprocess_runtime(raw_runtime_anova)
+    runtime_forward_selection = postprocess_runtime(raw_runtime_forward_selection)
+    runtime_backward_elimination = postprocess_runtime(raw_runtime_backward_elimination)
+    methods = ["Chi-Squared", "ANOVA", "Forward Selection", "Backward Elimination"]
+    runtime_methods = [runtime_chi2, runtime_anova, runtime_forward_selection, runtime_backward_elimination]
+    runtime_minutes_methods = [x / 60.0 for x in runtime_methods]
+
+    fig, ax = plt.subplots()
+
+    ax.bar(methods, runtime_minutes_methods, align="center", width=0.5)
+
+    font_size_ticks = 7
+    plt.xticks(fontsize=font_size_ticks)
+    plt.yticks(fontsize=font_size_ticks)
+
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+
+    plt.title(title)
+    return fig
 
 
 def plot_metrics_matplotlib(
@@ -42,12 +73,14 @@ def plot_metrics_matplotlib(
 
     fig, ax = plt.subplots()
 
-    ax.plot(percentage_features, metrics_chi2, label="chi2", marker="o") if raw_metrics_chi2 else None
-    ax.plot(percentage_features, metrics_anova, label="anova", marker="*") if raw_metrics_anova else None
-    ax.plot(percentage_features, metrics_forward_selection, label="forward_selection",
-            marker="^") if raw_metrics_forward_selection else None
-    ax.plot(percentage_features, metrics_backward_elimination, label="backward elimination",
-            marker="s") if raw_metrics_backward_elimination else None
+    if raw_metrics_chi2:
+        ax.plot(percentage_features, metrics_chi2, label="chi2", marker="o")
+    if raw_metrics_anova:
+        ax.plot(percentage_features, metrics_anova, label="anova", marker="*")
+    if raw_metrics_forward_selection:
+        ax.plot(percentage_features, metrics_forward_selection, label="forward_selection", marker="^")
+    if raw_metrics_backward_elimination:
+        ax.plot(percentage_features, metrics_backward_elimination, label="backward elimination", marker="s")
 
     font_size_ticks = 10
     plt.xticks(percentage_features, fontsize=font_size_ticks)

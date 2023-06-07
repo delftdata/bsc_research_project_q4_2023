@@ -1,4 +1,6 @@
-from typing import Literal, Union
+from __future__ import annotations
+
+from typing import Literal
 
 from numpy import nan
 from pandas import DataFrame
@@ -29,7 +31,7 @@ def impute_most_frequent(df: DataFrame) -> DataFrame:
     return df
 
 
-def impute_constant(df: DataFrame, constant: Union[float, str, int, None] = 0) -> DataFrame:
+def impute_constant(df: DataFrame, constant: float | str | int | None = 0) -> DataFrame:
     return df.replace(nan, constant)
 
 

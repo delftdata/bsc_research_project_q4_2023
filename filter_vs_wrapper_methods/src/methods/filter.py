@@ -3,9 +3,10 @@ from typing import Literal
 
 import pandas as pd
 from numpy import nan
+from sklearn.feature_selection import chi2, f_classif
+
 from processing.filter_preprocessing import preprocess_anova, preprocess_chi2
 from processing.splitter import split_input_target
-from sklearn.feature_selection import chi2, f_classif
 
 
 def rank_features_descending_filter(df: pd.DataFrame, method: Literal["chi2", "anova"],

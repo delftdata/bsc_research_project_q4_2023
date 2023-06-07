@@ -1,15 +1,18 @@
+from __future__ import annotations
+
+import json
 import os
-import sys
 import warnings
 from dataclasses import dataclass
 from multiprocessing import Pool
-from typing import Literal, Union
+from typing import Literal
 
 import pandas as pd
+from numpy import nan
+
 from evaluation.evaluator import Evaluator
 from methods.filter import rank_features_descending_filter
 from methods.wrapper import rank_features_descending_wrapper
-from numpy import nan
 from processing.imputer import (drop_missing_values, impute_mean_or_median,
                                 impute_most_frequent)
 from processing.preprocessing import convert_to_actual_type
@@ -24,28 +27,42 @@ os.environ["PYTHONWARNINGS"] = "ignore"
 def main():
     algorithm_names: list[tuple[str, str]] = [
         ("GBM", "LightGBM"), ("RF", "RandomForest"), ("LR", "LinearModel"), ("XGB", "XGBoost")]
-    svm_param_grid: list[dict[str, list[Union[str, int, float]]]] = [
+    svm_param_grid: list[dict[str, list[str | int | float]]] = [
         {
             "C": [0.1, 100, 10, 1000],
             "gamma": [1, "scale"],
             "kernel": ["rbf", "sigmoid", "linear"]
         }]
-    experiment_name = sys.argv[1]
-    print(f"Experiment_name: {experiment_name}")
-    preprocessing = experiment_name != "experiment1" and experiment_name != "experiment3"
-    imputation_strategy: Literal["mean", "median"] = "mean"
-    normalization = True
-    svm = True
-    runner = Runner(algorithm_names, svm_param_grid, experiment_name,
-                    preprocessing, imputation_strategy, normalization, svm)
-    dataset = sys.argv[2]
-    print(f"Dataset: {dataset}")
-    if dataset == "small":
-        runner.run_experiment_on_small_datasets_in_parallel()
-    elif dataset == "big":
-        runner.run_experiment_on_big_datasets_sequentially()
-    else:
-        runner.run_experiment_on_dataset(dataset)
+
+    with open("arguments_main.json", "r", encoding="utf-8") as json_file:
+        arguments = json.load(json_file)
+
+        experiment_name: str = arguments["experiment_name"]
+        print(f"Experiment name: {experiment_name}")
+
+        preprocessing = experiment_name not in ('experiment1', 'experiment3')
+
+        imputation_strategy: Literal["mean", "median"] = arguments["imputation_strategy"]
+        print(f"Imputation strategy: {imputation_strategy}")
+
+        normalization: bool = arguments["normalization"]
+        print(f"Normalization: {normalization}")
+
+        svm: bool = arguments["evaluate_on_svm"]
+        print(f"Use SVM: {svm}")
+
+        runner = Runner(algorithm_names, svm_param_grid, experiment_name,
+                        preprocessing, imputation_strategy, normalization, svm)
+
+        dataset: str = arguments["dataset"]
+        print(f"Dataset: {dataset}")
+
+        if dataset == "small":
+            runner.run_experiment_on_small_datasets_in_parallel()
+        elif dataset == "big":
+            runner.run_experiment_on_big_datasets_sequentially()
+        else:
+            runner.run_experiment_on_dataset(dataset)
 
 
 @dataclass
@@ -60,7 +77,7 @@ class DatasetInfo:
 class Runner:
     def __init__(
             self, algorithm_names: list[tuple[str, str]],
-            svm_param_grid: list[dict[str, list[Union[str, int, float]]]],
+            svm_param_grid: list[dict[str, list[str | int | float]]],
             experiment_name: str, preprocessing=True, imputation_strategy: Literal["mean", "median"] = "mean",
             normalization=True, svm=False):
         self.algorithm_names = algorithm_names
@@ -87,7 +104,7 @@ class Runner:
 
     def prepare_data_frame(self, df: pd.DataFrame, missing_values=False):
         if missing_values:
-            if self.experiment_name == "experiment2" or self.experiment_name == "experiment4":
+            if self.experiment_name in ('experiment2', 'experiment4'):
                 df = impute_mean_or_median(df, strategy=self.imputation_strategy)
                 df = impute_most_frequent(df)
             elif self.experiment_name == "experiment3":
@@ -126,13 +143,13 @@ class Runner:
         df_backward_elimination = drop_features(df_backward_elimination, dataset_info.target_label, "string")
 
         if df_chi2.columns.size > min_columns:
-            self.evaluate_feature_selection(df_chi2, dataset_info, methods=["chi2"])
+            self.evaluate_feature_selection(df_chi2, dataset_info, methods=("chi2"))
         if df_anova.columns.size > min_columns:
-            self.evaluate_feature_selection(df_anova, dataset_info, methods=["anova"])
+            self.evaluate_feature_selection(df_anova, dataset_info, methods=("anova"))
         if df_forward_selection.columns.size > min_columns:
-            self.evaluate_feature_selection(df_forward_selection, dataset_info, methods=["forward_selection"])
+            self.evaluate_feature_selection(df_forward_selection, dataset_info, methods=("forward_selection"))
         if df_backward_elimination.columns.size > min_columns:
-            self.evaluate_feature_selection(df_backward_elimination, dataset_info, methods=["backward_elimination"])
+            self.evaluate_feature_selection(df_backward_elimination, dataset_info, methods=("backward_elimination"))
 
     def run_experiment4(self, df: pd.DataFrame, dataset_info: DatasetInfo, min_columns=2):
         df_categorical, df_discrete, df_continuous = \
@@ -147,25 +164,18 @@ class Runner:
             dataset_info.dataset_file, dataset_info.target_label, f"{dataset_info.results_path}/continuous",
             eval_metric=dataset_info.eval_metric)
 
-        # print(df_categorical.dtypes)
-        # print(df_categorical)
-        # print(df_discrete.dtypes)
-        # print(df_discrete)
-        # print(df_continuous.dtypes)
-        # print(df_continuous)
-
         if df_categorical.columns.size > min_columns:
             print(f"Evaluating categorical features: {df_categorical.shape}.")
             self.evaluate_feature_selection(df_categorical, dataset_info_categorical)
-            print(f"Finished evaluating categorical features.")
+            print("Finished evaluating categorical features.")
         if df_discrete.columns.size > min_columns:
             print(f"Evaluating discrete features: {df_discrete.shape}.")
             self.evaluate_feature_selection(df_discrete, dataset_info_discrete)
-            print(f"Finished evaluating discrete features.")
+            print("Finished evaluating discrete features.")
         if df_continuous.columns.size > min_columns:
             print(f"Evaluating continuous features: {df_continuous.shape}.")
             self.evaluate_feature_selection(df_continuous, dataset_info_continuous)
-            print(f"Finished evaluating continuous features.")
+            print("Finished evaluating continuous features.")
 
     def run_bank_marketing(self):
         bank = DatasetInfo("data/bank_marketing/bank.csv", "y",
@@ -173,8 +183,6 @@ class Runner:
         df_bank = pd.read_csv(bank.dataset_file, low_memory=False)
         df_bank = df_bank.replace("unknown", nan)
         df_bank = self.prepare_data_frame(df=df_bank, missing_values=True)
-        # print(df_bank.dtypes)
-        # print(df_bank)
         if self.experiment_name == "experiment3":
             self.run_experiment3(df=df_bank, dataset_info=bank)
         elif self.experiment_name == "experiment4":
@@ -187,8 +195,6 @@ class Runner:
                                     f"results/{self.experiment_name}/breast_cancer")
         df_breast_cancer = pd.read_csv(breast_cancer.dataset_file, low_memory=False)
         df_breast_cancer = self.prepare_data_frame(df=df_breast_cancer)
-        # print(df_breast_cancer.dtypes)
-        # print(df_breast_cancer)
         if self.experiment_name == "experiment3":
             self.run_experiment3(df=df_breast_cancer, dataset_info=breast_cancer)
         elif self.experiment_name == "experiment4":
@@ -201,8 +207,6 @@ class Runner:
                                           "Class", f"results/{self.experiment_name}/steel_plates_faults")
         df_steel_plates_faults = pd.read_csv(steel_plates_faults.dataset_file, low_memory=False)
         df_steel_plates_faults = self.prepare_data_frame(df=df_steel_plates_faults)
-        # print(df_steel_plates_faults.dtypes)
-        # print(df_steel_plates_faults)
         if self.experiment_name == "experiment3":
             self.run_experiment3(df=df_steel_plates_faults, dataset_info=steel_plates_faults)
         elif self.experiment_name == "experiment4":
@@ -217,8 +221,6 @@ class Runner:
         df_housing_prices = pd.read_csv(housing_prices.dataset_file, low_memory=False)
         df_housing_prices = df_housing_prices.fillna(nan)
         df_housing_prices = self.prepare_data_frame(df=df_housing_prices, missing_values=True)
-        # print(df_housing_prices.dtypes)
-        # print(df_housing_prices)
         if self.experiment_name == "experiment3":
             self.run_experiment3(df=df_housing_prices, dataset_info=housing_prices)
         elif self.experiment_name == "experiment4":
@@ -231,8 +233,6 @@ class Runner:
                                    eval_metric="neg_root_mean_squared_error")
         df_bike_sharing = pd.read_csv(bike_sharing.dataset_file, low_memory=False)
         df_bike_sharing = self.prepare_data_frame(df=df_bike_sharing)
-        # print(df_bike_sharing.dtypes)
-        # print(df_bike_sharing)
         if self.experiment_name == "experiment3":
             self.run_experiment3(df=df_bike_sharing, dataset_info=bike_sharing)
         elif self.experiment_name == "experiment4":
@@ -246,8 +246,6 @@ class Runner:
         df_census_income = pd.read_csv(census_income.dataset_file, low_memory=False)
         df_census_income = df_census_income.fillna(nan)
         df_census_income = self.prepare_data_frame(df=df_census_income, missing_values=True)
-        # print(df_census_income.dtypes)
-        # print(df_census_income)
         if self.experiment_name == "experiment3":
             self.run_experiment3(df=df_census_income, dataset_info=census_income)
         elif self.experiment_name == "experiment4":
@@ -267,10 +265,8 @@ class Runner:
         df_connect_4 = pd.read_csv(connect_4.dataset_file, low_memory=False)
         df_connect_4 = df_connect_4.fillna(nan)
         df_connect_4 = self.prepare_data_frame(df=df_connect_4, missing_values=True)
-        df_connect_4[connect_4.target_label] = df_connect_4[connect_4.target_label].apply(lambda x: map_game(x))
+        df_connect_4[connect_4.target_label] = df_connect_4[connect_4.target_label].apply(map_game)
         df_connect_4[connect_4.target_label] = df_connect_4[connect_4.target_label].astype("category")
-        # print(df_connect_4.dtypes)
-        # print(df_connect_4)
         if self.experiment_name == "experiment3":
             self.run_experiment3(df=df_connect_4, dataset_info=connect_4)
         elif self.experiment_name == "experiment4":
@@ -325,8 +321,7 @@ class Runner:
                                             file_names="data/character_font_images/font.names")
         df_file_names = pd.read_csv(character_font_images.file_names, low_memory=False, header=None)
         frames = []
-        for i, file_name in enumerate(df_file_names[0]):
-            # print(file_name)
+        for file_name in df_file_names[0]:
             frames.append(pd.read_csv(f"{character_font_images.dataset_file}/{file_name}"))
         df_character_font_images = pd.concat(frames)
         df_character_font_images = self.prepare_data_frame(df=df_character_font_images)
@@ -350,16 +345,15 @@ class Runner:
             self.evaluate_feature_selection(df=df_internet_ads, dataset_info=internet_ads)
 
     def evaluate_feature_selection(
-        self, df: pd.DataFrame, dataset_info: DatasetInfo,
-        methods: list[Literal["chi2", "anova", "forward_selection", "backward_elimination"]] =
-            ["chi2", "anova", "forward_selection", "backward_elimination"]):
+            self, df: pd.DataFrame, dataset_info: DatasetInfo,
+            methods=("chi2", "anova", "forward_selection", "backward_elimination")):
 
         selected_features_path = f"{dataset_info.results_path}/selected_features"
 
         for method in methods:
             if not os.path.isfile(f"{selected_features_path}/{method}.txt"):
 
-                if method == "chi2" or method == "anova":
+                if method in ("chi2", "anova"):
                     sorted_features, runtime = rank_features_descending_filter(
                         df, method, dataset_info.target_label, self.preprocessing)
                 else:
@@ -375,26 +369,27 @@ class Runner:
                               self.algorithm_names, self.svm_param_grid)
 
         for method in methods:
-            sorted_features = [line.strip() for line in open(f"{selected_features_path}/{method}.txt", "r")]
-            performance = evaluator.perform_experiments(sorted_features, svm=self.svm)
-            print(f"Autogluon finished evaluating the features selected by: {method}")
-            write_performance(dataset_info, performance, method)
+            try:
+                with open(f"{selected_features_path}/{method}.txt", "r", encoding="utf-8") as lines:
+                    sorted_features = [line.strip() for line in lines]
+                    performance = evaluator.perform_experiments(sorted_features, svm=self.svm)
+                    print(f"Autogluon finished evaluating the features selected by: {method}.")
+                    write_performance(dataset_info, performance, method)
+            except OSError as e:
+                print(f"Autogluon could not evaluate method -{method}-, {e}.")
 
 
 def write_selected_features(dataset_info: DatasetInfo, selected_features: list[str], method: str):
-    # print(f"{method}: {selected_features}")
     for selected_feature in selected_features:
         write_to_file(f"{dataset_info.results_path}/selected_features", f"{method}.txt", selected_feature)
 
 
 def write_runtime(dataset_info: DatasetInfo, runtime: float, method: str):
-    # print(f"Runtime: {method} - {runtime}")
     write_to_file(f"{dataset_info.results_path}/runtime", f"{method}.txt", str(runtime))
 
 
 def write_performance(dataset_info: DatasetInfo, performance: dict[str, list[float]], method):
     for (algorithm, performance_algorithm) in performance.items():
-        # print(f"{algorithm}: {performance_algorithm}")
         content = ",".join([str(x) for x in performance_algorithm])
         write_to_file(f"{dataset_info.results_path}/{method}", f"{algorithm}.txt", content)
 
@@ -404,10 +399,9 @@ def write_to_file(path: str, results_file_name: str, content: str, mode="a+"):
     try:
         if not os.path.isdir(path):
             os.makedirs(path)
-        with open(path_to_file, mode=mode) as file:
+        with open(path_to_file, mode=mode, encoding="utf-8") as file:
             file.write(content + "\n")
-        # print(f"Updated -{path_to_file}- with content -{content}-")
-    except Exception as e:
+    except OSError as e:
         print(f"An error occurred: {e}")
 
 

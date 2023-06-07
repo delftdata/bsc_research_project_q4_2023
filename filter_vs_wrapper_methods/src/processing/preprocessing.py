@@ -7,7 +7,7 @@ from sklearn.preprocessing import (KBinsDiscretizer, MinMaxScaler, Normalizer,
 def scale_columns_min_max(df: pd.DataFrame, excluded_columns: list[str]) -> pd.DataFrame:
     for i, column in enumerate(df.columns):
         if column not in excluded_columns:
-            if (df[column].dtype == "float" or df[column].dtype == "int") and any([float(x) < 0 for x in df[column]]):
+            if df[column].dtype in set(["float", "int"]) and any(float(x) < 0 for x in df[column]):
                 min_max_scaler = MinMaxScaler()
                 df[column] = min_max_scaler.fit_transform(df.iloc[:, [i]])
     return df
@@ -63,20 +63,20 @@ def convert_to_actual_type(df: pd.DataFrame) -> pd.DataFrame:
     def is_float(value: str) -> bool:
         try:
             return not float(value).is_integer()
-        except:
+        except ValueError:
             return False
 
     def is_int(value: str) -> bool:
         try:
             return float(value).is_integer()
-        except:
+        except ValueError:
             return False
 
     for column in df.columns:
         if df[column].dtype == "object":
-            if all([is_float(str(value)) for value in df[column].values]):
+            if all(is_float(str(value)) for value in df[column].values):
                 df[column] = df[column].astype("float64")
-            elif all([is_int(str(value)) for value in df[column].values]):
+            elif all(is_int(str(value)) for value in df[column].values):
                 df[column] = df[column].astype("int64")
             else:
                 df[column] = df[column].astype("category")

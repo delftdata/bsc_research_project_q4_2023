@@ -43,11 +43,13 @@ def compare_models(drMethods, algorithmsToTest, matrix_train, label_train, matri
 
 def plotModelParameter (drMethod, algorithmToTest, matrix_train, label_train, matrix_test, label_test):
     handle = Handle()
-    if drMethod == DRMethod.LDA or drMethod == DRMethod.PCA:
+    varValues = []
+    varResults = []
+    numberOfFeatures = []
+
+    if drMethod == DRMethod.PCA:
         var = 0.05
-        varValues = []
-        varResults = []
-        numberOfFeatures = []
+
         while var <= 1:
             new_matrix_train, new_matrix_test, time_to_transform = handle.dimensionalReduce(matrix_train, label_train,
                                                                                             matrix_test, drMethod, var=var)
@@ -63,24 +65,55 @@ def plotModelParameter (drMethod, algorithmToTest, matrix_train, label_train, ma
             predictor = TabularPredictor(label='label', problem_type='multiclass', verbosity=0)
             predictor.fit(train_data=df_train, hyperparameters=algorithmToTest)
             performance = predictor.evaluate(df_test)
-            print("results: ", var, ": ", performance)
-            print(performance.get("accuracy"))
+            # print("results: ", var, ": ", performance)
+            # print(performance.get("accuracy"))
             varValues.append(var)
             varResults.append(performance.get("accuracy"))
             numberOfFeatures.append(df_train.shape[1] - 1)
 
             var += 0.05
 
-        fig, (ax1, ax2) = plt.subplots(1, 2)
-        fig.suptitle(('accuracy vs #features ', handle.enumToName(drMethod)))
-        ax1.plot(varValues, varResults)
-        ax2.plot(varValues, numberOfFeatures)
-        plt.show()
+        # fig, (ax1, ax2) = plt.subplots(1, 2)
+        # fig.suptitle(('accuracy vs #features ', handle.enumToName(drMethod)))
+        # ax1.plot(varValues, varResults)
+        # ax2.plot(varValues, numberOfFeatures)
+        # plt.show()
+
+    if drMethod == DRMethod.LDA:
+        var = 1
+
+        while True:
+            try:
+                new_matrix_train, new_matrix_test, time_to_transform = handle.dimensionalReduce(matrix_train, label_train,
+                                                                                                matrix_test, drMethod,
+                                                                                                var=var)
+
+                # Refactor data for autogluon
+                new_label_train = np.reshape(np.array(label_train), (-1, 1))
+                new_label_test = np.reshape(np.array(label_test), (-1, 1))
+                df_train = pd.DataFrame(new_matrix_train)
+                df_test = pd.DataFrame(new_matrix_test)
+                df_train['label'] = new_label_train
+                df_test['label'] = new_label_test
+
+                predictor = TabularPredictor(label='label', problem_type='multiclass', verbosity=0)
+                predictor.fit(train_data=df_train, hyperparameters=algorithmToTest)
+                performance = predictor.evaluate(df_test)
+                # print("results: ", var, ": ", performance)
+                # print(performance.get("accuracy"))
+                varValues.append(var)
+                varResults.append(performance.get("accuracy"))
+                numberOfFeatures.append(df_train.shape[1] - 1)
+
+                var += 1
+            except:
+                break
+
 
     elif drMethod == DRMethod.LASSO:
         alpha = 0.01
-        alphaValues = []
-        alphaResults = []
+        varValues = []
+        varResults = []
         numberOfFeatures = []
         while alpha <= 0.5:
             new_matrix_train, new_matrix_test, time_to_transform = handle.dimensionalReduce(matrix_train, label_train,
@@ -99,21 +132,25 @@ def plotModelParameter (drMethod, algorithmToTest, matrix_train, label_train, ma
                 predictor = TabularPredictor(label='label', problem_type='binary', verbosity=0)
                 predictor.fit(train_data=df_train, hyperparameters=algorithmToTest)
                 performance = predictor.evaluate(df_test)
-                print("results: ", alpha, ": ", performance)
-                print(performance.get("accuracy"))
-                alphaValues.append(alpha)
-                alphaResults.append(performance.get("accuracy"))
+                # print("results: ", alpha, ": ", performance)
+                # print(performance.get("accuracy"))
+                varValues.append(alpha)
+                varResults.append(performance.get("accuracy"))
                 numberOfFeatures.append(df_train.shape[1] - 1)
 
                 alpha += 0.01
             except:
                 break
 
-        fig, (ax1, ax2) = plt.subplots(1, 2)
-        fig.suptitle(('accuracy vs #features', handle.enumToName(drMethod)))
-        ax1.plot(alphaValues, alphaResults)
-        ax2.plot(alphaValues, numberOfFeatures)
-        plt.show()
+        # fig, (ax1, ax2) = plt.subplots(1, 2)
+        # fig.suptitle(('accuracy vs #features', handle.enumToName(drMethod)))
+        # ax1.plot(alphaValues, alphaResults)
+        # ax2.plot(alphaValues, numberOfFeatures)
+        # plt.show()
+
+    print("dr method: ", drMethod, " |classification methods: ", algorithmToTest)
+    for i in range(0, len(varValues)):
+        print("var value: ", varValues[i], " |accuracy: ", varResults[i], " |number of features: ", numberOfFeatures[i])
 
 
 if __name__ == '__main__':
@@ -138,6 +175,11 @@ if __name__ == '__main__':
     # hyperparameters = [{'LR': {}}]
     # compare_models(drMethods, hyperparameters, matrix_train, label_train, matrix_test, label_test)
     plotModelParameter(DRMethod.PCA, {'LR': {}}, matrix_train, label_train, matrix_test, label_test)
+    plotModelParameter(DRMethod.PCA, {'RF': {}}, matrix_train, label_train, matrix_test, label_test)
+    plotModelParameter(DRMethod.LDA, {'LR': {}}, matrix_train, label_train, matrix_test, label_test)
+    plotModelParameter(DRMethod.LDA, {'RF': {}}, matrix_train, label_train, matrix_test, label_test)
+    plotModelParameter(DRMethod.LASSO, {'LR': {}}, matrix_train, label_train, matrix_test, label_test)
+    plotModelParameter(DRMethod.LASSO, {'RF': {}}, matrix_train, label_train, matrix_test, label_test)
 
 
 

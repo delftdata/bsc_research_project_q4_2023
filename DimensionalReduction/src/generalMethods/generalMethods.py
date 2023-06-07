@@ -84,7 +84,7 @@ class Handle:
                     file_to_read = map_to_read + file
                     df.append(pd.read_csv(file_to_read))
             df = pd.concat(df)
-            print(df)
+            # print(df)
             print(df.shape)
             train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
             train_label = train_df['font']
@@ -104,7 +104,7 @@ class Handle:
         if data_set == DataSet.BCWD:
             df = pd.read_csv(file_to_read)
             df.rename({"diagnosis": "label"})
-            print(df)
+            # print(df)
             label = df['label']
             matrix = df.drop(['id', 'label'], axis=1)
 
@@ -197,17 +197,20 @@ class Handle:
             end_time = time.time()
 
         elif drMethod == DRMethod.LDA:
-            lda = LinearDiscriminantAnalysis()
+            lda = LinearDiscriminantAnalysis(n_components=var)
             start_time = time.time()
-            lda.fit(training_data, training_label)
-            explained_variances = lda.explained_variance_ratio_
-
-            n_components = 0
-            new_total_variance = 0.0
-            while new_total_variance < self.variance_to_keep:
-                new_total_variance += explained_variances[n_components]
-                n_components += 1
-            lda.n_components = (n_components -1)
+            try:
+                lda.fit(training_data, training_label)
+            except:
+                ("number of components to big")
+            # explained_variances = lda.explained_variance_ratio_
+            #
+            # n_components = 0
+            # new_total_variance = 0.0
+            # while new_total_variance < self.variance_to_keep:
+            #     new_total_variance += explained_variances[n_components]
+            #     n_components += 1
+            # lda.n_components = (n_components -1)
 
             training_data_result = lda.transform(training_data)
             test_data_result = lda.transform(test_data)

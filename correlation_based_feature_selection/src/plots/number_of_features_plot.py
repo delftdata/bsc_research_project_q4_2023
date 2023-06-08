@@ -11,7 +11,8 @@ evaluation_metrics_options = {
 }
 
 
-def plot_over_number_of_features(dataset_name, algorithm, number_of_features,
+def plot_over_number_of_features(dataset_name, algorithm,
+                                 number_of_features, dataset_type,
                                  evaluation_metric, pearson_performance,
                                  spearman_performance, cramersv_performance,
                                  su_performance, baseline_performance):
@@ -37,9 +38,9 @@ def plot_over_number_of_features(dataset_name, algorithm, number_of_features,
     plt.ylabel(str(evaluation_metric_name))
     plt.legend(['Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty', 'Baseline'])
     plt.title('Change of ' + str(evaluation_metric_name)
-              + f' for {algorithm} on {dataset_name} dataset '
+              + f' for {algorithm} on {dataset_name} dataset ({dataset_type}) '
               + 'with the increase of selected features')
 
-    plt.savefig(f'./results/result_{dataset_name}_{algorithm}.png')
+    plt.savefig(f'./results/result_{dataset_name}_{dataset_type}_{algorithm}.png')
     # plt.show()
     plt.clf()

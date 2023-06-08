@@ -22,8 +22,7 @@ filterwarnings("ignore", category=FutureWarning)
 class PreML:
     @staticmethod
     def imputation_most_common_value(dataframe):
-        #return dataframe.fillna(dataframe.mode(axis=1)[0])
-        return dataframe
+        return dataframe.fillna(dataframe.mode(axis=1)[0])
 
     # All features will be continuous
     @staticmethod
@@ -50,8 +49,14 @@ class InML:
     @staticmethod
     def feature_selection_select_k_best(train_dataframe, target_label, k):
         # Compute the ranking of features returned by each correlation method
-        pearson_selected_features = PearsonFeatureSelection.feature_selection(train_dataframe, target_label, k)
-        spearman_selected_features = SpearmanFeatureSelection.feature_selection(train_dataframe, target_label, k)
+        try:
+            pearson_selected_features = PearsonFeatureSelection.feature_selection(train_dataframe, target_label, k)
+        except ValueError:
+            pearson_selected_features = []
+        try:
+            spearman_selected_features = SpearmanFeatureSelection.feature_selection(train_dataframe, target_label, k)
+        except ValueError:
+            spearman_selected_features = []
         cramersv_selected_features = CramersVFeatureSelection.feature_selection(train_dataframe, target_label, k)
         su_selected_features = SymmetricUncertaintyFeatureSelection.feature_selection(train_dataframe, target_label, k)
 
@@ -146,6 +151,7 @@ class MLPipeline:
         # all_nominal_train_dataframe, all_nominal_test_dataframe = \
         #     PreML.k_bins_discretizer(train_dataframe, test_dataframe, self.target_label)
 
+        # 1 - normal, 2 - all continuous, 3 - all nominal
         dataset_type = 0
         # LOOP: Go through each type of data
         for current_train_dataframe, current_test_dataframe in zip(
@@ -200,6 +206,7 @@ class MLPipeline:
                 plot_over_number_of_features(dataset_name=self.dataset_name,
                                              algorithm=algorithm_name,
                                              number_of_features=self.features_to_select_k,
+                                             dataset_type=dataset_type,
                                              evaluation_metric=self.evaluation_metric,
                                              pearson_performance=correlation_methods_performances[0],
                                              spearman_performance=correlation_methods_performances[1],

@@ -1,0 +1,4 @@
+hum
+temp
+atemp
+windspeed

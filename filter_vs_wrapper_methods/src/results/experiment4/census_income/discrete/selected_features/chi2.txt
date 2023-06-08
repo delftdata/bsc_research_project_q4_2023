@@ -1,0 +1,6 @@
+capital-gain
+capital-loss
+age
+fnlwgt
+hours-per-week
+education-num

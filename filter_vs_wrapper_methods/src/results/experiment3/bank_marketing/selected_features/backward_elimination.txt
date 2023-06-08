@@ -1,7 +1,0 @@
-duration
-campaign
-previous
-age
-balance
-pdays
-day

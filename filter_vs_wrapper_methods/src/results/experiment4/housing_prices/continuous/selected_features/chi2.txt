@@ -1,3 +1,0 @@
-MasVnrArea
-LotFrontage
-GarageYrBlt

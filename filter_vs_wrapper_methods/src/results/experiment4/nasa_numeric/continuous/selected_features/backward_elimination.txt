@@ -1,3 +1,0 @@
-equivphyskloc
-year
-recordnumber

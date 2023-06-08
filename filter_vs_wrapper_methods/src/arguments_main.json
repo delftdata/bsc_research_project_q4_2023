@@ -1,7 +1,0 @@
-{
-    "experiment_name": "experiment1",
-    "imputation_strategy": "mean",
-    "normalization": true,
-    "evaluate_on_svm": false,
-    "dataset": "steel_plates_faults"
-}

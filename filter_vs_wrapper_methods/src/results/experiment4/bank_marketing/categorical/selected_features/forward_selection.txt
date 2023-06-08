@@ -1,9 +1,0 @@
-job
-poutcome
-housing
-loan
-default
-education
-contact
-marital
-month

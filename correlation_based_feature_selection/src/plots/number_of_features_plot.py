@@ -41,5 +41,5 @@ def plot_over_number_of_features(dataset_name, algorithm, number_of_features,
               + 'with the increase of selected features')
 
     plt.savefig(f'./results/result_{dataset_name}_{algorithm}.png')
-    plt.show()
+    # plt.show()
     plt.clf()

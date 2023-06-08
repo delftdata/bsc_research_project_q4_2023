@@ -1,3 +1,4 @@
+import json
 import os
 
 import matplotlib.pyplot as plt
@@ -6,30 +7,50 @@ from plotting.plotter import plot_metrics_matplotlib, plot_runtime_matplotlib
 
 
 def main():
-    # plot_results("experiment2", "breast_cancer")
-    # plot_results("experiment2", "steel_plates_faults")
-    # plot_results("experiment2", "bank_marketing")
-    # plot_experiments("experiment4", "arrhythmia")
-    # plot_experiments("experiment4", "bank_marketing")
-    # plot_experiments("experiment4", "bike_sharing", y_label="Root Mean Squared Error")
-    # plot_experiments("experiment4", "breast_cancer")
-    # plot_experiments("experiment4", "census_income")
-    # plot_experiments("experiment4", "connect-4")
-    # plot_experiments("experiment4", "housing_prices", y_label="Root Mean Squared Error")
-    # plot_experiments("experiment4", "internet_advertisements")
-    # plot_experiments("experiment4", "nasa_numeric", y_label="Root Mean Squared Error")
-    # plot_experiments("experiment1", "steel_plates_faults")
+    """Plots the experimental results of the research project `Automatic Feature Discovery: A comparative study between
+    filter and wrapper feature selection techniques`.
+
+    Raises
+    ------
+    OSError
+        If there is a mismatch between the provided `arguments_plot.json` path and its actual path.
+    """
     classification_datasets = ["arrhythmia", "bank_marketing", "breast_cancer", "census_income", "steel_plates_faults"]
     regression_datasets = ["housing_prices", "bike_sharing", "nasa_numeric"]
-    # y_label_regression = "Average Root Mean Squared Error"
-    # # plot_average_results_experiment2(classification_datasets)
-    # # plot_average_results_experiment2(regression_datasets, y_label=y_label_regression)
-    # plot_average_results_experiment4(classification_datasets)
-    # plot_average_results_experiment4(regression_datasets, y_label=y_label_regression)
-    plot_average_runtime(datasets=(classification_datasets + regression_datasets))
+    y_label_regression = "Average Root Mean Squared Error"
+
+    with open("arguments_plot.json", "r", encoding="utf-8") as json_file:
+        arguments = json.load(json_file)
+
+        experiment_name: str = arguments["experiment_name"]
+        print(f"Experiment name: {experiment_name}")
+
+        dataset: str = arguments["dataset"]
+        print(f"Dataset: {dataset}")
+        y_label = "Accuracy" if dataset in classification_datasets else y_label_regression
+
+        plot_type: str = arguments["plot_type"]
+        print(f"Plot type: {plot_type}")
+
+        if plot_type == "results":
+            plot_experiments(experiment_name, dataset, y_label)
+        elif plot_type == "average_results":
+            if experiment_name == "experiment2":
+                plot_average_results_experiment2(datasets=(classification_datasets + regression_datasets))
+            elif experiment_name == "experiment4":
+                plot_average_results_experiment4(datasets=(classification_datasets + regression_datasets))
+        elif plot_type == "average_runtime":
+            plot_average_runtime(datasets=(classification_datasets + regression_datasets))
 
 
 def plot_average_runtime(datasets: list[str]):
+    """Plots the average runtime across all experiments of different feature selection methods for the given datasets.
+
+    Parameters
+    ----------
+    datasets : list[str]
+        The list of datasets to plot the average runtime for.
+    """
     experiments = ["experiment1", "experiment2", "experiment3", "experiment4"]
     raw_runtime_chi2, raw_runtime_anova, raw_runtime_forward_selection, raw_runtime_backward_elimination = [], [], [], []
 
@@ -67,6 +88,15 @@ def plot_average_runtime(datasets: list[str]):
 
 
 def plot_average_results_experiment2(datasets: list[str], y_label="Average Accuracy"):
+    """Plots the average results (metrics) for different feature selection methods and models in Experiment 2.
+
+    Parameters
+    ----------
+    datasets : list[str]
+        The list of datasets to plot the average results for.
+    y_label : str, optional
+        The label for the y-axis of the plot (default: "Average Accuracy").
+    """
     results_path_experiment = "results/experiment2"
     models = ["GBM", "LR", "RF", "XGB"]
     for model in models:
@@ -95,6 +125,15 @@ def plot_average_results_experiment2(datasets: list[str], y_label="Average Accur
 
 
 def plot_average_results_experiment4(datasets: list[str], y_label="Average Accuracy"):
+    """Plots the average results (metrics) for different feature selection methods, models, and data types in Experiment 4.
+
+    Parameters
+    ----------
+    datasets : list[str]
+        The list of datasets to plot the average results for.
+    y_label : str, optional
+        The label for the y-axis of the plot (default: "Average Accuracy").
+    """
     results_path_experiment = "results/experiment4"
     models = ["GBM", "LR", "RF", "XGB"]
     data_types = ["categorical", "discrete", "continuous"]
@@ -126,9 +165,20 @@ def plot_average_results_experiment4(datasets: list[str], y_label="Average Accur
             plt.close(algorithm_plot)
 
 
-def plot_experiments(experiment: str, dataset: str, y_label="Accuracy"):
-    results_path = f"results/{experiment}/{dataset}"
-    if experiment == "experiment4":
+def plot_experiments(experiment_name: str, dataset: str, y_label="Accuracy"):
+    """Plots the results for a specific experiment and dataset.
+
+    Parameters
+    ----------
+    experiment_name : str
+        The name of the experiment.
+    dataset : str
+        The name of the dataset.
+    y_label : str, optional
+        The label for the y-axis of the plot (default: "Accuracy").
+    """
+    results_path = f"results/{experiment_name}/{dataset}"
+    if experiment_name == "experiment4":
         data_types = ["categorical", "discrete", "continuous"]
         for data_type in data_types:
             plot_results(f"{results_path}/{data_type}", y_label)
@@ -137,6 +187,15 @@ def plot_experiments(experiment: str, dataset: str, y_label="Accuracy"):
 
 
 def plot_results(results_path: str, y_label="Accuracy"):
+    """Plots the results for a specific results path.
+
+    Parameters
+    ----------
+    results_path : str
+        The path to the directory containing the results.
+    y_label : str, optional
+        The label for the y-axis of the plot (default: "Accuracy").
+    """
     models = ["GBM", "LR", "RF", "XGB"]
 
     for model in models:
@@ -156,17 +215,78 @@ def plot_results(results_path: str, y_label="Accuracy"):
             print(f"Failed plotting or saving: {e}")
 
 
-def open_raw_metrics(results_path: str, method: str, model: str):
+def open_raw_metrics(results_path: str, method: str, model: str) -> list[str]:
+    """Opens and reads the raw metrics from a file.
+
+    Parameters
+    ----------
+    results_path : str
+        The path to the directory containing the results.
+    method : str
+        The method used for feature selection.
+    model : str
+        The name of the model.
+
+    Returns
+    -------
+    list[str]
+        A list of raw metrics read from the file.
+
+    Raises
+    ------
+    OSError
+        If there is an error while opening or reading the file.
+    """
     with open(f"{results_path}/{method}/{model}.txt", "r", encoding="utf-8") as lines:
         return [line.strip() for line in lines]
 
 
-def open_raw_runtime(runtime_path: str, method: str):
+def open_raw_runtime(runtime_path: str, method: str) -> list[str]:
+    """Opens and reads the raw runtime values from a file.
+
+    Parameters
+    ----------
+    runtime_path : str
+        The path to the directory containing the runtime results.
+    method : str
+        The method used for feature selection.
+
+    Returns
+    -------
+    list[str]
+        A list of raw runtime values read from the file.
+
+    Raises
+    ------
+    OSError
+        If there is an error while opening or reading the file.
+    """
     with open(f"{runtime_path}/{method}.txt", "r", encoding="utf-8") as lines:
         return [line.strip() for line in lines]
 
 
-def try_opening_raw_metrics(results_path: str, method: str, model: str):
+def try_opening_raw_metrics(results_path: str, method: str, model: str) -> list[str]:
+    """Attempts to open and read the raw metrics values from a file, handling any errors.
+
+    Parameters
+    ----------
+    results_path : str
+        The path to the directory containing the results.
+    method : str
+        The method used for feature selection.
+    model : str
+        The model for which the metrics are collected.
+
+    Returns
+    -------
+    list[str]
+        A list of raw metrics values read from the file, or an empty list if there was an error.
+
+    Raises
+    ------
+    OSError
+        If there is an error while opening or reading the file.
+    """
     raw_metrics = []
     try:
         raw_metrics = open_raw_metrics(results_path, method, model)

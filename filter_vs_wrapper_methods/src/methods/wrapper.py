@@ -14,6 +14,30 @@ from processing.wrapper_preprocessing import \
 def rank_features_descending_wrapper(df: pd.DataFrame, method: Literal["forward_selection", "backward_elimination"],
                                      target_label: str, scoring: Literal["accuracy", "neg_root_mean_squared_error"],
                                      preprocessing=False, normalization=True, n_jobs=-1) -> tuple[list[str], float]:
+    """Ranks features in descending order using Forward Selection or Backward Elimination.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The DataFrame containing the dataset.
+    method : Literal["forward_selection", "backward_elimination"]
+        The wrapper feature selection technique to be used for feature ranking.
+    target_label : str
+        The target label column in the DataFrame.
+    scoring : Literal["accuracy", "neg_root_mean_squared_error"]
+        The scoring metric to be used for feature evaluation.
+    preprocessing : bool, optional
+        Flag indicating whether to perform preprocessing on the data before ranking features (default: False).
+    normalization : bool, optional
+        Flag indicating whether to perform feature normalization during preprocessing (default: True).
+    n_jobs : int, optional
+        The number of parallel jobs to run during feature selection. Default is -1, which uses all available processors.
+
+    Returns
+    -------
+    tuple[list[str], float]
+        A tuple containing the sorted feature names in descending order and the runtime of the feature ranking.
+    """
 
     preprocessed_df = df.copy()
 
@@ -47,6 +71,28 @@ def perform_wrapper_feature_selection(range_selection: list[int],
                                       sequential_selector: SequentialFeatureSelector, X: pd.DataFrame, y,
                                       method: Literal["forward_selection", "backward_elimination"]
                                       ) -> tuple[list[str], float]:
+    """Performs feature selection using a wrapper method, either Forward Selection or Backward Elimination.
+
+    Parameters
+    ----------
+    range_selection : list[int]
+        A list specifying the range of feature selections to iterate over.
+        Forward Selection: [1, number of columns of X]
+        Backward Elimination: [number of columns of X, 1]
+    sequential_selector : SequentialFeatureSelector
+        The sequential feature selector object.
+    X : pd.DataFrame
+        The feature matrix.
+    y : ndarray or Series
+        The target variable.
+    method : Literal["forward_selection", "backward_elimination"]
+        The wrapper method for feature selection.
+
+    Returns
+    -------
+    tuple[list[str], float]
+        A tuple containing the sorted feature names and the runtime of the feature selection process.
+    """
     sorted_features: list[str] = []
     start = perf_counter()
 

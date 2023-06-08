@@ -11,6 +11,26 @@ from processing.splitter import split_input_target
 
 def rank_features_descending_filter(df: pd.DataFrame, method: Literal["chi2", "anova"],
                                     target_label: str, preprocessing=False, normalization=True) -> tuple[list[str], float]:
+    """Ranks features in descending order based on the Chi-Squared or ANOVA test.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The DataFrame containing the dataset.
+    method : Literal["chi2", "anova"]
+        The filter feature selection technique to be used for feature ranking.
+    target_label : str
+        The target label column in the DataFrame.
+    preprocessing : bool, optional
+        Flag indicating whether to perform preprocessing on the data before ranking features (default: False)
+    normalization : bool, optional
+        Flag indicating whether to perform feature normalization during preprocessing (default: True).
+
+    Returns
+    -------
+    tuple[list[str], float]
+        A tuple containing the sorted feature names in descending order and the runtime of the feature ranking.
+    """
 
     preprocessed_df = df.copy()
 

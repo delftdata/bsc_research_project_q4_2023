@@ -4,8 +4,8 @@ import pandas as pd
 from sklearn import preprocessing
 
 
-from generalMethods.generalMethods import *
-from models.models import *
+from .generalMethods.generalMethods import *
+from .models.models import *
 
 def compare_models(drMethods, algorithmsToTest, matrix_train, label_train, matrix_test, label_test):
 

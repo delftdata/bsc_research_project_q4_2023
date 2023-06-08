@@ -48,7 +48,7 @@ def plotModelParameter (drMethod, algorithmToTest, matrix_train, label_train, ma
     numberOfFeatures = []
 
     if drMethod == DRMethod.PCA:
-        var = 0.05
+        var = 0.9
 
         while var <= 1:
             new_matrix_train, new_matrix_test, time_to_transform = handle.dimensionalReduce(matrix_train, label_train,
@@ -65,13 +65,17 @@ def plotModelParameter (drMethod, algorithmToTest, matrix_train, label_train, ma
             predictor = TabularPredictor(label='label', problem_type='multiclass', verbosity=0)
             predictor.fit(train_data=df_train, hyperparameters=algorithmToTest)
             performance = predictor.evaluate(df_test)
-            # print("results: ", var, ": ", performance)
-            # print(performance.get("accuracy"))
+            print("results: ", var, ": ", performance)
+            print(performance.get("accuracy"))
             varValues.append(var)
             varResults.append(performance.get("accuracy"))
             numberOfFeatures.append(df_train.shape[1] - 1)
 
-            var += 0.05
+            if var == 0.95:
+                var = 0.99
+            else:
+                var += 0.05
+
 
         # fig, (ax1, ax2) = plt.subplots(1, 2)
         # fig.suptitle(('accuracy vs #features ', handle.enumToName(drMethod)))

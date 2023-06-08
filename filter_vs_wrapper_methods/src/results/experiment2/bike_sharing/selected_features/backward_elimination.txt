@@ -1,0 +1,16 @@
+casual
+hr
+registered
+dteday
+temp
+windspeed
+hum
+yr
+season
+workingday
+mnth
+holiday
+atemp
+weekday
+weathersit
+instant

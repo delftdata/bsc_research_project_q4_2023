@@ -6,6 +6,14 @@ import seaborn as sns
 
 from processing.postprocessing import postprocess_results, postprocess_runtime
 
+width = 11
+height = 8.25
+linewidth = 3
+markersize = 12
+font_size_ticks = 18
+font_size_labels = 18
+font_size_legend = 18
+
 
 def plot_metrics_sea_born(performance: dict[str, list[float]],
                           scoring: Literal["Accuracy", "Mean Squared Error"],
@@ -78,18 +86,17 @@ def plot_runtime_matplotlib(
     runtime_methods = [runtime_chi2, runtime_anova, runtime_forward_selection, runtime_backward_elimination]
     runtime_minutes_methods = [x / 60.0 for x in runtime_methods]
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(width, height))
 
     ax.bar(methods, runtime_minutes_methods, align="center", width=0.5)
 
-    font_size_ticks = 7
-    plt.xticks(fontsize=font_size_ticks)
-    plt.yticks(fontsize=font_size_ticks)
+    plt.xticks(fontsize=font_size_ticks * 0.7, weight="bold")
+    plt.yticks(fontsize=font_size_ticks, weight="bold")
 
-    plt.xlabel(x_label)
-    plt.ylabel(y_label)
+    plt.xlabel(x_label, fontsize=font_size_labels, weight="bold")
+    plt.ylabel(y_label, fontsize=font_size_labels, weight="bold")
+    plt.title(title, fontsize=font_size_labels, weight="bold")
 
-    plt.title(title)
     return fig
 
 
@@ -129,33 +136,41 @@ def plot_metrics_matplotlib(
     metrics_backward_elimination = postprocess_results(
         raw_metrics_backward_elimination) if raw_metrics_backward_elimination else []
 
-    percentage_features = [i for i in range(10, 110, 10)]
-    percentage_features = percentage_features[len(percentage_features) - len(metrics_chi2):]
+    valid_metrics = [x for x in (metrics_chi2, metrics_anova, metrics_forward_selection,
+                                 metrics_backward_elimination) if len(x) > 0]
+    percentage_features = list(range(10, 110, 10))
 
-    fig, ax = plt.subplots()
+    min_length_metrics = min(len(metric) for metric in valid_metrics)
+    min_percentage_index = len(percentage_features) - min_length_metrics
+
+    percentage_features = percentage_features[min_percentage_index:]
+
+    fig, ax = plt.subplots(figsize=(width, height))
 
     if raw_metrics_chi2:
-        ax.plot(percentage_features, metrics_chi2, label="chi2", marker="o")
+        ax.plot(percentage_features, metrics_chi2, label="chi2", marker="s", linewidth=linewidth, markersize=markersize)
     if raw_metrics_anova:
-        ax.plot(percentage_features, metrics_anova, label="anova", marker="*")
+        ax.plot(percentage_features, metrics_anova, label="anova",
+                marker="o", linewidth=linewidth, markersize=markersize)
     if raw_metrics_forward_selection:
-        ax.plot(percentage_features, metrics_forward_selection, label="forward_selection", marker="^")
+        ax.plot(percentage_features, metrics_forward_selection,
+                label="forward_selection", marker="^", linewidth=linewidth, markersize=markersize)
     if raw_metrics_backward_elimination:
-        ax.plot(percentage_features, metrics_backward_elimination, label="backward elimination", marker="s")
+        ax.plot(percentage_features, metrics_backward_elimination,
+                label="backward elimination",  marker="X", linewidth=linewidth, markersize=markersize)
 
-    font_size_ticks = 10
-    plt.xticks(percentage_features, fontsize=font_size_ticks)
-    plt.yticks(fontsize=font_size_ticks)
+    plt.xticks(percentage_features, fontsize=font_size_ticks, weight="bold")
+    plt.yticks(fontsize=font_size_ticks, weight="bold")
     # plt.yticks(
     #     np.unique(
     #         np.concatenate(
     #             (metrics_chi2, metrics_anova, metrics_forward_selection, metrics_backward_elimination),
     #             axis=None)))
 
-    plt.xlabel(x_label)
-    plt.ylabel(y_label)
+    plt.xlabel(x_label, fontsize=font_size_labels, weight="bold")
+    plt.ylabel(y_label, fontsize=font_size_labels, weight="bold")
+    plt.title(model, fontsize=font_size_labels, weight="bold")
 
-    plt.title(model)
-    plt.legend()
+    plt.legend(fontsize=font_size_legend)
 
     return fig

@@ -1,5 +1,5 @@
 {
-    "experiment_name": "experiment1",
+    "experiment_name": "experiment2",
     "dataset": "steel_plates_faults",
-    "plot_type": "average_runtime"
+    "plot_type": "all_results"
 }

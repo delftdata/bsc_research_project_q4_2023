@@ -3,10 +3,9 @@ from typing import Literal
 
 import pandas as pd
 from numpy import nan
-from sklearn.feature_selection import chi2, f_classif
-
 from processing.filter_preprocessing import preprocess_anova, preprocess_chi2
 from processing.splitter import split_input_target
+from sklearn.feature_selection import chi2, f_classif
 
 
 def rank_features_descending_filter(df: pd.DataFrame, method: Literal["chi2", "anova"],
@@ -52,8 +51,8 @@ def rank_features_descending_filter(df: pd.DataFrame, method: Literal["chi2", "a
         end = perf_counter()
         # print(f"Finished filter feature selection, {method}.")
         runtime = end - start
-    except Exception as e:
-        print(f"Finished filter feature selection with error, {method}: {e}.")
+    except Exception as error:
+        print(f"Finished filter feature selection with error, {method}: {error}.")
 
     sorted_indices = sorted([i for i, _ in enumerate(statistic_value)],
                             key=lambda i: statistic_value[i], reverse=True)

@@ -14,10 +14,13 @@ def main():
     ------
     OSError
         If there is a mismatch between the provided `arguments_plot.json` path and its actual path.
+    KeyError
+        If the provided plot_type is invalid.
     """
-    classification_datasets = ["arrhythmia", "bank_marketing", "breast_cancer", "census_income", "steel_plates_faults"]
-    regression_datasets = ["housing_prices", "bike_sharing", "nasa_numeric"]
-    y_label_regression = "Average Root Mean Squared Error"
+    classification_datasets = ["arrhythmia", "bank_marketing", "breast_cancer",
+                               "census_income", "internet_advertisements", "steel_plates_faults"]
+    regression_datasets = ["bike_sharing", "housing_prices", "nasa_numeric"]
+    y_label_regression = "Root Mean Squared Error"
 
     with open("arguments_plot.json", "r", encoding="utf-8") as json_file:
         arguments = json.load(json_file)
@@ -34,13 +37,20 @@ def main():
 
         if plot_type == "results":
             plot_experiments(experiment_name, dataset, y_label)
+        elif plot_type == "all_results":
+            for dataset in (classification_datasets + regression_datasets):
+                y_label = "Accuracy" if dataset in classification_datasets else y_label_regression
+                plot_experiments(experiment_name, dataset, y_label)
+                plot_experiments(f"{experiment_name}/no_normalization", dataset, y_label)
         elif plot_type == "average_results":
             if experiment_name == "experiment2":
-                plot_average_results_experiment2(datasets=(classification_datasets + regression_datasets))
+                plot_average_results_experiment2(datasets=classification_datasets + regression_datasets)
             elif experiment_name == "experiment4":
-                plot_average_results_experiment4(datasets=(classification_datasets + regression_datasets))
+                plot_average_results_experiment4(datasets=classification_datasets + regression_datasets)
         elif plot_type == "average_runtime":
-            plot_average_runtime(datasets=(classification_datasets + regression_datasets))
+            plot_average_runtime(datasets=classification_datasets + regression_datasets)
+        else:
+            raise KeyError(f"The plot_type: {plot_type} is not valid.")
 
 
 def plot_average_runtime(datasets: list[str]):
@@ -70,8 +80,8 @@ def plot_average_runtime(datasets: list[str]):
                     raw_runtime_anova += open_raw_runtime(runtime_path, "anova")
                     raw_runtime_forward_selection += open_raw_runtime(runtime_path, "forward_selection")
                     raw_runtime_backward_elimination += open_raw_runtime(runtime_path, "backward_elimination")
-                except OSError as e:
-                    print(f"Runtime: {e}")
+                except OSError as error:
+                    print(f"Runtime: {error}")
 
                 if experiment != "experiment4":
                     break
@@ -108,8 +118,8 @@ def plot_average_results_experiment2(datasets: list[str], y_label="Average Accur
                 raw_metrics_anova += open_raw_metrics(results_path, "anova", model)
                 raw_metrics_forward_selection += open_raw_metrics(results_path, "forward_selection", model)
                 raw_metrics_backward_elimination += open_raw_metrics(results_path, "backward_elimination", model)
-            except OSError as e:
-                print(f"{dataset}: {e}")
+            except OSError as error:
+                print(f"{dataset}: {error}")
 
         task = "classification" if y_label == "Average Accuracy" else "regression"
         plot_path = f"results/experiment2/average_results/{task}"
@@ -148,8 +158,8 @@ def plot_average_results_experiment4(datasets: list[str], y_label="Average Accur
                     raw_metrics_anova += open_raw_metrics(results_path, "anova", model)
                     raw_metrics_forward_selection += open_raw_metrics(results_path, "forward_selection", model)
                     raw_metrics_backward_elimination += open_raw_metrics(results_path, "backward_elimination", model)
-                except OSError as e:
-                    print(f"{data_type}: {e}")
+                except OSError as error:
+                    print(f"{data_type}: {error}")
 
             task = "classification" if y_label == "Average Accuracy" else "regression"
             average_results_plot_path = f"results/experiment4/average_results/{task}"
@@ -211,8 +221,8 @@ def plot_results(results_path: str, y_label="Accuracy"):
 
             algorithm_plot.savefig(f"{results_path}/{model}.png")
             plt.close(algorithm_plot)
-        except OSError as e:
-            print(f"Failed plotting or saving: {e}")
+        except Exception as error:
+            print(f"Failed plotting or saving: {error}")
 
 
 def open_raw_metrics(results_path: str, method: str, model: str) -> list[str]:
@@ -290,8 +300,8 @@ def try_opening_raw_metrics(results_path: str, method: str, model: str) -> list[
     raw_metrics = []
     try:
         raw_metrics = open_raw_metrics(results_path, method, model)
-    except OSError as e:
-        print(e)
+    except OSError as error:
+        print(error)
     return raw_metrics
 
 

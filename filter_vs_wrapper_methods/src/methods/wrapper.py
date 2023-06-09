@@ -3,12 +3,11 @@ from typing import Literal
 
 import pandas as pd
 from numpy import nan
-from sklearn.feature_selection import SequentialFeatureSelector
-from sklearn.linear_model import LinearRegression, LogisticRegression
-
 from processing.splitter import split_input_target
 from processing.wrapper_preprocessing import \
     preprocess_sequential_feature_selection
+from sklearn.feature_selection import SequentialFeatureSelector
+from sklearn.linear_model import LinearRegression, LogisticRegression
 
 
 def rank_features_descending_wrapper(df: pd.DataFrame, method: Literal["forward_selection", "backward_elimination"],
@@ -58,8 +57,8 @@ def rank_features_descending_wrapper(df: pd.DataFrame, method: Literal["forward_
 
     try:
         sorted_features, runtime = perform_wrapper_feature_selection(range_selection, sequential_selector, X, y, method)
-    except Exception as e:
-        print(f"Finished wrapper feature selection with error, {method}: {e}.")
+    except Exception as error:
+        print(f"Finished wrapper feature selection with error, {method}: {error}.")
 
     sorted_features.append([column for column in X.columns if column not in sorted_features][0])
     if method == "backward_elimination":

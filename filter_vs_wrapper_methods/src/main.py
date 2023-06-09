@@ -625,10 +625,10 @@ class Runner:
 
                 if method in ("chi2", "anova"):
                     sorted_features, runtime = rank_features_descending_filter(
-                        df, method, dataset_info.target_label, self.preprocessing)
+                        df, method, dataset_info.target_label, self.preprocessing, self.normalization)
                 else:
                     sorted_features, runtime = rank_features_descending_wrapper(
-                        df, method, dataset_info.target_label, dataset_info.eval_metric, self.preprocessing)
+                        df, method, dataset_info.target_label, dataset_info.eval_metric, self.preprocessing, self.normalization)
 
                 write_runtime(dataset_info, runtime, method)
                 write_selected_features(dataset_info, sorted_features, method)
@@ -645,8 +645,8 @@ class Runner:
                     performance = evaluator.perform_experiments(sorted_features, svm=self.svm)
                     print(f"Autogluon finished evaluating the features selected by: {method}.")
                     write_performance(dataset_info, performance, method)
-            except Exception as e:
-                print(f"Autogluon could not evaluate method -{method}-, {e}.")
+            except Exception as error:
+                print(f"Autogluon could not evaluate method -{method}-, {error}.")
 
 
 def write_selected_features(dataset_info: DatasetInfo, selected_features: list[str], method: str):
@@ -718,8 +718,8 @@ def write_to_file(path: str, results_file_name: str, content: str, mode="a+"):
             os.makedirs(path)
         with open(path_to_file, mode=mode, encoding="utf-8") as file:
             file.write(content + "\n")
-    except OSError as e:
-        print(f"An error occurred: {e}")
+    except OSError as error:
+        print(f"An error occurred: {error}")
 
 
 if __name__ == "__main__":

@@ -123,7 +123,7 @@ def visualize_results(dataset_name, model_names, n, mrmrs, mifss, jmis, cifes):
 def main():
     datasets = []
     datasets.append({'path': 'skfeature/data/housing_train.csv', 'y_label': 'SalePrice', 'n_features': 40})
-    datasets.append({'path': 'skfeature/data/gisette/gisette_train.csv', 'y_label': 'Class', 'n_features': 250})
+    datasets.append({'path': 'skfeature/data/Gisette/gisette_train.csv', 'y_label': 'Class', 'n_features': 250})
 
     for dataset in datasets:
         mat = pd.read_csv(dataset['path'])

@@ -1,1 +1,0 @@
-SVC(C=10, degree=8, gamma=1, kernel='poly')

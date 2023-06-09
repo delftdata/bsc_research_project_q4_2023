@@ -92,12 +92,12 @@ class Runner:
             "breast_cancer": self.run_breast_cancer,
             "steel_plates_faults": self.run_steel_plates_faults,
             "housing_prices": self.run_housing_prices,
-            "bike_sharing": self.run_bike_sharing,
+            "BikeSharing": self.run_bike_sharing,
             "census_income": self.run_census_income,
             "connect_4": self.run_connect_4,
             "arrhythmia": self.run_arrhythmia,
             "crop": self.run_crop,
-            "character_font_images": self.run_character_font_images,
+            "CharacterFontImages": self.run_character_font_images,
             "internet_ads": self.run_internet_ads,
             "nasa_numeric": self.run_nasa_numeric,
         }
@@ -117,12 +117,12 @@ class Runner:
 
     def run_experiment_on_small_datasets_in_parallel(self):
         with Pool() as pool:
-            small_datasets = ["bank_marketing", "bike_sharing", "breast_cancer", "steel_plates_faults",
+            small_datasets = ["bank_marketing", "BikeSharing", "breast_cancer", "steel_plates_faults",
                               "census_income", "housing_prices", "nasa_numeric", "connect_4"]
             pool.map(self.run_experiment_on_dataset, small_datasets)
 
     def run_experiment_on_big_datasets_sequentially(self):
-        big_datasets = ["arrhythmia", "crop", "character_font_images", "internet_ads"]
+        big_datasets = ["arrhythmia", "crop", "CharacterFontImages", "internet_ads"]
         for big_dataset in big_datasets:
             self.run_experiment_on_dataset(dataset=big_dataset)
 
@@ -229,7 +229,7 @@ class Runner:
             self.evaluate_feature_selection(df=df_housing_prices, dataset_info=housing_prices)
 
     def run_bike_sharing(self):
-        bike_sharing = DatasetInfo("data/bike_sharing/hour.csv", "cnt", f"results/{self.experiment_name}/bike_sharing",
+        bike_sharing = DatasetInfo("data/bike_sharing/hour.csv", "cnt", f"results/{self.experiment_name}/BikeSharing",
                                    eval_metric="neg_root_mean_squared_error")
         df_bike_sharing = pd.read_csv(bike_sharing.dataset_file, low_memory=False)
         df_bike_sharing = self.prepare_data_frame(df=df_bike_sharing)
@@ -317,7 +317,7 @@ class Runner:
 
     def run_character_font_images(self):
         character_font_images = DatasetInfo("data/character_font_images", "font",
-                                            f"results/{self.experiment_name}/character_font_images",
+                                            f"results/{self.experiment_name}/CharacterFontImages",
                                             file_names="data/character_font_images/font.names")
         df_file_names = pd.read_csv(character_font_images.file_names, low_memory=False, header=None)
         frames = []
@@ -334,7 +334,7 @@ class Runner:
 
     def run_internet_ads(self):
         internet_ads = DatasetInfo("data/internet_advertisements/internet_advertisements.csv",
-                                   "class", f"results/{self.experiment_name}/internet_advertisements")
+                                   "class", f"results/{self.experiment_name}/InternetAdvertisements")
         df_internet_ads = pd.read_csv(internet_ads.dataset_file, low_memory=False)
         df_internet_ads = self.prepare_data_frame(df=df_internet_ads)
         if self.experiment_name == "experiment3":

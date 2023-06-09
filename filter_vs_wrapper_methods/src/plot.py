@@ -11,16 +11,16 @@ def main():
     # plot_results("experiment2", "bank_marketing")
     # plot_experiments("experiment4", "arrhythmia")
     # plot_experiments("experiment4", "bank_marketing")
-    # plot_experiments("experiment4", "bike_sharing", y_label="Root Mean Squared Error")
+    # plot_experiments("experiment4", "BikeSharing", y_label="Root Mean Squared Error")
     # plot_experiments("experiment4", "breast_cancer")
     # plot_experiments("experiment4", "census_income")
     # plot_experiments("experiment4", "connect-4")
     # plot_experiments("experiment4", "housing_prices", y_label="Root Mean Squared Error")
-    # plot_experiments("experiment4", "internet_advertisements")
+    # plot_experiments("experiment4", "InternetAdvertisements")
     # plot_experiments("experiment4", "nasa_numeric", y_label="Root Mean Squared Error")
     # plot_experiments("experiment1", "steel_plates_faults")
     classification_datasets = ["arrhythmia", "bank_marketing", "breast_cancer", "census_income", "steel_plates_faults"]
-    regression_datasets = ["housing_prices", "bike_sharing", "nasa_numeric"]
+    regression_datasets = ["housing_prices", "BikeSharing", "nasa_numeric"]
     # y_label_regression = "Average Root Mean Squared Error"
     # # plot_average_results_experiment2(classification_datasets)
     # # plot_average_results_experiment2(regression_datasets, y_label=y_label_regression)

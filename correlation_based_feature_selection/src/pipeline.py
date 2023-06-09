@@ -151,7 +151,7 @@ class MLPipeline:
         # all_nominal_train_dataframe, all_nominal_test_dataframe = \
         #     PreML.k_bins_discretizer(train_dataframe, test_dataframe, self.target_label)
 
-        # 1 - normal, 2 - all continuous, 3 - all nominal
+        # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
         dataset_type = 0
         # LOOP: Go through each type of data
         for current_train_dataframe, current_test_dataframe in zip(
@@ -227,8 +227,8 @@ class MLPipeline:
 
         # Write the results to a txt file
         file_path = f"./results_tables/txt_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
-                    f"{correlation_method}_{subset_length}.txt"
-        file = open(file_path, "w")
+                    f"{correlation_method}.txt"
+        file = open(file_path, "a")
 
         file.write("DATASET NAME: " + dataset_name + '\n')
         file.write("DATASET TYPE: " + str(dataset_type) + '\n')
@@ -238,6 +238,7 @@ class MLPipeline:
         file.write("CURRENT FEATURE SUBSET: " + str(current_subset) + '\n')
         file.write("CURRENT PERFORMANCE: " + str(current_performance) + '\n')
         file.write("BASELINE PERFORMANCE: " + str(baseline_performance) + '\n')
+        file.write('\n')
         file.close()
 
         # Write the results to a csv file

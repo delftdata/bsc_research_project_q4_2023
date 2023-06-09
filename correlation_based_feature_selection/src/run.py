@@ -61,10 +61,21 @@ def evaluate_gisette_dataset():
     dataset_evaluator.evaluate_all_models()
 
 
+def evaluate_bank_marketing_dataset():
+    dataset_evaluator = MLPipeline(
+        dataset_file='../datasets/BankMarketing/bank.csv',
+        dataset_name='BankMarketing',
+        target_label='y',
+        evaluation_metric='accuracy')
+
+    dataset_evaluator.evaluate_all_models()
+
+
 if __name__ == '__main__':
     # evaluate_census_income_dataset()
     # evaluate_breast_cancer_dataset()
     # evaluate_steel_plates_fault_dataset()
-    evaluate_connect4_dataset()
+    # evaluate_connect4_dataset()
     # evaluate_housing_prices_dataset()
     # evaluate_gisette_dataset()
+    evaluate_bank_marketing_dataset()

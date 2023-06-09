@@ -1,4 +1,0 @@
-{'root_mean_squared_error': -860.7164042429357, 'mean_squared_error': -740832.7285328888, 'mean_absolute_error': -566.5865834286338, 'r2': -1.681751609257971, 'pearsonr': 0.37463277208310286, 'median_absolute_error': -362.6510009765625}
-Encode Duration: 0. Total Duration: 0.6125061511993408
-{'root_mean_squared_error': -601.7861064515579, 'mean_squared_error': -362146.5179181257, 'mean_absolute_error': -382.64367238094934, 'r2': -0.3109396626380134, 'pearsonr': 0.5955727778165559, 'median_absolute_error': -152.21266174316406}
-Encode Duration: 0. Total Duration: 0.5358002185821533

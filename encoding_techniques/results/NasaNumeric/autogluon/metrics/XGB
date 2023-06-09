@@ -1,3 +1,0 @@
-{'root_mean_squared_error': -536.4284960931486, 'mean_squared_error': -287755.5314207571, 'mean_absolute_error': -324.6999365756386, 'r2': -0.04165060443362867, 'pearsonr': 0.49785831262242447, 'median_absolute_error': -95.27194213867188}
-Encode Duration: 0.12849974632263184. Total Duration: 72.26700186729431
-

@@ -1,4 +1,5 @@
 import numpy as np
+import os
 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
@@ -41,6 +42,10 @@ def plot_over_number_of_features(dataset_name, algorithm,
               + f' for {algorithm} on {dataset_name} dataset ({dataset_type}) '
               + 'with the increase of selected features')
 
+    # Create the directory if it doesn't exist
+    directory = "./results"
+    os.makedirs(directory, exist_ok=True)
+    # Save the figure to folder
     plt.savefig(f'./results/result_{dataset_name}_{dataset_type}_{algorithm}.png')
     # plt.show()
     plt.clf()

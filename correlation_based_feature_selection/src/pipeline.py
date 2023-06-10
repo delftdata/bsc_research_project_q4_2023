@@ -129,6 +129,8 @@ class MLPipeline:
         return hyperparameters, baseline_performance
 
     def evaluate_all_models(self):
+        print('Total features: ' + str(self.features_to_select_k))
+
         # Prepare the data for Autogluon
         self.dataframe = TabularDataset(PreML.imputation_most_common_value(self.dataframe))
         self.dataframe = FillNaFeatureGenerator(inplace=True).fit_transform(self.dataframe)
@@ -174,7 +176,7 @@ class MLPipeline:
                                                         current_train_dataframe, current_test_dataframe)
 
                 # LOOP: Go through each method
-                correlation_methods = ['Pearson', 'Spearman', 'Cramer\'s V', 'SU']
+                correlation_methods = ['Pearson', 'Spearman', 'CramersV', 'SU']
                 correlation_methods_performances = []
                 for ranked_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
                                                                 cramersv_selected_features, su_selected_features],

@@ -16,7 +16,7 @@ class SymmetricUncertaintyFeatureSelection:
     @staticmethod
     def compute_correlation(feature, target_feature):
         """
-        Calculates the correlation between the feature and target feature using the Symmetric
+        SELECT K BEST ALGORITHM: Calculates the correlation between the feature and target feature using the Symmetric
         Uncertainty method. A value of 0 means that the features are independent, whereas a value
         of 1 means that knowledge of the feature’s value strongly represents target’s value. Source
         of the code is: https://github.com/jundongl/scikit-feature.

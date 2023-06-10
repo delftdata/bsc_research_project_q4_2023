@@ -12,6 +12,7 @@ class PearsonFeatureSelection:
     -------
     compute_correlation(feature, target_feature): Computes the value of the correlation
     """
+
     @staticmethod
     def compute_correlation(feature, target_feature):
         """
@@ -38,7 +39,7 @@ class PearsonFeatureSelection:
     @staticmethod
     def feature_selection(train_dataframe, target_feature, number_features):
         """
-        Performs feature selection using the Pearson correlation-based method. Selects
+        SELECT K BEST ALGORITHM: Performs feature selection using the Pearson correlation-based method. Selects
         a specified number of top-performing features.
 
         Parameters
@@ -49,7 +50,7 @@ class PearsonFeatureSelection:
 
         Returns
         -------
-        selected_features (list): List of selected features based on the Pearson correlation
+        selected_features (list): List of selected features based on the Pearson correlation using "Select k best"
         """
         target_column = train_dataframe[target_feature]
         train_dataframe = train_dataframe.drop(columns=[target_feature])
@@ -62,3 +63,32 @@ class PearsonFeatureSelection:
         # Select the top features with the highest absolute correlation
         sorted_correlations = pearson_correlations.abs().sort_values(ascending=False)
         return sorted_correlations[:number_features].index.tolist()
+
+    @staticmethod
+    def feature_selection_second_approach(train_dataframe, target_feature, threshold):
+        """
+        SELECT ABOVE K ALGORITHM: Performs feature selection using the Pearson correlation-based method. Selects
+        a number of features that have correlation with the target above a certain threshold.
+
+        Parameters
+        ----------
+        train_dataframe (DataFrame): Training data containing the features
+        target_feature (str): Name of the target feature column
+        threshold (float): Minimum value for the feature to be considered useful for predicting the target
+
+        Returns
+        -------
+        selected_features (list): List of selected features based on the Pearson correlation using "Select above k"
+        """
+        target_column = train_dataframe[target_feature]
+        train_dataframe = train_dataframe.drop(columns=[target_feature])
+
+        # Calculate the Pearson correlation between each feature and the target feature
+        pearson_correlations = train_dataframe \
+            .apply(func=lambda feature: PearsonFeatureSelection.compute_correlation(feature, target_column),
+                   axis=0)
+
+        # Select the top features with the highest absolute correlation
+        filtered_features = [feature for feature, correlation in pearson_correlations if
+                             correlation > threshold]
+        return filtered_features

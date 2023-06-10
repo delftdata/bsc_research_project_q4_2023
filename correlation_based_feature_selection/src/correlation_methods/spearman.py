@@ -15,7 +15,7 @@ class SpearmanFeatureSelection:
     @staticmethod
     def compute_correlation(feature, target_feature):
         """
-        Calculates the correlation between the feature and target feature using the Spearman method.
+        SELECT K BEST ALGORITHM: Calculates the correlation between the feature and target feature using the Spearman method.
         It is similar to Pearson method, but it transforms the features using fractional ranking. It
         can take values between -1 and 1. A value of 0 means that the features are independent. A value
         closer to -1 means that the features are negatively correlated, whereas a value closer to

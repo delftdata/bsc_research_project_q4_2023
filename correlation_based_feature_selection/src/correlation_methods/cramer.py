@@ -16,8 +16,8 @@ class CramersVFeatureSelection:
     @staticmethod
     def compute_correlation(feature, target_feature):
         """
-        Calculates the correlation between the feature and target feature using Cramer's V method.
-        It is computed by taking the square root of the chi-squared statistic divided by the number
+        SELECT K BEST ALGORITHM: Calculates the correlation between the feature and target feature using Cramer's V
+        method. It is computed by taking the square root of the chi-squared statistic divided by the number
         of the observations and the minimum dimension of the features minus 1. A value of 0 means
         that the features are not associated, whereas a value of 1 means that the features are
         perfectly associated.

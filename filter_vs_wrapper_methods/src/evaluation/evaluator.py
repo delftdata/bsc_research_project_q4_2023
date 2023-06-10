@@ -4,11 +4,12 @@ import pandas as pd
 from autogluon.features.generators import (AutoMLPipelineFeatureGenerator,
                                            IdentityFeatureGenerator)
 from autogluon.tabular import TabularDataset, TabularPredictor
+from sklearn.model_selection import GridSearchCV
+from sklearn.svm import SVC, SVR
+
 from processing.splitter import (select_k_best_features_from_data_frame,
                                  split_input_target,
                                  split_train_test_df_indices)
-from sklearn.model_selection import GridSearchCV
-from sklearn.svm import SVC, SVR
 
 
 class Evaluator:

@@ -42,6 +42,7 @@ def main():
                 y_label = "Accuracy" if dataset in classification_datasets else y_label_regression
                 plot_experiments(experiment_name, dataset, y_label)
                 plot_experiments(f"{experiment_name}/no_normalization", dataset, y_label)
+                plot_experiments(f"{experiment_name}/median", dataset, y_label)
         elif plot_type == "average_results":
             if experiment_name == "experiment2":
                 plot_average_results_experiment2(datasets=classification_datasets + regression_datasets)

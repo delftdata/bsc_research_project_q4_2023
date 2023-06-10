@@ -161,11 +161,6 @@ def plot_metrics_matplotlib(
 
     plt.xticks(percentage_features, fontsize=font_size_ticks, weight="bold")
     plt.yticks(fontsize=font_size_ticks, weight="bold")
-    # plt.yticks(
-    #     np.unique(
-    #         np.concatenate(
-    #             (metrics_chi2, metrics_anova, metrics_forward_selection, metrics_backward_elimination),
-    #             axis=None)))
 
     plt.xlabel(x_label, fontsize=font_size_labels, weight="bold")
     plt.ylabel(y_label, fontsize=font_size_labels, weight="bold")

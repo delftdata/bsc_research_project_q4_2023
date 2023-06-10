@@ -146,36 +146,12 @@ def convert_to_actual_type(df: pd.DataFrame) -> pd.DataFrame:
     """
 
     def is_float(value: str) -> bool:
-        """Checks if a given value can be parsed as a float.
-
-        Parameters
-        ----------
-        value : str
-            The value to check.
-
-        Returns
-        -------
-        bool
-            True if the value can be parsed as a float, False otherwise.
-        """
         try:
             return not float(value).is_integer()
         except Exception:
             return False
 
     def is_int(value: str) -> bool:
-        """Checks if a given value can be parsed as an integer.
-
-        Parameters
-        ----------
-        value : str
-            The value to check.
-
-        Returns
-        -------
-        bool
-            True if the value can be parsed as an integer, False otherwise.
-        """
         try:
             return float(value).is_integer()
         except Exception:

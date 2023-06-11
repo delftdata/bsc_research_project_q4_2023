@@ -46,7 +46,7 @@ def evaluate_housing_prices_dataset():
         dataset_file='../datasets/HousingPrices/train.csv',
         dataset_name='Housing Prices',
         target_label='SalePrice',
-        evaluation_metric='accuracy')
+        evaluation_metric='root_mean_squared_error')
 
     dataset_evaluator.evaluate_all_models()
 

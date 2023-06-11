@@ -1,0 +1,3 @@
+SVR(C=1000, degree=9, kernel='poly')
+SVR(C=1000, degree=9, kernel='poly')
+SVR(C=1000, degree=9, kernel='poly')

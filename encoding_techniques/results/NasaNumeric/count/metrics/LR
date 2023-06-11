@@ -1,0 +1,7 @@
+{'root_mean_squared_error': -1160.317905872425, 'mean_squared_error': -1346337.6426881698, 'mean_absolute_error': -762.3525576942845, 'r2': -3.8736280145637423, 'pearsonr': 0.4940732654948778, 'median_absolute_error': -492.7952880859375}
+Encode Duration: 0.10899829864501953. Total Duration: 13.536126136779785
+{'root_mean_squared_error': -1091.7904196883826, 'mean_squared_error': -1192006.3205233347, 'mean_absolute_error': -734.2283153132389, 'r2': -3.314961725084223, 'pearsonr': 0.5141708301698987, 'median_absolute_error': -505.9359130859375}
+Encode Duration: 0.09950041770935059. Total Duration: 13.57071566581726
+{'root_mean_squared_error': -1091.7904196883826, 'mean_squared_error': -1192006.3205233347, 'mean_absolute_error': -734.2283153132389, 'r2': -3.314961725084223, 'pearsonr': 0.5141708301698987, 'median_absolute_error': -505.9359130859375}
+Encode Duration: 0.11300492286682129. Total Duration: 13.97150707244873
+

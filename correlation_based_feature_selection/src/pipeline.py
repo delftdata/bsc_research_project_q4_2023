@@ -1,6 +1,7 @@
 import pandas as pd
 import csv
 import os
+import time
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import KBinsDiscretizer
 from autogluon.features.generators import AutoMLPipelineFeatureGenerator, FillNaFeatureGenerator
@@ -77,17 +78,22 @@ class PostML:
     @staticmethod
     def evaluate_model(algorithm, hyperparameters, train_dataframe, feature_subset,
                        target_label, test_dataframe, evaluation_metric):
+        start_time_model = time.time()
+
         train_data = TabularDataset(train_dataframe[feature_subset])
         fitted_predictor = TabularPredictor(label=target_label,
                                             eval_metric=evaluation_metric,
                                             verbosity=0) \
             .fit(train_data=train_data, hyperparameters={algorithm: hyperparameters})
 
+        # Get the duration the model with feature selection took
+        current_duration = time.time() - start_time_model
+
         # Evaluate the model with feature selection applied
         test_data = TabularDataset(test_dataframe)
         current_performance = fitted_predictor.evaluate(test_data)[evaluation_metric]
 
-        return current_performance
+        return current_performance, current_duration
 
 
 class MLPipeline:
@@ -111,10 +117,14 @@ class MLPipeline:
         self.evaluation_metric = evaluation_metric
 
     def run_model_no_feature_selection(self, algorithm, model_name, train_dataframe, test_dataframe):
+        start_time_baseline = time.time()
         fitted_predictor = TabularPredictor(label=self.target_label,
                                             eval_metric=self.evaluation_metric,
                                             verbosity=1) \
             .fit(train_data=train_dataframe, hyperparameters={algorithm: {}})
+
+        # Get the duration the baseline took
+        baseline_duration = time.time() - start_time_baseline
 
         # Get the tuned hyperparameters
         training_results = fitted_predictor.info()
@@ -126,7 +136,7 @@ class MLPipeline:
 
         # print("Feature importance: " + importance)
 
-        return hyperparameters, baseline_performance
+        return hyperparameters, baseline_performance, baseline_duration
 
     def evaluate_all_models(self):
         print('Total features: ' + str(self.features_to_select_k))
@@ -171,7 +181,7 @@ class MLPipeline:
             # LOOP: Go through each algorithm
             for algorithm, algorithm_name in self.algorithms_model_names.items():
                 # COMPUTATION: Get the hyperparameters on the data set with all features
-                hyperparameters, baseline_performance = \
+                hyperparameters, baseline_performance, baseline_duration = \
                     self.run_model_no_feature_selection(algorithm, algorithm_name,
                                                         current_train_dataframe, current_test_dataframe)
 
@@ -189,20 +199,28 @@ class MLPipeline:
                         current_subset = ranked_features[:subset_length]
                         current_subset.append(self.target_label)
 
-                        current_performance = PostML.evaluate_model(algorithm=algorithm,
-                                                                    hyperparameters=hyperparameters,
-                                                                    train_dataframe=train_dataframe,
-                                                                    feature_subset=current_subset,
-                                                                    target_label=self.target_label,
-                                                                    test_dataframe=current_test_dataframe,
-                                                                    evaluation_metric=self.evaluation_metric)
+                        current_performance, current_duration = PostML.evaluate_model(algorithm=algorithm,
+                                                                                      hyperparameters=hyperparameters,
+                                                                                      train_dataframe=train_dataframe,
+                                                                                      feature_subset=current_subset,
+                                                                                      target_label=self.target_label,
+                                                                                      test_dataframe=
+                                                                                      current_test_dataframe,
+                                                                                      evaluation_metric=
+                                                                                      self.evaluation_metric)
                         correlation_method_performance.append(current_performance)
 
                         # Save the results to file
-                        MLPipeline.write_to_file(self.dataset_name, str(dataset_type),
-                                                 algorithm_name, correlation_method,
-                                                 subset_length, current_subset,
-                                                 current_performance, baseline_performance)
+                        MLPipeline.write_to_file(dataset_name=self.dataset_name,
+                                                 dataset_type=str(dataset_type),
+                                                 algorithm_name=algorithm_name,
+                                                 correlation_method=correlation_method,
+                                                 subset_length=subset_length,
+                                                 current_subset=current_subset,
+                                                 current_performance=current_performance,
+                                                 current_duration=current_duration,
+                                                 baseline_performance=baseline_performance,
+                                                 baseline_duration=baseline_duration)
                     correlation_methods_performances.append(correlation_method_performance)
 
                 plot_over_number_of_features(dataset_name=self.dataset_name,
@@ -218,7 +236,8 @@ class MLPipeline:
 
     @staticmethod
     def write_to_file(dataset_name, dataset_type, algorithm_name, correlation_method,
-                      subset_length, current_subset, current_performance, baseline_performance):
+                      subset_length, current_subset, current_performance, current_duration,
+                      baseline_performance, baseline_duration):
         # Create the directory if it doesn't exist
         directory = "./results_tables"
         os.makedirs(directory, exist_ok=True)
@@ -240,6 +259,7 @@ class MLPipeline:
         file.write("CURRENT FEATURE SUBSET: " + str(current_subset) + '\n')
         file.write("CURRENT PERFORMANCE: " + str(current_performance) + '\n')
         file.write("BASELINE PERFORMANCE: " + str(baseline_performance) + '\n')
+        file.write("BASELINE TIME: " + str(baseline_time) + '\n')
         file.write('\n')
         file.close()
 

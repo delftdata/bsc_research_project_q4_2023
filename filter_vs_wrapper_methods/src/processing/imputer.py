@@ -1,40 +1,39 @@
-from typing import Literal, Union
+from __future__ import annotations
 
-import numpy as np
-import pandas as pd
+from typing import Literal
+
+from numpy import nan
+from pandas import DataFrame
 from sklearn.impute import SimpleImputer
 
 
-class Imputer:
-    @staticmethod
-    def impute_mean_or_median(df: pd.DataFrame, strategy: Literal["mean", "median"]) -> pd.DataFrame:
-        imputer = SimpleImputer(missing_values=np.nan, strategy=strategy)
-        imputer.set_output(transform="pandas")
+def impute_mean_or_median(df: DataFrame, strategy: Literal["mean", "median"]) -> DataFrame:
+    imputer = SimpleImputer(missing_values=nan, strategy=strategy)
+    imputer.set_output(transform="pandas")
 
-        for i, column in enumerate(df.columns):
-            if df[column].dtype != "float":
-                continue
-            if any(df.iloc[:, [i]].isna().values):
-                df[column] = imputer.fit_transform(df.iloc[:, [i]])
+    for i, column in enumerate(df.columns):
+        if df[column].dtype != "float":
+            continue
+        if any(df.iloc[:, [i]].isna().values):
+            df[column] = imputer.fit_transform(df.iloc[:, [i]])
 
-        return df
+    return df
 
-    @staticmethod
-    def impute_most_frequent(df: pd.DataFrame) -> pd.DataFrame:
-        imputer = SimpleImputer(missing_values=np.nan, strategy="most_frequent")
-        imputer.set_output(transform="pandas")
 
-        for i, column in enumerate(df.columns):
-            if any(df.iloc[:, [i]].isna().values):
-                df[column] = imputer.fit_transform(df.iloc[:, [i]])
+def impute_most_frequent(df: DataFrame) -> DataFrame:
+    imputer = SimpleImputer(missing_values=nan, strategy="most_frequent")
+    imputer.set_output(transform="pandas")
 
-        return df
+    for i, column in enumerate(df.columns):
+        if any(df.iloc[:, [i]].isna().values):
+            df[column] = imputer.fit_transform(df.iloc[:, [i]])
 
-    @staticmethod
-    def impute_constant(df: pd.DataFrame, constant: Union[float, str, int, None] = 0) -> pd.DataFrame:
-        return df.replace(np.nan, constant)
+    return df
 
-    @staticmethod
-    def drop_missing_values(
-            df: pd.DataFrame, axis: Literal[0, 1] = 0, how: Literal["any", "all"] = "any") -> pd.DataFrame:
-        return df.dropna(axis=axis, how=how)
+
+def impute_constant(df: DataFrame, constant: float | str | int | None = 0) -> DataFrame:
+    return df.replace(nan, constant)
+
+
+def drop_missing_values(df: DataFrame, axis: Literal[0, 1] = 0, how: Literal["any", "all"] = "any") -> DataFrame:
+    return df.dropna(axis=axis, how=how)

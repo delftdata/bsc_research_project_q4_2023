@@ -117,7 +117,7 @@ class Handle:
         file_to_read = "../datasets"
 
         if data_set == DataSet.BCWD:
-            file_to_read += "/breast-cancer"
+            file_to_read += "/BreastCancer"
         elif data_set == DataSet.CIFAR_10:
             file_to_read += "/CIFAR-10"
         elif data_set == DataSet.FONTS:

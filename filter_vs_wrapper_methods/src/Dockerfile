@@ -1,8 +1,16 @@
-FROM pytorch/pytorch
+FROM python:3.9
 
-COPY requirements.txt /
-RUN pip3 install -r /requirements.txt
+WORKDIR /filter_vs_wrapper_methods
 
-RUN apt-get update && apt-get install nano -y 
+COPY requirements.txt .
 
-COPY . ./src
+RUN python3.9 -m pip install --upgrade pip setuptools wheel
+
+RUN python3.9 -m pip install -r requirements.txt
+    
+COPY ./data ./data
+COPY ./evaluation ./evaluation
+COPY ./methods ./methods
+COPY ./processing ./processing
+COPY arguments_main.json .
+COPY main.py .

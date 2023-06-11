@@ -1,0 +1,6 @@
+duration
+pdays
+age
+campaign
+day
+previous

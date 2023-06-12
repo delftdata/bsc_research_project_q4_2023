@@ -1,0 +1,16 @@
+poutcome
+default
+contact
+duration
+housing
+education
+job
+marital
+previous
+campaign
+age
+loan
+pdays
+day
+month
+balance

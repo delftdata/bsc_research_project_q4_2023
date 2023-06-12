@@ -5,6 +5,20 @@ from sklearn.preprocessing import (KBinsDiscretizer, MinMaxScaler, Normalizer,
 
 
 def scale_columns_min_max(df: pd.DataFrame, excluded_columns: list[str]) -> pd.DataFrame:
+    """Scales the numerical columns in the DataFrame using Min-Max scaling.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The input DataFrame.
+    excluded_columns : list[str]
+        List of column names to exclude from scaling.
+
+    Returns
+    -------
+    pd.DataFrame
+        The scaled DataFrame.
+    """
     for i, column in enumerate(df.columns):
         if column not in excluded_columns:
             if df[column].dtype in set(["float", "int"]) and any(float(x) < 0 for x in df[column]):
@@ -14,6 +28,20 @@ def scale_columns_min_max(df: pd.DataFrame, excluded_columns: list[str]) -> pd.D
 
 
 def discretize_columns_k_bins(df: pd.DataFrame, excluded_columns: list[str]) -> pd.DataFrame:
+    """Discretizes the float columns in the DataFrame using k-bins discretization.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The input DataFrame.
+    excluded_columns : list[str]
+        List of column names to exclude from discretization.
+
+    Returns
+    -------
+    pd.DataFrame
+        The discretized DataFrame.
+    """
     for i, column in enumerate(df.columns):
         if column not in excluded_columns:
             if df[column].dtype == "float" and all(float(x).is_integer() for x in df[column]):
@@ -26,6 +54,20 @@ def discretize_columns_k_bins(df: pd.DataFrame, excluded_columns: list[str]) -> 
 
 
 def discretize_columns_ordinal_encoder(df: pd.DataFrame, excluded_columns: list[str]) -> pd.DataFrame:
+    """Converts categorical columns in the DataFrame to numeric using ordinal encoding.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The input DataFrame.
+    excluded_columns : list[str]
+        List of column names to exclude from encoding.
+
+    Returns
+    -------
+    pd.DataFrame
+        The encoded DataFrame.
+    """
     for i, column in enumerate(df.columns):
         if column not in excluded_columns:
             if df[column].dtype != "float":
@@ -36,6 +78,21 @@ def discretize_columns_ordinal_encoder(df: pd.DataFrame, excluded_columns: list[
 
 
 def normalize_df(df: pd.DataFrame, excluded_columns: list[str]) -> pd.DataFrame:
+    """Normalizes the numerical columns in the DataFrame, therefore the provided DataFrame must contain only numerical
+    features.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The input DataFrame.
+    excluded_columns : list[str]
+        List of column names to exclude from normalization.
+
+    Returns
+    -------
+    pd.DataFrame
+        The normalized DataFrame.
+    """
     normalizer = Normalizer()
     normalizer.set_output(transform="pandas")
 
@@ -50,6 +107,21 @@ def normalize_df(df: pd.DataFrame, excluded_columns: list[str]) -> pd.DataFrame:
 
 
 def drop_constant_feature(df: pd.DataFrame, excluded_columns: list[str]) -> pd.DataFrame:
+    """Drops constant columns from the DataFrame. Columns are considered constant if they contain the same value for
+    all rows.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The input DataFrame.
+    excluded_columns : list[str]
+        List of column names to exclude from dropping.
+
+    Returns
+    -------
+    pd.DataFrame
+        The DataFrame with constant columns removed.
+    """
     columns = df.columns
 
     for column in columns:
@@ -60,16 +132,29 @@ def drop_constant_feature(df: pd.DataFrame, excluded_columns: list[str]) -> pd.D
 
 
 def convert_to_actual_type(df: pd.DataFrame) -> pd.DataFrame:
+    """Converts columns with inferred types to their actual data types.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The input DataFrame.
+
+    Returns
+    -------
+    pd.DataFrame
+        The DataFrame with converted data types.
+    """
+
     def is_float(value: str) -> bool:
         try:
             return not float(value).is_integer()
-        except ValueError:
+        except Exception:
             return False
 
     def is_int(value: str) -> bool:
         try:
             return float(value).is_integer()
-        except ValueError:
+        except Exception:
             return False
 
     for column in df.columns:

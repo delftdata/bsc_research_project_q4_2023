@@ -6,7 +6,7 @@ import matplotlib.ticker as mticker
 from matplotlib.pyplot import figure
 
 evaluation_metrics_options = {
-    'accuracy': 'Accuracy',
+    'accuracy': 'Accuracy (%)',
     'rmse': 'Root mean square error',
 }
 
@@ -24,15 +24,15 @@ def plot_over_number_of_features(dataset_name, algorithm,
     figure(figsize=(8, 6), dpi=100)
     plt.gca().xaxis.set_major_locator(mticker.MultipleLocator(2))
 
-    plt.plot(number_of_features_iteration, np.array(pearson_performance),
+    plt.plot(number_of_features_iteration, np.array(pearson_performance) * 100,
              marker='D', color='#10A5D6')
-    plt.plot(number_of_features_iteration, np.array(spearman_performance),
+    plt.plot(number_of_features_iteration, np.array(spearman_performance) * 100,
              marker='*', color='#C6209B')
-    plt.plot(number_of_features_iteration, np.array(cramersv_performance),
+    plt.plot(number_of_features_iteration, np.array(cramersv_performance) * 100,
              marker='>', color='#BF9000')
-    plt.plot(number_of_features_iteration, np.array(su_performance),
+    plt.plot(number_of_features_iteration, np.array(su_performance) * 100,
              marker='s', color='#2EB835')
-    plt.plot(number_of_features_iteration[-1], baseline_performance,
+    plt.plot(number_of_features_iteration[-1], baseline_performance * 100,
              marker='o', color='#000000')
 
     plt.xlabel('Number of features')

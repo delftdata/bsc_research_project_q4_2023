@@ -140,7 +140,9 @@ class MLPipeline:
         return hyperparameters, baseline_performance, baseline_duration
 
     def evaluate_all_models(self):
-        print('Total features: ' + str(self.features_to_select_k))
+        number_rows, number_columns = self.dataframe.shape
+        print('Total columns: ' + str(number_columns))
+        print('Total rows: ' + str(number_rows))
 
         # Prepare the data for Autogluon
         self.dataframe = TabularDataset(PreML.imputation_most_common_value(self.dataframe))

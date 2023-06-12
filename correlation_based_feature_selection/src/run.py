@@ -124,7 +124,7 @@ def evaluate_feature_selection_bank_marketing_dataset():
 
 def evaluate_feature_selection_nasa_numeric_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../datasets/NasaNumeric/bank.csv',
+        dataset_file='../datasets/NasaNumeric/nasa_numeric.csv',
         dataset_name='NasaNumeric',
         target_label='act_effort',
         evaluation_metric='root_mean_squared_error')

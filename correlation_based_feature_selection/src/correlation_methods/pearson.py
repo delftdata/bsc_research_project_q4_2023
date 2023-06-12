@@ -55,9 +55,8 @@ class PearsonFeatureSelection:
         train_dataframe = train_dataframe.drop(columns=[target_feature])
 
         # Calculate the Pearson correlation between each feature and the target feature
-        pearson_correlations = train_dataframe\
-            .apply(func=lambda feature: PearsonFeatureSelection.
-                   compute_correlation(feature, target_column),
+        pearson_correlations = train_dataframe \
+            .apply(func=lambda feature: PearsonFeatureSelection.compute_correlation(feature, target_column),
                    axis=0)
 
         # Select the top features with the highest absolute correlation

@@ -7,7 +7,6 @@ from multiprocessing import Pool
 from typing import Literal
 
 import pandas as pd
-
 from evaluator.evaluator import Evaluator
 from feature_selection_methods.filter import rank_features_descending_filter
 from feature_selection_methods.wrapper import rank_features_descending_wrapper
@@ -187,7 +186,7 @@ class Runner:
             - "connect_4"
         """
         with Pool() as pool:
-            small_datasets = ["bank_marketing", "bike_sharing", "breast_cancer", "steel_plates_faults",
+            small_datasets = ["bank_marketing", "BikeSharing", "breast_cancer", "steel_plates_faults",
                               "census_income", "housing_prices", "nasa_numeric", "connect_4"]
             pool.map(self.run_experiment_on_dataset, small_datasets)
 

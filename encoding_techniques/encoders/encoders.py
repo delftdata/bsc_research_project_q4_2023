@@ -89,9 +89,7 @@ class TargetEncoder:
         df = df.drop(target_column, axis=1)
         non_categorical_df = df.drop(categoricalColumns, axis=1)
         df = df.drop(non_categorical_df, axis=1)
-        # print(categoricalColumns)
-        # print(df.head(5))
-        # print(target.head(5))
+
         self.encoder.fit(df, target)
         df = self.encoder.transform(df)
 
@@ -198,7 +196,6 @@ class CombinedEncoder:
         df_count = df_count.drop(numericColumns, axis = 1)
         df_count = df_count.add_suffix('_count')
         
-        # print(df_ordinal.columns)
         df = pd.concat([df_onehot, df_ordinal, df_target, df_catboost, df_count, df[numericColumns], df[target_column]], axis = 1)
         return df
 

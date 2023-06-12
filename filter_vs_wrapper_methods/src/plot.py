@@ -2,7 +2,6 @@ import json
 import os
 
 import matplotlib.pyplot as plt
-
 from plotter.plotter import plot_metrics_matplotlib, plot_runtime_matplotlib
 
 

@@ -58,8 +58,7 @@ class CramersVFeatureSelection:
 
         # Calculate the Cramer's V correlation between each feature and the target feature
         cramersv_correlations = train_dataframe\
-            .apply(func=lambda feature: CramersVFeatureSelection.
-                   compute_correlation(feature, target_column),
+            .apply(func=lambda feature: CramersVFeatureSelection.compute_correlation(feature, target_column),
                    axis=0)
 
         # Select the top features with the highest correlation

@@ -72,6 +72,16 @@ def evaluate_housing_prices_dataset():
     dataset_evaluator.evaluate_all_models()
 
 
+def evaluate_feature_selection_housing_prices_dataset():
+    dataset_evaluator = MLPipeline(
+        dataset_file='../datasets/HousingPrices/train.csv',
+        dataset_name='Housing Prices',
+        target_label='SalePrice',
+        evaluation_metric='root_mean_squared_error')
+
+    dataset_evaluator.evaluate_feature_selection_step()
+
+
 def evaluate_gisette_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../datasets/Gisette/gisette_train.csv',
@@ -112,6 +122,16 @@ def evaluate_feature_selection_bank_marketing_dataset():
     dataset_evaluator.evaluate_feature_selection_step()
 
 
+def evaluate_feature_selection_nasa_numeric_dataset():
+    dataset_evaluator = MLPipeline(
+        dataset_file='../datasets/NasaNumeric/bank.csv',
+        dataset_name='NasaNumeric',
+        target_label='act_effort',
+        evaluation_metric='root_mean_squared_error')
+
+    dataset_evaluator.evaluate_feature_selection_step()
+
+
 if __name__ == '__main__':
     # evaluate_census_income_dataset()
     # evaluate_breast_cancer_dataset()
@@ -120,7 +140,10 @@ if __name__ == '__main__':
     # evaluate_housing_prices_dataset()
     # evaluate_gisette_dataset()
     # evaluate_bank_marketing_dataset()
-    evaluate_feature_selection_breast_cancer_dataset()
-    evaluate_feature_selection_gisette_dataset()
-    evaluate_feature_selection_bank_marketing_dataset()
-    evaluate_feature_selection_steel_plates_faults_dataset()
+    # evaluate_feature_selection_breast_cancer_dataset()
+    # evaluate_feature_selection_gisette_dataset()
+    # evaluate_feature_selection_bank_marketing_dataset()
+    # evaluate_feature_selection_steel_plates_faults_dataset()
+    # evaluate_feature_selection_housing_prices_dataset()
+    evaluate_feature_selection_nasa_numeric_dataset()
+    # plot_over_runtime()

@@ -12,13 +12,30 @@ def plot_over_runtime():
     sns.set_theme(style="whitegrid")
 
     data = {
-        'Duration': [
+        'Runtime': [
             # BreastCancer
-            2, 3, 5, 6,
-            2, 3, 5, 12,
-            2, 1, 4, 6,
-            1, 4, 6, 2,
-            1, 4, 2, 9],
+            23.97, 14.94, 191.22, 11.93,
+            24.00, 14.80, 209.34, 23.06,
+            23.50, 15.14, 247.67, 32.46,
+            23.71, 15.28, 270.60, 44.41,
+            23.22, 15.62, 304.16, 58.67,
+            25.13, 16.41, 325.21, 74.35,
+            26.40, 17.52, 391.79, 83.35,
+            23.89, 16.74, 341.068, 87.28,
+            23.23, 15.84, 344.80, 95.85,
+            23.01, 16.19, 453.24, 99.91,
+            # Gisette
+            # 23.97, 14.94, 191.22, 11.93,
+            # 24.00, 14.80, 209.34, 23.06,
+            # 23.50, 15.14, 247.67, 32.46,
+            # 23.71, 15.28, 270.60, 44.41,
+            # 23.22, 15.62, 304.16, 58.67,
+            # 25.13, 16.41, 325.21, 74.35,
+            # 26.40, 17.52, 391.79, 83.35,
+            # 23.89, 16.74, 341.068, 87.28,
+            # 23.23, 15.84, 344.80, 95.85,
+            # 23.01, 16.19, 453.24, 99.91
+        ],
         'Dataset': [
             # BreastCancer
             'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
@@ -31,6 +48,17 @@ def plot_over_runtime():
             'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
             'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
             'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
+            # Gisette
+            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
+            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
+            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
+            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
+            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
+            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
+            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
+            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
+            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
+            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
         ],
         'Method': [
             # BreastCancer
@@ -44,6 +72,17 @@ def plot_over_runtime():
             'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
             'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
             'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty'
+            # Gisette
+            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
+            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
+            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
+            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
+            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
+            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
+            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
+            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
+            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
+            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty'
         ]
     }
     df = pd.DataFrame(data)

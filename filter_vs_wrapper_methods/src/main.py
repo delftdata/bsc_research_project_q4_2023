@@ -8,7 +8,7 @@ from typing import Literal
 
 import pandas as pd
 
-from evaluation.evaluator import Evaluator
+from evaluator.evaluator import Evaluator
 from feature_selection_methods.filter import rank_features_descending_filter
 from feature_selection_methods.wrapper import rank_features_descending_wrapper
 from processing.splitter import (
@@ -293,8 +293,8 @@ class Runner:
         methods : tuple, optional
             The feature selection methods to apply (default: ("chi2", "anova", "forward_selection", "backward_elimination")).
         """
-
-        selected_features_path = f"{dataset_info.results_path}/selected_features"
+        results_path = self.get_results_path(dataset_info.results_path)
+        selected_features_path = f"{results_path}/selected_features"
 
         for method in methods:
             if not os.path.isfile(f"{selected_features_path}/{method}.txt"):
@@ -308,8 +308,8 @@ class Runner:
                         df, method, dataset_info.target_label, dataset_info.eval_metric,
                         self.preprocessing, self.normalization)
 
-                write_runtime(dataset_info, runtime, method)
-                write_selected_features(dataset_info, sorted_features, method)
+                write_runtime(results_path, runtime, method)
+                write_selected_features(results_path, sorted_features, method)
             print(f"Finished feature selection, {method}.")
 
         evaluator = Evaluator(df, dataset_info.target_label, "root_mean_squared_error"
@@ -322,57 +322,90 @@ class Runner:
                     sorted_features = [line.strip() for line in lines]
                     performance = evaluator.perform_experiments(sorted_features, svm=self.svm)
                     print(f"Autogluon finished evaluating the features selected by: {method}.")
-                    write_performance(dataset_info, performance, method)
+                    write_performance(results_path, performance, method)
             except Exception as error:
                 print(f"Autogluon could not evaluate method -{method}-, {error}.")
 
+    def get_results_path(self, results_path: str) -> str:
+        """Returns the results path based on the configuration of the experiment.
 
-def write_selected_features(dataset_info: DatasetInfo, selected_features: list[str], method: str):
-    """Writes the selected features to a file for a specific feature selection method and dataset.
+        Parameters
+        ----------
+        results_path : str
+            The base path to the results directory.
+
+        Returns
+        -------
+        str
+            The updated results path based on the experiment configuration.
+
+        """
+        if not self.normalization and self.imputation_strategy == "median":
+            results_path = f"{results_path}/no_normalization_median"
+        elif not self.normalization:
+            results_path = f"{results_path}/no_normalization"
+        elif self.imputation_strategy == "median":
+            results_path = f"{results_path}/median"
+        return results_path
+
+
+def write_selected_features(results_path: str, selected_features: list[str], method: str):
+    """Writes the selected features to files for the given method.
 
     Parameters
     ----------
-    dataset_info : DatasetInfo
-        An instance of the DatasetInfo class representing the dataset information.
+    results_path : str
+        The path to the results directory.
     selected_features : list[str]
         The list of selected features.
     method : str
-        The feature selection method.
+        The name of the method used for feature selection.
+
     """
     for selected_feature in selected_features:
-        write_to_file(f"{dataset_info.results_path}/selected_features", f"{method}.txt", selected_feature)
+        write_to_file(f"{results_path}/selected_features", f"{method}.txt", selected_feature)
 
 
-def write_runtime(dataset_info: DatasetInfo, runtime: float, method: str):
-    """Writes the runtime of a feature selection method to a file for a specific dataset.
+def write_runtime(results_path: str, runtime: float, method: str):
+    """Writes the runtime of a specific method to a file.
 
     Parameters
     ----------
-    dataset_info : DatasetInfo
-        An instance of the DatasetInfo class representing the dataset information.
+    results_path : str
+        The path to the results directory.
     runtime : float
-        The runtime of the feature selection method.
+        The runtime of the method.
     method : str
-        The feature selection method.
+        The name of the method.
+
+    Raises
+    ------
+    OSError
+        If there is an error while writing the runtime to the file.
     """
-    write_to_file(f"{dataset_info.results_path}/runtime", f"{method}.txt", str(runtime))
+    write_to_file(f"{results_path}/runtime", f"{method}.txt", str(runtime))
 
 
-def write_performance(dataset_info: DatasetInfo, performance: dict[str, list[float]], method):
-    """Writes the performance results of a feature selection method for different algorithms to files.
+def write_performance(results_path: str, performance: dict[str, list[float]], method):
+    """Writes the performance of different algorithms for a specific method to separate files.
 
     Parameters
     ----------
-    dataset_info : DatasetInfo
-        An instance of the DatasetInfo class representing the dataset information.
+    results_path : str
+        The path to the results directory.
     performance : dict[str, list[float]]
-        A dictionary mapping algorithm names to a list of performance values.
+        A dictionary where the keys are the algorithm names and the values are lists of performance scores.
     method : str
-        The feature selection method.
+        The name of the method.
+
+    Raises
+    ------
+    OSError
+        If there is an error while writing the performance to the files.
     """
     for (algorithm, performance_algorithm) in performance.items():
         content = ",".join([str(x) for x in performance_algorithm])
-        write_to_file(f"{dataset_info.results_path}/{method}", f"{algorithm}.txt", content)
+        write_to_file(f"{results_path}/{method}", f"{algorithm}.txt", content)
 
 
 def write_to_file(path: str, results_file_name: str, content: str, mode="a+"):

@@ -3,7 +3,7 @@ import os
 
 import matplotlib.pyplot as plt
 
-from plotting.plotter import plot_metrics_matplotlib, plot_runtime_matplotlib
+from plotter.plotter import plot_metrics_matplotlib, plot_runtime_matplotlib
 
 
 def main():
@@ -41,8 +41,6 @@ def main():
             for dataset in (classification_datasets + regression_datasets):
                 y_label = "Accuracy" if dataset in classification_datasets else y_label_regression
                 plot_experiments(experiment_name, dataset, y_label)
-                plot_experiments(f"{experiment_name}/no_normalization", dataset, y_label)
-                plot_experiments(f"{experiment_name}/median", dataset, y_label)
         elif plot_type == "average_results":
             if experiment_name == "experiment2":
                 plot_average_results_experiment2(datasets=classification_datasets + regression_datasets)
@@ -188,13 +186,14 @@ def plot_experiments(experiment_name: str, dataset: str, y_label="Accuracy"):
     y_label : str, optional
         The label for the y-axis of the plot (default: "Accuracy").
     """
-    results_path = f"results/{experiment_name}/{dataset}"
-    if experiment_name == "experiment4":
-        data_types = ["categorical", "discrete", "continuous"]
-        for data_type in data_types:
-            plot_results(f"{results_path}/{data_type}", y_label)
-    else:
-        plot_results(results_path, y_label)
+    for preprocessing_variation in ["", "no_normalization", "median"]:
+        results_path = f"results/{experiment_name}/{dataset}/{preprocessing_variation}"
+        if experiment_name == "experiment4":
+            data_types = ["categorical", "discrete", "continuous"]
+            for data_type in data_types:
+                plot_results(f"{results_path}/{data_type}", y_label)
+        else:
+            plot_results(results_path, y_label)
 
 
 def plot_results(results_path: str, y_label="Accuracy"):

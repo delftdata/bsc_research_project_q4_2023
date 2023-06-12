@@ -228,7 +228,7 @@ class Reader:
         df_nasa_numeric = self.prepare_data_frame(df=df_nasa_numeric, missing_values=True)
         return df_nasa_numeric, nasa_numeric
 
-    def read_arrhythmia(self):
+    def read_arrhythmia(self) -> tuple[pd.DataFrame, DatasetInfo]:
         """Reads the arrhythmia dataset from a CSV file and prepares the DataFrame.
 
         Returns

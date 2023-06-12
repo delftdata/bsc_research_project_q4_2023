@@ -12,6 +12,7 @@ from .correlation_methods.spearman import SpearmanFeatureSelection
 from .correlation_methods.cramer import CramersVFeatureSelection
 from .correlation_methods.su import SymmetricUncertaintyFeatureSelection
 from .plots.number_of_features_plot import plot_over_number_of_features
+from .plots.runtime_plot import plot_over_runtime
 from .encoding.encoding import OneHotEncoder
 from .encoding.encoding import KBinsDiscretizer
 from warnings import filterwarnings
@@ -188,11 +189,13 @@ class MLPipeline:
                 # LOOP: Go through each method
                 correlation_methods = ['Pearson', 'Spearman', 'CramersV', 'SU']
                 correlation_methods_performances = []
+                correlation_methods_durations = []
                 for ranked_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
                                                                 cramersv_selected_features, su_selected_features],
                                                                correlation_methods):
 
                     correlation_method_performance = []
+                    correlation_method_duration = []
                     # LOOP: Go to all possible values of k (i.e. number of selected features)
                     for subset_length in range(1, len(ranked_features)):
                         # Get the current feature subset
@@ -209,6 +212,7 @@ class MLPipeline:
                                                                                       evaluation_metric=
                                                                                       self.evaluation_metric)
                         correlation_method_performance.append(current_performance)
+                        correlation_method_duration.append(current_duration)
 
                         # Save the results to file
                         MLPipeline.write_to_file(dataset_name=self.dataset_name,
@@ -222,7 +226,9 @@ class MLPipeline:
                                                  baseline_performance=baseline_performance,
                                                  baseline_duration=baseline_duration)
                     correlation_methods_performances.append(correlation_method_performance)
+                    correlation_methods_durations.append(correlation_method_duration)
 
+                # Make plot of metric vs increasing number of selected features
                 plot_over_number_of_features(dataset_name=self.dataset_name,
                                              algorithm=algorithm_name,
                                              number_of_features=self.features_to_select_k,
@@ -233,6 +239,17 @@ class MLPipeline:
                                              cramersv_performance=correlation_methods_performances[2],
                                              su_performance=correlation_methods_performances[3],
                                              baseline_performance=baseline_performance)
+
+                # Make plot of runtime vs increasing number of selected features
+                plot_over_runtime(dataset_name=self.dataset_name,
+                                  algorithm=algorithm_name,
+                                  number_of_features=self.features_to_select_k,
+                                  dataset_type=dataset_type,
+                                  pearson_duration=correlation_methods_durations[0],
+                                  spearman_duration=correlation_methods_durations[1],
+                                  cramersv_duration=correlation_methods_durations[2],
+                                  su_duration=correlation_methods_durations[3],
+                                  baseline_duration=baseline_duration)
 
     @staticmethod
     def write_to_file(dataset_name, dataset_type, algorithm_name, correlation_method,
@@ -259,7 +276,7 @@ class MLPipeline:
         file.write("CURRENT FEATURE SUBSET: " + str(current_subset) + '\n')
         file.write("CURRENT PERFORMANCE: " + str(current_performance) + '\n')
         file.write("BASELINE PERFORMANCE: " + str(baseline_performance) + '\n')
-        file.write("BASELINE TIME: " + str(baseline_time) + '\n')
+        file.write("BASELINE TIME: " + str(baseline_duration) + '\n')
         file.write('\n')
         file.close()
 

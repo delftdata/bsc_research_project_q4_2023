@@ -141,7 +141,7 @@ class MLPipeline:
 
     def evaluate_all_models(self):
         number_rows, number_columns = self.dataframe.shape
-        print('Total columns: ' + str(number_columns))
+        print('Total columns: ' + str(number_columns - 1))
         print('Total rows: ' + str(number_rows))
 
         # Prepare the data for Autogluon

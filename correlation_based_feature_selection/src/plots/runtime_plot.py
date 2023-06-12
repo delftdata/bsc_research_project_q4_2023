@@ -30,7 +30,7 @@ def plot_over_runtime(dataset_name, algorithm, number_of_features, dataset_type,
              marker='o', color='#000000')
 
     plt.xlabel('Number of features')
-    plt.ylabel('Milliseconds')
+    plt.ylabel('Seconds')
     plt.legend(['Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty', 'Baseline'])
     # plt.title('Change of ' + str(evaluation_metric_name)
     #           + f' for {algorithm} on {dataset_name} dataset ({dataset_type}) '

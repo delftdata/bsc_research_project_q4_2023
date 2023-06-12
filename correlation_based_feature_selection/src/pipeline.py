@@ -1,7 +1,9 @@
 import pandas as pd
+import numpy as np
 import csv
 import os
 import time
+import timeit
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import KBinsDiscretizer
 from autogluon.features.generators import AutoMLPipelineFeatureGenerator, FillNaFeatureGenerator
@@ -16,6 +18,7 @@ from .plots.runtime_plot import plot_over_runtime
 from .encoding.encoding import OneHotEncoder
 from .encoding.encoding import KBinsDiscretizer
 from warnings import filterwarnings
+
 
 filterwarnings("ignore", category=UserWarning)
 filterwarnings("ignore", category=RuntimeWarning)
@@ -156,7 +159,7 @@ class MLPipeline:
         x_train, x_test, y_train, y_test = \
             train_test_split(self.auxiliary_dataframe.drop(columns=[self.target_label]),
                              self.auxiliary_dataframe[self.target_label],
-                             test_size=0.2, random_state=1)
+                             test_size=0.2, random_state=42)
         train_dataframe = pd.concat([x_train, y_train], axis=1)
         test_dataframe = pd.concat([x_test, y_test], axis=1)
 
@@ -189,7 +192,7 @@ class MLPipeline:
                                                         current_train_dataframe, current_test_dataframe)
 
                 # LOOP: Go through each method
-                correlation_methods = ['Pearson', 'Spearman', 'CramersV', 'SU']
+                correlation_methods = ['Pearson', 'Spearman', 'Cramér\'s V', 'SU']
                 correlation_methods_performances = []
                 correlation_methods_durations = []
                 for ranked_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
@@ -253,6 +256,69 @@ class MLPipeline:
                                   su_duration=correlation_methods_durations[3],
                                   baseline_duration=baseline_duration)
 
+    def evaluate_feature_selection_step(self):
+        # Prepare the data
+        self.dataframe = TabularDataset(PreML.imputation_most_common_value(self.dataframe))
+        self.dataframe = FillNaFeatureGenerator(inplace=True).fit_transform(self.dataframe)
+        self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
+            enable_text_special_features=False,
+            enable_text_ngram_features=False) \
+            .fit_transform(self.dataframe)
+        current_dataframe = self.auxiliary_dataframe
+
+        pearson_runtimes = []
+        spearman_runtimes = []
+        cramersv_runtimes = []
+        su_runtimes = []
+        # Take samples from the original dataset for each percentage
+        for percent in np.arange(10, 110, 10):
+            sample_size = int(len(current_dataframe) * percent / 100)
+            sample = current_dataframe.sample(n=sample_size, random_state=42)
+
+            pearson_start_time = timeit.default_timer()
+            PearsonFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
+            pearson_execution_time = (timeit.default_timer() - pearson_start_time) * 1000
+            pearson_runtimes.append(pearson_execution_time)
+
+            spearman_start_time = timeit.default_timer()
+            SpearmanFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
+            spearman_execution_time = (timeit.default_timer() - spearman_start_time) * 1000
+            spearman_runtimes.append(spearman_execution_time)
+
+            cramersv_start_time = timeit.default_timer()
+            CramersVFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
+            cramersv_execution_time = (timeit.default_timer() - cramersv_start_time) * 1000
+            cramersv_runtimes.append(cramersv_execution_time)
+
+            su_start_time = timeit.default_timer()
+            SymmetricUncertaintyFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
+            su_execution_time = (timeit.default_timer() - su_start_time) * 1000
+            su_runtimes.append(su_execution_time)
+
+            # Write the results to file
+            directory = "./results_runtime2"
+            os.makedirs(directory, exist_ok=True)
+            directory = "./results_runtime2/txt_files"
+            os.makedirs(directory, exist_ok=True)
+            file_path = f"./results_runtime2/txt_files/{self.dataset_name}.txt"
+            file = open(file_path, "a")
+            file.write("DATA PERCENTAGE: " + str(percent) + '\n')
+            file.write("PEARSON RUNTIME: " + str(pearson_execution_time) + '\n')
+            file.write("SPEARMAN RUNTIME: " + str(spearman_execution_time) + '\n')
+            file.write("CRAMER\'S V RUNTIME: " + str(cramersv_execution_time) + '\n')
+            file.write("SYMMETRIC UNCERTAINTY RUNTIME: " + str(su_execution_time) + '\n')
+            file.write('\n')
+            file.close()
+
+            print('Percentage of data: ' + str(percent))
+            print('Pearson runtime: ' + str(pearson_execution_time))
+            print('Spearman runtime: ' + str(spearman_execution_time))
+            print('Cramér\'s V runtime: ' + str(cramersv_execution_time))
+            print('Symmetric Uncertainty runtime: ' + str(su_execution_time))
+            print('\n')
+
+        return pearson_runtimes, spearman_runtimes, cramersv_runtimes, su_runtimes
+
     @staticmethod
     def write_to_file(dataset_name, dataset_type, algorithm_name, correlation_method,
                       subset_length, current_subset, current_performance, current_duration,
@@ -277,8 +343,9 @@ class MLPipeline:
         file.write("SUBSET OF FEATURES: " + str(subset_length) + '\n')
         file.write("CURRENT FEATURE SUBSET: " + str(current_subset) + '\n')
         file.write("CURRENT PERFORMANCE: " + str(current_performance) + '\n')
+        file.write("CURRENT RUNTIME: " + str(current_duration) + '\n')
         file.write("BASELINE PERFORMANCE: " + str(baseline_performance) + '\n')
-        file.write("BASELINE TIME: " + str(baseline_duration) + '\n')
+        file.write("BASELINE RUNTIME: " + str(baseline_duration) + '\n')
         file.write('\n')
         file.close()
 

@@ -110,7 +110,7 @@ class MLPipeline:
         # Specify the models to use: GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
         self.algorithms_model_names = {
             #'GBM': 'LightGBM',
-            'RF': 'RandomForest',
+            #'RF': 'RandomForest',
             'LR': 'LinearModel',
             'XGB': 'XGBoost'
         }

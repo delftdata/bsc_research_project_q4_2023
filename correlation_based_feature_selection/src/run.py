@@ -49,6 +49,7 @@ def evaluate_feature_selection_steel_plates_faults_dataset():
 
     dataset_evaluator.evaluate_feature_selection_step()
 
+
 def evaluate_connect4_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../datasets/Connect4/connect4.csv', dataset_name='Connect4',
@@ -172,27 +173,26 @@ def evaluate_dataframe(dataframe):
 
 
 if __name__ == '__main__':
-    # evaluate_census_income_dataset()
-    # evaluate_breast_cancer_dataset()
-    # evaluate_steel_plates_fault_dataset()
-    # evaluate_connect4_dataset()
-    # evaluate_housing_prices_dataset()
-    # evaluate_gisette_dataset()
-    # evaluate_bank_marketing_dataset()
+    evaluate_census_income_dataset()
+    evaluate_breast_cancer_dataset()
+    evaluate_steel_plates_fault_dataset()
+    evaluate_connect4_dataset()
+    evaluate_housing_prices_dataset()
+    evaluate_gisette_dataset()
 
     # Databases that have SMALL number of instances
-    evaluate_feature_selection_breast_cancer_dataset()
-    evaluate_feature_selection_steel_plates_faults_dataset()
-    evaluate_feature_selection_arrhythmia_dataset()
-    evaluate_feature_selection_housing_prices_dataset()
-    evaluate_feature_selection_internet_advertisements_dataset()
-
-    # Databases that have LARGE number of instances
-    evaluate_feature_selection_gisette_dataset()
-    evaluate_feature_selection_bike_sharing_dataset()
-    evaluate_feature_selection_nursery_dataset()
-    evaluate_feature_selection_connect4_dataset()
-    evaluate_feature_selection_census_income_dataset()
+    # evaluate_feature_selection_breast_cancer_dataset()
+    # evaluate_feature_selection_steel_plates_faults_dataset()
+    # evaluate_feature_selection_arrhythmia_dataset()
+    # evaluate_feature_selection_housing_prices_dataset()
+    # evaluate_feature_selection_internet_advertisements_dataset()
+    #
+    # # Databases that have LARGE number of instances
+    # evaluate_feature_selection_gisette_dataset()
+    # evaluate_feature_selection_bike_sharing_dataset()
+    # evaluate_feature_selection_nursery_dataset()
+    # evaluate_feature_selection_connect4_dataset()
+    # evaluate_feature_selection_census_income_dataset()
 
     # plot_over_runtime()
     # plot_over_runtime_large_datasets()

@@ -6,6 +6,7 @@ import seaborn as sns
 
 plt.style.use('seaborn-darkgrid')
 plt.rc_context({"context": "paper"})
+sns.set(rc={'figure.figsize':(12,12)})
 
 
 def parse_results(directory="./results_runtime2/txt_files"):
@@ -68,15 +69,15 @@ def parse_results(directory="./results_runtime2/txt_files"):
 
 
 def plot_over_runtime():
-    sns.set_theme(style="whitegrid")
-
     dataframe = parse_results(directory="./results_runtime2/txt_files")
 
-    custom_palette = ["#10A5D6", "#045a8d", "#BF9000", "#ca0020"]
+    sns.set_theme(style="whitegrid")
+    custom_palette = ["#10A5D6", "#045A8D", "#BF9000", "#CA0020"]
     g = sns.catplot(
         data=dataframe, x="Dataset", y="Runtime", hue="Method",
-        capsize=.2, palette=custom_palette, errorbar="sd",
-        kind="point", height=7, aspect=.75, legend=False
+        capsize=.2, palette=custom_palette, errorbar="sd", estimator="median",
+        kind="point", height=7, aspect=.75, legend=False,
+        order=["Nursery (8)", "CensusIncome (14)", "BikeSharing (16)", "BreastCancer (31)", "SteelPlatesFaults (33)"]
     )
     g.despine(left=True)
     g.set(xlabel="Data")
@@ -84,7 +85,7 @@ def plot_over_runtime():
 
     plt.xticks(rotation=45)
 
-    plt.gcf().set_size_inches(7, 7)
+    plt.gcf().set_size_inches(8, 8)
     plt.subplots_adjust(bottom=0.2)
 
     ax = plt.gca()
@@ -92,10 +93,10 @@ def plot_over_runtime():
     ax.grid(color='white')
 
     plt.legend(loc='upper left', title='Correlation technique')
-    plt.yticks([0.1, 1, 2, 3, 4])
-    plt.text(0.44, 0.38, '10% of rows', transform=ax.transAxes, fontsize=9,
+    plt.yticks([0.1, 0.5, 1, 2, 3, 4])
+    plt.text(0.44, 0.53, '10% of rows', transform=ax.transAxes, fontsize=9,
              verticalalignment='top')
-    plt.text(0.43, 0.92, '100% of rows', transform=ax.transAxes, fontsize=9,
+    plt.text(0.44, 0.99, '100% of rows', transform=ax.transAxes, fontsize=9,
              verticalalignment='top')
 
     directory = "./results_runtime2"
@@ -105,15 +106,16 @@ def plot_over_runtime():
 
 
 def plot_over_runtime_large_datasets():
-    sns.set_theme(style="whitegrid")
-
     dataframe = parse_results(directory="./results_runtime2/txt_files2")
 
-    custom_palette = ["#10A5D6", "#045a8d", "#BF9000", "#ca0020"]
+    sns.set_theme(style="whitegrid")
+    custom_palette = ["#10A5D6", "#045A8D", "#BF9000", "#CA0020"]
     g = sns.catplot(
         data=dataframe, x="Dataset", y="Runtime", hue="Method",
-        capsize=.2, palette=custom_palette, errorbar="sd",
-        kind="point", height=7, aspect=.75, legend=False
+        capsize=.2, palette=custom_palette, errorbar="sd", estimator="median",
+        kind="point", height=7, aspect=.75, legend=False,
+        order=["Connect-4 (42)", "HousingPrices (80)", "Arrhythmia (279)",
+               "InternetAds (1558)", "Gisette (5000)"]
     )
     g.despine(left=True)
     g.set(xlabel="Data")
@@ -121,7 +123,7 @@ def plot_over_runtime_large_datasets():
 
     plt.xticks(rotation=45)
 
-    plt.gcf().set_size_inches(7, 7)
+    plt.gcf().set_size_inches(8, 8)
     plt.subplots_adjust(bottom=0.2)
 
     ax = plt.gca()
@@ -130,10 +132,10 @@ def plot_over_runtime_large_datasets():
 
     plt.legend(loc='upper left', title='Correlation technique')
     plt.yticks([0.1, 5, 10, 15, 20, 25, 30, 35])
-    # plt.text(0.44, 0.38, '10% of rows', transform=ax.transAxes, fontsize=9,
-    #          verticalalignment='top')
-    # plt.text(0.43, 0.92, '100% of rows', transform=ax.transAxes, fontsize=9,
-    #          verticalalignment='top')
+    plt.text(0.84, 0.30, '10% of rows', transform=ax.transAxes, fontsize=9,
+             verticalalignment='top')
+    plt.text(0.84, 0.99, '100% of rows', transform=ax.transAxes, fontsize=9,
+             verticalalignment='top')
 
     directory = "./results_runtime2"
     os.makedirs(directory, exist_ok=True)

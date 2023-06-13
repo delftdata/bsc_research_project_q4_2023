@@ -187,6 +187,6 @@ if __name__ == '__main__':
     # evaluate_feature_selection_housing_prices_dataset()
     # evaluate_feature_selection_nasa_numeric_dataset()
     # evaluate_feature_selection_bike_sharing_dataset()
-    evaluate_feature_selection_arrhythmia_dataset()
+    # evaluate_feature_selection_arrhythmia_dataset()
     evaluate_feature_selection_internet_advertisements_dataset()
     # plot_over_runtime()

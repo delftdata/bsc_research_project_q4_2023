@@ -132,6 +132,16 @@ def evaluate_feature_selection_nasa_numeric_dataset():
     dataset_evaluator.evaluate_feature_selection_step()
 
 
+def evaluate_feature_selection_bike_sharing_dataset():
+    dataset_evaluator = MLPipeline(
+        dataset_file='../datasets/BikeSharing/hour.csv',
+        dataset_name='BikeSharing',
+        target_label='cnt',
+        evaluation_metric='root_mean_squared_error')
+
+    dataset_evaluator.evaluate_feature_selection_step()
+
+
 if __name__ == '__main__':
     # evaluate_census_income_dataset()
     # evaluate_breast_cancer_dataset()
@@ -145,5 +155,6 @@ if __name__ == '__main__':
     # evaluate_feature_selection_bank_marketing_dataset()
     # evaluate_feature_selection_steel_plates_faults_dataset()
     # evaluate_feature_selection_housing_prices_dataset()
-    evaluate_feature_selection_nasa_numeric_dataset()
+    # evaluate_feature_selection_nasa_numeric_dataset()
+    evaluate_feature_selection_bike_sharing_dataset()
     # plot_over_runtime()

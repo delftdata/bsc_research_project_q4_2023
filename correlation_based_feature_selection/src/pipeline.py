@@ -258,8 +258,14 @@ class MLPipeline:
 
     def evaluate_feature_selection_step(self):
         # Prepare the data
+        self.dataframe = self.dataframe.fillna(self.dataframe.mode(axis=1)[0])
+        mode_values = self.dataframe.mode().iloc[0]
+
+        for col in self.dataframe.columns:
+            self.dataframe[col] = self.dataframe[col].replace([np.inf, -np.inf], mode_values[col])
         self.dataframe = TabularDataset(PreML.imputation_most_common_value(self.dataframe))
         self.dataframe = FillNaFeatureGenerator(inplace=True).fit_transform(self.dataframe)
+        print(self.dataframe)
         self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
             enable_text_special_features=False,
             enable_text_ngram_features=False) \

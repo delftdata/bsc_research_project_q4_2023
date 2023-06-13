@@ -80,7 +80,7 @@ def plot_over_runtime():
     )
     g.despine(left=True)
     g.set(xlabel="Data")
-    g.set(ylabel="Runtime (milliseconds)")
+    g.set(ylabel="Runtime (seconds)")
 
     plt.xticks(rotation=45)
 
@@ -92,7 +92,7 @@ def plot_over_runtime():
     ax.grid(color='white')
 
     plt.legend(loc='upper left', title='Correlation technique')
-    plt.yticks([100, 1000, 2000, 3000, 4000, 5000, 6000])
+    plt.yticks([0.1, 1, 2, 3, 4, 5, 6])
     plt.text(0.44, 0.38, '10% of rows', transform=ax.transAxes, fontsize=9,
              verticalalignment='top')
     plt.text(0.43, 0.92, '100% of rows', transform=ax.transAxes, fontsize=9,
@@ -117,7 +117,7 @@ def plot_over_runtime_large_datasets():
     )
     g.despine(left=True)
     g.set(xlabel="Data")
-    g.set(ylabel="Runtime (milliseconds)")
+    g.set(ylabel="Runtime (seconds)")
 
     plt.xticks(rotation=45)
 
@@ -129,7 +129,7 @@ def plot_over_runtime_large_datasets():
     ax.grid(color='white')
 
     plt.legend(loc='upper left', title='Correlation technique')
-    plt.yticks([100, 1000, 2000, 3000, 4000, 5000, 6000])
+    #plt.yticks([100, 1000, 2000, 3000, 4000, 5000, 6000])
     # plt.text(0.44, 0.38, '10% of rows', transform=ax.transAxes, fontsize=9,
     #          verticalalignment='top')
     # plt.text(0.43, 0.92, '100% of rows', transform=ax.transAxes, fontsize=9,

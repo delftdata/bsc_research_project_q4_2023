@@ -278,22 +278,22 @@ class MLPipeline:
 
             pearson_start_time = timeit.default_timer()
             PearsonFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
-            pearson_execution_time = (timeit.default_timer() - pearson_start_time) * 1000
+            pearson_execution_time = (timeit.default_timer() - pearson_start_time)
             pearson_runtimes.append(pearson_execution_time)
 
             spearman_start_time = timeit.default_timer()
             SpearmanFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
-            spearman_execution_time = (timeit.default_timer() - spearman_start_time) * 1000
+            spearman_execution_time = (timeit.default_timer() - spearman_start_time)
             spearman_runtimes.append(spearman_execution_time)
 
             cramersv_start_time = timeit.default_timer()
             CramersVFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
-            cramersv_execution_time = (timeit.default_timer() - cramersv_start_time) * 1000
+            cramersv_execution_time = (timeit.default_timer() - cramersv_start_time)
             cramersv_runtimes.append(cramersv_execution_time)
 
             su_start_time = timeit.default_timer()
             SymmetricUncertaintyFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
-            su_execution_time = (timeit.default_timer() - su_start_time) * 1000
+            su_execution_time = timeit.default_timer() - su_start_time
             su_runtimes.append(su_execution_time)
 
             # Write the results to file

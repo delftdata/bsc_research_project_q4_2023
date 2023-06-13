@@ -8,8 +8,7 @@ plt.style.use('seaborn-darkgrid')
 plt.rc_context({"context": "paper"})
 
 
-def parse_results():
-    directory = "./results_runtime2/txt_files"
+def parse_results(directory="./results_runtime2/txt_files"):
     runtimes = []
     methods = []
     datasets = []
@@ -65,31 +64,78 @@ def parse_results():
         "Method": methods
     })
 
-    print(dataframe)
-
     return dataframe
 
 
 def plot_over_runtime():
     sns.set_theme(style="whitegrid")
 
-    dataframe = parse_results()
+    dataframe = parse_results(directory="./results_runtime2/txt_files")
 
     custom_palette = ["#10A5D6", "#045a8d", "#BF9000", "#ca0020"]
     g = sns.catplot(
         data=dataframe, x="Dataset", y="Runtime", hue="Method",
         capsize=.2, palette=custom_palette, errorbar="sd",
-        kind="point", height=6, aspect=.75,
+        kind="point", height=7, aspect=.75, legend=False
     )
     g.despine(left=True)
     g.set(xlabel="Data")
     g.set(ylabel="Runtime (milliseconds)")
 
+    plt.xticks(rotation=45)
+
+    plt.gcf().set_size_inches(7, 7)
+    plt.subplots_adjust(bottom=0.2)
+
     ax = plt.gca()
     ax.set_facecolor('#F0F0F0')
     ax.grid(color='white')
 
+    plt.legend(loc='upper left', title='Correlation technique')
+    plt.yticks([100, 1000, 2000, 3000, 4000, 5000, 6000])
+    plt.text(0.44, 0.38, '10% of rows', transform=ax.transAxes, fontsize=9,
+             verticalalignment='top')
+    plt.text(0.43, 0.92, '100% of rows', transform=ax.transAxes, fontsize=9,
+             verticalalignment='top')
+
     directory = "./results_runtime2"
     os.makedirs(directory, exist_ok=True)
     plt.savefig(f'./results_runtime2/result.png')
+    plt.clf()
+
+
+def plot_over_runtime_large_datasets():
+    sns.set_theme(style="whitegrid")
+
+    dataframe = parse_results(directory="./results_runtime2/txt_files2")
+
+    custom_palette = ["#10A5D6", "#045a8d", "#BF9000", "#ca0020"]
+    g = sns.catplot(
+        data=dataframe, x="Dataset", y="Runtime", hue="Method",
+        capsize=.2, palette=custom_palette, errorbar="sd",
+        kind="point", height=7, aspect=.75, legend=False
+    )
+    g.despine(left=True)
+    g.set(xlabel="Data")
+    g.set(ylabel="Runtime (milliseconds)")
+
+    plt.xticks(rotation=45)
+
+    plt.gcf().set_size_inches(7, 7)
+    plt.subplots_adjust(bottom=0.2)
+
+    ax = plt.gca()
+    ax.set_facecolor('#F0F0F0')
+    ax.grid(color='white')
+
+    plt.legend(loc='upper left', title='Correlation technique')
+    plt.yticks([100, 1000, 2000, 3000, 4000, 5000, 6000])
+    # plt.text(0.44, 0.38, '10% of rows', transform=ax.transAxes, fontsize=9,
+    #          verticalalignment='top')
+    # plt.text(0.43, 0.92, '100% of rows', transform=ax.transAxes, fontsize=9,
+    #          verticalalignment='top')
+
+    directory = "./results_runtime2"
+    os.makedirs(directory, exist_ok=True)
+    plt.savefig(f'./results_runtime2/result_large_datasets.png')
     plt.clf()

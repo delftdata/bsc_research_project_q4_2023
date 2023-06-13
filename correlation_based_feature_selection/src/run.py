@@ -182,14 +182,14 @@ if __name__ == '__main__':
     # evaluate_feature_selection_steel_plates_faults_dataset()
     # evaluate_feature_selection_arrhythmia_dataset()
     # evaluate_feature_selection_housing_prices_dataset()
-    evaluate_feature_selection_internet_advertisements_dataset()
+    # evaluate_feature_selection_internet_advertisements_dataset()
 
     # Databases that have LARGE number of instances
-    # evaluate_feature_selection_gisette_dataset()
-    # evaluate_feature_selection_bike_sharing_dataset()
+    evaluate_feature_selection_gisette_dataset()
+    evaluate_feature_selection_bike_sharing_dataset()
     # evaluate_feature_selection_nursery_dataset()
     # evaluate_feature_selection_connect4_dataset()
     # evaluate_feature_selection_census_income_dataset()
 
-    plot_over_runtime()
-    # plot_over_runtime_large_datasets()
+    #plot_over_runtime()
+    #plot_over_runtime_large_datasets()

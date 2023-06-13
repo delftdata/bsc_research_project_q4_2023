@@ -7,89 +7,81 @@ plt.style.use('seaborn-darkgrid')
 plt.rc_context({"context": "paper"})
 
 
+def parse_results():
+    directory = "./results_runtime2/txt_files"
+
+    # Initialize empty lists to store the extracted information
+    runtimes = []
+    methods = []
+    datasets = []
+
+    # Iterate over each file in the directory
+    for filename in os.listdir(directory):
+        # Skip any non-txt files
+        if not filename.endswith(".txt"):
+            continue
+
+        # File path
+        file_path = os.path.join(directory, filename)
+
+        # Extract the file name without the extension
+        file_name = os.path.splitext(os.path.basename(file_path))[0]
+
+        with open(file_path, 'r') as file:
+            data = file.read()
+
+        # Split the data by newline character
+        lines = data.strip().split('\n\n')
+
+        # Iterate over each section of data and extract the values
+        for line in lines:
+            # Split the lines by newline character and remove any leading/trailing spaces
+            linesplit = [x.strip() for x in line.split('\n')]
+            percentage = int(linesplit[0].split(':')[-1])
+
+            # Extract the values
+            for l in linesplit[1:]:
+                label, value = l.split(':')
+                label = label.strip()
+                value = float(value.strip())
+
+                if label == "PEARSON RUNTIME":
+                    runtimes.append(value)
+                    methods.append('Pearson')
+                    datasets.append(file_name)
+                elif label == "SPEARMAN RUNTIME":
+                    runtimes.append(value)
+                    methods.append('Spearman')
+                    datasets.append(file_name)
+                elif label == "CRAMER'S V RUNTIME":
+                    runtimes.append(value)
+                    methods.append('Cramér\'s V')
+                    datasets.append(file_name)
+                elif label == "SYMMETRIC UNCERTAINTY RUNTIME":
+                    runtimes.append(value)
+                    methods.append('Symmetric Uncertainty')
+                    datasets.append(file_name)
+
+    dataframe = pd.DataFrame({
+        "Runtime": runtimes,
+        "Dataset": datasets,
+        "Method": methods
+    })
+
+    print(dataframe)
+
+    return dataframe
+
+
 def plot_over_runtime():
     import seaborn as sns
     sns.set_theme(style="whitegrid")
 
-    data = {
-        'Runtime': [
-            # BreastCancer
-            23.97, 14.94, 191.22, 11.93,
-            24.00, 14.80, 209.34, 23.06,
-            23.50, 15.14, 247.67, 32.46,
-            23.71, 15.28, 270.60, 44.41,
-            23.22, 15.62, 304.16, 58.67,
-            25.13, 16.41, 325.21, 74.35,
-            26.40, 17.52, 391.79, 83.35,
-            23.89, 16.74, 341.068, 87.28,
-            23.23, 15.84, 344.80, 95.85,
-            23.01, 16.19, 453.24, 99.91,
-            # Gisette
-            # 23.97, 14.94, 191.22, 11.93,
-            # 24.00, 14.80, 209.34, 23.06,
-            # 23.50, 15.14, 247.67, 32.46,
-            # 23.71, 15.28, 270.60, 44.41,
-            # 23.22, 15.62, 304.16, 58.67,
-            # 25.13, 16.41, 325.21, 74.35,
-            # 26.40, 17.52, 391.79, 83.35,
-            # 23.89, 16.74, 341.068, 87.28,
-            # 23.23, 15.84, 344.80, 95.85,
-            # 23.01, 16.19, 453.24, 99.91
-        ],
-        'Dataset': [
-            # BreastCancer
-            'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
-            'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
-            'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
-            'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
-            'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
-            'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
-            'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
-            'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
-            'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
-            'BreastCancer', 'BreastCancer', 'BreastCancer', 'BreastCancer',
-            # Gisette
-            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
-            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
-            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
-            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
-            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
-            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
-            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
-            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
-            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
-            # 'Gisette', 'Gisette', 'Gisette', 'Gisette',
-        ],
-        'Method': [
-            # BreastCancer
-            'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty'
-            # Gisette
-            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty',
-            # 'Pearson', 'Spearman', 'Cramér\'s V', 'Symmetric Uncertainty'
-        ]
-    }
-    df = pd.DataFrame(data)
+    dataframe = parse_results()
 
-    custom_palette = ["#10A5D6", "#C6209B", "#BF9000", "#2EB835"]
+    custom_palette = ["#10A5D6", "#045a8d", "#BF9000", "#ca0020"]
     g = sns.catplot(
-        data=df, x="Dataset", y="Runtime", hue="Method",
+        data=dataframe, x="Dataset", y="Runtime", hue="Method",
         capsize=.2, palette=custom_palette, errorbar="se",
         kind="point", height=6, aspect=.75,
     )

@@ -1,5 +1,5 @@
 from .pipeline import MLPipeline
-from .plots.runtime_plot2 import plot_over_runtime
+from .plots.runtime_plot2 import plot_over_runtime, parse_results
 
 
 def evaluate_census_income_dataset():
@@ -186,7 +186,7 @@ if __name__ == '__main__':
     # evaluate_feature_selection_steel_plates_faults_dataset()
     # evaluate_feature_selection_housing_prices_dataset()
     # evaluate_feature_selection_nasa_numeric_dataset()
-    # evaluate_feature_selection_bike_sharing_dataset()
+    evaluate_feature_selection_bike_sharing_dataset()
     # evaluate_feature_selection_arrhythmia_dataset()
-    evaluate_feature_selection_internet_advertisements_dataset()
+    # evaluate_feature_selection_internet_advertisements_dataset()
     # plot_over_runtime()

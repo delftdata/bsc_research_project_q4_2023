@@ -127,11 +127,7 @@ def evaluate_feature_selection_bike_sharing_dataset():
         dataset_file='../datasets/BikeSharing/hour.csv', dataset_name='BikeSharing',
         target_label='cnt', evaluation_metric='root_mean_squared_error')
 
-    print("Number of rows:", dataset_evaluator.dataframe.shape[0])
-    print("Number of columns:", dataset_evaluator.dataframe.shape[1])
-    print(dataset_evaluator.dataframe.dtypes)
-    print(dataset_evaluator.dataframe.head())
-    #dataset_evaluator.evaluate_feature_selection_step()
+    dataset_evaluator.evaluate_feature_selection_step()
 
 
 def evaluate_feature_selection_arrhythmia_dataset():
@@ -168,6 +164,13 @@ def evaluate_feature_selection_nursery_dataset():
     dataset_evaluator.evaluate_feature_selection_step()
 
 
+def evaluate_dataframe(dataframe):
+    print("Number of rows:", dataframe.shape[0])
+    print("Number of columns:", dataframe.shape[1])
+    print(dataframe.dtypes)
+    print(dataframe.head())
+
+
 if __name__ == '__main__':
     # evaluate_census_income_dataset()
     # evaluate_breast_cancer_dataset()
@@ -185,11 +188,11 @@ if __name__ == '__main__':
     # evaluate_feature_selection_internet_advertisements_dataset()
 
     # Databases that have LARGE number of instances
-    evaluate_feature_selection_gisette_dataset()
+    # evaluate_feature_selection_gisette_dataset()
     evaluate_feature_selection_bike_sharing_dataset()
     # evaluate_feature_selection_nursery_dataset()
     # evaluate_feature_selection_connect4_dataset()
     # evaluate_feature_selection_census_income_dataset()
-
-    #plot_over_runtime()
-    #plot_over_runtime_large_datasets()
+    #
+    # plot_over_runtime()
+    # plot_over_runtime_large_datasets()

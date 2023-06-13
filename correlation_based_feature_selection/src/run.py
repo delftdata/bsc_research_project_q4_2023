@@ -180,13 +180,18 @@ if __name__ == '__main__':
     # evaluate_housing_prices_dataset()
     # evaluate_gisette_dataset()
     # evaluate_bank_marketing_dataset()
-    # evaluate_feature_selection_breast_cancer_dataset()
-    # evaluate_feature_selection_gisette_dataset()
-    # evaluate_feature_selection_bank_marketing_dataset()
-    # evaluate_feature_selection_steel_plates_faults_dataset()
-    # evaluate_feature_selection_housing_prices_dataset()
-    # evaluate_feature_selection_nasa_numeric_dataset()
+
+    # Databases that have SMALL number of instances
+    evaluate_feature_selection_breast_cancer_dataset()
+    evaluate_feature_selection_bank_marketing_dataset()
+    evaluate_feature_selection_steel_plates_faults_dataset()
+
+    # Databases that have LARGE number of instances
+    evaluate_feature_selection_gisette_dataset()
+    evaluate_feature_selection_arrhythmia_dataset()
     evaluate_feature_selection_bike_sharing_dataset()
-    # evaluate_feature_selection_arrhythmia_dataset()
-    # evaluate_feature_selection_internet_advertisements_dataset()
+
+    evaluate_feature_selection_housing_prices_dataset()
+    evaluate_feature_selection_nasa_numeric_dataset()
+    evaluate_feature_selection_internet_advertisements_dataset()
     # plot_over_runtime()

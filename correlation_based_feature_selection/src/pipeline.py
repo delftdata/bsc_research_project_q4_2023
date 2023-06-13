@@ -27,7 +27,7 @@ filterwarnings("ignore", category=FutureWarning)
 class PreML:
     @staticmethod
     def imputation_most_common_value(dataframe):
-        return dataframe.fillna(dataframe.mode(axis=1)[0])
+        return dataframe.apply(lambda x: x.fillna(x.value_counts().index[0]))
 
     # All features will be continuous
     @staticmethod
@@ -148,12 +148,13 @@ class MLPipeline:
         print('Total rows: ' + str(number_rows))
 
         # Prepare the data for Autogluon
-        self.dataframe = TabularDataset(PreML.imputation_most_common_value(self.dataframe))
+        self.dataframe = TabularDataset(self.dataframe)
         self.dataframe = FillNaFeatureGenerator(inplace=True).fit_transform(self.dataframe)
         self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
             enable_text_special_features=False,
             enable_text_ngram_features=False) \
             .fit_transform(self.dataframe)
+        self.auxiliary_dataframe = PreML.imputation_most_common_value(self.auxiliary_dataframe)
 
         # Split the data into train and test
         x_train, x_test, y_train, y_test = \
@@ -258,19 +259,13 @@ class MLPipeline:
 
     def evaluate_feature_selection_step(self):
         # Prepare the data
-        self.dataframe = self.dataframe.fillna(self.dataframe.mode(axis=1)[0])
-        mode_values = self.dataframe.mode().iloc[0]
-
-        for col in self.dataframe.columns:
-            self.dataframe[col] = self.dataframe[col].replace([np.inf, -np.inf], mode_values[col])
-        self.dataframe = TabularDataset(PreML.imputation_most_common_value(self.dataframe))
+        self.dataframe = TabularDataset(self.dataframe)
         self.dataframe = FillNaFeatureGenerator(inplace=True).fit_transform(self.dataframe)
-        print(self.dataframe)
         self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
             enable_text_special_features=False,
             enable_text_ngram_features=False) \
             .fit_transform(self.dataframe)
-        current_dataframe = self.auxiliary_dataframe
+        self.auxiliary_dataframe = PreML.imputation_most_common_value(self.auxiliary_dataframe)
 
         pearson_runtimes = []
         spearman_runtimes = []
@@ -278,8 +273,8 @@ class MLPipeline:
         su_runtimes = []
         # Take samples from the original dataset for each percentage
         for percent in np.arange(10, 110, 10):
-            sample_size = int(len(current_dataframe) * percent / 100)
-            sample = current_dataframe.sample(n=sample_size, random_state=42)
+            sample_size = int(len(self.auxiliary_dataframe) * percent / 100)
+            sample = self.auxiliary_dataframe.sample(n=sample_size, random_state=42)
 
             pearson_start_time = timeit.default_timer()
             PearsonFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])

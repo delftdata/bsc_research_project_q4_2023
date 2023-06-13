@@ -1,6 +1,7 @@
 import os
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 
 
 plt.style.use('seaborn-darkgrid')
@@ -9,15 +10,11 @@ plt.rc_context({"context": "paper"})
 
 def parse_results():
     directory = "./results_runtime2/txt_files"
-
-    # Initialize empty lists to store the extracted information
     runtimes = []
     methods = []
     datasets = []
 
-    # Iterate over each file in the directory
     for filename in os.listdir(directory):
-        # Skip any non-txt files
         if not filename.endswith(".txt"):
             continue
 
@@ -74,7 +71,6 @@ def parse_results():
 
 
 def plot_over_runtime():
-    import seaborn as sns
     sns.set_theme(style="whitegrid")
 
     dataframe = parse_results()
@@ -82,22 +78,18 @@ def plot_over_runtime():
     custom_palette = ["#10A5D6", "#045a8d", "#BF9000", "#ca0020"]
     g = sns.catplot(
         data=dataframe, x="Dataset", y="Runtime", hue="Method",
-        capsize=.2, palette=custom_palette, errorbar="se",
+        capsize=.2, palette=custom_palette, errorbar="sd",
         kind="point", height=6, aspect=.75,
     )
     g.despine(left=True)
-    g.set(xlabel="Database")
+    g.set(xlabel="Data")
     g.set(ylabel="Runtime (milliseconds)")
 
-    # Set background
     ax = plt.gca()
     ax.set_facecolor('#F0F0F0')
     ax.grid(color='white')
 
-    # Create the directory if it doesn't exist
     directory = "./results_runtime2"
     os.makedirs(directory, exist_ok=True)
-    # Save the figure to folder
     plt.savefig(f'./results_runtime2/result.png')
-    # plt.show()
     plt.clf()

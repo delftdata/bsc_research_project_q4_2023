@@ -109,7 +109,7 @@ class MLPipeline:
         self.auxiliary_dataframe = pd.read_csv(dataset_file)
         # Specify the models to use: GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
         self.algorithms_model_names = {
-            'GBM': 'LightGBM',
+            #'GBM': 'LightGBM',
             'RF': 'RandomForest',
             'LR': 'LinearModel',
             'XGB': 'XGBoost'
@@ -144,6 +144,7 @@ class MLPipeline:
 
     def evaluate_all_models(self):
         number_rows, number_columns = self.dataframe.shape
+        print('Dataset: ' + self.dataset_name)
         print('Total columns: ' + str(number_columns - 1))
         print('Total rows: ' + str(number_rows))
 

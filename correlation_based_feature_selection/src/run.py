@@ -134,7 +134,7 @@ def evaluate_feature_selection_bike_sharing_dataset():
 def evaluate_arrhythmia_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../datasets/Arrhythmia/arrhythmia.csv', dataset_name='Arrhythmia',
-        target_label='Class', evaluation_metric='accuracy')
+        target_label='Class', evaluation_metric='accuracy', features_to_select=100)
 
     dataset_evaluator.evaluate_all_models()
 

@@ -131,6 +131,14 @@ def evaluate_feature_selection_bike_sharing_dataset():
     dataset_evaluator.evaluate_feature_selection_step()
 
 
+def evaluate_arrhythmia_dataset():
+    dataset_evaluator = MLPipeline(
+        dataset_file='../datasets/Arrhythmia/arrhythmia.csv', dataset_name='Arrhythmia',
+        target_label='Class', evaluation_metric='accuracy')
+
+    dataset_evaluator.evaluate_all_models()
+
+
 def evaluate_feature_selection_arrhythmia_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../datasets/Arrhythmia/arrhythmia.csv', dataset_name='Arrhythmia',
@@ -177,8 +185,9 @@ if __name__ == '__main__':
     # evaluate_breast_cancer_dataset()
     # evaluate_steel_plates_fault_dataset()
     # evaluate_connect4_dataset()
-    evaluate_housing_prices_dataset()
+    # evaluate_housing_prices_dataset()
     # evaluate_gisette_dataset()
+    evaluate_arrhythmia_dataset()
 
     # Databases that have SMALL number of instances
     # evaluate_feature_selection_breast_cancer_dataset()

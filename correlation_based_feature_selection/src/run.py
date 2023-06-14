@@ -176,8 +176,8 @@ if __name__ == '__main__':
     # evaluate_census_income_dataset()
     # evaluate_breast_cancer_dataset()
     # evaluate_steel_plates_fault_dataset()
-    evaluate_connect4_dataset()
-    # evaluate_housing_prices_dataset()
+    # evaluate_connect4_dataset()
+    evaluate_housing_prices_dataset()
     # evaluate_gisette_dataset()
 
     # Databases that have SMALL number of instances
@@ -186,7 +186,7 @@ if __name__ == '__main__':
     # evaluate_feature_selection_arrhythmia_dataset()
     # evaluate_feature_selection_housing_prices_dataset()
     # evaluate_feature_selection_internet_advertisements_dataset()
-    #
+
     # # Databases that have LARGE number of instances
     # evaluate_feature_selection_gisette_dataset()
     # evaluate_feature_selection_bike_sharing_dataset()

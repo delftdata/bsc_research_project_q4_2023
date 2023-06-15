@@ -115,8 +115,7 @@ class MLPipeline:
             'LR': 'LinearModel',
             'XGB': 'XGBoost'
         }
-        # TODO: Experiment with other values for the number of features to select
-        # TODO: Experiment with a threshold when selecting features
+        # The maximum number of features that can be selected during feature selection (excl. target)
         self.features_to_select_k = features_to_select
         if self.features_to_select_k is None:
             self.features_to_select_k = self.dataframe.shape[1] - 1
@@ -197,7 +196,7 @@ class MLPipeline:
                                                         current_train_dataframe, current_test_dataframe)
 
                 # LOOP: Go through each method
-                correlation_methods = ['Pearson', 'Spearman', 'Cramér\'s V', 'SU']
+                correlation_methods = ['Pearson', 'Spearman', 'Cramer', 'SU']
                 correlation_methods_performances = []
                 correlation_methods_durations = []
                 for ranked_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
@@ -239,27 +238,133 @@ class MLPipeline:
                     correlation_methods_durations.append(correlation_method_duration)
 
                 # Make plot of metric vs increasing number of selected features
-                plot_over_number_of_features(dataset_name=self.dataset_name,
-                                             algorithm=algorithm_name,
-                                             number_of_features=self.features_to_select_k,
-                                             dataset_type=dataset_type,
-                                             evaluation_metric=self.evaluation_metric,
-                                             pearson_performance=correlation_methods_performances[0],
-                                             spearman_performance=correlation_methods_performances[1],
-                                             cramersv_performance=correlation_methods_performances[2],
-                                             su_performance=correlation_methods_performances[3],
-                                             baseline_performance=baseline_performance)
+                # plot_over_number_of_features(dataset_name=self.dataset_name,
+                #                              algorithm=algorithm_name,
+                #                              number_of_features=self.features_to_select_k,
+                #                              dataset_type=dataset_type,
+                #                              evaluation_metric=self.evaluation_metric,
+                #                              pearson_performance=correlation_methods_performances[0],
+                #                              spearman_performance=correlation_methods_performances[1],
+                #                              cramersv_performance=correlation_methods_performances[2],
+                #                              su_performance=correlation_methods_performances[3],
+                #                              baseline_performance=baseline_performance)
 
-                # Make plot of runtime vs increasing number of selected features
-                plot_over_runtime(dataset_name=self.dataset_name,
-                                  algorithm=algorithm_name,
-                                  number_of_features=self.features_to_select_k,
-                                  dataset_type=dataset_type,
-                                  pearson_duration=correlation_methods_durations[0],
-                                  spearman_duration=correlation_methods_durations[1],
-                                  cramersv_duration=correlation_methods_durations[2],
-                                  su_duration=correlation_methods_durations[3],
-                                  baseline_duration=baseline_duration)
+                # # Make plot of runtime vs increasing number of selected features
+                # plot_over_runtime(dataset_name=self.dataset_name,
+                #                   algorithm=algorithm_name,
+                #                   number_of_features=self.features_to_select_k,
+                #                   dataset_type=dataset_type,
+                #                   pearson_duration=correlation_methods_durations[0],
+                #                   spearman_duration=correlation_methods_durations[1],
+                #                   cramersv_duration=correlation_methods_durations[2],
+                #                   su_duration=correlation_methods_durations[3],
+                #                   baseline_duration=baseline_duration)
+
+    def evaluate_feature_selection_step(self):
+        # Prepare the data
+        self.dataframe = TabularDataset(self.dataframe)
+        self.dataframe = FillNaFeatureGenerator(inplace=True).fit_transform(self.dataframe)
+        self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
+            enable_text_special_features=False,
+            enable_text_ngram_features=False) \
+            .fit_transform(self.dataframe)
+        self.auxiliary_dataframe = PreML.imputation_most_common_value(self.auxiliary_dataframe)
+
+        pearson_runtimes = []
+        spearman_runtimes = []
+        cramersv_runtimes = []
+        su_runtimes = []
+        # Take samples from the original dataset for each percentage
+        for percent in np.arange(10, 110, 10):
+            sample_size = int(len(self.auxiliary_dataframe) * percent / 100)
+            sample = self.auxiliary_dataframe.sample(n=sample_size, random_state=42)
+
+            pearson_start_time = timeit.default_timer()
+            PearsonFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
+            pearson_execution_time = timeit.default_timer() - pearson_start_time
+            pearson_runtimes.append(pearson_execution_time)
+
+            spearman_start_time = timeit.default_timer()
+            SpearmanFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
+            spearman_execution_time = timeit.default_timer() - spearman_start_time
+            spearman_runtimes.append(spearman_execution_time)
+
+            cramersv_start_time = timeit.default_timer()
+            CramersVFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
+            cramersv_execution_time = timeit.default_timer() - cramersv_start_time
+            cramersv_runtimes.append(cramersv_execution_time)
+
+            su_start_time = timeit.default_timer()
+            SymmetricUncertaintyFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
+            su_execution_time = timeit.default_timer() - su_start_time
+            su_runtimes.append(su_execution_time)
+
+            # Write the results to file
+            directory = "./results_runtime2"
+            os.makedirs(directory, exist_ok=True)
+            directory = "./results_runtime2/txt_files"
+            os.makedirs(directory, exist_ok=True)
+            file_path = f"./results_runtime2/txt_files/{self.dataset_name}.txt"
+            file = open(file_path, "a")
+            file.write("DATA PERCENTAGE: " + str(percent) + '\n')
+            file.write("PEARSON RUNTIME: " + str(pearson_execution_time) + '\n')
+            file.write("SPEARMAN RUNTIME: " + str(spearman_execution_time) + '\n')
+            file.write("CRAMER\'S V RUNTIME: " + str(cramersv_execution_time) + '\n')
+            file.write("SYMMETRIC UNCERTAINTY RUNTIME: " + str(su_execution_time) + '\n')
+            file.write('\n')
+            file.close()
+
+            print('Percentage of data: ' + str(percent))
+            print('Pearson runtime: ' + str(pearson_execution_time))
+            print('Spearman runtime: ' + str(spearman_execution_time))
+            print('Cramer runtime: ' + str(cramersv_execution_time))
+            print('Symmetric Uncertainty runtime: ' + str(su_execution_time))
+            print('\n')
+
+        return pearson_runtimes, spearman_runtimes, cramersv_runtimes, su_runtimes
+
+    @staticmethod
+    def write_to_file(dataset_name, dataset_type, algorithm_name, correlation_method,
+                      subset_length, current_subset, current_performance, current_duration,
+                      baseline_performance, baseline_duration):
+        # Create the directory if it doesn't exist
+        directory = "./results_tables_new"
+        os.makedirs(directory, exist_ok=True)
+        directory = "./results_tables_new/txt_files"
+        os.makedirs(directory, exist_ok=True)
+        directory = "./results_tables_new/csv_files"
+        os.makedirs(directory, exist_ok=True)
+
+        # Write the results to a txt file
+        file_path = f"./results_tables_new/txt_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
+                    f"{correlation_method}.txt"
+        file = open(file_path, "a")
+
+        file.write("DATASET NAME: " + dataset_name + '\n')
+        file.write("DATASET TYPE: " + str(dataset_type) + '\n')
+        file.write("ALGORITHM NAME: " + algorithm_name + '\n')
+        file.write("CORRELATION METHOD: " + correlation_method + '\n')
+        file.write("SUBSET OF FEATURES: " + str(subset_length) + '\n')
+        file.write("CURRENT FEATURE SUBSET: " + str(current_subset) + '\n')
+        file.write("CURRENT PERFORMANCE: " + str(current_performance) + '\n')
+        file.write("CURRENT RUNTIME: " + str(current_duration) + '\n')
+        file.write("BASELINE PERFORMANCE: " + str(baseline_performance) + '\n')
+        file.write("BASELINE RUNTIME: " + str(baseline_duration) + '\n')
+        file.write('\n')
+        file.close()
+
+        # Write the results to a csv file
+        file_path = f"./results_tables_new/csv_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
+                    f"{correlation_method}_{subset_length}.csv"
+
+        with open(file_path, "w", newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["DATASET NAME", "DATASET TYPE",
+                             "ALGORITHM NAME", "CORRELATION METHOD",
+                             "SUBSET OF FEATURES", "CURRENT FEATURE SUBSET",
+                             "CURRENT PERFORMANCE", "BASELINE PERFORMANCE"])
+            writer.writerow([dataset_name, dataset_type, algorithm_name, correlation_method,
+                             subset_length, current_subset, current_performance, baseline_performance])
 
     def evaluate_all_models_k_fold(self):
         number_rows, number_columns = self.dataframe.shape
@@ -304,7 +409,7 @@ class MLPipeline:
                                                         train_dataframe, test_dataframe)
 
                 # LOOP: Go through each method
-                correlation_methods = ['Pearson', 'Spearman', 'Cramér\'s V', 'SU']
+                correlation_methods = ['Pearson', 'Spearman', 'Cramer', 'SU']
                 for ranked_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
                                                                 cramersv_selected_features, su_selected_features],
                                                                correlation_methods):
@@ -371,108 +476,3 @@ class MLPipeline:
                           su_duration=durations[3],
                           baseline_duration=baseline_duration)
 
-    def evaluate_feature_selection_step(self):
-        # Prepare the data
-        self.dataframe = TabularDataset(self.dataframe)
-        self.dataframe = FillNaFeatureGenerator(inplace=True).fit_transform(self.dataframe)
-        self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
-            enable_text_special_features=False,
-            enable_text_ngram_features=False) \
-            .fit_transform(self.dataframe)
-        self.auxiliary_dataframe = PreML.imputation_most_common_value(self.auxiliary_dataframe)
-
-        pearson_runtimes = []
-        spearman_runtimes = []
-        cramersv_runtimes = []
-        su_runtimes = []
-        # Take samples from the original dataset for each percentage
-        for percent in np.arange(10, 110, 10):
-            sample_size = int(len(self.auxiliary_dataframe) * percent / 100)
-            sample = self.auxiliary_dataframe.sample(n=sample_size, random_state=42)
-
-            pearson_start_time = timeit.default_timer()
-            PearsonFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
-            pearson_execution_time = timeit.default_timer() - pearson_start_time
-            pearson_runtimes.append(pearson_execution_time)
-
-            spearman_start_time = timeit.default_timer()
-            SpearmanFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
-            spearman_execution_time = timeit.default_timer() - spearman_start_time
-            spearman_runtimes.append(spearman_execution_time)
-
-            cramersv_start_time = timeit.default_timer()
-            CramersVFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
-            cramersv_execution_time = timeit.default_timer() - cramersv_start_time
-            cramersv_runtimes.append(cramersv_execution_time)
-
-            su_start_time = timeit.default_timer()
-            SymmetricUncertaintyFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
-            su_execution_time = timeit.default_timer() - su_start_time
-            su_runtimes.append(su_execution_time)
-
-            # Write the results to file
-            directory = "./results_runtime2"
-            os.makedirs(directory, exist_ok=True)
-            directory = "./results_runtime2/txt_files"
-            os.makedirs(directory, exist_ok=True)
-            file_path = f"./results_runtime2/txt_files/{self.dataset_name}.txt"
-            file = open(file_path, "a")
-            file.write("DATA PERCENTAGE: " + str(percent) + '\n')
-            file.write("PEARSON RUNTIME: " + str(pearson_execution_time) + '\n')
-            file.write("SPEARMAN RUNTIME: " + str(spearman_execution_time) + '\n')
-            file.write("CRAMER\'S V RUNTIME: " + str(cramersv_execution_time) + '\n')
-            file.write("SYMMETRIC UNCERTAINTY RUNTIME: " + str(su_execution_time) + '\n')
-            file.write('\n')
-            file.close()
-
-            print('Percentage of data: ' + str(percent))
-            print('Pearson runtime: ' + str(pearson_execution_time))
-            print('Spearman runtime: ' + str(spearman_execution_time))
-            print('Cramér\'s V runtime: ' + str(cramersv_execution_time))
-            print('Symmetric Uncertainty runtime: ' + str(su_execution_time))
-            print('\n')
-
-        return pearson_runtimes, spearman_runtimes, cramersv_runtimes, su_runtimes
-
-    @staticmethod
-    def write_to_file(dataset_name, dataset_type, algorithm_name, correlation_method,
-                      subset_length, current_subset, current_performance, current_duration,
-                      baseline_performance, baseline_duration):
-        # Create the directory if it doesn't exist
-        directory = "./results_tables"
-        os.makedirs(directory, exist_ok=True)
-        directory = "./results_tables/txt_files"
-        os.makedirs(directory, exist_ok=True)
-        directory = "./results_tables/csv_files"
-        os.makedirs(directory, exist_ok=True)
-
-        # Write the results to a txt file
-        file_path = f"./results_tables/txt_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
-                    f"{correlation_method}.txt"
-        file = open(file_path, "a")
-
-        file.write("DATASET NAME: " + dataset_name + '\n')
-        file.write("DATASET TYPE: " + str(dataset_type) + '\n')
-        file.write("ALGORITHM NAME: " + algorithm_name + '\n')
-        file.write("CORRELATION METHOD: " + correlation_method + '\n')
-        file.write("SUBSET OF FEATURES: " + str(subset_length) + '\n')
-        file.write("CURRENT FEATURE SUBSET: " + str(current_subset) + '\n')
-        file.write("CURRENT PERFORMANCE: " + str(current_performance) + '\n')
-        file.write("CURRENT RUNTIME: " + str(current_duration) + '\n')
-        file.write("BASELINE PERFORMANCE: " + str(baseline_performance) + '\n')
-        file.write("BASELINE RUNTIME: " + str(baseline_duration) + '\n')
-        file.write('\n')
-        file.close()
-
-        # Write the results to a csv file
-        file_path = f"./results_tables/csv_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
-                    f"{correlation_method}_{subset_length}.csv"
-
-        with open(file_path, "w", newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(["DATASET NAME", "DATASET TYPE",
-                             "ALGORITHM NAME", "CORRELATION METHOD",
-                             "SUBSET OF FEATURES", "CURRENT FEATURE SUBSET",
-                             "CURRENT PERFORMANCE", "BASELINE PERFORMANCE"])
-            writer.writerow([dataset_name, dataset_type, algorithm_name, correlation_method,
-                             subset_length, current_subset, current_performance, baseline_performance])

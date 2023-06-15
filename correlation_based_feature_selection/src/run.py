@@ -5,7 +5,7 @@ from .plots.runtime_plot2 import plot_over_runtime, parse_results, plot_over_run
 def evaluate_census_income_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../datasets/CensusIncome/CensusIncome.csv', dataset_name='CensusIncome',
-        target_label='income_label', evaluation_metric='accuracy')
+        target_label='income_label', evaluation_metric='accuracy', features_to_select=14)
 
     dataset_evaluator.evaluate_all_models()
 
@@ -21,7 +21,7 @@ def evaluate_feature_selection_census_income_dataset():
 def evaluate_breast_cancer_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../datasets/BreastCancer/data.csv', dataset_name='BreastCancer',
-        target_label='diagnosis', evaluation_metric='accuracy')
+        target_label='diagnosis', evaluation_metric='accuracy', features_to_select=31)
 
     dataset_evaluator.evaluate_all_models()
 
@@ -37,7 +37,7 @@ def evaluate_feature_selection_breast_cancer_dataset():
 def evaluate_steel_plates_fault_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../datasets/SteelPlatesFaults/steel_faults_train.csv', dataset_name='SteelPlatesFaults',
-        target_label='Class', evaluation_metric='accuracy')
+        target_label='Class', evaluation_metric='accuracy', features_to_select=33)
 
     dataset_evaluator.evaluate_all_models()
 
@@ -53,7 +53,7 @@ def evaluate_feature_selection_steel_plates_faults_dataset():
 def evaluate_connect4_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../datasets/Connect4/connect4.csv', dataset_name='Connect4',
-        target_label='label', evaluation_metric='accuracy')
+        target_label='label', evaluation_metric='accuracy', features_to_select=42)
 
 
     dataset_evaluator.evaluate_all_models()
@@ -137,7 +137,7 @@ def evaluate_feature_selection_bike_sharing_dataset():
 def evaluate_arrhythmia_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../datasets/Arrhythmia/arrhythmia.csv', dataset_name='Arrhythmia',
-        target_label='Class', evaluation_metric='accuracy', features_to_select=100)
+        target_label='Class', evaluation_metric='accuracy', features_to_select=200)
 
     dataset_evaluator.evaluate_all_models()
 
@@ -182,7 +182,7 @@ def evaluate_feature_selection_internet_advertisements_dataset():
 def evaluate_nursery_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../datasets/Nursery/nursery.csv', dataset_name='Nursery',
-        target_label='label', evaluation_metric='accuracy')
+        target_label='label', evaluation_metric='accuracy', features_to_select=8)
 
     dataset_evaluator.evaluate_all_models()
 
@@ -203,15 +203,14 @@ def evaluate_dataframe(dataframe):
 
 
 if __name__ == '__main__':
-    # evaluate_census_income_dataset()
-    # evaluate_breast_cancer_dataset()
-    # evaluate_steel_plates_fault_dataset()
-    # evaluate_arrhythmia_dataset()
+    evaluate_census_income_dataset()
+    evaluate_breast_cancer_dataset()
+    evaluate_steel_plates_fault_dataset()
+    evaluate_arrhythmia_dataset()
     evaluate_internet_advertisements_dataset()
     evaluate_gisette_dataset()
-
     evaluate_nursery_dataset()
-    # evaluate_connect4_dataset()
+    evaluate_connect4_dataset()
 
     # evaluate_housing_prices_dataset()
 

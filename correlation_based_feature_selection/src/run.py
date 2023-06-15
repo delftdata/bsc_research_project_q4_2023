@@ -155,6 +155,16 @@ def evaluate_feature_selection_crop_mapping_dataset():
     dataset_evaluator.evaluate_feature_selection_step()
 
 
+def evaluate_internet_advertisements_dataset():
+    dataset_evaluator = MLPipeline(
+        dataset_file='../datasets/InternetAdvertisements/internet_advertisements.csv',
+        dataset_name='InternetAds',
+        target_label='class',
+        evaluation_metric='accuracy')
+
+    dataset_evaluator.evaluate_all_models()
+
+
 def evaluate_feature_selection_internet_advertisements_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../datasets/InternetAdvertisements/internet_advertisements.csv',
@@ -163,6 +173,14 @@ def evaluate_feature_selection_internet_advertisements_dataset():
         evaluation_metric='accuracy')
 
     dataset_evaluator.evaluate_feature_selection_step()
+
+
+def evaluate_nursery_dataset():
+    dataset_evaluator = MLPipeline(
+        dataset_file='../datasets/Nursery/nursery.csv', dataset_name='Nursery',
+        target_label='label', evaluation_metric='accuracy')
+
+    dataset_evaluator.evaluate_all_models()
 
 
 def evaluate_feature_selection_nursery_dataset():
@@ -184,10 +202,14 @@ if __name__ == '__main__':
     # evaluate_census_income_dataset()
     # evaluate_breast_cancer_dataset()
     # evaluate_steel_plates_fault_dataset()
+    # evaluate_arrhythmia_dataset()
+    evaluate_internet_advertisements_dataset()
+    evaluate_gisette_dataset()
+
+    evaluate_nursery_dataset()
     # evaluate_connect4_dataset()
+
     # evaluate_housing_prices_dataset()
-    # evaluate_gisette_dataset()
-    evaluate_arrhythmia_dataset()
 
     # Databases that have SMALL number of instances
     # evaluate_feature_selection_breast_cancer_dataset()

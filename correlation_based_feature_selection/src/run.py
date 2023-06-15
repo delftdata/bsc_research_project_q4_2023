@@ -203,7 +203,7 @@ def evaluate_dataframe(dataframe):
 
 
 if __name__ == '__main__':
-    evaluate_census_income_dataset()
+    # evaluate_census_income_dataset()
     # evaluate_breast_cancer_dataset()
     # evaluate_steel_plates_fault_dataset()
     # evaluate_arrhythmia_dataset()

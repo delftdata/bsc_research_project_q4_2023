@@ -85,8 +85,11 @@ def evaluate_feature_selection_housing_prices_dataset():
 
 def evaluate_gisette_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../datasets/Gisette/gisette_train.csv', dataset_name='Gisette',
-        target_label='Class', evaluation_metric='accuracy')
+        dataset_file='../datasets/Gisette/gisette_train.csv',
+        dataset_name='Gisette',
+        target_label='Class',
+        evaluation_metric='accuracy',
+        features_to_select=200)
 
     dataset_evaluator.evaluate_all_models()
 
@@ -160,7 +163,8 @@ def evaluate_internet_advertisements_dataset():
         dataset_file='../datasets/InternetAdvertisements/internet_advertisements.csv',
         dataset_name='InternetAds',
         target_label='class',
-        evaluation_metric='accuracy')
+        evaluation_metric='accuracy',
+        features_to_select=200)
 
     dataset_evaluator.evaluate_all_models()
 

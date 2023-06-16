@@ -206,7 +206,7 @@ class MLPipeline:
 
                     current_performance, current_duration = PostML.evaluate_model(algorithm=algorithm,
                                                                                   hyperparameters=hyperparameters,
-                                                                                  train_dataframe=train_dataframe,
+                                                                                  train_dataframe=current_train_dataframe,
                                                                                   feature_subset=current_subset,
                                                                                   target_label=self.target_label,
                                                                                   test_dataframe=

@@ -1,5 +1,5 @@
 {
     "experiment_name": "experiment2",
     "dataset": "bank_marketing",
-    "plot_type": "all_results"
+    "plot_type": "results"
 }

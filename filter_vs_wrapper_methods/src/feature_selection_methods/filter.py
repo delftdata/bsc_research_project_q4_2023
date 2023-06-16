@@ -10,7 +10,8 @@ from processing.splitter import split_input_target
 
 
 def rank_features_descending_filter(df: pd.DataFrame, method: Literal["chi2", "anova"],
-                                    target_label: str, preprocessing=False, normalization=True) -> tuple[list[str], float]:
+                                    target_label: str, preprocessing=False, normalization=True
+                                    ) -> tuple[list[str], float]:
     """Ranks features in descending order based on the Chi-Squared or ANOVA test.
 
     Parameters

@@ -293,11 +293,11 @@ class MLPipeline:
             su_runtimes.append(su_execution_time)
 
             # Write the results to file
-            directory = "./results_runtime2"
+            directory = "./results_runtime_new2"
             os.makedirs(directory, exist_ok=True)
-            directory = "./results_runtime2/txt_files"
+            directory = "./results_runtime_new2/txt_files"
             os.makedirs(directory, exist_ok=True)
-            file_path = f"./results_runtime2/txt_files/{self.dataset_name}.txt"
+            file_path = f"./results_runtime_new2/txt_files/{self.dataset_name}.txt"
             file = open(file_path, "a")
             file.write("DATA PERCENTAGE: " + str(percent) + '\n')
             file.write("PEARSON RUNTIME: " + str(pearson_execution_time) + '\n')
@@ -321,15 +321,15 @@ class MLPipeline:
                       subset_length, current_subset, current_performance, current_duration,
                       baseline_performance, baseline_duration):
         # Create the directory if it doesn't exist
-        directory = "./results_tables_new"
+        directory = "./results_tables_new2"
         os.makedirs(directory, exist_ok=True)
-        directory = "./results_tables_new/txt_files"
+        directory = "./results_tables_new2/txt_files"
         os.makedirs(directory, exist_ok=True)
-        directory = "./results_tables_new/csv_files"
+        directory = "./results_tables_new2/csv_files"
         os.makedirs(directory, exist_ok=True)
 
         # Write the results to a txt file
-        file_path = f"./results_tables_new/txt_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
+        file_path = f"./results_tables_new2/txt_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
                     f"{correlation_method}.txt"
         file = open(file_path, "a")
 
@@ -347,7 +347,7 @@ class MLPipeline:
         file.close()
 
         # Write the results to a csv file
-        file_path = f"./results_tables_new/csv_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
+        file_path = f"./results_tables_new2/csv_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
                     f"{correlation_method}_{subset_length}.csv"
 
         with open(file_path, "w", newline='') as file:

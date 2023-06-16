@@ -11,8 +11,10 @@ evaluation_metrics_options = {
     'accuracy': 'Accuracy (%)',
     'rmse': 'Root mean square error',
 }
+
 current_algorithm = 'LinearModel'
 current_dataset = 'SteelPlatesFaults'
+current_number_of_features = 33
 
 def parse_data(dataset=current_dataset, algorithm=current_algorithm):
     pearson_performance = []
@@ -20,7 +22,7 @@ def parse_data(dataset=current_dataset, algorithm=current_algorithm):
     cramersv_performance = []
     su_performance = []
 
-    file_path_pearson = f'./{dataset}/{dataset}_1_{algorithm}_Pearson.txt'
+    file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_{algorithm}_Pearson.txt'
     with open(file_path_pearson, 'r') as file:
         for line in file:
             match = re.search(r'CURRENT PERFORMANCE: (\d+\.\d+)', line)
@@ -28,7 +30,7 @@ def parse_data(dataset=current_dataset, algorithm=current_algorithm):
                 pearson_value = float(match.group(1))
                 pearson_performance.append(pearson_value)
 
-    file_path_spearman = f'./{dataset}/{dataset}_1_{algorithm}_Spearman.txt'
+    file_path_spearman = f'./raw_results/{dataset}/{dataset}_1_{algorithm}_Spearman.txt'
     with open(file_path_spearman, 'r') as file:
         for line in file:
             match = re.search(r'CURRENT PERFORMANCE: (\d+\.\d+)', line)
@@ -36,7 +38,7 @@ def parse_data(dataset=current_dataset, algorithm=current_algorithm):
                 spearman_value = float(match.group(1))
                 spearman_performance.append(spearman_value)
 
-    file_path_cramer = f'./{dataset}/{dataset}_1_{algorithm}_Cramer.txt'
+    file_path_cramer = f'./raw_results/{dataset}/{dataset}_1_{algorithm}_Cramer.txt'
     with open(file_path_cramer, 'r') as file:
         for line in file:
             match = re.search(r'CURRENT PERFORMANCE: (\d+\.\d+)', line)
@@ -44,7 +46,7 @@ def parse_data(dataset=current_dataset, algorithm=current_algorithm):
                 cramer_value = float(match.group(1))
                 cramersv_performance.append(cramer_value)
 
-    file_path_su = f'./{dataset}/{dataset}_1_{algorithm}_SU.txt'
+    file_path_su = f'./raw_results/{dataset}/{dataset}_1_{algorithm}_SU.txt'
     with open(file_path_su, 'r') as file:
         for line in file:
             match = re.search(r'CURRENT PERFORMANCE: (\d+\.\d+)', line)
@@ -55,16 +57,10 @@ def parse_data(dataset=current_dataset, algorithm=current_algorithm):
     return pearson_performance, spearman_performance, cramersv_performance, su_performance
 
 
-def get_dataset_details():
+def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
     dataset_name = current_dataset
     algorithm = current_algorithm
-    number_of_features = 33
-
-    return dataset_name, algorithm, number_of_features
-
-
-def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
-    dataset_name, algorithm, number_of_features = get_dataset_details()
+    number_of_features = current_number_of_features
     pearson_performance, spearman_performance, cramersv_performance, su_performance = parse_data()
 
     evaluation_metric_name = evaluation_metrics_options.get(evaluation_metric)
@@ -89,11 +85,7 @@ def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
 
     plt.xlabel('Number of features')
     plt.ylabel(str(evaluation_metric_name))
-    # plt.title('Change of ' + str(evaluation_metric_name)
-    #           + f' for {algorithm} on {dataset_name} dataset ({dataset_type}) '
-    #           + 'with the increase of selected features')
 
-    # Add maximum value as a tick on the y-axis
     max_value = max(np.max(spearman_performance), np.max(pearson_performance),
                     np.max(cramersv_performance), np.max(su_performance))
     min_value = min(np.min(spearman_performance), np.min(pearson_performance),
@@ -110,8 +102,6 @@ def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
     plt.ylim(60, 101)
 
     ax.set_facecolor('white')
-
-    #plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.2), ncol=4)
 
     # Create the directory if it doesn't exist
     directory = "./results_performance"

@@ -1,26 +1,28 @@
 import numpy as np
 import os
 import re
+import random
 import seaborn as sns
 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
+current_algorithm = 'XGBoost'
+current_dataset = 'Arrhythmia'
+current_number_of_features = 200
 evaluation_metrics_options = {
     'accuracy': 'Accuracy (%)',
     'rmse': 'Root mean square error',
 }
 
-current_algorithm = 'LinearModel'
-current_dataset = 'SteelPlatesFaults'
-current_number_of_features = 33
 
 def parse_data(dataset=current_dataset, algorithm=current_algorithm):
     pearson_performance = []
     spearman_performance = []
     cramersv_performance = []
     su_performance = []
+    baseline_performance = 0
 
     file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_{algorithm}_Pearson.txt'
     with open(file_path_pearson, 'r') as file:
@@ -53,55 +55,80 @@ def parse_data(dataset=current_dataset, algorithm=current_algorithm):
             if match:
                 su_value = float(match.group(1))
                 su_performance.append(su_value)
+            match = re.search(r'BASELINE PERFORMANCE: (\d+\.\d+)', line)
+            if match:
+                baseline_value = float(match.group(1))
+                baseline_performance = baseline_value
 
-    return pearson_performance, spearman_performance, cramersv_performance, su_performance
+    return pearson_performance, spearman_performance, cramersv_performance, su_performance, baseline_performance
 
 
 def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
     dataset_name = current_dataset
     algorithm = current_algorithm
     number_of_features = current_number_of_features
-    pearson_performance, spearman_performance, cramersv_performance, su_performance = parse_data()
+    pearson_performance, spearman_performance, cramersv_performance, su_performance, baseline_performance = parse_data()
 
     evaluation_metric_name = evaluation_metrics_options.get(evaluation_metric)
     number_of_features_iteration = list(range(1, number_of_features + 1))
 
-    sns.set(style='whitegrid')
-
-    plt.figure(figsize=(8, 6), dpi=100)
+    sns.set_style("whitegrid", {"grid.color": "0.9", "grid.linestyle": "-", "grid.linewidth": "0.2"})
+    plt.figure(figsize=(8, 6), dpi=1200)
     ax = plt.gca()
     ax.xaxis.set_major_locator(mticker.MultipleLocator(2))
 
+    # performance_values = np.concatenate([
+    #     np.array(pearson_performance) * 100,
+    #     np.array(spearman_performance) * 100,
+    #     np.array(cramersv_performance) * 100,
+    #     np.array(su_performance) * 100
+    # ])
+    # unique_values = np.unique(performance_values)
+    # ordered_values = np.sort(unique_values)
+    # print(list(ordered_values))
+
     sns.lineplot(x=number_of_features_iteration, y=np.array(pearson_performance) * 100,
-                 marker='D', color='#10A5D6', label='Pearson')
+                 marker='D', color='#10A5D6', label='Pearson', linewidth=1.5)
     sns.lineplot(x=number_of_features_iteration, y=np.array(spearman_performance) * 100,
-                 marker='o', color='#00005A', label='Spearman')
+                 marker='o', color='#00005A', label='Spearman', linewidth=1.5)
     sns.lineplot(x=number_of_features_iteration, y=np.array(cramersv_performance) * 100,
-                 marker='>', color='#BF9000', label='Cramer\'s V')
+                 marker='>', color='#BF9000', label='Cramér\'s V', linewidth=1.5)
     sns.lineplot(x=number_of_features_iteration, y=np.array(su_performance) * 100,
-                 marker='s', color='#CA0020', label='Symmetric Uncertainty')
-    # sns.lineplot(x=number_of_features_iteration[-1], y=baseline_performance * 100,
-    #              marker='o', color='#000000')
+                 marker='s', color='#CA0020', label='Symmetric Uncertainty', linewidth=1.5)
+    sns.lineplot(x=[number_of_features_iteration[-1]], y=[baseline_performance * 100],
+                 marker='p', color='#000000', label='Baseline')
 
     plt.xlabel('Number of features')
     plt.ylabel(str(evaluation_metric_name))
-
-    max_value = max(np.max(spearman_performance), np.max(pearson_performance),
-                    np.max(cramersv_performance), np.max(su_performance))
-    min_value = min(np.min(spearman_performance), np.min(pearson_performance),
-                    np.min(cramersv_performance), np.min(su_performance))
+    max_value = round(max(np.max(np.array(pearson_performance) * 100), np.max(np.array(spearman_performance) * 100),
+                    np.max(np.array(cramersv_performance) * 100), np.max(np.array(su_performance) * 100)), 2)
+    min_value = round(min(np.min(np.array(pearson_performance) * 100), np.min(np.array(spearman_performance) * 100),
+                    np.min(np.array(cramersv_performance) * 100), np.min(np.array(su_performance) * 100)), 2)
     sns.set(font_scale=1.9)
-    y_ticks = list(plt.yticks()[0])
-    if max_value * 100 not in y_ticks:
-        y_ticks.append(max_value * 100)
-        y_ticks.append(min_value * 100)
-    #y_ticks.remove(100)
+
+    # THIS VARIES PER DATASET
+    # y_ticks = [70, 72, 74, 76, 78, 80, 82, 84] # CI-RF
+    # y_ticks = [77, 78, 79, 80, 81, 82, 83] # CI-LR
+    y_ticks = [66, 68, 70, 72, 74, 78, 80, 82, 84, 86, min_value, max_value] #CI-LG, CI-XB
+    # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
+    # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
     plt.yticks(y_ticks)
-    plt.xticks([2, 5, 10, 15, 20, 25, 32])
+    plt.xticks([1, 2, 4, 6, 8, 10, 12, 14])
+    print(plt.gca().get_yticklabels())
+    plt.gca().get_yticklabels()[11].set_color('#CA0020')
+    plt.gca().get_yticklabels()[10].set_color('#CA0020')
     plt.xlim(0, number_of_features + 1)
-    plt.ylim(60, 101)
+    plt.ylim(50, 74)
 
     ax.set_facecolor('white')
+    ax.spines['top'].set_linewidth(1.2)
+    ax.spines['bottom'].set_linewidth(1.2)
+    ax.spines['left'].set_linewidth(1.2)
+    ax.spines['right'].set_linewidth(1.2)
+    ax.spines['top'].set_edgecolor('black')
+    ax.spines['bottom'].set_edgecolor('black')
+    ax.spines['left'].set_edgecolor('black')
+    ax.spines['right'].set_edgecolor('black')
 
     # Create the directory if it doesn't exist
     directory = "./results_performance"

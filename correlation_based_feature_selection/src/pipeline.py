@@ -83,14 +83,12 @@ class PostML:
     @staticmethod
     def evaluate_model(algorithm, hyperparameters, train_dataframe, feature_subset,
                        target_label, test_dataframe, evaluation_metric):
-        start_time_model = time.time()
-
         train_data = TabularDataset(train_dataframe[feature_subset])
+        start_time_model = time.time()
         fitted_predictor = TabularPredictor(label=target_label,
                                             eval_metric=evaluation_metric,
                                             verbosity=0) \
             .fit(train_data=train_data, hyperparameters={algorithm: hyperparameters})
-
         # Get the duration the model with feature selection took
         current_duration = time.time() - start_time_model
 
@@ -128,7 +126,6 @@ class MLPipeline:
                                             eval_metric=self.evaluation_metric,
                                             verbosity=1) \
             .fit(train_data=train_dataframe, hyperparameters={algorithm: {}})
-
         # Get the duration the baseline took
         baseline_duration = time.time() - start_time_baseline
 
@@ -199,7 +196,7 @@ class MLPipeline:
                 correlation_method_performance = []
                 correlation_method_duration = []
                 # LOOP: Go to all possible values of k (i.e. number of selected features)
-                for subset_length in range(1, len(ranked_features) + 1):
+                for subset_length in [210, 220, 230, 240, 250, 260, 270, 279]:
                     # Get the current feature subset
                     current_subset = ranked_features[:subset_length]
                     current_subset.append(self.target_label)

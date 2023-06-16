@@ -163,9 +163,9 @@ class MLPipeline:
         x_train, x_test, y_train, y_test = \
             train_test_split(self.auxiliary_dataframe.drop(columns=[self.target_label]),
                              self.auxiliary_dataframe[self.target_label],
-                             test_size=0.2, random_state=42)
-        train_dataframe = pd.concat([x_train, y_train], axis=1)
-        test_dataframe = pd.concat([x_test, y_test], axis=1)
+                             test_size=0.2, random_state=0)
+        current_train_dataframe = pd.concat([x_train, y_train], axis=1)
+        current_test_dataframe = pd.concat([x_test, y_test], axis=1)
 
         # Encode the features
         # all_continuous_train_dataframe, all_continuous_test_dataframe = \
@@ -174,91 +174,84 @@ class MLPipeline:
         #     PreML.k_bins_discretizer(train_dataframe, test_dataframe, self.target_label)
 
         # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
-        dataset_type = 0
-        # LOOP: Go through each type of data
-        for current_train_dataframe, current_test_dataframe in zip(
-                [train_dataframe], #, all_continuous_train_dataframe, all_nominal_train_dataframe],
-                [test_dataframe]): # all_continuous_test_dataframe, all_nominal_test_dataframe]):
+        dataset_type = 1
+        # COMPUTATION: Compute the ranking of features returned by each correlation method
+        pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features = \
+            InML.feature_selection_select_k_best(current_train_dataframe,
+                                                 self.target_label,
+                                                 self.features_to_select_k)
 
-            dataset_type = dataset_type + 1
+        # LOOP: Go through each algorithm
+        for algorithm, algorithm_name in self.algorithms_model_names.items():
+            # COMPUTATION: Get the hyperparameters on the data set with all features
+            hyperparameters, baseline_performance, baseline_duration = \
+                self.run_model_no_feature_selection(algorithm, algorithm_name,
+                                                    current_train_dataframe, current_test_dataframe)
 
-            # COMPUTATION: Compute the ranking of features returned by each correlation method
-            pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features = \
-                InML.feature_selection_select_k_best(current_train_dataframe,
-                                                     self.target_label,
-                                                     self.features_to_select_k)
+            # LOOP: Go through each method
+            correlation_methods = ['Pearson', 'Spearman', 'Cramer', 'SU']
+            correlation_methods_performances = []
+            correlation_methods_durations = []
+            for ranked_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
+                                                            cramersv_selected_features, su_selected_features],
+                                                           correlation_methods):
 
-            # LOOP: Go through each algorithm
-            for algorithm, algorithm_name in self.algorithms_model_names.items():
-                # COMPUTATION: Get the hyperparameters on the data set with all features
-                hyperparameters, baseline_performance, baseline_duration = \
-                    self.run_model_no_feature_selection(algorithm, algorithm_name,
-                                                        current_train_dataframe, current_test_dataframe)
+                correlation_method_performance = []
+                correlation_method_duration = []
+                # LOOP: Go to all possible values of k (i.e. number of selected features)
+                for subset_length in range(1, len(ranked_features) + 1):
+                    # Get the current feature subset
+                    current_subset = ranked_features[:subset_length]
+                    current_subset.append(self.target_label)
 
-                # LOOP: Go through each method
-                correlation_methods = ['Pearson', 'Spearman', 'Cramer', 'SU']
-                correlation_methods_performances = []
-                correlation_methods_durations = []
-                for ranked_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
-                                                                cramersv_selected_features, su_selected_features],
-                                                               correlation_methods):
+                    current_performance, current_duration = PostML.evaluate_model(algorithm=algorithm,
+                                                                                  hyperparameters=hyperparameters,
+                                                                                  train_dataframe=train_dataframe,
+                                                                                  feature_subset=current_subset,
+                                                                                  target_label=self.target_label,
+                                                                                  test_dataframe=
+                                                                                  current_test_dataframe,
+                                                                                  evaluation_metric=
+                                                                                  self.evaluation_metric)
+                    correlation_method_performance.append(current_performance)
+                    correlation_method_duration.append(current_duration)
 
-                    correlation_method_performance = []
-                    correlation_method_duration = []
-                    # LOOP: Go to all possible values of k (i.e. number of selected features)
-                    for subset_length in range(1, len(ranked_features) + 1):
-                        # Get the current feature subset
-                        current_subset = ranked_features[:subset_length]
-                        current_subset.append(self.target_label)
+                    # Save the results to file
+                    MLPipeline.write_to_file(dataset_name=self.dataset_name,
+                                             dataset_type=str(dataset_type),
+                                             algorithm_name=algorithm_name,
+                                             correlation_method=correlation_method,
+                                             subset_length=subset_length,
+                                             current_subset=current_subset,
+                                             current_performance=current_performance,
+                                             current_duration=current_duration,
+                                             baseline_performance=baseline_performance,
+                                             baseline_duration=baseline_duration)
+                correlation_methods_performances.append(correlation_method_performance)
+                correlation_methods_durations.append(correlation_method_duration)
 
-                        current_performance, current_duration = PostML.evaluate_model(algorithm=algorithm,
-                                                                                      hyperparameters=hyperparameters,
-                                                                                      train_dataframe=train_dataframe,
-                                                                                      feature_subset=current_subset,
-                                                                                      target_label=self.target_label,
-                                                                                      test_dataframe=
-                                                                                      current_test_dataframe,
-                                                                                      evaluation_metric=
-                                                                                      self.evaluation_metric)
-                        correlation_method_performance.append(current_performance)
-                        correlation_method_duration.append(current_duration)
+            # Make plot of metric vs increasing number of selected features
+            # plot_over_number_of_features(dataset_name=self.dataset_name,
+            #                              algorithm=algorithm_name,
+            #                              number_of_features=self.features_to_select_k,
+            #                              dataset_type=dataset_type,
+            #                              evaluation_metric=self.evaluation_metric,
+            #                              pearson_performance=correlation_methods_performances[0],
+            #                              spearman_performance=correlation_methods_performances[1],
+            #                              cramersv_performance=correlation_methods_performances[2],
+            #                              su_performance=correlation_methods_performances[3],
+            #                              baseline_performance=baseline_performance)
 
-                        # Save the results to file
-                        MLPipeline.write_to_file(dataset_name=self.dataset_name,
-                                                 dataset_type=str(dataset_type),
-                                                 algorithm_name=algorithm_name,
-                                                 correlation_method=correlation_method,
-                                                 subset_length=subset_length,
-                                                 current_subset=current_subset,
-                                                 current_performance=current_performance,
-                                                 current_duration=current_duration,
-                                                 baseline_performance=baseline_performance,
-                                                 baseline_duration=baseline_duration)
-                    correlation_methods_performances.append(correlation_method_performance)
-                    correlation_methods_durations.append(correlation_method_duration)
-
-                # Make plot of metric vs increasing number of selected features
-                # plot_over_number_of_features(dataset_name=self.dataset_name,
-                #                              algorithm=algorithm_name,
-                #                              number_of_features=self.features_to_select_k,
-                #                              dataset_type=dataset_type,
-                #                              evaluation_metric=self.evaluation_metric,
-                #                              pearson_performance=correlation_methods_performances[0],
-                #                              spearman_performance=correlation_methods_performances[1],
-                #                              cramersv_performance=correlation_methods_performances[2],
-                #                              su_performance=correlation_methods_performances[3],
-                #                              baseline_performance=baseline_performance)
-
-                # # Make plot of runtime vs increasing number of selected features
-                # plot_over_runtime(dataset_name=self.dataset_name,
-                #                   algorithm=algorithm_name,
-                #                   number_of_features=self.features_to_select_k,
-                #                   dataset_type=dataset_type,
-                #                   pearson_duration=correlation_methods_durations[0],
-                #                   spearman_duration=correlation_methods_durations[1],
-                #                   cramersv_duration=correlation_methods_durations[2],
-                #                   su_duration=correlation_methods_durations[3],
-                #                   baseline_duration=baseline_duration)
+            # # Make plot of runtime vs increasing number of selected features
+            # plot_over_runtime(dataset_name=self.dataset_name,
+            #                   algorithm=algorithm_name,
+            #                   number_of_features=self.features_to_select_k,
+            #                   dataset_type=dataset_type,
+            #                   pearson_duration=correlation_methods_durations[0],
+            #                   spearman_duration=correlation_methods_durations[1],
+            #                   cramersv_duration=correlation_methods_durations[2],
+            #                   su_duration=correlation_methods_durations[3],
+            #                   baseline_duration=baseline_duration)
 
     def evaluate_feature_selection_step(self):
         # Prepare the data
@@ -277,7 +270,7 @@ class MLPipeline:
         # Take samples from the original dataset for each percentage
         for percent in np.arange(10, 110, 10):
             sample_size = int(len(self.auxiliary_dataframe) * percent / 100)
-            sample = self.auxiliary_dataframe.sample(n=sample_size, random_state=42)
+            sample = self.auxiliary_dataframe.sample(n=sample_size, random_state=0)
 
             pearson_start_time = timeit.default_timer()
             PearsonFeatureSelection.feature_selection(sample, self.target_label, self.dataframe.shape[1])
@@ -388,7 +381,7 @@ class MLPipeline:
         durations = []
         k_counter = 0
 
-        ss = KFold(n_splits=10, shuffle=True, random_state=42)
+        ss = KFold(n_splits=10, shuffle=True, random_state=0)
         for train_dataframe, test_dataframe in ss.split(self.auxiliary_dataframe):
             k_counter += 1
             method_counter = 0

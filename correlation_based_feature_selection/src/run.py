@@ -57,7 +57,6 @@ def evaluate_connect4_dataset():
         dataset_file='../datasets/Connect4/connect4.csv', dataset_name='Connect4',
         target_label='label', evaluation_metric='accuracy', features_to_select=42)
 
-
     dataset_evaluator.evaluate_all_models()
 
 
@@ -213,11 +212,11 @@ if __name__ == '__main__':
     # evaluate_breast_cancer_dataset()
     # evaluate_steel_plates_fault_dataset()
     # evaluate_arrhythmia_dataset()
-    evaluate_internet_advertisements_dataset()
+    # evaluate_internet_advertisements_dataset()
     # evaluate_gisette_dataset()
     # # multi-class classification
-    # evaluate_nursery_dataset()
-    # evaluate_connect4_dataset()
+    evaluate_nursery_dataset()
+    evaluate_connect4_dataset()
 
     # regression
     # evaluate_housing_prices_dataset()

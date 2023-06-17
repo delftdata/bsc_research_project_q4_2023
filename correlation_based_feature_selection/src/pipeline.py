@@ -18,6 +18,8 @@ from .encoding.encoding import OneHotEncoder
 from .encoding.encoding import KBinsDiscretizer
 from warnings import filterwarnings
 from sklearn.model_selection import KFold
+from sklearn.svm import SVC, SVR, LinearSVC
+from sklearn.model_selection import GridSearchCV
 
 
 filterwarnings("ignore", category=UserWarning)
@@ -140,6 +142,94 @@ class MLPipeline:
         # print("Feature importance: " + importance)
 
         return hyperparameters, baseline_performance, baseline_duration
+
+    def evaluate_support_vector_machine_model(self):
+        number_rows, number_columns = self.dataframe.shape
+        print('Dataset: ' + self.dataset_name)
+        print('Total columns: ' + str(number_columns - 1))
+        print('Total rows: ' + str(number_rows))
+        # Prepare the data
+        self.dataframe = TabularDataset(self.dataframe)
+        self.dataframe = FillNaFeatureGenerator(inplace=True).fit_transform(self.dataframe)
+        self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
+            enable_text_special_features=False,
+            enable_text_ngram_features=False) \
+            .fit_transform(self.dataframe)
+        self.auxiliary_dataframe = PreML.imputation_most_common_value(self.auxiliary_dataframe)
+
+        # Split the data into train and test
+        x_train, x_test, y_train, y_test = \
+            train_test_split(self.auxiliary_dataframe.drop(columns=[self.target_label]),
+                             self.auxiliary_dataframe[self.target_label],
+                             test_size=0.2, random_state=0)
+        current_train_dataframe = pd.concat([x_train, y_train], axis=1)
+        current_test_dataframe = pd.concat([x_test, y_test], axis=1)
+
+        # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
+        dataset_type = 1
+        # COMPUTATION: Compute the ranking of features returned by each correlation method
+        pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features = \
+            InML.feature_selection_select_k_best(current_train_dataframe,
+                                                 self.target_label,
+                                                 self.features_to_select_k)
+
+        # estimator = SVC() if self.evaluation_metric == "accuracy" else SVR()
+        # svm_param_grid = {
+        #     "C": [0.1, 100, 10, 1000],
+        #     "gamma": [1, "scale"],
+        #     "kernel": ["rbf", "sigmoid", "linear"]
+        # }
+        # grid = GridSearchCV(estimator, svm_param_grid, refit=True, cv=5, n_jobs=-1)
+        estimator_simple = LinearSVC(random_state=0)
+        start_time_baseline = time.time()
+        estimator_simple.fit(x_train, y_train)
+        baseline_duration = time.time() - start_time_baseline
+        baseline_performance = estimator_simple.score(x_test, y_test)
+        # svm_hyperparameters = grid.best_params_
+
+        # LOOP: Go through each method
+        correlation_methods = ['Pearson', 'Spearman', 'Cramer', 'SU']
+        correlation_methods_performances = []
+        correlation_methods_durations = []
+        for ranked_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
+                                                        cramersv_selected_features, su_selected_features],
+                                                       correlation_methods):
+
+            correlation_method_performance = []
+            correlation_method_duration = []
+            # LOOP: Go to all possible values of k (i.e. number of selected features)
+            for subset_length in range(1, len(ranked_features) + 1):
+                # if self.evaluation_metric == "accuracy":
+                #     predictor = SVC(C=svm_hyperparameters["C"], gamma=svm_hyperparameters["gamma"],
+                #                     kernel=svm_hyperparameters["kernel"])
+                # else:
+                #     predictor = SVR(C=svm_hyperparameters["C"], gamma=svm_hyperparameters["gamma"],
+                #                     kernel=svm_hyperparameters["kernel"])
+                predictor = LinearSVC(random_state=0)
+
+                # Get the current feature subset
+                current_subset = ranked_features[:subset_length]
+
+                current_start_time = time.time()
+                predictor.fit(x_train[current_subset], y_train)
+                current_duration = time.time() - current_start_time
+                performance_score = predictor.score(x_test, y_test)
+                correlation_method_performance.append(performance_score)
+                correlation_method_duration.append(current_duration)
+
+                # Save the results to file
+                MLPipeline.write_to_file(dataset_name=self.dataset_name,
+                                         dataset_type=str(dataset_type),
+                                         algorithm_name='SVM',
+                                         correlation_method=correlation_method,
+                                         subset_length=subset_length,
+                                         current_subset=current_subset,
+                                         current_performance=performance_score,
+                                         current_duration=current_duration,
+                                         baseline_performance=baseline_performance,
+                                         baseline_duration=baseline_duration)
+            correlation_methods_performances.append(correlation_method_performance)
+            correlation_methods_durations.append(correlation_method_duration)
 
     def evaluate_all_models(self):
         number_rows, number_columns = self.dataframe.shape

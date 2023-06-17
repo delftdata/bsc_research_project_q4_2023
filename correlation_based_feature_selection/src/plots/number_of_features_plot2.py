@@ -301,8 +301,6 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accur
     plt.ylim(80, 100)
     plt.xlim(-1, 203)
 
-    plt.legend('dgfg')
-
     ax.set_facecolor('white')
     ax.spines['top'].set_linewidth(1.2)
     ax.spines['bottom'].set_linewidth(1.2)

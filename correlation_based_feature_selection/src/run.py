@@ -10,7 +10,7 @@ def evaluate_census_income_dataset():
         dataset_file='../datasets/CensusIncome/CensusIncome.csv', dataset_name='CensusIncome',
         target_label='income_label', evaluation_metric='accuracy', features_to_select=14)
 
-    dataset_evaluator.evaluate_all_models()
+    dataset_evaluator.evaluate_support_vector_machine_model()
 
 
 def evaluate_feature_selection_census_income_dataset():
@@ -213,7 +213,7 @@ def evaluate_dataframe(dataframe):
 
 
 if __name__ == '__main__':
-    plot_over_runtime()
+    # plot_over_runtime()
     # parse_data()
     # plot_over_number_of_features()
     # plot_over_number_of_features_custom()
@@ -221,7 +221,7 @@ if __name__ == '__main__':
     # plot_over_number_of_features_runtime_custom()
 
     # binary classification
-    # evaluate_census_income_dataset()
+    evaluate_census_income_dataset()
     # evaluate_breast_cancer_dataset()
     # evaluate_steel_plates_fault_dataset()
     # evaluate_arrhythmia_dataset()

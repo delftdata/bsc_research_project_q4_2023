@@ -213,7 +213,7 @@ class MLPipeline:
                 current_start_time = time.time()
                 predictor.fit(x_train[current_subset], y_train)
                 current_duration = time.time() - current_start_time
-                performance_score = predictor.score(x_test, y_test)
+                performance_score = predictor.score(x_test[current_subset], y_test)
                 correlation_method_performance.append(performance_score)
                 correlation_method_duration.append(current_duration)
 

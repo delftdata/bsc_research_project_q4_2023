@@ -107,8 +107,8 @@ class MLPipeline:
         self.auxiliary_dataframe = pd.read_csv(dataset_file)
         # Specify the models to use: GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
         self.algorithms_model_names = {
-            # 'GBM': 'LightGBM',
-            # 'RF': 'RandomForest',
+            'GBM': 'LightGBM',
+            'RF': 'RandomForest',
             'LR': 'LinearModel',
             'XGB': 'XGBoost'
         }
@@ -196,7 +196,7 @@ class MLPipeline:
                 correlation_method_performance = []
                 correlation_method_duration = []
                 # LOOP: Go to all possible values of k (i.e. number of selected features)
-                for subset_length in range(1, len(ranked_features) + 1):
+                for subset_length in [210, 220, 230, 240, 250]:
                     # Get the current feature subset
                     current_subset = ranked_features[:subset_length]
                     current_subset.append(self.target_label)

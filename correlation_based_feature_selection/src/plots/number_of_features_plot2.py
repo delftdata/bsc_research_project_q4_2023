@@ -8,9 +8,9 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-current_algorithm = 'LightGBM'
-current_dataset = 'InternetAds'
-current_number_of_features = 1558
+current_algorithm = 'LinearModel'
+current_dataset = 'Nursery'
+current_number_of_features = 8
 evaluation_metrics_options = {
     'accuracy': 'Accuracy (%)',
     'rmse': 'Root mean square error',
@@ -96,7 +96,7 @@ def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
     sns.lineplot(x=number_of_features_iteration, y=np.array(su_performance) * 100,
                  marker='s', color='#CA0020', label='Symmetric Uncertainty', linewidth=1.5)
     sns.lineplot(x=[number_of_features_iteration[-1]], y=[baseline_performance * 100],
-                 marker='p', color='#000000', label='Baseline')
+                 marker='p', color='#3CB371', label='Baseline')
 
     plt.xlabel('Number of features')
     plt.ylabel(str(evaluation_metric_name))
@@ -109,16 +109,17 @@ def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
     # THIS VARIES PER DATASET
     # y_ticks = [70, 72, 74, 76, 78, 80, 82, 84] # CI-RF
     # y_ticks = [77, 78, 79, 80, 81, 82, 83] # CI-LR
-    y_ticks = [54, 62, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, min_value, max_value] #CI-LG, CI-XB
+    # y_ticks = [54, 62, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, min_value, max_value] #CI-LG, CI-XB
     # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
     # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
+    y_ticks = [75, 80, 85, 90, 95, 100, min_value, max_value]
     plt.yticks(y_ticks)
-    plt.xticks([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31])
+    plt.xticks([1, 2, 3, 4, 5, 6, 7, 8])
     print(plt.gca().get_yticklabels())
-    plt.gca().get_yticklabels()[12].set_color('#CA0020')
-    plt.gca().get_yticklabels()[13].set_color('#CA0020')
-    plt.xlim(0, number_of_features + 1)
-    plt.ylim(54, 100)
+    plt.gca().get_yticklabels()[6].set_color('#CA0020')
+    plt.gca().get_yticklabels()[7].set_color('#CA0020')
+    plt.xlim(0.5, 8.5)
+    plt.ylim(70, 100)
 
     ax.set_facecolor('white')
     ax.spines['top'].set_linewidth(1.2)

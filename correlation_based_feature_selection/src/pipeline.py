@@ -163,7 +163,6 @@ class MLPipeline:
                              self.auxiliary_dataframe[self.target_label],
                              test_size=0.2, random_state=0)
         current_train_dataframe = pd.concat([x_train, y_train], axis=1)
-        current_test_dataframe = pd.concat([x_test, y_test], axis=1)
 
         # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
         dataset_type = 1
@@ -173,21 +172,12 @@ class MLPipeline:
                                                  self.target_label,
                                                  self.features_to_select_k)
 
-        # estimator = SVC() if self.evaluation_metric == "accuracy" else SVR()
-        # svm_param_grid = {
-        #     "C": [0.1, 100, 10, 1000],
-        #     "gamma": [1, "scale"],
-        #     "kernel": ["rbf", "sigmoid", "linear"]
-        # }
-        # grid = GridSearchCV(estimator, svm_param_grid, refit=True, cv=5, n_jobs=-1)
         estimator_simple = LinearSVC(random_state=0)
         start_time_baseline = time.time()
         estimator_simple.fit(x_train, y_train)
         baseline_duration = time.time() - start_time_baseline
         baseline_performance = estimator_simple.score(x_test, y_test)
-        # svm_hyperparameters = grid.best_params_
 
-        # LOOP: Go through each method
         correlation_methods = ['Pearson', 'Spearman', 'Cramer', 'SU']
         correlation_methods_performances = []
         correlation_methods_durations = []
@@ -199,12 +189,6 @@ class MLPipeline:
             correlation_method_duration = []
             # LOOP: Go to all possible values of k (i.e. number of selected features)
             for subset_length in range(1, len(ranked_features) + 1):
-                # if self.evaluation_metric == "accuracy":
-                #     predictor = SVC(C=svm_hyperparameters["C"], gamma=svm_hyperparameters["gamma"],
-                #                     kernel=svm_hyperparameters["kernel"])
-                # else:
-                #     predictor = SVR(C=svm_hyperparameters["C"], gamma=svm_hyperparameters["gamma"],
-                #                     kernel=svm_hyperparameters["kernel"])
                 predictor = LinearSVC(random_state=0)
 
                 # Get the current feature subset

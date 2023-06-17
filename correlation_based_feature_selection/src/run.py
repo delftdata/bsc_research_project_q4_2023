@@ -26,7 +26,7 @@ def evaluate_breast_cancer_dataset():
         dataset_file='../datasets/BreastCancer/data.csv', dataset_name='BreastCancer',
         target_label='diagnosis', evaluation_metric='accuracy', features_to_select=31)
 
-    dataset_evaluator.evaluate_all_models()
+    dataset_evaluator.evaluate_support_vector_machine_model()
 
 
 def evaluate_feature_selection_breast_cancer_dataset():
@@ -42,7 +42,7 @@ def evaluate_steel_plates_fault_dataset():
         dataset_file='../datasets/SteelPlatesFaults/steel_faults_train.csv', dataset_name='SteelPlatesFaults',
         target_label='Class', evaluation_metric='accuracy', features_to_select=33)
 
-    dataset_evaluator.evaluate_all_models()
+    dataset_evaluator.evaluate_support_vector_machine_model()
 
 
 def evaluate_feature_selection_steel_plates_faults_dataset():
@@ -58,7 +58,7 @@ def evaluate_connect4_dataset():
         dataset_file='../datasets/Connect4/connect4.csv', dataset_name='Connect4',
         target_label='label', evaluation_metric='accuracy', features_to_select=42)
 
-    dataset_evaluator.evaluate_all_models()
+    dataset_evaluator.evaluate_support_vector_machine_model()
 
 
 def evaluate_feature_selection_connect4_dataset():
@@ -74,7 +74,7 @@ def evaluate_housing_prices_dataset():
         dataset_file='../datasets/HousingPrices/train.csv', dataset_name='HousingPrices',
         target_label='SalePrice', evaluation_metric='root_mean_squared_error', features_to_select=80)
 
-    dataset_evaluator.evaluate_all_models()
+    dataset_evaluator.evaluate_support_vector_machine_model()
 
 
 def evaluate_feature_selection_housing_prices_dataset():
@@ -93,7 +93,7 @@ def evaluate_gisette_dataset():
         evaluation_metric='accuracy',
         features_to_select=200)
 
-    dataset_evaluator.evaluate_all_models()
+    dataset_evaluator.evaluate_support_vector_machine_model()
 
 
 def evaluate_feature_selection_gisette_dataset():
@@ -101,7 +101,7 @@ def evaluate_feature_selection_gisette_dataset():
         dataset_file='../datasets/Gisette/gisette_train.csv', dataset_name='Gisette',
         target_label='Class', evaluation_metric='accuracy')
 
-    dataset_evaluator.evaluate_feature_selection_step()
+    dataset_evaluator.evaluate_support_vector_machine_model()
 
 
 def evaluate_bank_marketing_dataset():
@@ -133,7 +133,7 @@ def evaluate_bike_sharing_dataset():
         dataset_file='../datasets/BikeSharing/hour.csv', dataset_name='BikeSharing',
         target_label='cnt', evaluation_metric='root_mean_squared_error', features_to_select=16)
 
-    dataset_evaluator.evaluate_all_models()
+    dataset_evaluator.evaluate_support_vector_machine_model()
 
 
 def evaluate_feature_selection_bike_sharing_dataset():
@@ -149,7 +149,7 @@ def evaluate_arrhythmia_dataset():
         dataset_file='../datasets/Arrhythmia/arrhythmia.csv', dataset_name='Arrhythmia',
         target_label='Class', evaluation_metric='accuracy', features_to_select=200)
 
-    dataset_evaluator.evaluate_all_models()
+    dataset_evaluator.evaluate_support_vector_machine_model()
 
 
 def evaluate_feature_selection_arrhythmia_dataset():
@@ -176,7 +176,7 @@ def evaluate_internet_advertisements_dataset():
         evaluation_metric='accuracy',
         features_to_select=200)
 
-    dataset_evaluator.evaluate_all_models()
+    dataset_evaluator.evaluate_support_vector_machine_model()
 
 
 def evaluate_feature_selection_internet_advertisements_dataset():
@@ -194,7 +194,7 @@ def evaluate_nursery_dataset():
         dataset_file='../datasets/Nursery/nursery.csv', dataset_name='Nursery',
         target_label='label', evaluation_metric='accuracy', features_to_select=8)
 
-    dataset_evaluator.evaluate_all_models()
+    dataset_evaluator.evaluate_support_vector_machine_model()
 
 
 def evaluate_feature_selection_nursery_dataset():
@@ -221,19 +221,19 @@ if __name__ == '__main__':
     # plot_over_number_of_features_runtime_custom()
 
     # binary classification
-    evaluate_census_income_dataset()
-    # evaluate_breast_cancer_dataset()
-    # evaluate_steel_plates_fault_dataset()
-    # evaluate_arrhythmia_dataset()
-    # evaluate_internet_advertisements_dataset()
-    # evaluate_gisette_dataset()
-    # # multi-class classification
-    # evaluate_nursery_dataset()
-    # evaluate_connect4_dataset()
+    # evaluate_census_income_dataset()
+    evaluate_breast_cancer_dataset()
+    evaluate_steel_plates_fault_dataset()
+    evaluate_arrhythmia_dataset()
+    evaluate_internet_advertisements_dataset()
+    evaluate_gisette_dataset()
+    # multi-class classification
+    evaluate_nursery_dataset()
+    evaluate_connect4_dataset()
 
     # regression
-    # evaluate_housing_prices_dataset()
-    # evaluate_bike_sharing_dataset()
+    evaluate_housing_prices_dataset()
+    evaluate_bike_sharing_dataset()
 
     # Databases that have SMALL number of instances
     # evaluate_feature_selection_breast_cancer_dataset()

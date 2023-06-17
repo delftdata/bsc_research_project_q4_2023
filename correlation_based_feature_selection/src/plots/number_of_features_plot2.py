@@ -7,9 +7,12 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-current_algorithm = 'LightGBM'
-current_dataset = 'Arrhythmia'
+current_algorithm = 'RandomForest'
+current_dataset = 'Nursery'
 current_number_of_features = 5000
+current_good_features = list(range(10, 201, 10))
+current_good_features.append(1)
+current_good_features.append(5)
 evaluation_metrics_options = {
     'accuracy': 'Accuracy (%)',
     'rmse': 'Root mean square error',
@@ -145,14 +148,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
     cramersv_performance = []
     su_performance = []
     baseline_performance = 0
-    good_features = list(range(10, 271, 10))
-    good_features.append(1)
-    good_features.append(2)
-    good_features.append(3)
-    good_features.append(5)
-    good_features.append(8)
-    good_features.append(9)
-    good_features.append(279)
+    good_features = current_good_features
 
     current_performance = None
     current_num_features = None
@@ -294,15 +290,18 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accur
     # y_ticks = [94, 95, 96, 97, 98, 99, 100, min_value, max_value] #CI-LG, CI-XB
     # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
     # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
-    #y_ticks = [94, 95, 97, 98, 99, 100, max_value, min_value]
-    #plt.yticks(y_ticks)
-    plt.xticks([10, 40, 70, 100, 130, 160, 190, 220, 250])
+    # y_thicks = [94, 95, 97, 98, 99, 100, max_value, min_value]
+    y_ticks = [80, 82, 86, 88, 90, 92, 94, 96, 100, max_value, min_value]
+    plt.yticks(y_ticks)
+    plt.xticks([1, 10, 30, 50, 70, 90, 110, 130, 150, 180, 200])
     print(plt.gca().get_yticklabels())
-    #plt.gca().get_yticklabels()[6].set_color('#CA0020')
-    #plt.gca().get_yticklabels()[7].set_color('#CA0020')
+    plt.gca().get_yticklabels()[9].set_color('#CA0020')
+    plt.gca().get_yticklabels()[10].set_color('#CA0020')
     #plt.xlim(0, len(feature_list) + 1)
-    plt.ylim(40, 70)
-    plt.xlim(0, 253)
+    plt.ylim(80, 100)
+    plt.xlim(-1, 203)
+
+    plt.legend('dgfg')
 
     ax.set_facecolor('white')
     ax.spines['top'].set_linewidth(1.2)

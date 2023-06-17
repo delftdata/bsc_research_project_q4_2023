@@ -205,13 +205,13 @@ class Runner:
         df_backward_elimination = drop_features(df_backward_elimination, dataset_info.target_label, "string")
 
         if df_chi2.columns.size > min_columns:
-            self.evaluate_feature_selection(df_chi2, dataset_info, methods=("chi2"))
+            self.evaluate_feature_selection(df_chi2, dataset_info, methods=("chi2",))
         if df_anova.columns.size > min_columns:
-            self.evaluate_feature_selection(df_anova, dataset_info, methods=("anova"))
+            self.evaluate_feature_selection(df_anova, dataset_info, methods=("anova",))
         if df_forward_selection.columns.size > min_columns:
-            self.evaluate_feature_selection(df_forward_selection, dataset_info, methods=("forward_selection"))
+            self.evaluate_feature_selection(df_forward_selection, dataset_info, methods=("forward_selection",))
         if df_backward_elimination.columns.size > min_columns:
-            self.evaluate_feature_selection(df_backward_elimination, dataset_info, methods=("backward_elimination"))
+            self.evaluate_feature_selection(df_backward_elimination, dataset_info, methods=("backward_elimination",))
 
     def run_experiment4(self, df: pd.DataFrame, dataset_info: DatasetInfo, min_columns=2):
         """Runs experiment 4 on the given DataFrame using Chi-Squared, ANOVA, Forward Selection and Backward Elimination

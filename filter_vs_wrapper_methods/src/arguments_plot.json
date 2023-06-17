@@ -1,5 +1,5 @@
 {
-    "experiment_name": "experiment4",
+    "experiment_name": "experiment3",
     "dataset": "character_font_images",
-    "plot_type": "results"
+    "plot_type": "all_results"
 }

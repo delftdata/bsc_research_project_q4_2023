@@ -196,7 +196,7 @@ class MLPipeline:
                 correlation_method_performance = []
                 correlation_method_duration = []
                 # LOOP: Go to all possible values of k (i.e. number of selected features)
-                for subset_length in [210, 220, 230, 240, 250, 260, 270, 279]:
+                for subset_length in [210, 220, 230, 240, 250]:
                     # Get the current feature subset
                     current_subset = ranked_features[:subset_length]
                     current_subset.append(self.target_label)

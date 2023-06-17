@@ -108,9 +108,9 @@ class MLPipeline:
         # Specify the models to use: GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
         self.algorithms_model_names = {
             # 'GBM': 'LightGBM',
-            'RF': 'RandomForest',
-            # 'LR': 'LinearModel',
-            # 'XGB': 'XGBoost'
+            # 'RF': 'RandomForest',
+            'LR': 'LinearModel',
+            'XGB': 'XGBoost'
         }
         # The maximum number of features that can be selected during feature selection (excl. target)
         self.features_to_select_k = features_to_select
@@ -128,7 +128,6 @@ class MLPipeline:
             .fit(train_data=train_dataframe, hyperparameters={algorithm: {}})
         # Get the duration the baseline took
         baseline_duration = time.time() - start_time_baseline
-        print('baseline' + str(baseline_duration))
 
         # Get the tuned hyperparameters
         training_results = fitted_predictor.info()
@@ -188,16 +187,16 @@ class MLPipeline:
 
             # LOOP: Go through each method
             correlation_methods = ['Pearson', 'Spearman', 'Cramer', 'SU']
-            correlation_methods = ['SU']
             correlation_methods_performances = []
             correlation_methods_durations = []
-            for ranked_features, correlation_method in zip([su_selected_features],
+            for ranked_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
+                                                            cramersv_selected_features, su_selected_features],
                                                            correlation_methods):
 
                 correlation_method_performance = []
                 correlation_method_duration = []
                 # LOOP: Go to all possible values of k (i.e. number of selected features)
-                for subset_length in range(9, len(ranked_features) + 1):
+                for subset_length in range(1, len(ranked_features) + 1):
                     # Get the current feature subset
                     current_subset = ranked_features[:subset_length]
                     current_subset.append(self.target_label)

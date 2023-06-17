@@ -8,9 +8,9 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-current_algorithm = 'LinearModel'
-current_dataset = 'BreastCancer'
-current_number_of_features = 31
+current_algorithm = 'LightGBM'
+current_dataset = 'InternetAds'
+current_number_of_features = 1558
 evaluation_metrics_options = {
     'accuracy': 'Accuracy (%)',
     'rmse': 'Root mean square error',
@@ -145,8 +145,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
     cramersv_performance = []
     su_performance = []
     baseline_performance = 0
-    good_features = list(range(10, 271, 10))
-    good_features.append(279)
+    good_features = list(range(10, 251, 10))
 
     current_performance = None
     current_num_features = None
@@ -271,8 +270,8 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accur
     sns.lineplot(x=number_of_features_iteration, y=np.array(su_performance) * 100,
                  marker='s', color='#CA0020', label='Symmetric Uncertainty', linewidth=1.5)
     print(baseline_performance * 100)
-    sns.lineplot(x=[279], y=[baseline_performance * 100],
-                 marker='p', color='#000000', label='Baseline')
+    sns.lineplot(x=[250], y=[baseline_performance * 100],
+                 marker='p', color='#3CB371', label='Baseline (using 1558 features)')
 
     plt.xlabel('Number of features')
     plt.ylabel(str(evaluation_metric_name))
@@ -288,15 +287,15 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accur
     # y_ticks = [94, 95, 96, 97, 98, 99, 100, min_value, max_value] #CI-LG, CI-XB
     # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
     # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
-    y_ticks = [46, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 74, max_value, min_value]
+    y_ticks = [94, 95, 97, 98, 99, 100, max_value, min_value]
     plt.yticks(y_ticks)
-    plt.xticks([10, 40, 70, 100, 130, 160, 190, 220, 250, 279])
+    plt.xticks([10, 40, 70, 100, 130, 160, 190, 220, 250])
     print(plt.gca().get_yticklabels())
-    plt.gca().get_yticklabels()[13].set_color('#CA0020')
-    plt.gca().get_yticklabels()[14].set_color('#CA0020')
+    plt.gca().get_yticklabels()[6].set_color('#CA0020')
+    plt.gca().get_yticklabels()[7].set_color('#CA0020')
     #plt.xlim(0, len(feature_list) + 1)
-    plt.ylim(46, 74)
-    plt.xlim(1, 283)
+    plt.ylim(94, 100)
+    plt.xlim(1, 253)
 
     ax.set_facecolor('white')
     ax.spines['top'].set_linewidth(1.2)

@@ -8,9 +8,9 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-current_algorithm = 'XGBoost'
-current_dataset = 'InternetAds'
-current_number_of_features = 200
+current_algorithm = 'LinearModel'
+current_dataset = 'BreastCancer'
+current_number_of_features = 31
 evaluation_metrics_options = {
     'accuracy': 'Accuracy (%)',
     'rmse': 'Root mean square error',
@@ -109,16 +109,16 @@ def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
     # THIS VARIES PER DATASET
     # y_ticks = [70, 72, 74, 76, 78, 80, 82, 84] # CI-RF
     # y_ticks = [77, 78, 79, 80, 81, 82, 83] # CI-LR
-    y_ticks = [66, 68, 70, 72, 74, 78, 80, 82, 84, 86, min_value, max_value] #CI-LG, CI-XB
+    y_ticks = [54, 62, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, min_value, max_value] #CI-LG, CI-XB
     # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
     # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
     plt.yticks(y_ticks)
-    plt.xticks([1, 2, 4, 6, 8, 10, 12, 14])
+    plt.xticks([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31])
     print(plt.gca().get_yticklabels())
-    plt.gca().get_yticklabels()[11].set_color('#CA0020')
-    plt.gca().get_yticklabels()[10].set_color('#CA0020')
+    plt.gca().get_yticklabels()[12].set_color('#CA0020')
+    plt.gca().get_yticklabels()[13].set_color('#CA0020')
     plt.xlim(0, number_of_features + 1)
-    plt.ylim(50, 74)
+    plt.ylim(54, 100)
 
     ax.set_facecolor('white')
     ax.spines['top'].set_linewidth(1.2)

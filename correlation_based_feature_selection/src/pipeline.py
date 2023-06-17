@@ -14,7 +14,6 @@ from .correlation_methods.spearman import SpearmanFeatureSelection
 from .correlation_methods.cramer import CramersVFeatureSelection
 from .correlation_methods.su import SymmetricUncertaintyFeatureSelection
 from .plots.number_of_features_plot import plot_over_number_of_features
-from .plots.runtime_plot import plot_over_runtime
 from .encoding.encoding import OneHotEncoder
 from .encoding.encoding import KBinsDiscretizer
 from warnings import filterwarnings
@@ -108,7 +107,7 @@ class MLPipeline:
         self.auxiliary_dataframe = pd.read_csv(dataset_file)
         # Specify the models to use: GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
         self.algorithms_model_names = {
-            'GBM': 'LightGBM',
+            # 'GBM': 'LightGBM',
             'RF': 'RandomForest',
             'LR': 'LinearModel',
             'XGB': 'XGBoost'
@@ -121,6 +120,7 @@ class MLPipeline:
         self.evaluation_metric = evaluation_metric
 
     def run_model_no_feature_selection(self, algorithm, model_name, train_dataframe, test_dataframe):
+        train_dataframe = TabularDataset(train_dataframe)
         start_time_baseline = time.time()
         fitted_predictor = TabularPredictor(label=self.target_label,
                                             eval_metric=self.evaluation_metric,
@@ -128,6 +128,7 @@ class MLPipeline:
             .fit(train_data=train_dataframe, hyperparameters={algorithm: {}})
         # Get the duration the baseline took
         baseline_duration = time.time() - start_time_baseline
+        print('baseline' + str(baseline_duration))
 
         # Get the tuned hyperparameters
         training_results = fitted_predictor.info()

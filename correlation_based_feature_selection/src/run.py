@@ -1,7 +1,7 @@
 from .pipeline import MLPipeline
-from .plots.runtime_plot2 import plot_over_runtime, parse_results, plot_over_runtime_large_datasets
 from .plots.number_of_features_plot2 import parse_data, plot_over_number_of_features, \
     plot_over_number_of_features_custom
+from .plots.runtime_plot import plot_over_number_of_features_runtime
 
 
 def evaluate_census_income_dataset():
@@ -215,6 +215,8 @@ if __name__ == '__main__':
     # parse_data()
     # plot_over_number_of_features_custom()
     # plot_over_number_of_features()
+    # plot_over_number_of_features_runtime()
+
     # binary classification
     # evaluate_census_income_dataset()
     # evaluate_breast_cancer_dataset()
@@ -224,11 +226,11 @@ if __name__ == '__main__':
     # evaluate_gisette_dataset()
     # # multi-class classification
     # evaluate_nursery_dataset()
-    # evaluate_connect4_dataset()
+    evaluate_connect4_dataset()
 
     # regression
-    evaluate_housing_prices_dataset()
-    evaluate_bike_sharing_dataset()
+    # evaluate_housing_prices_dataset()
+    # evaluate_bike_sharing_dataset()
 
     # Databases that have SMALL number of instances
     # evaluate_feature_selection_breast_cancer_dataset()

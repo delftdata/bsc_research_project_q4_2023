@@ -408,7 +408,8 @@ class Runner:
                 print(f"{i + 1}/{actual_fitting_rounds}")
                 X, y = split_input_target(df_sample, dataset_info.target_label)
                 grid.fit(X, y)
-                df_sample = df.sample(n=max_rows, random_state=42)
+                if actual_fitting_rounds > 1:
+                    df_sample = df.sample(n=max_rows, random_state=42)
 
             Writer.write_json_to_file(
                 path=f"{hyperparameters_path}", results_file_name="SVM.json", json_content=grid.best_params_)

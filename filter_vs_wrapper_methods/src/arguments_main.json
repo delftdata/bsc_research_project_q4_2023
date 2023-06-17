@@ -1,7 +1,7 @@
 {
-    "experiment_name": "experiment2",
+    "experiment_name": "experiment4",
     "imputation_strategy": "mean",
     "normalization": true,
-    "evaluate_on_svm": true,
-    "dataset": "bank_marketing"
+    "evaluate_on_svm": false,
+    "dataset": "character_font_images"
 }

@@ -141,7 +141,8 @@ class Evaluator:
             print(f"{i + 1}/{actual_training_rounds}")
             X_train, y_train = split_input_target(train_data_sample, self.target_label)
             predictor.fit(X_train, y_train)
-            train_data_sample = train_data.sample(n=max_rows, random_state=42)
+            if actual_training_rounds > 1:
+                train_data_sample = train_data.sample(n=max_rows, random_state=42)
 
         X_test, y_test = split_input_target(test_data, self.target_label)
         y_pred = predictor.predict(X_test)

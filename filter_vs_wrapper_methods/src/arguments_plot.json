@@ -1,5 +1,5 @@
 {
-    "experiment_name": "experiment2",
-    "dataset": "bank_marketing",
+    "experiment_name": "experiment4",
+    "dataset": "character_font_images",
     "plot_type": "results"
 }

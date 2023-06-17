@@ -225,5 +225,5 @@ def try_opening_raw_metrics(results_path: str, method: str, model: str) -> list[
     return raw_metrics
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

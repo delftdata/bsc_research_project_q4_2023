@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-current_algorithm = 'XGBoost'
-current_dataset = 'SteelPlatesFaults'
-current_number_of_features = 33
+current_algorithm = 'RandomForest'
+current_dataset = 'Arrhythmia'
+current_number_of_features = 279
 
 
 def parse_data(dataset=current_dataset, algorithm=current_algorithm):
@@ -126,11 +126,11 @@ def plot_over_number_of_features_runtime(dataset_type=1):
 
 
 def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
-    pearson_performance = []
-    spearman_performance = []
-    cramersv_performance = []
-    su_performance = []
-    baseline_performance = 0
+    pearson_runtime = []
+    spearman_runtime = []
+    cramersv_runtime = []
+    su_runtime = []
+    baseline_runtime = 0
     good_features = list(range(10, 271, 10))
     good_features.append(279)
 
@@ -139,7 +139,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
     file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_{algorithm}_Pearson.txt'
     with open(file_path_pearson, 'r') as file:
         for line in file:
-            performance_match = re.search(r'CURRENT PERFORMANCE: (\d+\.\d+)', line)
+            performance_match = re.search(r'CURRENT RUNTIME: (\d+\.\d+)', line)
             features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
 
             if features_match:
@@ -153,7 +153,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
                     # print("Current Performance:", current_performance)
                     # print("Number of Features:", current_num_features)
                     # print("-------------------")
-                    pearson_performance.append(current_performance)
+                    pearson_runtime.append(current_performance)
 
                 current_performance = None
                 current_num_features = None
@@ -161,7 +161,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
     file_path_spearman = f'./raw_results/{dataset}/{dataset}_1_{algorithm}_Spearman.txt'
     with open(file_path_spearman, 'r') as file:
         for line in file:
-            performance_match = re.search(r'CURRENT PERFORMANCE: (\d+\.\d+)', line)
+            performance_match = re.search(r'CURRENT RUNTIME: (\d+\.\d+)', line)
             features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
 
             if features_match:
@@ -175,7 +175,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
                     # print("Current Performance:", current_performance)
                     # print("Number of Features:", current_num_features)
                     # print("-------------------")
-                    spearman_performance.append(current_performance)
+                    spearman_runtime.append(current_performance)
 
                 current_performance = None
                 current_num_features = None
@@ -183,7 +183,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
     file_path_cramer = f'./raw_results/{dataset}/{dataset}_1_{algorithm}_Cramer.txt'
     with open(file_path_cramer, 'r') as file:
         for line in file:
-            performance_match = re.search(r'CURRENT PERFORMANCE: (\d+\.\d+)', line)
+            performance_match = re.search(r'CURRENT RUNTIME: (\d+\.\d+)', line)
             features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
 
             if features_match:
@@ -197,7 +197,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
                     # print("Current Performance:", current_performance)
                     # print("Number of Features:", current_num_features)
                     # print("-------------------")
-                    cramersv_performance.append(current_performance)
+                    cramersv_runtime.append(current_performance)
 
                 current_performance = None
                 current_num_features = None
@@ -205,7 +205,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
     file_path_su = f'./raw_results/{dataset}/{dataset}_1_{algorithm}_SU.txt'
     with open(file_path_su, 'r') as file:
         for line in file:
-            performance_match = re.search(r'CURRENT PERFORMANCE: (\d+\.\d+)', line)
+            performance_match = re.search(r'CURRENT RUNTIME: (\d+\.\d+)', line)
             features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
 
             if features_match:
@@ -219,20 +219,21 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
                     # print("Current Performance:", current_performance)
                     # print("Number of Features:", current_num_features)
                     # print("-------------------")
-                    su_performance.append(current_performance)
+                    su_runtime.append(current_performance)
 
                 current_performance = None
                 current_num_features = None
 
-            match = re.search(r'BASELINE PERFORMANCE: (\d+\.\d+)', line)
+            match = re.search(r'BASELINE RUNTIME: (\d+\.\d+)', line)
             if match:
                 baseline_value = float(match.group(1))
                 baseline_performance = baseline_value
 
-    return good_features, pearson_performance, spearman_performance, cramersv_performance, su_performance, baseline_performance
+    return good_features, pearson_runtime, spearman_runtime, cramersv_runtime, su_runtime, \
+        baseline_performance
 
 
-def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accuracy'):
+def plot_over_number_of_features_runtime_custom(dataset_type=1, evaluation_metric='accuracy'):
     dataset_name = current_dataset
     algorithm = current_algorithm
     feature_list, pearson_performance, spearman_performance, cramersv_performance, su_performance, \
@@ -246,23 +247,23 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accur
 
     print(number_of_features_iteration)
     print(pearson_performance)
-    sns.lineplot(x=number_of_features_iteration, y=np.array(pearson_performance) * 100,
+    sns.lineplot(x=number_of_features_iteration, y=np.array(pearson_performance),
                  marker='D', color='#10A5D6', label='Pearson', linewidth=1.5)
-    sns.lineplot(x=number_of_features_iteration, y=np.array(spearman_performance) * 100,
+    sns.lineplot(x=number_of_features_iteration, y=np.array(spearman_performance),
                  marker='o', color='#00005A', label='Spearman', linewidth=1.5)
-    sns.lineplot(x=number_of_features_iteration, y=np.array(cramersv_performance) * 100,
+    sns.lineplot(x=number_of_features_iteration, y=np.array(cramersv_performance),
                  marker='>', color='#BF9000', label='Cramér\'s V', linewidth=1.5)
-    sns.lineplot(x=number_of_features_iteration, y=np.array(su_performance) * 100,
+    sns.lineplot(x=number_of_features_iteration, y=np.array(su_performance),
                  marker='s', color='#CA0020', label='Symmetric Uncertainty', linewidth=1.5)
-    sns.lineplot(x=[279], y=[baseline_performance * 100],
+    sns.lineplot(x=[279], y=[baseline_performance],
                  marker='p', color='#000000', label='Baseline')
 
     plt.xlabel('Number of features')
     plt.ylabel('Runtime (seconds)')
-    max_value = round(max(np.max(np.array(pearson_performance) * 100), np.max(np.array(spearman_performance) * 100),
-                    np.max(np.array(cramersv_performance) * 100), np.max(np.array(su_performance) * 100)), 2)
-    min_value = round(min(np.min(np.array(pearson_performance) * 100), np.min(np.array(spearman_performance) * 100),
-                    np.min(np.array(cramersv_performance) * 100), np.min(np.array(su_performance) * 100)), 2)
+    max_value = round(max(np.max(np.array(pearson_performance)), np.max(np.array(spearman_performance)),
+                    np.max(np.array(cramersv_performance)), np.max(np.array(su_performance))), 2)
+    min_value = round(min(np.min(np.array(pearson_performance)), np.min(np.array(spearman_performance)),
+                    np.min(np.array(cramersv_performance)), np.min(np.array(su_performance))), 2)
     sns.set(font_scale=1.9)
 
     # THIS VARIES PER DATASET
@@ -271,14 +272,14 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accur
     # y_ticks = [94, 95, 96, 97, 98, 99, 100, min_value, max_value] #CI-LG, CI-XB
     # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
     # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
-    y_ticks = [46, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 74, max_value, min_value]
+    y_ticks = [0, 3, 4, 5, 6, 7, 8, 9, 10, max_value, min_value]
     plt.yticks(y_ticks)
     plt.xticks([10, 40, 70, 100, 130, 160, 190, 220, 250, 279])
     print(plt.gca().get_yticklabels())
-    plt.gca().get_yticklabels()[13].set_color('#CA0020')
-    plt.gca().get_yticklabels()[14].set_color('#CA0020')
+    plt.gca().get_yticklabels()[10].set_color('#CA0020')
+    plt.gca().get_yticklabels()[9].set_color('#CA0020')
     #plt.xlim(0, len(feature_list) + 1)
-    plt.ylim(46, 74)
+    plt.ylim(0, 10)
     plt.xlim(1, 283)
 
     ax.set_facecolor('white')
@@ -295,6 +296,6 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accur
     directory = "./results_runtime"
     os.makedirs(directory, exist_ok=True)
     # Save the figure to folder
-    plt.savefig(f'./results_runtime/result_{dataset_name}_{dataset_type}_{algorithm}.pdf')
+    plt.savefig(f'./results_runtime/result_{dataset_name}_{dataset_type}_{algorithm}_runtime.pdf')
     # plt.show()
     plt.clf()

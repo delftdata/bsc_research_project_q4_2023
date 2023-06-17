@@ -1,7 +1,7 @@
 from .pipeline import MLPipeline
 from .plots.number_of_features_plot2 import parse_data, plot_over_number_of_features, \
     plot_over_number_of_features_custom
-from .plots.runtime_plot import plot_over_number_of_features_runtime
+from .plots.runtime_plot import plot_over_number_of_features_runtime, plot_over_number_of_features_runtime_custom
 
 
 def evaluate_census_income_dataset():
@@ -216,6 +216,7 @@ if __name__ == '__main__':
     # plot_over_number_of_features_custom()
     # plot_over_number_of_features()
     # plot_over_number_of_features_runtime()
+    # plot_over_number_of_features_runtime_custom()
 
     # binary classification
     # evaluate_census_income_dataset()

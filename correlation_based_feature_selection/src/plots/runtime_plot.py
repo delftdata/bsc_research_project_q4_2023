@@ -8,8 +8,8 @@ import matplotlib.ticker as mticker
 
 
 current_algorithm = 'LightGBM'
-current_dataset = 'Nursery'
-current_number_of_features = 8
+current_dataset = 'Gisette'
+current_number_of_features = 5000
 
 
 def parse_data(dataset=current_dataset, algorithm=current_algorithm):
@@ -98,13 +98,13 @@ def plot_over_number_of_features_runtime(dataset_type=1):
     # y_ticks = [66, 68, 70, 72, 74, 78, 80, 82, 84, 86, min_value, max_value] #CI-LG, CI-XB
     # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
     # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
-    plt.yticks([0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, max_value, min_value])
-    plt.xticks([1, 2, 3, 4, 5, 6, 7, 8])
-    print(plt.gca().get_yticklabels())
-    plt.gca().get_yticklabels()[11].set_color('#CA0020')
-    plt.gca().get_yticklabels()[12].set_color('#CA0020')
-    plt.xlim(0, number_of_features + 1)
-    plt.ylim(0, 10)
+    # plt.yticks([0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, max_value, min_value])
+    plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
+    # print(plt.gca().get_yticklabels())
+    # plt.gca().get_yticklabels()[11].set_color('#CA0020')
+    # plt.gca().get_yticklabels()[12].set_color('#CA0020')
+    plt.xlim(0, 43)
+    plt.ylim(0, 200)
 
     ax.set_facecolor('white')
     ax.spines['top'].set_linewidth(1.2)

@@ -71,7 +71,7 @@ def evaluate_feature_selection_connect4_dataset():
 def evaluate_housing_prices_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../datasets/HousingPrices/train.csv', dataset_name='HousingPrices',
-        target_label='SalePrice', evaluation_metric='root_mean_squared_error')
+        target_label='SalePrice', evaluation_metric='root_mean_squared_error', features_to_select=80)
 
     dataset_evaluator.evaluate_all_models()
 
@@ -125,6 +125,14 @@ def evaluate_feature_selection_nasa_numeric_dataset():
         target_label='act_effort', evaluation_metric='root_mean_squared_error')
 
     dataset_evaluator.evaluate_feature_selection_step()
+
+
+def evaluate_bike_sharing_dataset():
+    dataset_evaluator = MLPipeline(
+        dataset_file='../datasets/BikeSharing/hour.csv', dataset_name='BikeSharing',
+        target_label='cnt', evaluation_metric='root_mean_squared_error', features_to_select=16)
+
+    dataset_evaluator.evaluate_all_models()
 
 
 def evaluate_feature_selection_bike_sharing_dataset():
@@ -215,11 +223,12 @@ if __name__ == '__main__':
     # evaluate_internet_advertisements_dataset()
     # evaluate_gisette_dataset()
     # # multi-class classification
-    evaluate_nursery_dataset()
-    evaluate_connect4_dataset()
+    # evaluate_nursery_dataset()
+    # evaluate_connect4_dataset()
 
     # regression
-    # evaluate_housing_prices_dataset()
+    evaluate_housing_prices_dataset()
+    evaluate_bike_sharing_dataset()
 
     # Databases that have SMALL number of instances
     # evaluate_feature_selection_breast_cancer_dataset()

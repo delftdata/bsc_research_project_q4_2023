@@ -163,15 +163,17 @@ class MLPipeline:
         scaler = MinMaxScaler()
         scaled_X = scaler.fit_transform(self.auxiliary_dataframe)
         normalized_X = pd.DataFrame(scaled_X, columns=self.auxiliary_dataframe.columns)
-        lab = preprocessing.LabelEncoder()
-        normalized_X2 = lab.fit_transform(normalized_X)
 
         # Split the data into train and test
         x_train, x_test, y_train, y_test = \
-            train_test_split(normalized_X2.drop(columns=[self.target_label]),
-                             normalized_X2[self.target_label],
+            train_test_split(normalized_X.drop(columns=[self.target_label]),
+                             normalized_X[self.target_label],
                              test_size=0.2, random_state=0)
         current_train_dataframe = pd.concat([x_train, y_train], axis=1)
+
+        lab = preprocessing.LabelEncoder()
+        x_train = lab.fit_transform(x_train)
+        x_test = lab.fit_transform(x_test)
 
         # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
         dataset_type = 1

@@ -222,14 +222,14 @@ if __name__ == '__main__':
 
     # binary classification
     # evaluate_census_income_dataset()
-    evaluate_breast_cancer_dataset()
-    evaluate_steel_plates_fault_dataset()
-    evaluate_arrhythmia_dataset()
-    evaluate_internet_advertisements_dataset()
-    evaluate_gisette_dataset()
+    # evaluate_breast_cancer_dataset()
+    # evaluate_steel_plates_fault_dataset()
+    # evaluate_arrhythmia_dataset()
+    # evaluate_internet_advertisements_dataset()
+    # evaluate_gisette_dataset()
     # multi-class classification
-    evaluate_nursery_dataset()
-    evaluate_connect4_dataset()
+    # evaluate_nursery_dataset()
+    # evaluate_connect4_dataset()
 
     # regression
     evaluate_housing_prices_dataset()

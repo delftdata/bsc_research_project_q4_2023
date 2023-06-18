@@ -16,18 +16,17 @@ from .correlation_methods.pearson import PearsonFeatureSelection
 from .correlation_methods.spearman import SpearmanFeatureSelection
 from .correlation_methods.cramer import CramersVFeatureSelection
 from .correlation_methods.su import SymmetricUncertaintyFeatureSelection
-from .plots.number_of_features_plot import plot_over_number_of_features
 from .encoding.encoding import OneHotEncoder
 from .encoding.encoding import KBinsDiscretizer
 from warnings import filterwarnings
 from sklearn.model_selection import KFold
-from sklearn.svm import SVC, SVR, LinearSVR, LinearSVC
-from sklearn.model_selection import GridSearchCV
+from sklearn.svm import LinearSVR, LinearSVC
 
 
 filterwarnings("ignore", category=UserWarning)
 filterwarnings("ignore", category=RuntimeWarning)
 filterwarnings("ignore", category=FutureWarning)
+
 
 class PreML:
     @staticmethod
@@ -691,4 +690,3 @@ class MLPipeline:
         print(accuracies)
         accuracies = np.mean(accuracies, axis=0)
         durations = np.mean(durations, axis=0)
-

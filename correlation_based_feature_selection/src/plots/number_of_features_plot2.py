@@ -2,13 +2,11 @@ import numpy as np
 import os
 import re
 import seaborn as sns
-
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
 current_algorithm = 'SVM2'
-#current_algorithm = 'LinearModel'
 current_dataset = 'InternetAds'
 current_number_of_features = 250
 current_good_features = [1] + list(range(10, 251, 10))
@@ -77,16 +75,6 @@ def plot_over_number_of_features(dataset_type=1, evaluation_metric='rmse'):
     ax = plt.gca()
     ax.xaxis.set_major_locator(mticker.MultipleLocator(2))
 
-    # performance_values = np.concatenate([
-    #     np.array(pearson_performance) * 100,
-    #     np.array(spearman_performance) * 100,
-    #     np.array(cramersv_performance) * 100,
-    #     np.array(su_performance) * 100
-    # ])
-    # unique_values = np.unique(performance_values)
-    # ordered_values = np.sort(unique_values)
-    # print(list(ordered_values))
-
     sns.lineplot(x=number_of_features_iteration, y=np.array(pearson_performance) * 100,
                  marker='D', color='#10A5D6', label='Pearson', linewidth=1.5)
     sns.lineplot(x=number_of_features_iteration, y=np.array(spearman_performance) * 100,
@@ -111,20 +99,19 @@ def plot_over_number_of_features(dataset_type=1, evaluation_metric='rmse'):
     # plt.yticks([66, 76, 70, 72, 74, 78, 80, 82, 84, 88, min_value, max_value])
     # plt.yticks([54, 58, 62, 66, 70, 74, 78, 82, 86, 90, 94, 98, min_value, max_value])
     # plt.yticks([55, 60, 65, 75, 80, 85, 90, 95, 100, min_value, max_value])
-    #plt.yticks([64, 68, 70, 72, 74, 82, 78, 80, 86, 84, 88, 90, min_value, max_value])
-
+    # plt.yticks([64, 68, 70, 72, 74, 82, 78, 80, 86, 84, 88, 90, min_value, max_value])
     # print(plt.gca().get_yticklabels())
-    #plt.gca().get_yticklabels()[13].set_color('#CA0020')
-    #plt.gca().get_yticklabels()[12].set_color('#CA0020')
+    # plt.gca().get_yticklabels()[13].set_color('#CA0020')
+    # plt.gca().get_yticklabels()[12].set_color('#CA0020')
 
     # plt.xticks([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31])
-    #plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
+    # plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
     # plt.xticks([1, 2, 4, 6, 8, 10, 12, 14])
     # plt.xticks([1, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33])
     # plt.xticks([1, 2, 3, 4, 5, 6, 7, 8])
 
-    #plt.xlim(0, 43)
-    #plt.ylim(64, 90)
+    # plt.xlim(0, 43)
+    # plt.ylim(64, 90)
 
     ax.set_facecolor('white')
     ax.spines['top'].set_linewidth(1.2)
@@ -168,10 +155,6 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
 
             if current_performance is not None and current_num_features is not None:
                 if current_num_features in good_features:
-                    # print("Matching block:")
-                    # print("Current Performance:", current_performance)
-                    # print("Number of Features:", current_num_features)
-                    # print("-------------------")
                     pearson_performance.append(current_performance)
 
                 current_performance = None
@@ -190,10 +173,6 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
 
             if current_performance is not None and current_num_features is not None:
                 if current_num_features in good_features:
-                    # print("Matching block:")
-                    # print("Current Performance:", current_performance)
-                    # print("Number of Features:", current_num_features)
-                    # print("-------------------")
                     spearman_performance.append(current_performance)
 
                 current_performance = None
@@ -212,10 +191,6 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
 
             if current_performance is not None and current_num_features is not None:
                 if current_num_features in good_features:
-                    # print("Matching block:")
-                    # print("Current Performance:", current_performance)
-                    # print("Number of Features:", current_num_features)
-                    # print("-------------------")
                     cramersv_performance.append(current_performance)
 
                 current_performance = None
@@ -234,10 +209,6 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
 
             if current_performance is not None and current_num_features is not None:
                 if current_num_features in good_features:
-                    # print("Matching block:")
-                    # print("Current Performance:", current_performance)
-                    # print("Number of Features:", current_num_features)
-                    # print("-------------------")
                     su_performance.append(current_performance)
 
                 current_performance = None

@@ -161,10 +161,10 @@ class MLPipeline:
         self.auxiliary_dataframe = PreML.imputation_most_common_value(self.auxiliary_dataframe)
 
         self.auxiliary_dataframe = self.auxiliary_dataframe.apply(lambda x: pd.factorize(x)[0] if x.dtype == object else x)
-        # scaler = MinMaxScaler()
-        # scaled_X = scaler.fit_transform(self.auxiliary_dataframe)
-        # normalized_X = pd.DataFrame(scaled_X, columns=self.auxiliary_dataframe.columns)
-        normalized_X = self.auxiliary_dataframe
+        scaler = MinMaxScaler()
+        scaled_X = scaler.fit_transform(self.auxiliary_dataframe)
+        normalized_X = pd.DataFrame(scaled_X, columns=self.auxiliary_dataframe.columns)
+        #normalized_X = self.auxiliary_dataframe
 
         # Split the data into train and test
         x_train, x_test, y_train, y_test = \
@@ -174,9 +174,9 @@ class MLPipeline:
         current_train_dataframe = pd.concat([x_train, y_train], axis=1)
 
         # Only for Arrhythmia, Nursery and Connect4 datasets
-        # lab = preprocessing.LabelEncoder()
-        # y_train = lab.fit_transform(y_train)
-        # y_test = lab.fit_transform(y_test)
+        lab = preprocessing.LabelEncoder()
+        y_train = lab.fit_transform(y_train)
+        y_test = lab.fit_transform(y_test)
 
         # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
         dataset_type = 1
@@ -186,7 +186,7 @@ class MLPipeline:
                                                  self.target_label,
                                                  self.features_to_select_k)
 
-        estimator_simple = LinearSVR(random_state=0)
+        estimator_simple = LinearSVC(random_state=0)
         start_time_baseline = time.time()
         estimator_simple.fit(x_train, y_train)
         baseline_duration = time.time() - start_time_baseline
@@ -203,8 +203,8 @@ class MLPipeline:
             correlation_method_performance = []
             correlation_method_duration = []
             # LOOP: Go to all possible values of k (i.e. number of selected features)
-            for subset_length in range(1, len(ranked_features) + 1):
-                predictor = LinearSVR(random_state=0)
+            for subset_length in [210, 220, 230, 240, 250, 260, 270, 279]:
+                predictor = LinearSVC(random_state=0)
 
                 # Get the current feature subset
                 current_subset = ranked_features[:subset_length]
@@ -223,7 +223,7 @@ class MLPipeline:
                 # Save the results to file
                 MLPipeline.write_to_file(dataset_name=self.dataset_name,
                                          dataset_type=str(dataset_type),
-                                         algorithm_name='SVM2-LinearSVR-final',
+                                         algorithm_name='SVM2',
                                          correlation_method=correlation_method,
                                          subset_length=subset_length,
                                          current_subset=current_subset,

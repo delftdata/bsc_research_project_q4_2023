@@ -7,11 +7,11 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-#current_algorithm = 'SVM2-LinearSVR-final'
-current_algorithm = 'LinearModel'
-current_dataset = 'BikeSharing'
-current_number_of_features = 16
-current_good_features = list(range(1, 17))
+current_algorithm = 'SVM2'
+#current_algorithm = 'LinearModel'
+current_dataset = 'Arrhythmia'
+current_number_of_features = 279
+current_good_features = [1] + list(range(10, 271, 10)) + [279]
 evaluation_metrics_options = {
     'accuracy': 'Accuracy (%)',
     'rmse': 'Root mean square error',
@@ -252,7 +252,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
     return good_features, pearson_performance, spearman_performance, cramersv_performance, su_performance, baseline_performance
 
 
-def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='rmse'):
+def plot_over_number_of_features_custom_regression_tasks(dataset_type=1, evaluation_metric='rmse'):
     dataset_name = current_dataset
     algorithm = current_algorithm
     feature_list, pearson_performance, spearman_performance, cramersv_performance, su_performance, \
@@ -286,30 +286,88 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='rmse'
                     np.min(np.array(cramersv_performance)), np.min(np.array(su_performance))), 2)
     sns.set(font_scale=1.9)
 
-    # THIS VARIES PER DATASET
-    # y_ticks = [70, 72, 74, 76, 78, 80, 82, 84] # CI-RF
-    # y_ticks = [77, 78, 79, 80, 81, 82, 83] # CI-LR
-    # y_ticks = [94, 95, 96, 97, 98, 99, 100, min_value, max_value] #CI-LG, CI-XB
-    # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
-    # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
-    # y_thicks = [94, 95, 97, 98, 99, 100, max_value, min_value]
-    # y_ticks = [80, 82, 86, 88, 90, 92, 94, 96, max_value, min_value]
-    # plt.yticks(y_ticks)
-
     # plt.yticks([-1 * 10**5, -0.75 * 10**5, -0.5 * 10**5, -0* 10**5, 0.25 * 10**5, 0.75 * 10**5, 0.5*10**5,
     #             1 * 10**5, 1.25 * 10**5, 1.5 * 10**5, 1.75*10**5, 2* 10**5, min_value, max_value])
     # plt.gca().get_yticklabels()[12].set_color('#CA0020')
     # plt.gca().get_yticklabels()[13].set_color('#CA0020')
-    plt.yticks([25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, min_value, max_value])
-    plt.gca().get_yticklabels()[13].set_color('#CA0020')
+    plt.yticks([-300, -250, -200, -150, -100, -50, 50, 100, 150, 200, 300, min_value, max_value])
+    plt.gca().get_yticklabels()[11].set_color('#CA0020')
     plt.gca().get_yticklabels()[12].set_color('#CA0020')
 
-    # plt.xticks([1, 10, 30, 50, 70, 90, 110, 130, 150, 180, 200])
     #plt.xticks([1, 5, 10, 20, 30, 40, 50, 60, 70, 80])
     plt.xticks([1, 2, 4, 6, 8, 10, 12, 14, 16])
 
-    plt.ylim(-5, 300)
-    plt.xlim(-1, current_good_features[-1] + 1)
+    plt.ylim(-300, 300)
+    plt.xlim(0, current_good_features[-1] + 1)
+
+    ax.set_facecolor('white')
+    ax.spines['top'].set_linewidth(1.2)
+    ax.spines['bottom'].set_linewidth(1.2)
+    ax.spines['left'].set_linewidth(1.2)
+    ax.spines['right'].set_linewidth(1.2)
+    ax.spines['top'].set_edgecolor('black')
+    ax.spines['bottom'].set_edgecolor('black')
+    ax.spines['left'].set_edgecolor('black')
+    ax.spines['right'].set_edgecolor('black')
+
+    # Create the directory if it doesn't exist
+    directory = "./results_performance"
+    os.makedirs(directory, exist_ok=True)
+    # Save the figure to folder
+    plt.savefig(f'./results_performance/result_{dataset_name}_{dataset_type}_{algorithm}.pdf')
+    # plt.show()
+    plt.clf()
+
+
+def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accuracy'):
+    dataset_name = current_dataset
+    algorithm = current_algorithm
+    feature_list, pearson_performance, spearman_performance, cramersv_performance, su_performance, \
+        baseline_performance = parse_data_custom()
+    pearson_performance = np.array(pearson_performance) * 100
+    spearman_performance = np.array(spearman_performance) * 100
+    cramersv_performance = np.array(cramersv_performance) * 100
+    su_performance = np.array(su_performance) * 100
+    baseline_performance = baseline_performance * 100
+
+    evaluation_metric_name = evaluation_metrics_options.get(evaluation_metric)
+    number_of_features_iteration = feature_list
+
+    sns.set_style("whitegrid", {"grid.color": "0.9", "grid.linestyle": "-", "grid.linewidth": "0.2"})
+    plt.figure(figsize=(8, 6), dpi=1200)
+    ax = plt.gca()
+    ax.xaxis.set_major_locator(mticker.MultipleLocator(2))
+
+    sns.lineplot(x=number_of_features_iteration, y=np.array(pearson_performance),
+                 marker='D', color='#10A5D6', label='Pearson', linewidth=1.5)
+    sns.lineplot(x=number_of_features_iteration, y=np.array(spearman_performance),
+                 marker='o', color='#00005A', label='Spearman', linewidth=1.5)
+    sns.lineplot(x=number_of_features_iteration, y=np.array(cramersv_performance),
+                 marker='>', color='#BF9000', label='Cramér\'s V', linewidth=1.5)
+    sns.lineplot(x=number_of_features_iteration, y=np.array(su_performance),
+                 marker='s', color='#CA0020', label='Symmetric Uncertainty', linewidth=1.5)
+    print(baseline_performance)
+    sns.lineplot(x=[current_good_features[-1]], y=[baseline_performance],
+                 marker='p', color='#7030A0', label='Baseline')
+
+    plt.xlabel('Number of features')
+    plt.ylabel(str(evaluation_metric_name))
+    max_value = round(max(np.max(np.array(pearson_performance)), np.max(np.array(spearman_performance)),
+                    np.max(np.array(cramersv_performance)), np.max(np.array(su_performance))), 2)
+    min_value = round(min(np.min(np.array(pearson_performance)), np.min(np.array(spearman_performance)),
+                    np.min(np.array(cramersv_performance)), np.min(np.array(su_performance))), 2)
+    sns.set(font_scale=1.9)
+
+    # THIS VARIES PER DATASET
+    plt.yticks([35, 40, 45, 50, 55, 60, 65, 70, 75, min_value, max_value])
+    plt.gca().get_yticklabels()[10].set_color('#CA0020')
+    plt.gca().get_yticklabels()[9].set_color('#CA0020')
+
+    # plt.xticks([1, 2, 4, 6, 8, 10, 12, 14, 16])
+    plt.xticks([10, 40, 70, 100, 130, 160, 190, 220, 250, 279])
+
+    plt.ylim(35, 75)
+    plt.xlim(-3, current_good_features[-1] + 3)
 
     ax.set_facecolor('white')
     ax.spines['top'].set_linewidth(1.2)

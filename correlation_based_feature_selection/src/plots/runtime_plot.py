@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-current_algorithm = 'RandomForest'
+current_algorithm = 'SVM2'
 current_dataset = 'BreastCancer'
 current_number_of_features = 31
 
@@ -101,7 +101,7 @@ def plot_over_number_of_features_runtime(dataset_type=1):
     # plt.yticks([0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, max_value, min_value])
     #plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
     plt.xticks([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31])
-    plt.yticks([0, 0.25, 0.5, 1, 1.25, 1.5, 1.75, 2, min_value, max_value])
+    plt.yticks([0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, min_value, max_value])
     print(plt.gca().get_yticklabels())
     plt.gca().get_yticklabels()[8].set_color('#CA0020')
     plt.gca().get_yticklabels()[9].set_color('#CA0020')

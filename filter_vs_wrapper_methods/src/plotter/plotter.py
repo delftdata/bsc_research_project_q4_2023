@@ -121,9 +121,9 @@ def plot_metrics_matplotlib(
     model : str
         The model for which the metrics are collected.
     x_label : str, optional
-        The label for the x-axis, by default "Percentage of selected features".
+        The label for the x-axis, default: "Percentage of selected features".
     y_label : str, optional
-        The label for the y-axis, by default "Accuracy".
+        The label for the y-axis, default: "Accuracy".
 
     Returns
     -------
@@ -136,27 +136,25 @@ def plot_metrics_matplotlib(
     metrics_backward_elimination = postprocess_results(
         raw_metrics_backward_elimination) if raw_metrics_backward_elimination else []
 
-    valid_metrics = [x for x in (metrics_chi2, metrics_anova, metrics_forward_selection,
-                                 metrics_backward_elimination) if len(x) > 0]
     percentage_features = list(range(10, 110, 10))
-
-    min_length_metrics = min(len(metric) for metric in valid_metrics)
-    min_percentage_index = len(percentage_features) - min_length_metrics
-
-    percentage_features = percentage_features[min_percentage_index:]
 
     fig, ax = plt.subplots(figsize=(width, height))
 
     if raw_metrics_chi2:
-        ax.plot(percentage_features, metrics_chi2, label="chi2", marker="s", linewidth=linewidth, markersize=markersize)
+        min_percentage_index = len(percentage_features) - len(metrics_chi2)
+        ax.plot(percentage_features[min_percentage_index:], metrics_chi2,
+                label="chi2", marker="s", linewidth=linewidth, markersize=markersize)
     if raw_metrics_anova:
-        ax.plot(percentage_features, metrics_anova, label="anova",
+        min_percentage_index = len(percentage_features) - len(metrics_anova)
+        ax.plot(percentage_features[min_percentage_index:], metrics_anova, label="anova",
                 marker="o", linewidth=linewidth, markersize=markersize)
     if raw_metrics_forward_selection:
-        ax.plot(percentage_features, metrics_forward_selection,
+        min_percentage_index = len(percentage_features) - len(metrics_forward_selection)
+        ax.plot(percentage_features[min_percentage_index:], metrics_forward_selection,
                 label="forward_selection", marker="^", linewidth=linewidth, markersize=markersize)
     if raw_metrics_backward_elimination:
-        ax.plot(percentage_features, metrics_backward_elimination,
+        min_percentage_index = len(percentage_features) - len(metrics_backward_elimination)
+        ax.plot(percentage_features[min_percentage_index:], metrics_backward_elimination,
                 label="backward elimination",  marker="X", linewidth=linewidth, markersize=markersize)
 
     plt.xticks(percentage_features, fontsize=font_size_ticks, weight="bold")

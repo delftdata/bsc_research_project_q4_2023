@@ -75,8 +75,8 @@ def select_k_best_features_from_data_frame(df: pd.DataFrame, target_label: str, 
     selected_k_features_names = sorted_features[0:k]
 
     selected_k_features_indices = [
-        i for i in range(df.shape[1])
-        if df.columns[i] in selected_k_features_names or df.columns[i] == target_label]
+        i for i, column in enumerate(df.columns)
+        if column in selected_k_features_names or column == target_label]
 
     return df.iloc[:, selected_k_features_indices]
 
@@ -123,8 +123,8 @@ def drop_features_with_negative_values(df: pd.DataFrame, target_label: str) -> p
     pd.DataFrame
         The DataFrame with the columns containing negative values dropped.
     """
-    def is_number(column_type) -> bool: return column_type == "int64" or column_type == "float64"
-    def is_positive(column) -> bool: return all([x >= 0 for x in column])
+    def is_number(column_type) -> bool: return column_type in ("int64", "float64")
+    def is_positive(column) -> bool: return all(x >= 0 for x in column)
 
     target_index = df.columns.get_loc(key=target_label)
 

@@ -76,8 +76,8 @@ where each experiment is extensively discussed.
       Autogluon models (Light GBM, Random Forest, XGBoost, Linear/Logistic Regression).
       Accepted values are: `true`, `false`.
     - `"dataset"`: Indicates the dataset to be used for the experiments. Supported datasets include: `"bank_marketing"`,
-      `"breast_cancer"`, `"steel_plates_faults"`, `"housing_prices"`, `"bike_sharing"`, `"census_income"`,
-      `"connect_4"`, `"arrhythmia"`, `"crop"`, `"character_font_images"`, `"internet_ads"`, `"nasa_numeric"`.
+      `"breast_cancer"`, `"steel_plates_faults"`,`"housing_prices"`, `"bike_sharing"`, `"census_income"`,
+      `"arrhythmia"`, `"crop"`, `"character_font_images"`, `"internet_advertisements"`, `"nasa_numeric"`.
 
 2. arguments_plot.json
 
@@ -97,15 +97,13 @@ where each experiment is extensively discussed.
       `"experiment1"`, `"experiment2"`, `"experiment3"`, `"experiment4"`.
     - `"dataset"`: Specifies the dataset for which the results should be considered by `main`. Supported datasets
       include:`"bank_marketing"`, `"breast_cancer"`, `"steel_plates_faults"`,
-      `"housing_prices"`, `"bike_sharing"`, `"census_income"`, `"connect_4"`, `"arrhythmia"`, `"crop"`,
-      `"character_font_images"`, `"internet_ads"`, `"nasa_numeric"`.
+      `"housing_prices"`, `"bike_sharing"`, `"census_income"`, `"arrhythmia"`, `"crop"`,
+      `"character_font_images"`, `"internet_advertisements"`, `"nasa_numeric"`.
     - `"plot_type"`: Specifies the type of plot to generate. Here is an overview of the possible values for
       `"plot_type"` and their meanings:
         - `"results"`: Plots the results for the specified `"dataset"`.
         - `"all_results"`: Plots the results for all available datasets corresponding to the given `"experiment_name"`.
           Ignores the value of `"dataset"`.
-        - `"average_results"`: Plots the average results across all datasets for the specified `"experiment_name"`.
-          Currently only `"experiment2"` and `"experiment4"` are supported. Ignores the value of `"dataset"`.
         - `"average_runtime"`: Plots the average runtime across all datasets for the specified `"experiment_name"`.
           Ignores the value of `"dataset"`.
 
@@ -113,7 +111,7 @@ where each experiment is extensively discussed.
 
 The project structure of the ``filter_vs_wrapper_methods` project is as follows:
 
--   `docs`: Directory containing the project documentation in markdown format, including `documentation.md`.
+-   `documentation.md`: Markdown file containing the project documentation.
 -   `src`: Source code directory
 -   `README.md`: Markdown file providing instructions for installation and usage of the project.
 
@@ -145,6 +143,11 @@ is required to make Python treat those directories as packages<sup>[1]</sup>.
 -   `__init__.py`
 -   `dataset_info.py`: Defines the DatasetInfo dataclass for storing dataset information.
 -   `reader.py`: Defines the Reader class for reading and storing data from files into pandas DataFrames.
+
+### `writer` directory
+
+-   `__init__.py`
+-   `writer.py`: Defines the Writer class for writing data to files.
 
 ### `plotter` directory
 

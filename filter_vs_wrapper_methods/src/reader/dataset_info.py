@@ -9,8 +9,10 @@ class DatasetInfo:
 
     Attributes
     ----------
-    dataset_file : str
-        Name of the dataset (usually what comes before .csv).
+    dataset_name : str
+        Name of the dataset.
+    dataset_path : str
+        Path of the dataset.
     target_label : str
         Name of the target label.
     results_path : str
@@ -22,7 +24,8 @@ class DatasetInfo:
     file_names : str, optional
         Only used by the character font images dataset, since it is split into multiple files (default: "").
     """
-    dataset_file: str
+    dataset_name: str
+    dataset_path: str
     target_label: str
     results_path: str
     eval_metric: Literal["accuracy", "neg_root_mean_squared_error"] = "accuracy"

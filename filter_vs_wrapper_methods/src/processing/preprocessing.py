@@ -21,7 +21,7 @@ def scale_columns_min_max(df: pd.DataFrame, excluded_columns: list[str]) -> pd.D
     """
     for i, column in enumerate(df.columns):
         if column not in excluded_columns:
-            if df[column].dtype in set(["float", "int"]) and any(float(x) < 0 for x in df[column]):
+            if any(is_negative(x) for x in df[column]):
                 min_max_scaler = MinMaxScaler()
                 df[column] = min_max_scaler.fit_transform(df.iloc[:, [i]])
     return df
@@ -44,9 +44,9 @@ def discretize_columns_k_bins(df: pd.DataFrame, excluded_columns: list[str]) -> 
     """
     for i, column in enumerate(df.columns):
         if column not in excluded_columns:
-            if df[column].dtype == "float" and all(float(x).is_integer() for x in df[column]):
+            if all(is_int(x) for x in df[column]):
                 df[column] = df[column].astype("int64")
-            elif df[column].dtype == "float":
+            elif all(is_float(x) for x in df[column]):
                 k_bins_discretizer = KBinsDiscretizer(n_bins=df.shape[1], encode="ordinal", strategy="uniform")
                 df[column] = k_bins_discretizer.fit_transform(df.iloc[:, [i]])
                 df[column] = df[column].astype("int64")
@@ -70,7 +70,7 @@ def discretize_columns_ordinal_encoder(df: pd.DataFrame, excluded_columns: list[
     """
     for i, column in enumerate(df.columns):
         if column not in excluded_columns:
-            if df[column].dtype != "float":
+            if not any(is_float(x) for x in df[column]):
                 ordinal_encoder = OrdinalEncoder(dtype=np.float64)
                 df[column] = df[column].astype("category")
                 df[column] = ordinal_encoder.fit_transform(df.iloc[:, [i]])
@@ -145,24 +145,34 @@ def convert_to_actual_type(df: pd.DataFrame) -> pd.DataFrame:
         The DataFrame with converted data types.
     """
 
-    def is_float(value: str) -> bool:
-        try:
-            return not float(value).is_integer()
-        except Exception:
-            return False
-
-    def is_int(value: str) -> bool:
-        try:
-            return float(value).is_integer()
-        except Exception:
-            return False
-
     for column in df.columns:
         if df[column].dtype == "object":
-            if all(is_float(str(value)) for value in df[column].values):
+            if all(is_float(x) for x in df[column].values):
                 df[column] = df[column].astype("float64")
-            elif all(is_int(str(value)) for value in df[column].values):
+            elif all(is_int(x) for x in df[column].values):
                 df[column] = df[column].astype("int64")
             else:
                 df[column] = df[column].astype("category")
     return df
+
+
+def is_float(value) -> bool:
+    try:
+        float(value)
+        return True
+    except Exception:
+        return False
+
+
+def is_int(value) -> bool:
+    try:
+        return float(value).is_integer()
+    except Exception:
+        return False
+
+
+def is_negative(value):
+    try:
+        return float(value) < 0
+    except Exception:
+        return False

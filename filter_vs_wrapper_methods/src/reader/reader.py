@@ -72,8 +72,9 @@ class Reader:
         FileNotFoundError
             If the bank marketing dataset file is not found.
         """
-        bank = DatasetInfo("reader/data/bank_marketing/bank.csv", "y", f"results/{self.experiment_name}/bank_marketing")
-        df_bank = pd.read_csv(bank.dataset_file, low_memory=False)
+        bank = DatasetInfo("bank_marketing", "reader/data/bank_marketing/bank.csv",
+                           "y", f"results/{self.experiment_name}/bank_marketing")
+        df_bank = pd.read_csv(bank.dataset_path, low_memory=False)
         df_bank = df_bank.replace("unknown", nan)
         df_bank = self.prepare_data_frame(df=df_bank, missing_values=True)
         return df_bank, bank
@@ -91,9 +92,9 @@ class Reader:
         FileNotFoundError
             If the breast cancer dataset file is not found.
         """
-        breast_cancer = DatasetInfo("reader/data/breast_cancer/breast_cancer.csv", "diagnosis",
+        breast_cancer = DatasetInfo("breast_cancer", "reader/data/breast_cancer/breast_cancer.csv", "diagnosis",
                                     f"results/{self.experiment_name}/breast_cancer")
-        df_breast_cancer = pd.read_csv(breast_cancer.dataset_file, low_memory=False)
+        df_breast_cancer = pd.read_csv(breast_cancer.dataset_path, low_memory=False)
         df_breast_cancer = self.prepare_data_frame(df=df_breast_cancer)
         return df_breast_cancer, breast_cancer
 
@@ -110,9 +111,10 @@ class Reader:
         FileNotFoundError
             If the steel plates faults dataset file is not found.
         """
-        steel_plates_faults = DatasetInfo("reader/data/steel_plates_faults/steel_plates_faults.csv",
-                                          "Class", f"results/{self.experiment_name}/steel_plates_faults")
-        df_steel_plates_faults = pd.read_csv(steel_plates_faults.dataset_file, low_memory=False)
+        steel_plates_faults = DatasetInfo(
+            "steel_plates_faults", "reader/data/steel_plates_faults/steel_plates_faults.csv", "Class",
+            f"results/{self.experiment_name}/steel_plates_faults")
+        df_steel_plates_faults = pd.read_csv(steel_plates_faults.dataset_path, low_memory=False)
         df_steel_plates_faults = self.prepare_data_frame(df=df_steel_plates_faults)
         return df_steel_plates_faults, steel_plates_faults
 
@@ -130,9 +132,9 @@ class Reader:
             If the housing prices dataset file is not found.
         """
         housing_prices = DatasetInfo(
-            "reader/data/housing_prices/housing_prices.csv", "SalePrice",
+            "housing_prices", "reader/data/housing_prices/housing_prices.csv", "SalePrice",
             f"results/{self.experiment_name}/housing_prices", eval_metric="neg_root_mean_squared_error")
-        df_housing_prices = pd.read_csv(housing_prices.dataset_file, low_memory=False)
+        df_housing_prices = pd.read_csv(housing_prices.dataset_path, low_memory=False)
         df_housing_prices = df_housing_prices.fillna(nan)
         df_housing_prices = self.prepare_data_frame(df=df_housing_prices, missing_values=True)
         return df_housing_prices, housing_prices
@@ -150,10 +152,10 @@ class Reader:
         FileNotFoundError
             If the bike sharing dataset file is not found.
         """
-        bike_sharing = DatasetInfo("reader/data/bike_sharing/hour.csv", "cnt",
+        bike_sharing = DatasetInfo("bike_sharing", "reader/data/bike_sharing/hour.csv", "cnt",
                                    f"results/{self.experiment_name}/bike_sharing",
                                    eval_metric="neg_root_mean_squared_error")
-        df_bike_sharing = pd.read_csv(bike_sharing.dataset_file, low_memory=False)
+        df_bike_sharing = pd.read_csv(bike_sharing.dataset_path, low_memory=False)
         df_bike_sharing = self.prepare_data_frame(df=df_bike_sharing)
         return df_bike_sharing, bike_sharing
 
@@ -170,42 +172,12 @@ class Reader:
         FileNotFoundError
             If the census income dataset file is not found.
         """
-        census_income = DatasetInfo("reader/data/census_income/census_income.csv", "income_label",
+        census_income = DatasetInfo("census_income", "reader/data/census_income/census_income.csv", "income_label",
                                     f"results/{self.experiment_name}/census_income")
-        df_census_income = pd.read_csv(census_income.dataset_file, low_memory=False)
+        df_census_income = pd.read_csv(census_income.dataset_path, low_memory=False)
         df_census_income = df_census_income.fillna(nan)
         df_census_income = self.prepare_data_frame(df=df_census_income, missing_values=True)
         return df_census_income, census_income
-
-    def read_connect_4(self) -> tuple[pd.DataFrame, DatasetInfo]:
-        """Reads the connect-4 dataset from a CSV file and prepares the DataFrame.
-
-        Returns
-        -------
-        tuple[pd.DataFrame, DatasetInfo]
-            A tuple containing the prepared DataFrame and the DatasetInfo object.
-
-        Raises
-        ------
-        FileNotFoundError
-            If the connect-4 dataset file is not found.
-        """
-
-        def map_game(value: float) -> Literal["win", "loss", "tie"]:
-            if value == -1.0:
-                return "loss"
-            if value == 0.0:
-                return "tie"
-            return "win"
-
-        connect_4 = DatasetInfo("reader/data/connect-4/connect-4.csv", "winner",
-                                f"results/{self.experiment_name}/connect-4")
-        df_connect_4 = pd.read_csv(connect_4.dataset_file, low_memory=False)
-        df_connect_4 = df_connect_4.fillna(nan)
-        df_connect_4 = self.prepare_data_frame(df=df_connect_4, missing_values=True)
-        df_connect_4[connect_4.target_label] = df_connect_4[connect_4.target_label].apply(map_game)
-        df_connect_4[connect_4.target_label] = df_connect_4[connect_4.target_label].astype("category")
-        return df_connect_4, connect_4
 
     def read_nasa_numeric(self) -> tuple[pd.DataFrame, DatasetInfo]:
         """Reads the nasa numeric dataset from a CSV file and prepares the DataFrame.
@@ -221,9 +193,9 @@ class Reader:
             If the nasa numeric dataset file is not found.
         """
         nasa_numeric = DatasetInfo(
-            "reader/data/nasa_numeric/nasa_numeric.csv", "act_effort", f"results/{self.experiment_name}/nasa_numeric",
-            eval_metric="neg_root_mean_squared_error")
-        df_nasa_numeric = pd.read_csv(nasa_numeric.dataset_file, low_memory=False)
+            "nasa_numeric", "reader/data/nasa_numeric/nasa_numeric.csv", "act_effort",
+            f"results/{self.experiment_name}/nasa_numeric", eval_metric="neg_root_mean_squared_error")
+        df_nasa_numeric = pd.read_csv(nasa_numeric.dataset_path, low_memory=False)
         df_nasa_numeric = df_nasa_numeric.fillna(nan)
         df_nasa_numeric = self.prepare_data_frame(df=df_nasa_numeric, missing_values=True)
         return df_nasa_numeric, nasa_numeric
@@ -241,9 +213,9 @@ class Reader:
         FileNotFoundError
             If the arrhythmia dataset file is not found.
         """
-        arrhythmia = DatasetInfo("reader/data/arrhythmia/arrhythmia.csv", "Class",
+        arrhythmia = DatasetInfo("arrhythmia", "reader/data/arrhythmia/arrhythmia.csv", "Class",
                                  f"results/{self.experiment_name}/arrhythmia")
-        df_arrhythmia = pd.read_csv(arrhythmia.dataset_file, low_memory=False)
+        df_arrhythmia = pd.read_csv(arrhythmia.dataset_path, low_memory=False)
         df_arrhythmia = df_arrhythmia.replace("?", nan)
         df_arrhythmia = self.prepare_data_frame(df=df_arrhythmia, missing_values=True)
         return df_arrhythmia, arrhythmia
@@ -261,10 +233,10 @@ class Reader:
         FileNotFoundError
             If any of the crop dataset files are not found.
         """
-        crop = DatasetInfo("reader/data/crop", "label", f"results/{self.experiment_name}/crop")
+        crop = DatasetInfo("crop", "reader/data/crop", "label", f"results/{self.experiment_name}/crop")
         frames = []
-        for i in range(10):
-            frames.append(pd.read_csv(f"{crop.dataset_file}/crop{i}.csv", low_memory=False))
+        for i in range(2):
+            frames.append(pd.read_csv(f"{crop.dataset_path}/crop{i}.csv", low_memory=False))
         df_crop = pd.concat(frames)
         df_crop = self.prepare_data_frame(df=df_crop)
         return df_crop, crop
@@ -282,18 +254,21 @@ class Reader:
         FileNotFoundError
             If any of the character font images dataset files or the font names file are not found.
         """
-        character_font_images = DatasetInfo("reader/data/character_font_images", "font",
-                                            f"results/{self.experiment_name}/character_font_images",
-                                            file_names="reader/data/character_font_images/font.names")
+        character_font_images = DatasetInfo(
+            "character_font_images", "reader/data/character_font_images", "font",
+            f"results/{self.experiment_name}/character_font_images",
+            file_names="reader/data/character_font_images/font.names")
         df_file_names = pd.read_csv(character_font_images.file_names, low_memory=False, header=None)
         frames = []
-        for file_name in df_file_names[0]:
-            frames.append(pd.read_csv(f"{character_font_images.dataset_file}/{file_name}"))
+        for i, file_name in enumerate(df_file_names[0]):
+            frames.append(pd.read_csv(f"{character_font_images.dataset_path}/{file_name}"))
+            if i == 2:
+                break
         df_character_font_images = pd.concat(frames)
         df_character_font_images = self.prepare_data_frame(df=df_character_font_images)
         return df_character_font_images, character_font_images
 
-    def read_internet_ads(self) -> tuple[pd.DataFrame, DatasetInfo]:
+    def read_internet_advertisements(self) -> tuple[pd.DataFrame, DatasetInfo]:
         """Reads the internet advertisements dataset from a CSV file.
 
         Returns
@@ -306,8 +281,12 @@ class Reader:
         FileNotFoundError
             If the internet advertisements dataset file is not found.
         """
-        internet_ads = DatasetInfo("reader/data/internet_advertisements/internet_advertisements.csv",
-                                   "class", f"results/{self.experiment_name}/internet_advertisements")
-        df_internet_ads = pd.read_csv(internet_ads.dataset_file, low_memory=False)
-        df_internet_ads = self.prepare_data_frame(df=df_internet_ads)
+        internet_ads = DatasetInfo("internet_advertisements",
+                                   "reader/data/internet_advertisements/internet_advertisements.csv", "class",
+                                   f"results/{self.experiment_name}/internet_advertisements")
+        df_internet_ads = pd.read_csv(internet_ads.dataset_path, low_memory=False)
+        df_internet_ads = df_internet_ads.replace("   ?", nan)
+        df_internet_ads = df_internet_ads.replace("     ?", nan)
+        df_internet_ads = df_internet_ads.replace("?", nan)
+        df_internet_ads = self.prepare_data_frame(df=df_internet_ads, missing_values=True)
         return df_internet_ads, internet_ads

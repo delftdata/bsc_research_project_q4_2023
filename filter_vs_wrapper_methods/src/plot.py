@@ -2,7 +2,10 @@ import json
 import os
 
 import matplotlib.pyplot as plt
+
 from plotter.plotter import plot_metrics_matplotlib, plot_runtime_matplotlib
+
+models = ["GBM", "LR", "RF", "XGB", "SVM"]
 
 
 def main():
@@ -16,8 +19,8 @@ def main():
     KeyError
         If the provided plot_type is invalid.
     """
-    classification_datasets = ["arrhythmia", "bank_marketing", "breast_cancer",
-                               "census_income", "internet_advertisements", "steel_plates_faults"]
+    classification_datasets = ["arrhythmia", "bank_marketing", "breast_cancer", "census_income",
+                               "internet_advertisements", "steel_plates_faults", "character_font_images"]
     regression_datasets = ["bike_sharing", "housing_prices", "nasa_numeric"]
     y_label_regression = "Root Mean Squared Error"
 
@@ -40,11 +43,6 @@ def main():
             for dataset in (classification_datasets + regression_datasets):
                 y_label = "Accuracy" if dataset in classification_datasets else y_label_regression
                 plot_experiments(experiment_name, dataset, y_label)
-        elif plot_type == "average_results":
-            if experiment_name == "experiment2":
-                plot_average_results_experiment2(datasets=classification_datasets + regression_datasets)
-            elif experiment_name == "experiment4":
-                plot_average_results_experiment4(datasets=classification_datasets + regression_datasets)
         elif plot_type == "average_runtime":
             plot_average_runtime(datasets=classification_datasets + regression_datasets)
         else:
@@ -95,84 +93,6 @@ def plot_average_runtime(datasets: list[str]):
     plt.close(algorithm_plot)
 
 
-def plot_average_results_experiment2(datasets: list[str], y_label="Average Accuracy"):
-    """Plots the average results (metrics) for different feature selection methods and models in Experiment 2.
-
-    Parameters
-    ----------
-    datasets : list[str]
-        The list of datasets to plot the average results for.
-    y_label : str, optional
-        The label for the y-axis of the plot (default: "Average Accuracy").
-    """
-    results_path_experiment = "results/experiment2"
-    models = ["GBM", "LR", "RF", "XGB"]
-    for model in models:
-        raw_metrics_chi2, raw_metrics_anova, raw_metrics_forward_selection, raw_metrics_backward_elimination = [], [], [], []
-        for dataset in datasets:
-            results_path = f"{results_path_experiment}/{dataset}"
-            try:
-                raw_metrics_chi2 += open_raw_metrics(results_path, "chi2", model)
-                raw_metrics_anova += open_raw_metrics(results_path, "anova", model)
-                raw_metrics_forward_selection += open_raw_metrics(results_path, "forward_selection", model)
-                raw_metrics_backward_elimination += open_raw_metrics(results_path, "backward_elimination", model)
-            except OSError as error:
-                print(f"{dataset}: {error}")
-
-        task = "classification" if y_label == "Average Accuracy" else "regression"
-        plot_path = f"results/experiment2/average_results/{task}"
-        if not os.path.isdir(plot_path):
-            os.makedirs(plot_path)
-
-        algorithm_plot = plot_metrics_matplotlib(
-            raw_metrics_chi2, raw_metrics_anova, raw_metrics_forward_selection, raw_metrics_backward_elimination,
-            model, y_label=y_label)
-
-        algorithm_plot.savefig(f"{plot_path}/{model}.png")
-        plt.close(algorithm_plot)
-
-
-def plot_average_results_experiment4(datasets: list[str], y_label="Average Accuracy"):
-    """Plots the average results (metrics) for different feature selection methods, models, and data types in Experiment 4.
-
-    Parameters
-    ----------
-    datasets : list[str]
-        The list of datasets to plot the average results for.
-    y_label : str, optional
-        The label for the y-axis of the plot (default: "Average Accuracy").
-    """
-    results_path_experiment = "results/experiment4"
-    models = ["GBM", "LR", "RF", "XGB"]
-    data_types = ["categorical", "discrete", "continuous"]
-    for model in models:
-        for data_type in data_types:
-            raw_metrics_chi2, raw_metrics_anova, raw_metrics_forward_selection, raw_metrics_backward_elimination = [], [], [], []
-
-            for dataset in datasets:
-                results_path = f"{results_path_experiment}/{dataset}/{data_type}"
-                try:
-                    raw_metrics_chi2 += open_raw_metrics(results_path, "chi2", model)
-                    raw_metrics_anova += open_raw_metrics(results_path, "anova", model)
-                    raw_metrics_forward_selection += open_raw_metrics(results_path, "forward_selection", model)
-                    raw_metrics_backward_elimination += open_raw_metrics(results_path, "backward_elimination", model)
-                except OSError as error:
-                    print(f"{data_type}: {error}")
-
-            task = "classification" if y_label == "Average Accuracy" else "regression"
-            average_results_plot_path = f"results/experiment4/average_results/{task}"
-            plot_path = f"{average_results_plot_path}/{data_type}"
-            if not os.path.isdir(plot_path):
-                os.makedirs(plot_path)
-
-            algorithm_plot = plot_metrics_matplotlib(
-                raw_metrics_chi2, raw_metrics_anova, raw_metrics_forward_selection, raw_metrics_backward_elimination,
-                model, y_label=y_label)
-
-            algorithm_plot.savefig(f"{plot_path}/{model}.png")
-            plt.close(algorithm_plot)
-
-
 def plot_experiments(experiment_name: str, dataset: str, y_label="Accuracy"):
     """Plots the results for a specific experiment and dataset.
 
@@ -185,8 +105,11 @@ def plot_experiments(experiment_name: str, dataset: str, y_label="Accuracy"):
     y_label : str, optional
         The label for the y-axis of the plot (default: "Accuracy").
     """
-    for preprocessing_variation in ["", "no_normalization", "median"]:
-        results_path = f"results/{experiment_name}/{dataset}/{preprocessing_variation}"
+    for preprocessing_variation in ("", "no_normalization", "median"):
+        if not preprocessing_variation:
+            results_path = f"results/{experiment_name}/{dataset}"
+        else:
+            results_path = f"results/{experiment_name}/{dataset}/{preprocessing_variation}"
         if experiment_name == "experiment4":
             data_types = ["categorical", "discrete", "continuous"]
             for data_type in data_types:
@@ -205,8 +128,6 @@ def plot_results(results_path: str, y_label="Accuracy"):
     y_label : str, optional
         The label for the y-axis of the plot (default: "Accuracy").
     """
-    models = ["GBM", "LR", "RF", "XGB"]
-
     for model in models:
         try:
             raw_metrics_chi2 = try_opening_raw_metrics(results_path, "chi2", model)
@@ -304,5 +225,5 @@ def try_opening_raw_metrics(results_path: str, method: str, model: str) -> list[
     return raw_metrics
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

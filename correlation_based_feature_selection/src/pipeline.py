@@ -143,12 +143,14 @@ class MLPipeline:
 
         return hyperparameters, baseline_performance, baseline_duration
 
-    def evaluate_support_vector_machine_model(self):
+    def evaluate_support_vector_machine_model(self, problem_type='classification'):
+        # Print information about the database
         number_rows, number_columns = self.dataframe.shape
         print('Dataset: ' + self.dataset_name)
         print('Total columns: ' + str(number_columns - 1))
         print('Total rows: ' + str(number_rows))
-        # Prepare the data
+
+        # Prepare the data for SVM
         self.dataframe = TabularDataset(self.dataframe)
         self.dataframe = FillNaFeatureGenerator(inplace=True).fit_transform(self.dataframe)
         self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
@@ -157,11 +159,12 @@ class MLPipeline:
             .fit_transform(self.dataframe)
         self.auxiliary_dataframe = PreML.imputation_most_common_value(self.auxiliary_dataframe)
 
+        # Normalize the data for SVM
         self.auxiliary_dataframe = self.auxiliary_dataframe.apply(lambda x: pd.factorize(x)[0] if x.dtype == object else x)
         scaler = MinMaxScaler()
         scaled_X = scaler.fit_transform(self.auxiliary_dataframe)
         normalized_X = pd.DataFrame(scaled_X, columns=self.auxiliary_dataframe.columns)
-        #normalized_X = self.auxiliary_dataframe
+        # normalized_X = self.auxiliary_dataframe
 
         # Split the data into train and test
         x_train, x_test, y_train, y_test = \
@@ -170,10 +173,10 @@ class MLPipeline:
                              test_size=0.2, random_state=0)
         current_train_dataframe = pd.concat([x_train, y_train], axis=1)
 
-        # Only for Arrhythmia, Nursery and Connect4 datasets
-        # lab = preprocessing.LabelEncoder()
-        # y_train = lab.fit_transform(y_train)
-        # y_test = lab.fit_transform(y_test)
+        # Perform data preprocessing for SVM
+        lab = preprocessing.LabelEncoder()
+        y_train = lab.fit_transform(y_train)
+        y_test = lab.fit_transform(y_test)
 
         # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
         dataset_type = 1
@@ -183,42 +186,42 @@ class MLPipeline:
                                                  self.target_label,
                                                  self.features_to_select_k)
 
-        estimator_simple = LinearSVC(random_state=0)
+        baseline_estimator = LinearSVC(random_state=0)
+        if problem_type == 'regression':
+            baseline_estimator = LinearSVR(random_state=0)
         start_time_baseline = time.time()
-        estimator_simple.fit(x_train, y_train)
+        baseline_estimator.fit(x_train, y_train)
         baseline_duration = time.time() - start_time_baseline
-        baseline_performance = estimator_simple.score(x_test, y_test)
-        #baseline_rmse = mean_squared_error(y_test, estimator_simple.predict(x_test), squared=False)
+        if problem_type == 'regression':
+            baseline_performance = mean_squared_error(y_test, baseline_estimator.predict(x_test), squared=False)
+        else:
+            baseline_performance = baseline_estimator.score(x_test, y_test)
 
         correlation_methods = ['Pearson', 'Spearman', 'Cramer', 'SU']
-        correlation_methods_performances = []
-        correlation_methods_durations = []
         for ranked_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
                                                         cramersv_selected_features, su_selected_features],
                                                        correlation_methods):
-
-            correlation_method_performance = []
-            correlation_method_duration = []
             # LOOP: Go to all possible values of k (i.e. number of selected features)
-            for subset_length in [210, 220, 230, 240, 250]:
-                predictor = LinearSVC(random_state=0)
-
+            for subset_length in range(1, len(ranked_features) + 1):
                 # Get the current feature subset
                 current_subset = ranked_features[:subset_length]
 
+                predictor = LinearSVC(random_state=0)
+                if problem_type == 'regression':
+                    predictor = LinearSVR(random_state=0)
                 current_start_time = time.time()
                 predictor.fit(x_train[current_subset], y_train)
                 current_duration = time.time() - current_start_time
-                performance_score = predictor.score(x_test[current_subset], y_test)
-                #rmse = mean_squared_error(y_test, predictor.predict(x_test[current_subset]), squared=False)
-
-                correlation_method_performance.append(performance_score)
-                correlation_method_duration.append(current_duration)
+                if problem_type == 'regression':
+                    performance_score = mean_squared_error(y_test, predictor.predict(x_test[current_subset]),
+                                                           squared=False)
+                else:
+                    performance_score = predictor.score(x_test[current_subset], y_test)
 
                 # Save the results to file
                 MLPipeline.write_to_file(dataset_name=self.dataset_name,
                                          dataset_type=str(dataset_type),
-                                         algorithm_name='SVM2',
+                                         algorithm_name='SVM',
                                          correlation_method=correlation_method,
                                          subset_length=subset_length,
                                          current_subset=current_subset,
@@ -226,10 +229,9 @@ class MLPipeline:
                                          current_duration=current_duration,
                                          baseline_performance=baseline_performance,
                                          baseline_duration=baseline_duration)
-            correlation_methods_performances.append(correlation_method_performance)
-            correlation_methods_durations.append(correlation_method_duration)
 
     def evaluate_all_models(self):
+        # Print information about the database
         number_rows, number_columns = self.dataframe.shape
         print('Dataset: ' + self.dataset_name)
         print('Total columns: ' + str(number_columns - 1))
@@ -275,14 +277,9 @@ class MLPipeline:
 
             # LOOP: Go through each method
             correlation_methods = ['Pearson', 'Spearman', 'Cramer', 'SU']
-            correlation_methods_performances = []
-            correlation_methods_durations = []
             for ranked_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
                                                             cramersv_selected_features, su_selected_features],
                                                            correlation_methods):
-
-                correlation_method_performance = []
-                correlation_method_duration = []
                 # LOOP: Go to all possible values of k (i.e. number of selected features)
                 for subset_length in range(1, len(ranked_features) + 1):
                     # Get the current feature subset
@@ -298,8 +295,6 @@ class MLPipeline:
                                                                                   current_test_dataframe,
                                                                                   evaluation_metric=
                                                                                   self.evaluation_metric)
-                    correlation_method_performance.append(current_performance)
-                    correlation_method_duration.append(current_duration)
 
                     # Save the results to file
                     MLPipeline.write_to_file(dataset_name=self.dataset_name,
@@ -312,10 +307,9 @@ class MLPipeline:
                                              current_duration=current_duration,
                                              baseline_performance=baseline_performance,
                                              baseline_duration=baseline_duration)
-                correlation_methods_performances.append(correlation_method_performance)
-                correlation_methods_durations.append(correlation_method_duration)
 
     def evaluate_all_models_select_above_c(self):
+        # Print information about the database
         number_rows, number_columns = self.dataframe.shape
         print('Dataset: ' + self.dataset_name)
         print('Total columns: ' + str(number_columns - 1))
@@ -388,6 +382,7 @@ class MLPipeline:
                                                             baseline_duration=baseline_duration)
 
     def evaluate_support_vector_machine_model_select_above_c(self, problem_type='classification'):
+        # Print information about the database
         number_rows, number_columns = self.dataframe.shape
         print('Dataset: ' + self.dataset_name)
         print('Total columns: ' + str(number_columns - 1))

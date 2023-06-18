@@ -72,9 +72,10 @@ class InML:
                                                                                               target_label, t)
         spearman_selected_features = SpearmanFeatureSelection.feature_selection_second_approach(train_dataframe,
                                                                                                 target_label, t)
-        cramersv_selected_features = CramersVFeatureSelection.feature_selection(train_dataframe, target_label, t)
-        su_selected_features = SymmetricUncertaintyFeatureSelection.feature_selection(train_dataframe,
-                                                                                      target_label, t)
+        cramersv_selected_features = CramersVFeatureSelection.feature_selection_second_approach(train_dataframe,
+                                                                                                target_label, t)
+        su_selected_features = SymmetricUncertaintyFeatureSelection.feature_selection_second_approach(train_dataframe,
+                                                                                                      target_label, t)
 
         return pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features
 
@@ -347,7 +348,7 @@ class MLPipeline:
                                                     current_train_dataframe, current_test_dataframe)
 
             # LOOP: Go to all possible values of c (i.e. correlation threshold)
-            for threshold in [0.9, 0.8, 0.7, 0.6, 0.5, 0.3, 0.2, 0.1]:
+            for threshold in [0.9, 0.8, 0.7, 0.6, 0.5, 0.3, 0.2, 0.1, 0]:
                 # COMPUTATION: Compute the ranking of features returned by each correlation method
                 pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features = \
                     InML.feature_selection_select_above_t(train_dataframe=current_train_dataframe,
@@ -359,18 +360,21 @@ class MLPipeline:
                 for selected_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
                                                                   cramersv_selected_features, su_selected_features],
                                                                  correlation_methods):
-
-                    current_performance, current_duration = PostML.evaluate_model(algorithm=algorithm,
-                                                                                  hyperparameters=hyperparameters,
-                                                                                  train_dataframe=
-                                                                                  current_train_dataframe,
-                                                                                  feature_subset=
-                                                                                  selected_features,
-                                                                                  target_label=self.target_label,
-                                                                                  test_dataframe=
-                                                                                  current_test_dataframe,
-                                                                                  evaluation_metric=
-                                                                                  self.evaluation_metric)
+                    current_performance = 0
+                    current_duration = 0
+                    if len(selected_features) >= 1:
+                        selected_features.append(self.target_label)
+                        current_performance, current_duration = PostML.evaluate_model(algorithm=algorithm,
+                                                                                      hyperparameters=hyperparameters,
+                                                                                      train_dataframe=
+                                                                                      current_train_dataframe,
+                                                                                      feature_subset=
+                                                                                      selected_features,
+                                                                                      target_label=self.target_label,
+                                                                                      test_dataframe=
+                                                                                      current_test_dataframe,
+                                                                                      evaluation_metric=
+                                                                                      self.evaluation_metric)
                     MLPipeline.write_to_file_select_above_c(dataset_name=self.dataset_name,
                                                             dataset_type=str(dataset_type),
                                                             algorithm_name=algorithm_name,
@@ -383,6 +387,94 @@ class MLPipeline:
                                                             baseline_performance=baseline_performance,
                                                             baseline_duration=baseline_duration)
 
+    def evaluate_support_vector_machine_model_select_above_c(self, problem_type='classification'):
+        number_rows, number_columns = self.dataframe.shape
+        print('Dataset: ' + self.dataset_name)
+        print('Total columns: ' + str(number_columns - 1))
+        print('Total rows: ' + str(number_rows))
+
+        # Prepare the data
+        self.dataframe = TabularDataset(self.dataframe)
+        self.dataframe = FillNaFeatureGenerator(inplace=True).fit_transform(self.dataframe)
+        self.auxiliary_dataframe = AutoMLPipelineFeatureGenerator(
+            enable_text_special_features=False,
+            enable_text_ngram_features=False) \
+            .fit_transform(self.dataframe)
+        self.auxiliary_dataframe = PreML.imputation_most_common_value(self.auxiliary_dataframe)
+
+        # Preprocess the data for SVM
+        self.auxiliary_dataframe = self.auxiliary_dataframe.apply(lambda x: pd.factorize(x)[0] if x.dtype == object else x)
+        scaler = MinMaxScaler()
+        scaled_X = scaler.fit_transform(self.auxiliary_dataframe)
+        normalized_X = pd.DataFrame(scaled_X, columns=self.auxiliary_dataframe.columns)
+        # normalized_X = self.auxiliary_dataframe
+
+        # Split the data into train and test
+        x_train, x_test, y_train, y_test = \
+            train_test_split(normalized_X.drop(columns=[self.target_label]),
+                             normalized_X[self.target_label],
+                             test_size=0.2, random_state=0)
+        current_train_dataframe = pd.concat([x_train, y_train], axis=1)
+
+        # Preprocess the data for SVM
+        lab = preprocessing.LabelEncoder()
+        y_train = lab.fit_transform(y_train)
+        y_test = lab.fit_transform(y_test)
+
+        # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
+        dataset_type = 1
+
+        # Evaluate the baseline SVM
+        baseline_estimator = LinearSVC(random_state=0)
+        if problem_type == 'regression':
+            baseline_estimator = LinearSVR(random_state=0)
+        start_time_baseline = time.time()
+        baseline_estimator.fit(x_train, y_train)
+        baseline_duration = time.time() - start_time_baseline
+        if problem_type == 'regression':
+            baseline_performance = mean_squared_error(y_test, baseline_estimator.predict(x_test), squared=False)
+        else:
+            baseline_performance = baseline_estimator.score(x_test, y_test)
+
+        # LOOP: Go to all possible values of c (i.e. correlation threshold)
+        for threshold in [0.9, 0.8, 0.7, 0.6, 0.5, 0.3, 0.2, 0.1, 0]:
+            # COMPUTATION: Compute the ranking of features returned by each correlation method
+            pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features = \
+                InML.feature_selection_select_above_t(train_dataframe=current_train_dataframe,
+                                                      target_label=self.target_label,
+                                                      t=threshold)
+
+            # LOOP: Go through each method
+            correlation_methods = ['Pearson', 'Spearman', 'Cramer', 'SU']
+            for selected_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
+                                                              cramersv_selected_features, su_selected_features],
+                                                             correlation_methods):
+                current_performance = 0
+                current_duration = 0
+                if len(selected_features) >= 1:
+                    predictor = LinearSVC(random_state=0)
+                    if problem_type == 'regression':
+                        predictor = LinearSVR(random_state=0)
+                    current_start_time = time.time()
+                    predictor.fit(x_train[selected_features], y_train)
+                    current_duration = time.time() - current_start_time
+                    if problem_type == 'regression':
+                        current_performance = mean_squared_error(y_test, predictor.predict(x_test), squared=False)
+                    else:
+                        current_performance = predictor.score(x_test[selected_features], y_test)
+
+                MLPipeline.write_to_file_select_above_c(dataset_name=self.dataset_name,
+                                                        dataset_type=str(dataset_type),
+                                                        algorithm_name='SVM',
+                                                        correlation_method=correlation_method,
+                                                        threshold=threshold,
+                                                        subset_length=len(selected_features),
+                                                        current_subset=selected_features,
+                                                        current_performance=current_performance,
+                                                        current_duration=current_duration,
+                                                        baseline_performance=baseline_performance,
+                                                        baseline_duration=baseline_duration)
+
     @staticmethod
     def write_to_file_select_above_c(dataset_name, dataset_type, algorithm_name, correlation_method,
                                      threshold, subset_length, current_subset, current_performance,
@@ -391,8 +483,6 @@ class MLPipeline:
         directory = "./results_tables_select_c"
         os.makedirs(directory, exist_ok=True)
         directory = "./results_tables_select_c/txt_files"
-        os.makedirs(directory, exist_ok=True)
-        directory = "./results_tables_select_c/csv_files"
         os.makedirs(directory, exist_ok=True)
 
         # Write the results to a txt file
@@ -404,7 +494,7 @@ class MLPipeline:
         file.write("DATASET TYPE: " + str(dataset_type) + '\n')
         file.write("ALGORITHM NAME: " + algorithm_name + '\n')
         file.write("CORRELATION METHOD: " + correlation_method + '\n')
-        file.write("THRESHOLD C: " + threshold + '\n')
+        file.write("THRESHOLD C: " + str(threshold) + '\n')
         file.write("SUBSET OF FEATURES: " + str(subset_length) + '\n')
         file.write("CURRENT FEATURE SUBSET: " + str(current_subset) + '\n')
         file.write("CURRENT PERFORMANCE: " + str(current_performance) + '\n')

@@ -89,6 +89,6 @@ class SpearmanFeatureSelection:
                    axis=0)
 
         # Select the features with the absolute correlation above the threshold
-        filtered_features = [feature for feature, correlation in spearman_correlations if
-                             correlation >= threshold]
+        filtered_features = [feature for feature, correlation in spearman_correlations.items()
+                             if correlation >= threshold]
         return filtered_features

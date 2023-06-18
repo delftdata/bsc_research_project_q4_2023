@@ -88,7 +88,10 @@ class PearsonFeatureSelection:
             .apply(func=lambda feature: PearsonFeatureSelection.compute_correlation(feature, target_column),
                    axis=0)
 
+        print(pearson_correlations)
+
         # Select the features with the absolute correlation above the threshold
-        filtered_features = [feature for feature, correlation in pearson_correlations if
-                             correlation >= threshold]
+        filtered_features = [feature for feature, correlation in pearson_correlations.items()
+                             if correlation >= threshold]
+        print(filtered_features)
         return filtered_features

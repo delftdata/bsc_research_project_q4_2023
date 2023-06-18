@@ -359,8 +359,8 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accur
     sns.set(font_scale=1.9)
 
     # THIS VARIES PER DATASET
-    plt.yticks([35, 40, 45, 50, 55, 60, 65, 70, 75, min_value, max_value])
-    plt.gca().get_yticklabels()[10].set_color('#CA0020')
+    plt.yticks([35, 40, 45, 55, 60, 65, 70, 75, min_value, max_value])
+    plt.gca().get_yticklabels()[8].set_color('#CA0020')
     plt.gca().get_yticklabels()[9].set_color('#CA0020')
 
     # plt.xticks([1, 2, 4, 6, 8, 10, 12, 14, 16])

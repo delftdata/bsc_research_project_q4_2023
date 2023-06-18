@@ -161,9 +161,10 @@ class MLPipeline:
         self.auxiliary_dataframe = PreML.imputation_most_common_value(self.auxiliary_dataframe)
 
         self.auxiliary_dataframe = self.auxiliary_dataframe.apply(lambda x: pd.factorize(x)[0] if x.dtype == object else x)
-        scaler = MinMaxScaler()
-        scaled_X = scaler.fit_transform(self.auxiliary_dataframe)
-        normalized_X = pd.DataFrame(scaled_X, columns=self.auxiliary_dataframe.columns)
+        # scaler = MinMaxScaler()
+        # scaled_X = scaler.fit_transform(self.auxiliary_dataframe)
+        # normalized_X = pd.DataFrame(scaled_X, columns=self.auxiliary_dataframe.columns)
+        normalized_X = self.auxiliary_dataframe
 
         # Split the data into train and test
         x_train, x_test, y_train, y_test = \
@@ -212,6 +213,8 @@ class MLPipeline:
                 predictor.fit(x_train[current_subset], y_train)
                 current_duration = time.time() - current_start_time
                 performance_score = predictor.score(x_test[current_subset], y_test)
+                print(y_test)
+                print(predictor.predict(x_test[current_subset]))
                 rmse = mean_squared_error(y_test, predictor.predict(x_test[current_subset]), squared=False)
 
                 correlation_method_performance.append(performance_score)

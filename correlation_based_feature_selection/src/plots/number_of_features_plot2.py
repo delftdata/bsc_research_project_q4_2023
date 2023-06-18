@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-current_algorithm = 'SVM-LinearSVR'
+current_algorithm = 'SVM2-LinearSVR'
 current_dataset = 'HousingPrices'
 current_number_of_features = 80
 current_good_features = list(range(10, 201, 10))
@@ -65,7 +65,7 @@ def parse_data(dataset=current_dataset, algorithm=current_algorithm):
     return pearson_performance, spearman_performance, cramersv_performance, su_performance, baseline_performance
 
 
-def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
+def plot_over_number_of_features(dataset_type=1, evaluation_metric='rmse'):
     dataset_name = current_dataset
     algorithm = current_algorithm
     number_of_features = current_number_of_features

@@ -8,7 +8,7 @@ import matplotlib.ticker as mticker
 
 
 current_algorithm = 'SVM2'
-current_dataset = 'BreastCancer'
+current_dataset = 'CensusIncome'
 current_number_of_features = 31
 current_good_features = list(range(10, 201, 10))
 current_good_features.append(1)

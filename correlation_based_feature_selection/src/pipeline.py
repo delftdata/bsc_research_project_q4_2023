@@ -158,6 +158,7 @@ class MLPipeline:
             .fit_transform(self.dataframe)
         self.auxiliary_dataframe = PreML.imputation_most_common_value(self.auxiliary_dataframe)
 
+        self.auxiliary_dataframe = self.auxiliary_dataframe.apply(lambda x: pd.factorize(x)[0] if x.dtype == object else x)
         scaler = MinMaxScaler()
         scaled_X = scaler.fit_transform(self.auxiliary_dataframe)
         normalized_X = pd.DataFrame(scaled_X, columns=self.auxiliary_dataframe.columns)

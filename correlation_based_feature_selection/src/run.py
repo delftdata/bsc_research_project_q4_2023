@@ -222,8 +222,8 @@ if __name__ == '__main__':
 
     # binary classification
     # evaluate_census_income_dataset()
-    evaluate_breast_cancer_dataset()
-    evaluate_steel_plates_fault_dataset()
+    # evaluate_breast_cancer_dataset()
+    # evaluate_steel_plates_fault_dataset()
     evaluate_arrhythmia_dataset()
     evaluate_internet_advertisements_dataset()
     evaluate_gisette_dataset()

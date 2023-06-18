@@ -26,7 +26,7 @@ def evaluate_breast_cancer_dataset():
         dataset_file='../datasets/BreastCancer/data.csv', dataset_name='BreastCancer',
         target_label='diagnosis', evaluation_metric='accuracy', features_to_select=31)
 
-    dataset_evaluator.evaluate_support_vector_machine_model()
+    dataset_evaluator.evaluate_all_models_select_above_c()
 
 
 def evaluate_feature_selection_breast_cancer_dataset():
@@ -222,10 +222,10 @@ if __name__ == '__main__':
 
     # binary classification
     # evaluate_census_income_dataset()
-    # evaluate_breast_cancer_dataset()
+    evaluate_breast_cancer_dataset()
     # evaluate_steel_plates_fault_dataset()
     # evaluate_arrhythmia_dataset()
-    evaluate_internet_advertisements_dataset()
+    # evaluate_internet_advertisements_dataset()
     # evaluate_gisette_dataset()
     # multi-class classification
     # evaluate_nursery_dataset()

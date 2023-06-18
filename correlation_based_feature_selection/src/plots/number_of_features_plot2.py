@@ -9,14 +9,13 @@ import matplotlib.ticker as mticker
 
 current_algorithm = 'SVM2'
 #current_algorithm = 'LinearModel'
-current_dataset = 'Arrhythmia'
-current_number_of_features = 279
-current_good_features = [1] + list(range(10, 271, 10)) + [279]
+current_dataset = 'InternetAds'
+current_number_of_features = 250
+current_good_features = [1] + list(range(10, 251, 10))
 evaluation_metrics_options = {
     'accuracy': 'Accuracy (%)',
     'rmse': 'Root mean square error',
 }
-
 
 def parse_data(dataset=current_dataset, algorithm=current_algorithm):
     pearson_performance = []
@@ -359,14 +358,15 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accur
     sns.set(font_scale=1.9)
 
     # THIS VARIES PER DATASET
-    plt.yticks([35, 40, 45, 55, 60, 65, 70, 75, min_value, max_value])
-    plt.gca().get_yticklabels()[8].set_color('#CA0020')
-    plt.gca().get_yticklabels()[9].set_color('#CA0020')
+    # plt.yticks([35, 40, 45, 55, 60, 65, 70, 75, min_value, max_value])
+    plt.yticks([87, 89, 90, 91, 93, 92, 94, 95, 96, 98, 99, 100, min_value, max_value])
+    plt.gca().get_yticklabels()[12].set_color('#CA0020')
+    plt.gca().get_yticklabels()[13].set_color('#CA0020')
 
     # plt.xticks([1, 2, 4, 6, 8, 10, 12, 14, 16])
-    plt.xticks([10, 40, 70, 100, 130, 160, 190, 220, 250, 279])
+    plt.xticks([1, 10, 40, 70, 100, 130, 160, 190, 220, 250])
 
-    plt.ylim(35, 75)
+    plt.ylim(87, 100)
     plt.xlim(-3, current_good_features[-1] + 3)
 
     ax.set_facecolor('white')

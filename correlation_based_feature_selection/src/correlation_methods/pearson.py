@@ -67,7 +67,7 @@ class PearsonFeatureSelection:
     @staticmethod
     def feature_selection_second_approach(train_dataframe, target_feature, threshold):
         """
-        SELECT ABOVE K ALGORITHM: Performs feature selection using the Pearson correlation-based method. Selects
+        SELECT ABOVE C ALGORITHM: Performs feature selection using the Pearson correlation-based method. Selects
         a number of features that have correlation with the target above a certain threshold.
 
         Parameters
@@ -78,7 +78,7 @@ class PearsonFeatureSelection:
 
         Returns
         -------
-        selected_features (list): List of selected features based on the Pearson correlation using "Select above k"
+        selected_features (list): List of selected features based on the Pearson correlation using "Select above c"
         """
         target_column = train_dataframe[target_feature]
         train_dataframe = train_dataframe.drop(columns=[target_feature])
@@ -88,7 +88,7 @@ class PearsonFeatureSelection:
             .apply(func=lambda feature: PearsonFeatureSelection.compute_correlation(feature, target_column),
                    axis=0)
 
-        # Select the top features with the highest absolute correlation
+        # Select the features with the absolute correlation above the threshold
         filtered_features = [feature for feature, correlation in pearson_correlations if
-                             correlation > threshold]
+                             correlation >= threshold]
         return filtered_features

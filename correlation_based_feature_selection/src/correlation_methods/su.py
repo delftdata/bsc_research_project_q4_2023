@@ -70,3 +70,34 @@ class SymmetricUncertaintyFeatureSelection:
         sorted_correlations = su_correlations.sort_values(ascending=False)
 
         return sorted_correlations[:number_features].index.tolist()
+
+    @staticmethod
+    def feature_selection_second_approach(train_dataframe, target_feature, threshold):
+        """
+        SELECT ABOVE C ALGORITHM: Performs feature selection using the Symmetric Uncertainty correlation-based method.
+        Selects a number of features that have correlation with the target above a certain threshold.
+
+        Parameters
+        ----------
+        train_dataframe (DataFrame): Training data containing the features
+        target_feature (str): Name of the target feature column
+        threshold (float): Minimum value for the feature to be considered useful for predicting the target
+
+        Returns
+        -------
+        selected_features (list): List of selected features based on the Symmetric Uncertainty correlation using
+        "Select above c"
+        """
+        target_column = train_dataframe[target_feature]
+        train_dataframe = train_dataframe.drop(columns=[target_feature])
+
+        # Calculate the Spearman correlation between each feature and the target feature
+        su_correlations = train_dataframe \
+            .apply(func=lambda feature: SymmetricUncertaintyFeatureSelection.
+                   compute_correlation(feature, target_column),
+                   axis=0)
+
+        # Select the features with the absolute correlation above the threshold
+        filtered_features = [feature for feature, correlation in su_correlations if
+                             correlation >= threshold]
+        return filtered_features

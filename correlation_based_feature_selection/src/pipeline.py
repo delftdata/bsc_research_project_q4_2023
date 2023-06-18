@@ -172,8 +172,8 @@ class MLPipeline:
         current_train_dataframe = pd.concat([x_train, y_train], axis=1)
 
         lab = preprocessing.LabelEncoder()
-        x_train = lab.fit_transform(x_train)
-        x_test = lab.fit_transform(x_test)
+        y_train = lab.fit_transform(y_train)
+        y_test = lab.fit_transform(y_test)
 
         # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
         dataset_type = 1

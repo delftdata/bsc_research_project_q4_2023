@@ -216,7 +216,7 @@ class MLPipeline:
                 # Save the results to file
                 MLPipeline.write_to_file(dataset_name=self.dataset_name,
                                          dataset_type=str(dataset_type),
-                                         algorithm_name='SVM2',
+                                         algorithm_name='SVM2-multi',
                                          correlation_method=correlation_method,
                                          subset_length=subset_length,
                                          current_subset=current_subset,

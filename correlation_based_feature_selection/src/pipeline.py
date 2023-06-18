@@ -174,9 +174,9 @@ class MLPipeline:
         current_train_dataframe = pd.concat([x_train, y_train], axis=1)
 
         # Only for Arrhythmia, Nursery and Connect4 datasets
-        lab = preprocessing.LabelEncoder()
-        y_train = lab.fit_transform(y_train)
-        y_test = lab.fit_transform(y_test)
+        # lab = preprocessing.LabelEncoder()
+        # y_train = lab.fit_transform(y_train)
+        # y_test = lab.fit_transform(y_test)
 
         # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
         dataset_type = 1
@@ -203,7 +203,7 @@ class MLPipeline:
             correlation_method_performance = []
             correlation_method_duration = []
             # LOOP: Go to all possible values of k (i.e. number of selected features)
-            for subset_length in [210, 220, 230, 240, 250, 260, 270, 279]:
+            for subset_length in [210, 220, 230, 240, 250]:
                 predictor = LinearSVC(random_state=0)
 
                 # Get the current feature subset
@@ -213,8 +213,6 @@ class MLPipeline:
                 predictor.fit(x_train[current_subset], y_train)
                 current_duration = time.time() - current_start_time
                 performance_score = predictor.score(x_test[current_subset], y_test)
-                print(y_test)
-                print(predictor.predict(x_test[current_subset]))
                 rmse = mean_squared_error(y_test, predictor.predict(x_test[current_subset]), squared=False)
 
                 correlation_method_performance.append(performance_score)

@@ -8,8 +8,8 @@ import matplotlib.ticker as mticker
 
 
 current_algorithm = 'SVM2'
-current_dataset = 'BreastCancer'
-current_number_of_features = 31
+current_dataset = 'Nursery'
+current_number_of_features = 8
 
 
 def parse_data(dataset=current_dataset, algorithm=current_algorithm):
@@ -79,6 +79,7 @@ def plot_over_number_of_features_runtime(dataset_type=1):
     sns.lineplot(x=number_of_features_iteration, y=np.array(su_performance),
                  marker='s', color='#CA0020', label='Symmetric Uncertainty', linewidth=1.5)
     print(baseline_performance)
+    baseline_performance = baseline_performance
     sns.lineplot(x=[number_of_features_iteration[-1]], y=[baseline_performance],
                  marker='p', color='#7030A0', label='Baseline')
 
@@ -98,13 +99,18 @@ def plot_over_number_of_features_runtime(dataset_type=1):
     # y_ticks = [66, 68, 70, 72, 74, 78, 80, 82, 84, 86, min_value, max_value] #CI-LG, CI-XB
     # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
     # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
-    # plt.yticks([0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, max_value, min_value])
-    #plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
-    plt.xticks([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31])
-    plt.yticks([0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, min_value, max_value])
-    print(plt.gca().get_yticklabels())
+    # plt.yticks([1.5, 1, 0.5, 4.5, 2, 2.5, 3, 3.5, 4, 5, min_value])
+    plt.yticks([0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, min_value])
+
+    # print(plt.gca().get_yticklabels())
     plt.gca().get_yticklabels()[8].set_color('#CA0020')
     plt.gca().get_yticklabels()[9].set_color('#CA0020')
+
+    plt.xticks([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31])
+    # plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
+    # plt.xticks([1, 2, 4, 6, 8, 10, 12, 14])
+    # plt.xticks([1, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33])
+
     plt.xlim(0, 32)
     plt.ylim(0, 2)
 

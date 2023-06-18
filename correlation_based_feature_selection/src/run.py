@@ -228,12 +228,12 @@ if __name__ == '__main__':
     # evaluate_internet_advertisements_dataset()
     # evaluate_gisette_dataset()
     # multi-class classification
-    # evaluate_nursery_dataset()
-    # evaluate_connect4_dataset()
+    evaluate_nursery_dataset()
+    evaluate_connect4_dataset()
 
     # regression
-    evaluate_housing_prices_dataset()
-    evaluate_bike_sharing_dataset()
+    # evaluate_housing_prices_dataset()
+    # evaluate_bike_sharing_dataset()
 
     # Databases that have SMALL number of instances
     # evaluate_feature_selection_breast_cancer_dataset()

@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-current_algorithm = 'SVM2'
-current_dataset = 'CensusIncome'
-current_number_of_features = 31
+current_algorithm = 'LinearModel'
+current_dataset = 'Connect4'
+current_number_of_features = 42
 current_good_features = list(range(10, 201, 10))
 current_good_features.append(1)
 current_good_features.append(5)
@@ -109,21 +109,24 @@ def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
     sns.set(font_scale=1.9)
 
     # THIS VARIES PER DATASET
-    # y_ticks = [70, 72, 74, 76, 78, 80, 82, 84] # CI-RF
-    # y_ticks = [77, 78, 79, 80, 81, 82, 83] # CI-LR
-    # y_ticks = [54, 62, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, min_value, max_value] #CI-LG, CI-XB
-    # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
-    # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
-    # y_ticks = [64, 68, 70, 72, 74, 76, 78, 80, 82, 84, 88, 90, min_value, max_value]
-    # plt.yticks(y_ticks)
-    plt.yticks([54, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, min_value, max_value])
-    plt.xticks([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31])
-    #plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
-    print(plt.gca().get_yticklabels())
-    plt.gca().get_yticklabels()[11].set_color('#CA0020')
+    # plt.yticks([54, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, min_value, max_value])
+    # plt.yticks([66, 76, 70, 72, 74, 78, 80, 82, 84, 88, min_value, max_value])
+    # plt.yticks([54, 58, 62, 66, 70, 74, 78, 82, 86, 90, 94, 98, min_value, max_value])
+    # plt.yticks([55, 60, 65, 75, 80, 85, 90, 95, 100, min_value, max_value])
+    plt.yticks([64, 68, 70, 72, 74, 82, 78, 80, 86, 84, 88, 90, min_value, max_value])
+
+    # print(plt.gca().get_yticklabels())
+    plt.gca().get_yticklabels()[13].set_color('#CA0020')
     plt.gca().get_yticklabels()[12].set_color('#CA0020')
-    plt.xlim(0, 32)
-    plt.ylim(54, 100)
+
+    # plt.xticks([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31])
+    plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
+    # plt.xticks([1, 2, 4, 6, 8, 10, 12, 14])
+    # plt.xticks([1, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33])
+    # plt.xticks([1, 2, 3, 4, 5, 6, 7, 8])
+
+    plt.xlim(0, 43)
+    plt.ylim(64, 90)
 
     ax.set_facecolor('white')
     ax.spines['top'].set_linewidth(1.2)

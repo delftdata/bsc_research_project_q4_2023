@@ -7,12 +7,11 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-current_algorithm = 'SVM2-LinearSVR'
-current_dataset = 'HousingPrices'
-current_number_of_features = 80
-current_good_features = list(range(10, 201, 10))
-current_good_features.append(1)
-current_good_features.append(5)
+#current_algorithm = 'SVM2-LinearSVR-final'
+current_algorithm = 'LinearModel'
+current_dataset = 'BikeSharing'
+current_number_of_features = 16
+current_good_features = list(range(1, 17))
 evaluation_metrics_options = {
     'accuracy': 'Accuracy (%)',
     'rmse': 'Root mean square error',
@@ -89,8 +88,6 @@ def plot_over_number_of_features(dataset_type=1, evaluation_metric='rmse'):
     # ordered_values = np.sort(unique_values)
     # print(list(ordered_values))
 
-    print(len(cramersv_performance))
-    print(len(pearson_performance))
     sns.lineplot(x=number_of_features_iteration, y=np.array(pearson_performance) * 100,
                  marker='D', color='#10A5D6', label='Pearson', linewidth=1.5)
     sns.lineplot(x=number_of_features_iteration, y=np.array(spearman_performance) * 100,
@@ -162,7 +159,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
     file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_{algorithm}_Pearson.txt'
     with open(file_path_pearson, 'r') as file:
         for line in file:
-            performance_match = re.search(r'CURRENT PERFORMANCE: (\d+\.\d+)', line)
+            performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+\.\d+)', line)
             features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
 
             if features_match:
@@ -184,7 +181,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
     file_path_spearman = f'./raw_results/{dataset}/{dataset}_1_{algorithm}_Spearman.txt'
     with open(file_path_spearman, 'r') as file:
         for line in file:
-            performance_match = re.search(r'CURRENT PERFORMANCE: (\d+\.\d+)', line)
+            performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+\.\d+)', line)
             features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
 
             if features_match:
@@ -206,7 +203,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
     file_path_cramer = f'./raw_results/{dataset}/{dataset}_1_{algorithm}_Cramer.txt'
     with open(file_path_cramer, 'r') as file:
         for line in file:
-            performance_match = re.search(r'CURRENT PERFORMANCE: (\d+\.\d+)', line)
+            performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+\.\d+)', line)
             features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
 
             if features_match:
@@ -228,7 +225,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
     file_path_su = f'./raw_results/{dataset}/{dataset}_1_{algorithm}_SU.txt'
     with open(file_path_su, 'r') as file:
         for line in file:
-            performance_match = re.search(r'CURRENT PERFORMANCE: (\d+\.\d+)', line)
+            performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+\.\d+)', line)
             features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
 
             if features_match:
@@ -247,7 +244,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
                 current_performance = None
                 current_num_features = None
 
-            match = re.search(r'BASELINE PERFORMANCE: (\d+\.\d+)', line)
+            match = re.search(r'BASELINE PERFORMANCE: (-?\d+\.\d+)', line)
             if match:
                 baseline_value = float(match.group(1))
                 baseline_performance = baseline_value
@@ -255,7 +252,7 @@ def parse_data_custom(dataset=current_dataset, algorithm=current_algorithm):
     return good_features, pearson_performance, spearman_performance, cramersv_performance, su_performance, baseline_performance
 
 
-def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accuracy'):
+def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='rmse'):
     dataset_name = current_dataset
     algorithm = current_algorithm
     feature_list, pearson_performance, spearman_performance, cramersv_performance, su_performance, \
@@ -269,26 +266,24 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accur
     ax = plt.gca()
     ax.xaxis.set_major_locator(mticker.MultipleLocator(2))
 
-    print(number_of_features_iteration)
-    print(pearson_performance)
-    sns.lineplot(x=number_of_features_iteration, y=np.array(pearson_performance) * 100,
+    sns.lineplot(x=number_of_features_iteration, y=np.array(pearson_performance),
                  marker='D', color='#10A5D6', label='Pearson', linewidth=1.5)
-    sns.lineplot(x=number_of_features_iteration, y=np.array(spearman_performance) * 100,
+    sns.lineplot(x=number_of_features_iteration, y=np.array(spearman_performance),
                  marker='o', color='#00005A', label='Spearman', linewidth=1.5)
-    sns.lineplot(x=number_of_features_iteration, y=np.array(cramersv_performance) * 100,
+    sns.lineplot(x=number_of_features_iteration, y=np.array(cramersv_performance),
                  marker='>', color='#BF9000', label='Cramér\'s V', linewidth=1.5)
-    sns.lineplot(x=number_of_features_iteration, y=np.array(su_performance) * 100,
+    sns.lineplot(x=number_of_features_iteration, y=np.array(su_performance),
                  marker='s', color='#CA0020', label='Symmetric Uncertainty', linewidth=1.5)
-    print(baseline_performance * 100)
-    sns.lineplot(x=[200], y=[baseline_performance * 100],
-                 marker='p', color='#7030A0', label='Baseline (using 5000 features)')
+    print(baseline_performance)
+    sns.lineplot(x=[current_good_features[-1]], y=[baseline_performance],
+                 marker='p', color='#7030A0', label='Baseline')
 
     plt.xlabel('Number of features')
     plt.ylabel(str(evaluation_metric_name))
-    max_value = round(max(np.max(np.array(pearson_performance) * 100), np.max(np.array(spearman_performance) * 100),
-                    np.max(np.array(cramersv_performance) * 100), np.max(np.array(su_performance) * 100)), 2)
-    min_value = round(min(np.min(np.array(pearson_performance) * 100), np.min(np.array(spearman_performance) * 100),
-                    np.min(np.array(cramersv_performance) * 100), np.min(np.array(su_performance) * 100)), 2)
+    max_value = round(max(np.max(np.array(pearson_performance)), np.max(np.array(spearman_performance)),
+                    np.max(np.array(cramersv_performance)), np.max(np.array(su_performance))), 2)
+    min_value = round(min(np.min(np.array(pearson_performance)), np.min(np.array(spearman_performance)),
+                    np.min(np.array(cramersv_performance)), np.min(np.array(su_performance))), 2)
     sns.set(font_scale=1.9)
 
     # THIS VARIES PER DATASET
@@ -298,15 +293,23 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accur
     # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
     # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
     # y_thicks = [94, 95, 97, 98, 99, 100, max_value, min_value]
-    y_ticks = [80, 82, 86, 88, 90, 92, 94, 96, max_value, min_value]
-    plt.yticks(y_ticks)
-    plt.xticks([1, 10, 30, 50, 70, 90, 110, 130, 150, 180, 200])
-    print(plt.gca().get_yticklabels())
-    plt.gca().get_yticklabels()[9].set_color('#CA0020')
-    plt.gca().get_yticklabels()[10].set_color('#CA0020')
-    #plt.xlim(0, len(feature_list) + 1)
-    plt.ylim(80, 100)
-    plt.xlim(-1, 203)
+    # y_ticks = [80, 82, 86, 88, 90, 92, 94, 96, max_value, min_value]
+    # plt.yticks(y_ticks)
+
+    # plt.yticks([-1 * 10**5, -0.75 * 10**5, -0.5 * 10**5, -0* 10**5, 0.25 * 10**5, 0.75 * 10**5, 0.5*10**5,
+    #             1 * 10**5, 1.25 * 10**5, 1.5 * 10**5, 1.75*10**5, 2* 10**5, min_value, max_value])
+    # plt.gca().get_yticklabels()[12].set_color('#CA0020')
+    # plt.gca().get_yticklabels()[13].set_color('#CA0020')
+    plt.yticks([25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, min_value, max_value])
+    plt.gca().get_yticklabels()[13].set_color('#CA0020')
+    plt.gca().get_yticklabels()[12].set_color('#CA0020')
+
+    # plt.xticks([1, 10, 30, 50, 70, 90, 110, 130, 150, 180, 200])
+    #plt.xticks([1, 5, 10, 20, 30, 40, 50, 60, 70, 80])
+    plt.xticks([1, 2, 4, 6, 8, 10, 12, 14, 16])
+
+    plt.ylim(-5, 300)
+    plt.xlim(-1, current_good_features[-1] + 1)
 
     ax.set_facecolor('white')
     ax.spines['top'].set_linewidth(1.2)

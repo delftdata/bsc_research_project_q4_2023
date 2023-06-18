@@ -112,7 +112,7 @@ class MLPipeline:
         self.auxiliary_dataframe = pd.read_csv(dataset_file)
         # Specify the models to use: GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
         self.algorithms_model_names = {
-            'GBM': 'LightGBM',
+            # 'GBM': 'LightGBM',
             'RF': 'RandomForest',
             'LR': 'LinearModel',
             'XGB': 'XGBoost'

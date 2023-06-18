@@ -133,7 +133,7 @@ def evaluate_bike_sharing_dataset():
         dataset_file='../datasets/BikeSharing/hour.csv', dataset_name='BikeSharing',
         target_label='cnt', evaluation_metric='root_mean_squared_error', features_to_select=16)
 
-    dataset_evaluator.evaluate_support_vector_machine_model()
+    dataset_evaluator.evaluate_all_models()
 
 
 def evaluate_feature_selection_bike_sharing_dataset():
@@ -215,7 +215,7 @@ def evaluate_dataframe(dataframe):
 if __name__ == '__main__':
     # plot_over_runtime()
     # parse_data()
-    # plot_over_number_of_features()
+    #plot_over_number_of_features()
     # plot_over_number_of_features_custom()
     # plot_over_number_of_features_runtime()
     # plot_over_number_of_features_runtime_custom()
@@ -232,7 +232,7 @@ if __name__ == '__main__':
     # evaluate_connect4_dataset()
 
     # regression
-    evaluate_housing_prices_dataset()
+    # evaluate_housing_prices_dataset()
     evaluate_bike_sharing_dataset()
 
     # Databases that have SMALL number of instances

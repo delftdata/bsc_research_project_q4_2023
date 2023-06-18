@@ -33,6 +33,7 @@ as recorded after performing experiment 4.
 | Bike Sharing            | 17379    | 1            | 11        | 4           |
 | Breast Cancer           | 569      | 0            | 1         | 30          |
 | Census Income           | 48842    | 8            | 6         | 0           |
+| Character Font Images   | 745000   | 0            | 408       | 1           |
 | Housing Prices          | 1460     | 43           | 34        | 3           |
 | Internet Advertisements | 3279     | 4            | 1554      | 0           |
 | Nasa Numeric            | 93       | 19           | 0         | 3           |

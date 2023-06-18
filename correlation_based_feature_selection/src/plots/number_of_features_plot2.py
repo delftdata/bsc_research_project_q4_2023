@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-current_algorithm = 'SVM'
+current_algorithm = 'SVM2'
 current_dataset = 'BreastCancer'
 current_number_of_features = 31
 current_good_features = list(range(10, 201, 10))

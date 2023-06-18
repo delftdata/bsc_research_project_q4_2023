@@ -174,9 +174,9 @@ class MLPipeline:
         current_train_dataframe = pd.concat([x_train, y_train], axis=1)
 
         # Only for Arrhythmia, Nursery and Connect4 datasets
-        # lab = preprocessing.LabelEncoder()
-        # y_train = lab.fit_transform(y_train)
-        # y_test = lab.fit_transform(y_test)
+        lab = preprocessing.LabelEncoder()
+        y_train = lab.fit_transform(y_train)
+        y_test = lab.fit_transform(y_test)
 
         # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
         dataset_type = 1
@@ -191,7 +191,7 @@ class MLPipeline:
         estimator_simple.fit(x_train, y_train)
         baseline_duration = time.time() - start_time_baseline
         baseline_performance = estimator_simple.score(x_test, y_test)
-        baseline_rmse = mean_squared_error(y_test, estimator_simple.predict(x_test), squared=False)
+        #baseline_rmse = mean_squared_error(y_test, estimator_simple.predict(x_test), squared=False)
 
         correlation_methods = ['Pearson', 'Spearman', 'Cramer', 'SU']
         correlation_methods_performances = []
@@ -203,7 +203,7 @@ class MLPipeline:
             correlation_method_performance = []
             correlation_method_duration = []
             # LOOP: Go to all possible values of k (i.e. number of selected features)
-            for subset_length in [210, 220, 230, 240, 250]:
+            for subset_length in [210, 220, 230, 240, 250, 260, 270, 279]:
                 predictor = LinearSVC(random_state=0)
 
                 # Get the current feature subset
@@ -213,7 +213,7 @@ class MLPipeline:
                 predictor.fit(x_train[current_subset], y_train)
                 current_duration = time.time() - current_start_time
                 performance_score = predictor.score(x_test[current_subset], y_test)
-                rmse = mean_squared_error(y_test, predictor.predict(x_test[current_subset]), squared=False)
+                #rmse = mean_squared_error(y_test, predictor.predict(x_test[current_subset]), squared=False)
 
                 correlation_method_performance.append(performance_score)
                 correlation_method_duration.append(current_duration)
@@ -225,9 +225,9 @@ class MLPipeline:
                                          correlation_method=correlation_method,
                                          subset_length=subset_length,
                                          current_subset=current_subset,
-                                         current_performance=rmse,
+                                         current_performance=performance_score,
                                          current_duration=current_duration,
-                                         baseline_performance=baseline_rmse,
+                                         baseline_performance=baseline_performance,
                                          baseline_duration=baseline_duration)
             correlation_methods_performances.append(correlation_method_performance)
             correlation_methods_durations.append(correlation_method_duration)

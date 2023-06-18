@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-current_algorithm = 'LinearModel'
-current_dataset = 'Connect4'
-current_number_of_features = 42
+current_algorithm = 'SVM-LinearSVR'
+current_dataset = 'HousingPrices'
+current_number_of_features = 80
 current_good_features = list(range(10, 201, 10))
 current_good_features.append(1)
 current_good_features.append(5)
@@ -89,6 +89,8 @@ def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
     # ordered_values = np.sort(unique_values)
     # print(list(ordered_values))
 
+    print(len(cramersv_performance))
+    print(len(pearson_performance))
     sns.lineplot(x=number_of_features_iteration, y=np.array(pearson_performance) * 100,
                  marker='D', color='#10A5D6', label='Pearson', linewidth=1.5)
     sns.lineplot(x=number_of_features_iteration, y=np.array(spearman_performance) * 100,
@@ -113,20 +115,20 @@ def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
     # plt.yticks([66, 76, 70, 72, 74, 78, 80, 82, 84, 88, min_value, max_value])
     # plt.yticks([54, 58, 62, 66, 70, 74, 78, 82, 86, 90, 94, 98, min_value, max_value])
     # plt.yticks([55, 60, 65, 75, 80, 85, 90, 95, 100, min_value, max_value])
-    plt.yticks([64, 68, 70, 72, 74, 82, 78, 80, 86, 84, 88, 90, min_value, max_value])
+    #plt.yticks([64, 68, 70, 72, 74, 82, 78, 80, 86, 84, 88, 90, min_value, max_value])
 
     # print(plt.gca().get_yticklabels())
-    plt.gca().get_yticklabels()[13].set_color('#CA0020')
-    plt.gca().get_yticklabels()[12].set_color('#CA0020')
+    #plt.gca().get_yticklabels()[13].set_color('#CA0020')
+    #plt.gca().get_yticklabels()[12].set_color('#CA0020')
 
     # plt.xticks([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31])
-    plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
+    #plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
     # plt.xticks([1, 2, 4, 6, 8, 10, 12, 14])
     # plt.xticks([1, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33])
     # plt.xticks([1, 2, 3, 4, 5, 6, 7, 8])
 
-    plt.xlim(0, 43)
-    plt.ylim(64, 90)
+    #plt.xlim(0, 43)
+    #plt.ylim(64, 90)
 
     ax.set_facecolor('white')
     ax.spines['top'].set_linewidth(1.2)

@@ -5,6 +5,7 @@ import os
 import time
 import timeit
 from sklearn import preprocessing
+from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import KBinsDiscretizer
 from autogluon.features.generators import AutoMLPipelineFeatureGenerator, FillNaFeatureGenerator
@@ -172,9 +173,9 @@ class MLPipeline:
         current_train_dataframe = pd.concat([x_train, y_train], axis=1)
 
         # Only for Arrhythmia, Nursery and Connect4 datasets
-        lab = preprocessing.LabelEncoder()
-        y_train = lab.fit_transform(y_train)
-        y_test = lab.fit_transform(y_test)
+        # lab = preprocessing.LabelEncoder()
+        # y_train = lab.fit_transform(y_train)
+        # y_test = lab.fit_transform(y_test)
 
         # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
         dataset_type = 1
@@ -184,11 +185,12 @@ class MLPipeline:
                                                  self.target_label,
                                                  self.features_to_select_k)
 
-        estimator_simple = LinearSVC(random_state=0, multi_class='ovr')
+        estimator_simple = LinearSVR(random_state=0, multi_class='ovr')
         start_time_baseline = time.time()
         estimator_simple.fit(x_train, y_train)
         baseline_duration = time.time() - start_time_baseline
         baseline_performance = estimator_simple.score(x_test, y_test)
+        baseline_rmse = mean_squared_error(y_test, estimator_simple.predict(x_test), squared=False)
 
         correlation_methods = ['Pearson', 'Spearman', 'Cramer', 'SU']
         correlation_methods_performances = []
@@ -201,7 +203,7 @@ class MLPipeline:
             correlation_method_duration = []
             # LOOP: Go to all possible values of k (i.e. number of selected features)
             for subset_length in range(1, len(ranked_features) + 1):
-                predictor = LinearSVC(random_state=0, multi_class='ovr')
+                predictor = LinearSVR(random_state=0, multi_class='ovr')
 
                 # Get the current feature subset
                 current_subset = ranked_features[:subset_length]
@@ -210,19 +212,21 @@ class MLPipeline:
                 predictor.fit(x_train[current_subset], y_train)
                 current_duration = time.time() - current_start_time
                 performance_score = predictor.score(x_test[current_subset], y_test)
+                rmse = mean_squared_error(y_test, predictor.predict(x_test[current_subset]), squared=False)
+
                 correlation_method_performance.append(performance_score)
                 correlation_method_duration.append(current_duration)
 
                 # Save the results to file
                 MLPipeline.write_to_file(dataset_name=self.dataset_name,
                                          dataset_type=str(dataset_type),
-                                         algorithm_name='SVM2-multi',
+                                         algorithm_name='SVM2-LinearSVR',
                                          correlation_method=correlation_method,
                                          subset_length=subset_length,
                                          current_subset=current_subset,
-                                         current_performance=performance_score,
+                                         current_performance=rmse,
                                          current_duration=current_duration,
-                                         baseline_performance=baseline_performance,
+                                         baseline_performance=baseline_rmse,
                                          baseline_duration=baseline_duration)
             correlation_methods_performances.append(correlation_method_performance)
             correlation_methods_durations.append(correlation_method_duration)

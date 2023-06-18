@@ -185,7 +185,7 @@ class MLPipeline:
                                                  self.target_label,
                                                  self.features_to_select_k)
 
-        estimator_simple = LinearSVR(random_state=0, multi_class='ovr')
+        estimator_simple = LinearSVR(random_state=0)
         start_time_baseline = time.time()
         estimator_simple.fit(x_train, y_train)
         baseline_duration = time.time() - start_time_baseline
@@ -203,7 +203,7 @@ class MLPipeline:
             correlation_method_duration = []
             # LOOP: Go to all possible values of k (i.e. number of selected features)
             for subset_length in range(1, len(ranked_features) + 1):
-                predictor = LinearSVR(random_state=0, multi_class='ovr')
+                predictor = LinearSVR(random_state=0)
 
                 # Get the current feature subset
                 current_subset = ranked_features[:subset_length]

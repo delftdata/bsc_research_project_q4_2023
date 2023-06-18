@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-current_algorithm = 'RandomForest'
-current_dataset = 'Nursery'
-current_number_of_features = 5000
+current_algorithm = 'SVM'
+current_dataset = 'BreastCancer'
+current_number_of_features = 31
 current_good_features = list(range(10, 201, 10))
 current_good_features.append(1)
 current_good_features.append(5)
@@ -98,7 +98,7 @@ def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
     sns.lineplot(x=number_of_features_iteration, y=np.array(su_performance) * 100,
                  marker='s', color='#CA0020', label='Symmetric Uncertainty', linewidth=1.5)
     sns.lineplot(x=[number_of_features_iteration[-1]], y=[baseline_performance * 100],
-                 marker='p', color='#3CB371', label='Baseline')
+                 marker='p', color='#7030A0', label='Baseline')
 
     plt.xlabel('Number of features')
     plt.ylabel(str(evaluation_metric_name))
@@ -114,14 +114,16 @@ def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
     # y_ticks = [54, 62, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, min_value, max_value] #CI-LG, CI-XB
     # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
     # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
-    y_ticks = [64, 68, 70, 72, 74, 76, 78, 80, 82, 84, 88, 90, min_value, max_value]
-    plt.yticks(y_ticks)
-    plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
+    # y_ticks = [64, 68, 70, 72, 74, 76, 78, 80, 82, 84, 88, 90, min_value, max_value]
+    # plt.yticks(y_ticks)
+    plt.yticks([54, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, min_value, max_value])
+    plt.xticks([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31])
+    #plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
     print(plt.gca().get_yticklabels())
+    plt.gca().get_yticklabels()[11].set_color('#CA0020')
     plt.gca().get_yticklabels()[12].set_color('#CA0020')
-    plt.gca().get_yticklabels()[13].set_color('#CA0020')
-    plt.xlim(0, 43)
-    plt.ylim(64, 90)
+    plt.xlim(0, 32)
+    plt.ylim(54, 100)
 
     ax.set_facecolor('white')
     ax.spines['top'].set_linewidth(1.2)
@@ -274,7 +276,7 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accur
                  marker='s', color='#CA0020', label='Symmetric Uncertainty', linewidth=1.5)
     print(baseline_performance * 100)
     sns.lineplot(x=[200], y=[baseline_performance * 100],
-                 marker='p', color='#3CB371', label='Baseline (using 5000 features)')
+                 marker='p', color='#7030A0', label='Baseline (using 5000 features)')
 
     plt.xlabel('Number of features')
     plt.ylabel(str(evaluation_metric_name))
@@ -291,7 +293,7 @@ def plot_over_number_of_features_custom(dataset_type=1, evaluation_metric='accur
     # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
     # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
     # y_thicks = [94, 95, 97, 98, 99, 100, max_value, min_value]
-    y_ticks = [80, 82, 86, 88, 90, 92, 94, 96, 100, max_value, min_value]
+    y_ticks = [80, 82, 86, 88, 90, 92, 94, 96, max_value, min_value]
     plt.yticks(y_ticks)
     plt.xticks([1, 10, 30, 50, 70, 90, 110, 130, 150, 180, 200])
     print(plt.gca().get_yticklabels())

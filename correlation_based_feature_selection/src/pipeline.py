@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import KBinsDiscretizer
 from autogluon.features.generators import AutoMLPipelineFeatureGenerator, FillNaFeatureGenerator
 from autogluon.tabular import TabularDataset
+from sklearn.preprocessing import MinMaxScaler
 from autogluon.tabular import TabularPredictor
 from .correlation_methods.pearson import PearsonFeatureSelection
 from .correlation_methods.spearman import SpearmanFeatureSelection
@@ -157,10 +158,14 @@ class MLPipeline:
             .fit_transform(self.dataframe)
         self.auxiliary_dataframe = PreML.imputation_most_common_value(self.auxiliary_dataframe)
 
+        scaler = MinMaxScaler()
+        scaled_X = scaler.fit_transform(self.auxiliary_dataframe)
+        normalized_X = pd.DataFrame(scaled_X, columns=self.auxiliary_dataframe.columns)
+
         # Split the data into train and test
         x_train, x_test, y_train, y_test = \
-            train_test_split(self.auxiliary_dataframe.drop(columns=[self.target_label]),
-                             self.auxiliary_dataframe[self.target_label],
+            train_test_split(normalized_X.drop(columns=[self.target_label]),
+                             normalized_X[self.target_label],
                              test_size=0.2, random_state=0)
         current_train_dataframe = pd.concat([x_train, y_train], axis=1)
 

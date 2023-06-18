@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 
 
-current_algorithm = 'LightGBM'
-current_dataset = 'Gisette'
-current_number_of_features = 5000
+current_algorithm = 'RandomForest'
+current_dataset = 'BreastCancer'
+current_number_of_features = 31
 
 
 def parse_data(dataset=current_dataset, algorithm=current_algorithm):
@@ -80,7 +80,7 @@ def plot_over_number_of_features_runtime(dataset_type=1):
                  marker='s', color='#CA0020', label='Symmetric Uncertainty', linewidth=1.5)
     print(baseline_performance)
     sns.lineplot(x=[number_of_features_iteration[-1]], y=[baseline_performance],
-                 marker='p', color='#3CB371', label='Baseline')
+                 marker='p', color='#7030A0', label='Baseline')
 
     plt.xlabel('Number of features')
     plt.ylabel('Runtime (seconds)')
@@ -99,12 +99,14 @@ def plot_over_number_of_features_runtime(dataset_type=1):
     # y_ticks = [64, 68, 72, 76, 80, 84, 88, 92, 96]
     # y_ticks = [54, 64, 68, min_value, 72, 76, 80, 84, 88, 92, 96, max_value, 100]
     # plt.yticks([0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, max_value, min_value])
-    plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
-    # print(plt.gca().get_yticklabels())
-    # plt.gca().get_yticklabels()[11].set_color('#CA0020')
-    # plt.gca().get_yticklabels()[12].set_color('#CA0020')
-    plt.xlim(0, 43)
-    plt.ylim(0, 200)
+    #plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
+    plt.xticks([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31])
+    plt.yticks([0, 0.25, 0.5, 1, 1.25, 1.5, 1.75, 2, min_value, max_value])
+    print(plt.gca().get_yticklabels())
+    plt.gca().get_yticklabels()[8].set_color('#CA0020')
+    plt.gca().get_yticklabels()[9].set_color('#CA0020')
+    plt.xlim(0, 32)
+    plt.ylim(0, 2)
 
     ax.set_facecolor('white')
     ax.spines['top'].set_linewidth(1.2)
@@ -255,7 +257,7 @@ def plot_over_number_of_features_runtime_custom(dataset_type=1, evaluation_metri
     sns.lineplot(x=number_of_features_iteration, y=np.array(su_performance),
                  marker='s', color='#CA0020', label='Symmetric Uncertainty', linewidth=1.5)
     sns.lineplot(x=[279], y=[baseline_performance],
-                 marker='p', color='#3CB371', label='Baseline')
+                 marker='p', color='#7030A0', label='Baseline')
 
     plt.xlabel('Number of features')
     plt.ylabel('Runtime (seconds)')

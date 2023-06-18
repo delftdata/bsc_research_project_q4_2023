@@ -222,7 +222,7 @@ if __name__ == '__main__':
 
     # binary classification
     # evaluate_census_income_dataset()
-    # evaluate_breast_cancer_dataset()
+    evaluate_breast_cancer_dataset()
     # evaluate_steel_plates_fault_dataset()
     # evaluate_arrhythmia_dataset()
     # evaluate_internet_advertisements_dataset()
@@ -232,8 +232,8 @@ if __name__ == '__main__':
     # evaluate_connect4_dataset()
 
     # regression
-    evaluate_housing_prices_dataset()
-    evaluate_bike_sharing_dataset()
+    # evaluate_housing_prices_dataset()
+    # evaluate_bike_sharing_dataset()
 
     # Databases that have SMALL number of instances
     # evaluate_feature_selection_breast_cancer_dataset()

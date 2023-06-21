@@ -3,7 +3,7 @@ from __future__ import annotations
 import pandas as pd
 from autogluon.features.generators import IdentityFeatureGenerator
 from autogluon.tabular import TabularDataset, TabularPredictor
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import accuracy_score, mean_squared_error
 from sklearn.svm import SVC, SVR
 
 from processing.preprocessing import discretize_columns_ordinal_encoder
@@ -147,7 +147,10 @@ class Evaluator:
         X_test, y_test = split_input_target(test_data, self.target_label)
         y_pred = predictor.predict(X_test)
 
-        performance_score = mean_squared_error(y_true=y_test, y_pred=y_pred)
+        if self.scoring == "accuracy":
+            performance_score = accuracy_score(y_true=y_test, y_pred=y_pred)
+        else:
+            performance_score = (-1) * mean_squared_error(y_true=y_test, y_pred=y_pred)
         results.append(("SVM", {self.scoring: performance_score}))
 
         return results

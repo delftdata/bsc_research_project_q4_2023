@@ -2,6 +2,6 @@
     "experiment_name": "experiment2",
     "imputation_strategy": "mean",
     "normalization": true,
-    "evaluate_on_svm": false,
-    "dataset": "bank_marketing"
+    "evaluate_on_svm": true,
+    "dataset": "breast_cancer"
 }

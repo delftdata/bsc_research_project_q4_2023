@@ -1,6 +1,6 @@
 {
-    "experiment_name": "experiment2",
-    "dataset": "breast_cancer",
-    "plot_type": "results",
-    "leaderboard": "all"
+    "experiment_name": "experiment4",
+    "dataset": "character_font_images",
+    "plot_type": "all_results",
+    "3D": true
 }

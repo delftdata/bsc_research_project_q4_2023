@@ -3,13 +3,12 @@ from __future__ import annotations
 import pandas as pd
 from autogluon.features.generators import IdentityFeatureGenerator
 from autogluon.tabular import TabularDataset, TabularPredictor
-from sklearn.metrics import accuracy_score, mean_squared_error
-from sklearn.svm import SVC, SVR
-
 from processing.preprocessing import discretize_columns_ordinal_encoder
 from processing.splitter import (select_k_best_features_from_data_frame,
                                  split_input_target,
                                  split_train_test_df_indices)
+from sklearn.metrics import accuracy_score, mean_squared_error
+from sklearn.svm import SVC, SVR
 
 
 class Evaluator:
@@ -151,8 +150,8 @@ class Evaluator:
             performance_score = accuracy_score(y_true=y_test, y_pred=y_pred)
         else:
             performance_score = (-1) * mean_squared_error(y_true=y_test, y_pred=y_pred)
+            
         results.append(("SVM", {self.scoring: performance_score}))
-
         return results
 
     def evaluate_models(self, df: pd.DataFrame, test_size=0.2) -> list[tuple[str, dict]]:

@@ -3,7 +3,8 @@ import os
 
 import matplotlib.pyplot as plt
 
-from plotter.plotter import plot_metrics, plot_metrics_3D, plot_runtime
+from plotter.plotter import (plot_metrics, plot_metrics_3D, plot_runtime,
+                             plot_runtime_features_scatter_plot)
 
 models = ["GBM", "LR", "RF", "XGB", "SVM"]
 
@@ -48,8 +49,65 @@ def main():
                 plot_experiments(experiment_name, dataset, y_label, plot_3D)
         elif plot_type == "average_runtime":
             plot_average_runtime(datasets=classification_datasets + regression_datasets)
+        elif plot_type == "runtime_features":
+            plot_runtime_features(experiment_name, classification_datasets + regression_datasets)
         else:
             raise KeyError(f"The plot_type: {plot_type} is not valid.")
+
+
+def plot_runtime_features(experiment_name: str, datasets: list[str]):
+    """Plots and saves a scatter plot of average runtime for different feature selection techniques.
+
+    Parameters
+    ----------
+    experiment_name : str
+        The name of the experiment.
+    datasets : list[str]
+        The list of datasets to process.
+    """
+    average_runtime_chi2, average_runtime_anova, average_runtime_forward_selection, average_runtime_backward_elimination = [], [], [], []
+    amount_features = []
+    for dataset in datasets:
+        for preprocessing_variation in ("", "no_normalization", "median"):
+            if not preprocessing_variation:
+                results_path = f"results/{experiment_name}/{dataset}"
+            else:
+                results_path = f"results/{experiment_name}/{dataset}/{preprocessing_variation}"
+
+            for dataset in datasets:
+                runtime_path = f"{results_path}/runtime"
+                features_path = f"{results_path}/selected_features/forward_selection.txt"
+                data_types = ["categorical", "discrete", "continuous"]
+
+                for data_type in data_types:
+                    if experiment_name == "experiment4":
+                        runtime_path = f"{results_path}/{data_type}/runtime"
+                        features_path = f"{results_path}/{data_type}/selected_features/forward_selection.txt"
+
+                    try:
+                        runtime_chi2 = open_raw_average_runtime(runtime_path, "chi2")
+                        runtime_anova = open_raw_average_runtime(runtime_path, "anova")
+                        runtime_forward_selection = open_raw_average_runtime(runtime_path, "forward_selection")
+                        runtime_backward_elimination = open_raw_average_runtime(runtime_path, "backward_elimination")
+                        features = open_raw_features(features_path)
+
+                        average_runtime_chi2.append(runtime_chi2)
+                        average_runtime_anova.append(runtime_anova)
+                        average_runtime_forward_selection.append(runtime_forward_selection)
+                        average_runtime_backward_elimination.append(runtime_backward_elimination)
+                        amount_features.append(features)
+                    except OSError as error:
+                        print(f"Runtime: {error}")
+
+                    if experiment_name != "experiment4":
+                        break
+
+    algorithm_plot = plot_runtime_features_scatter_plot(
+        average_runtime_chi2, average_runtime_anova, average_runtime_forward_selection,
+        average_runtime_backward_elimination, amount_features)
+
+    algorithm_plot.savefig(f"results/{experiment_name}/runtime_features.png")
+    plt.close(algorithm_plot)
 
 
 def plot_average_runtime(datasets: list[str]):
@@ -252,6 +310,43 @@ def open_raw_runtime(runtime_path: str, method: str) -> list[str]:
     """
     with open(f"{runtime_path}/{method}.txt", "r", encoding="utf-8") as lines:
         return [line.strip() for line in lines]
+
+
+def open_raw_average_runtime(runtime_path: str, method: str) -> float:
+    """Opens the raw average runtime data for a specific method from a given file path.
+
+    Parameters
+    ----------
+    runtime_path : str
+        The file path to the runtime data.
+    method : str
+        The specific method for which to retrieve the average runtime.
+
+    Returns
+    -------
+    float
+        The average runtime value for the specified method.
+    """
+    raw_runtime = open_raw_runtime(runtime_path, method)
+    runtime = [float(x) for x in raw_runtime if x != "nan"]
+    return sum(runtime) / len(runtime) if runtime else 0
+
+
+def open_raw_features(features_path: str) -> int:
+    """Opens the file at the given path and counts the number of non-empty lines.
+
+    Parameters
+    ----------
+    features_path : str
+        The file path to the features data.
+
+    Returns
+    -------
+    int
+        The number of non-empty lines in the file.
+    """
+    with open(features_path, "r", encoding="utf-8") as lines:
+        return len([line for line in lines if line])
 
 
 def try_opening_raw_metrics(results_path: str, method: str, model: str) -> list[str]:

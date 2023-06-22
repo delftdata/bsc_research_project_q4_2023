@@ -108,6 +108,8 @@ where each experiment is extensively discussed.
           Ignores the value of `"dataset"`.
         - `"average_runtime"`: Plots the average runtime across all datasets for the specified `"experiment_name"`.
           Ignores the value of `"dataset"`.
+        - `"runtime_features"`: Plots the number of features - runtime graph across all datasets for
+          the specified `"experiment_name"`.
     - `"3D"`: Specifies whether to plot the results in 3D or not. The third dimension is the runtime. Valid options are:
       `true`, `false`. This key impacts the following `"plot_type"`: `"results"`, `"all_results"`.
 

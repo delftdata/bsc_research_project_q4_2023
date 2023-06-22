@@ -1,6 +1,6 @@
 {
     "experiment_name": "experiment4",
     "dataset": "character_font_images",
-    "plot_type": "all_results",
-    "3D": true
+    "plot_type": "runtime_features",
+    "3D": false
 }

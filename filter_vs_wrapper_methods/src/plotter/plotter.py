@@ -10,6 +10,7 @@ font_size_ticks = 18
 font_size_labels = 18
 font_size_legend = 18
 width_bar = 0.5
+s_scatter = 10**2
 
 
 def plot_runtime(
@@ -143,37 +144,38 @@ def plot_metrics_3D(raw_metrics_chi2: list[str],
                     raw_runtime_backward_elimination: list[str],
                     model: str, x_label="Percentage of selected features", y_label="Accuracy",
                     z_label="Runtime feature selection"):
-    """Plots a 3D graph showing the metrics and quantifying also the runtime for different feature selection methods.
+    """Plots the metrics for different feature selection techniques in a 3D plot.
 
-    Parameters:
-        raw_metrics_chi2 (list[str]):
-            Raw metrics data for the Chi-Squared feature selection method.
-        raw_metrics_anova (list[str]):
-            Raw metrics data for the ANOVA feature selection method.
-        raw_metrics_forward_selection (list[str]):
-            Raw metrics data for the Forward Selection feature selection method.
-        raw_metrics_backward_elimination (list[str]):
-            Raw metrics data for the Backward Elimination feature selection method.
-        raw_runtime_chi2 (list[str]):
-            Raw runtime data for the Chi-Squared feature selection method.
-        raw_runtime_anova (list[str]):
-            Raw runtime data for the ANOVA feature selection method.
-        raw_runtime_forward_selection (list[str]):
-            Raw runtime data for the Forward Selection feature selection method.
-        raw_runtime_backward_elimination (list[str]):
-            Raw runtime data for the Backward Elimination feature selection method.
-        model (str):
-            The name of the model.
-        x_label (str, optional):
-            Label for the x-axis. Defaults to "Percentage of selected features".
-        y_label (str, optional):
-            Label for the y-axis. Defaults to "Accuracy".
-        z_label (str, optional):
-            Label for the z-axis. Defaults to "Runtime feature selection".
+    Parameters
+    ----------
+    raw_metrics_chi2 : list[str]
+        The raw metric values for Chi-Squared feature selection.
+    raw_metrics_anova : list[str]
+        The raw metric values for ANOVA feature selection.
+    raw_metrics_forward_selection : list[str]
+        The raw metric values for Forward Selection feature selection.
+    raw_metrics_backward_elimination : list[str]
+        The raw metric values for Backward Elimination feature selection.
+    raw_runtime_chi2 : list[str]
+        The raw runtime values for Chi-Squared feature selection.
+    raw_runtime_anova : list[str]
+        The raw runtime values for ANOVA feature selection.
+    raw_runtime_forward_selection : list[str]
+        The raw runtime values for Forward Selection feature selection.
+    raw_runtime_backward_elimination : list[str]
+        The raw runtime values for Backward Elimination feature selection.
+    model : str
+        The model for which the metrics are collected.
+    x_label : str, optional
+        The label for the x-axis, default: "Percentage of selected features".
+    y_label : str, optional
+        The label for the y-axis, default: "Accuracy".
+    z_label : str, optional
+        The label for the z-axis, default: "Runtime feature selection".
 
     Returns
     -------
-        The generated Matplotlib figure.
+        The generated Matplotlib 3D figure.
     """
     metrics_chi2 = postprocess_results(raw_metrics_chi2) if raw_metrics_chi2 else []
     metrics_anova = postprocess_results(raw_metrics_anova) if raw_metrics_anova else []
@@ -223,5 +225,59 @@ def plot_metrics_3D(raw_metrics_chi2: list[str],
     plt.title(model, fontsize=font_size_labels, weight="bold")
 
     plt.legend(fontsize=font_size_legend - 2, loc="upper left", framealpha=0.2)
+
+    return fig
+
+
+def plot_runtime_features_scatter_plot(
+        average_runtime_chi2: list[float],
+        average_runtime_anova: list[float],
+        average_runtime_forward_selection: list[float],
+        average_runtime_backward_elimination: list[float],
+        amount_features: list[int], x_label="Amount of features", y_label="Runtime in seconds",
+        title="Runtime of feature selection techniques"):
+    """
+    Plots the scatter plot of average runtime for different feature selection techniques.
+
+    Parameters
+    ----------
+    average_runtime_chi2 : list[float]
+        The average runtime values for Chi-Squared feature selection.
+    average_runtime_anova : list[float]
+        The average runtime values for ANOVA feature selection.
+    average_runtime_forward_selection : list[float]
+        The average runtime values for Forward Selection feature selection.
+    average_runtime_backward_elimination : list[float]
+        The average runtime values for Backward Elimination feature selection.
+    amount_features : list[int]
+        The list of amount of features.
+    x_label : str, optional
+        The label for the x-axis, default: "Amount of features".
+    y_label : str, optional
+        The label for the y-axis, default: "Runtime in seconds".
+    title : str, optional
+        The title of the scatter plot, default: "Runtime of feature selection techniques".
+
+    Returns
+    -------
+        The generated Matplotlib figure.
+    """
+    fig, ax = plt.subplots(figsize=(width, height))
+
+    ax.scatter(amount_features, average_runtime_chi2, label="chi2", marker="s", s=s_scatter)  # type: ignore
+    ax.scatter(amount_features, average_runtime_anova, label="anova", marker="o", s=s_scatter)  # type: ignore
+    ax.scatter(amount_features, average_runtime_forward_selection,
+               label="forward_selection", marker="^", s=s_scatter)  # type: ignore
+    ax.scatter(amount_features, average_runtime_backward_elimination,
+               label="backward_elimination", marker="X", s=s_scatter)  # type: ignore
+
+    plt.xticks(fontsize=font_size_ticks, weight="bold")
+    plt.yticks(fontsize=font_size_ticks, weight="bold")
+
+    plt.xlabel(x_label, fontsize=font_size_labels, weight="bold")
+    plt.ylabel(y_label, fontsize=font_size_labels, weight="bold")
+    plt.title(title, fontsize=font_size_labels, weight="bold")
+
+    plt.legend(fontsize=font_size_legend)
 
     return fig

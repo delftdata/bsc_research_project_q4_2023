@@ -65,62 +65,83 @@ def parse_results(directory="./results_runtime2/txt_files"):
         "Runtime": runtimes,
         "Dataset": datasets,
         "Method": methods,
-        "Percentage of rows": percentanges
+        "Percentage of samples": percentanges
     })
 
     return dataframe
 
 def plot_over_runtime():
     dataframe = parse_results(directory="./results_runtime2/txt_files")
-    #dataset = 'Breast Cancer (31)'
-    #dataset = 'Gisette (5000)'
-    #dataset = 'Housing Prices (80)'
-    #dataset = 'Internet Ads (1558)'
-    #dataset = 'Arrhythmia (279)'
-    dataset = 'Bike Sharing (16)'
-    breast_cancer_dataframe = dataframe[dataframe['Dataset'] == dataset]
 
-    sns.set_theme(style="whitegrid")
-    plt.figure(figsize=(8, 6), dpi=1200)
+    sns.set(font_scale=2.6)
+    sns.set_style("whitegrid", {"grid.color": "0.9", "grid.linestyle": "-", "grid.linewidth": "0.2"})
+    fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(22, 12), dpi=1200, gridspec_kw={'hspace': 0.5})
 
-    # custom_palette = ["#E4EBF1", "#D8E9F9", "#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#08519c", "#08306b",
-    #                   "000000"]
-    custom_palette = ["#00005A", "#10A5D6", "#abd9e9", "#e0f3f8", "#ffffbf", "#fee090", "#fdae61",
-                      "#f46d43", "#CA0020", "#9A031B"]
-    # custom_palette = ["#fff5f0", "#fee0d2", "#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d", "#a50f15",
-    #                   "#67000d", "000000"]
-
-    g = sns.barplot(
-        data=breast_cancer_dataframe, x="Method", y="Runtime", hue="Percentage of rows",
-        palette=custom_palette
+    custom_palette = ["#10A5D6", "#7030A0", "#BF9000", "#c51b8a"]
+    sns.scatterplot(
+        data=dataframe[dataframe['Dataset'] == 'BikeSharing'], x="Percentage of samples", y="Runtime", hue="Method",
+        palette=custom_palette, ax=axes[0][0], legend=False, s=350
     )
-    g.set(xlabel="Database")
-    g.set(ylabel="Runtime (seconds)")
-    g.set_title("Data table with 16 columns")
-    g.set_xticklabels(['Pearson', 'Spearman', 'Cramér\'s V', 'SU'])
+    sns.scatterplot(
+        data=dataframe[dataframe['Dataset'] == 'BreastCancer'], x="Percentage of samples", y="Runtime", hue="Method",
+        palette=custom_palette, ax=axes[0][1], legend=False, s=350
+    )
+    sns.scatterplot(
+        data=dataframe[dataframe['Dataset'] == 'Connect4'], x="Percentage of samples", y="Runtime", hue="Method",
+        palette=custom_palette, ax=axes[0][2], legend=False, s=350
+    )
+    sns.scatterplot(
+        data=dataframe[dataframe['Dataset'] == 'Arrhythmia'], x="Percentage of samples", y="Runtime", hue="Method",
+        palette=custom_palette, ax=axes[1][0], legend=False, s=350
+    )
+    sns.scatterplot(
+        data=dataframe[dataframe['Dataset'] == 'InternetAds'], x="Percentage of samples", y="Runtime", hue="Method",
+        palette=custom_palette, ax=axes[1][1], legend='full', s=350
+    )
+    sns.scatterplot(
+        data=dataframe[dataframe['Dataset'] == 'Gisette'], x="Percentage of samples", y="Runtime", hue="Method",
+        palette=custom_palette, ax=axes[1][2], legend=False, s=350
+    )
 
-    plt.xticks(rotation=45)
-    sns.set(font_scale=1.9)
+    axes[0][0].set_title('BikeSharing (17,379x16)')
+    axes[0][1].set_title('BreastCancer (569x31)')
+    axes[0][2].set_title('Connect-4 (67,557x42)')
+    axes[1][0].set_title('Arrhythmia (452x279)')
+    axes[1][1].set_title('InternetAds (3,279x1,558)')
+    axes[1][2].set_title('Gisette (6,000x5,000)')
 
-    ax = plt.gca()
-    ax.set_facecolor('white')
-    ax.spines['top'].set_linewidth(1.2)
-    ax.spines['bottom'].set_linewidth(1.2)
-    ax.spines['left'].set_linewidth(1.2)
-    ax.spines['right'].set_linewidth(1.2)
-    ax.spines['top'].set_edgecolor('black')
-    ax.spines['bottom'].set_edgecolor('black')
-    ax.spines['left'].set_edgecolor('black')
-    ax.spines['right'].set_edgecolor('black')
+    #g.set(xlabel="Dataset")
+    axes[0][0].set_ylabel(ylabel="Execution time (sec.)")
+    axes[1][0].set_ylabel(ylabel="Execution time (sec.)")
+    axes[0][1].set_ylabel(ylabel="")
+    axes[0][2].set_ylabel(ylabel="")
+    axes[1][1].set_ylabel(ylabel="")
+    axes[1][2].set_ylabel(ylabel="")
 
-    # [0, 0.01, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30]
-    plt.yticks([0.1, 0.5, 1, 2, 3, 4])
-    #plt.yticks([0, 0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5])
-    plt.tick_params(axis='x', which='both', pad=0)
+    axes[0][1].set_xlabel(xlabel='Percentage of samples')
+    axes[1][1].set_xlabel(xlabel='Percentage of samples')
+    axes[0][0].set_xlabel(xlabel='')
+    axes[0][2].set_xlabel(xlabel='')
+    axes[1][0].set_xlabel(xlabel='')
+    axes[1][2].set_xlabel(xlabel='')
+
+    for i in [0, 1]:
+        for j in [0, 1, 2]:
+            axes[i][j].spines['top'].set_linewidth(3)
+            axes[i][j].spines['bottom'].set_linewidth(3)
+            axes[i][j].spines['left'].set_linewidth(3)
+            axes[i][j].spines['right'].set_linewidth(3)
+
+    lgnd = axes[1][1].legend(loc='lower center', ncol=3, bbox_to_anchor=(0.5, -0.7),
+               frameon=True, facecolor='white', framealpha=1)
+
+    for handle in lgnd.legendHandles:
+        handle._sizes = [250]
 
     directory = "./results_runtime2"
     os.makedirs(directory, exist_ok=True)
-    plt.savefig(f'./results_runtime2/result_{dataset}.pdf')
+    plt.savefig(f'./results_runtime2/fs_runtime.pdf', dpi=1200,
+                bbox_inches='tight')
     plt.clf()
 
 # def plot_over_runtime_large_datasets():

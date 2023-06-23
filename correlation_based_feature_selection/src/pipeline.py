@@ -341,7 +341,7 @@ class MLPipeline:
                                                     current_train_dataframe, current_test_dataframe)
 
             # LOOP: Go to all possible values of c (i.e. correlation threshold)
-            for threshold in [0.9, 0.8, 0.7, 0.6, 0.5, 0.3, 0.2, 0.1, 0]:
+            for threshold in [0.4]: # [0.9, 0.8, 0.7, 0.6, 0.5, 0.3, 0.2, 0.1, 0]:
                 # COMPUTATION: Compute the ranking of features returned by each correlation method
                 pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features = \
                     InML.feature_selection_select_above_t(train_dataframe=current_train_dataframe,
@@ -431,7 +431,7 @@ class MLPipeline:
             baseline_performance = baseline_estimator.score(x_test, y_test)
 
         # LOOP: Go to all possible values of c (i.e. correlation threshold)
-        for threshold in [0.9, 0.8, 0.7, 0.6, 0.5, 0.3, 0.2, 0.1, 0]:
+        for threshold in [0.4]: # [0.9, 0.8, 0.7, 0.6, 0.5, 0.3, 0.2, 0.1, 0]:
             # COMPUTATION: Compute the ranking of features returned by each correlation method
             pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features = \
                 InML.feature_selection_select_above_t(train_dataframe=current_train_dataframe,

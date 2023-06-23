@@ -5,14 +5,11 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import scipy.stats as stats
-from scipy.stats import f_oneway
-from statsmodels.formula.api import ols
-from statsmodels.stats.anova import anova_lm
 
 
-current_dataset4 = 'CensusIncome'
-current_number_of_features4 = 14
-current_good_features4 = list(range(1, 15, 1))
+current_dataset1 = 'Gisette'
+current_number_of_features1 = 200
+current_good_features1 = list(range(1, 201, 10))
 
 current_dataset2 = 'BreastCancer'
 current_number_of_features2 = 31
@@ -21,6 +18,10 @@ current_good_features2 = list(range(1, 32, 1))
 current_dataset3 = 'SteelPlatesFaults'
 current_number_of_features3 = 33
 current_good_features3 = list(range(1, 34, 1))
+
+current_dataset4 = 'CensusIncome'
+current_number_of_features4 = 14
+current_good_features4 = list(range(1, 15, 1))
 
 current_dataset5 = 'Nursery'
 current_number_of_features5 = 8
@@ -32,159 +33,96 @@ current_good_features6 = list(range(1, 201, 10))
 for i in [210, 220, 230, 240, 250, 260, 270, 279]:
     current_good_features6.append(i)
 
-current_dataset1 = 'Gisette'
-current_number_of_features1 = 200
-current_good_features1 = list(range(1, 201, 10))
-current_algorithm = 'SVM'
-
 evaluation_metrics_options = {
     'accuracy': 'Average accuracy (%)',
     'rmse': 'Average root mean square error',
 }
 
 
-def parse_data_threshold(dataset=current_dataset1):
-    threshold_values = [0.9, 0.8, 0.7, 0.6, 0.5, 0.3, 0.2, 0.1, 0]
-    accuracy_values = []
-
-    with open(f'./results_tables_select_c/txt_files/{dataset}_1_{current_algorithm}_Pearson.txt', 'r') as file:
-        for line in file:
-            if line.startswith('CURRENT PERFORMANCE:'):
-                accuracy = float(line.split(':')[1].strip())
-                accuracy_values.append(accuracy)
-    plt.bar(threshold_values, accuracy_values)
-    plt.xlabel('Threshold Value')
-    plt.ylabel('Accuracy')
-    #plt.xlim(0, 0.9)
-    plt.title('Accuracy vs. Threshold Value')
-    plt.grid(True)
-    plt.show()
-
-    return threshold_values, accuracy_values
-
-
-def parse_data_all(dataset=current_dataset1, num_files=5, current_good_features=current_good_features1):
+def parse_data_all_threshold(dataset=current_dataset1, num_files=5):
     pearson_performance = []
     spearman_performance = []
     cramersv_performance = []
     su_performance = []
     baseline_performance = 0
 
-    current_performance = None
-    current_num_features = None
     for i in range(1, num_files + 1):
         if i == 1:
-            file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_XGBoost_Pearson.txt'
-            file_path_spearman = f'./raw_results/{dataset}/{dataset}_1_XGBoost_Spearman.txt'
-            file_path_cramer = f'./raw_results/{dataset}/{dataset}_1_XGBoost_Cramer.txt'
-            file_path_su = f'./raw_results/{dataset}/{dataset}_1_XGBoost_SU.txt'
+            file_path_pearson = f'./results_tables_select_c/txt_files/{dataset}_1_XGBoost_Pearson.txt'
+            file_path_spearman = f'./results_tables_select_c/txt_files/{dataset}_1_XGBoost_Spearman.txt'
+            file_path_cramer = f'./results_tables_select_c/txt_files/{dataset}_1_XGBoost_Cramer.txt'
+            file_path_su = f'./results_tables_select_c/txt_files/{dataset}_1_XGBoost_SU.txt'
         elif i == 2:
-            file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_LightGBM_Pearson.txt'
-            file_path_spearman = f'./raw_results/{dataset}/{dataset}_1_LightGBM_Spearman.txt'
-            file_path_cramer = f'./raw_results/{dataset}/{dataset}_1_LightGBM_Cramer.txt'
-            file_path_su = f'./raw_results/{dataset}/{dataset}_1_LightGBM_SU.txt'
+            file_path_pearson = f'./results_tables_select_c/txt_files/{dataset}_1_LightGBM_Pearson.txt'
+            file_path_spearman = f'./results_tables_select_c/txt_files/{dataset}_1_LightGBM_Spearman.txt'
+            file_path_cramer = f'./results_tables_select_c/txt_files/{dataset}_1_LightGBM_Cramer.txt'
+            file_path_su = f'./results_tables_select_c/txt_files/{dataset}_1_LightGBM_SU.txt'
         elif i == 3:
-            file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_RandomForest_Pearson.txt'
-            file_path_spearman = f'./raw_results/{dataset}/{dataset}_1_RandomForest_Spearman.txt'
-            file_path_cramer = f'./raw_results/{dataset}/{dataset}_1_RandomForest_Cramer.txt'
-            file_path_su = f'./raw_results/{dataset}/{dataset}_1_RandomForest_SU.txt'
+            file_path_pearson = f'./results_tables_select_c/txt_files/{dataset}_1_RandomForest_Pearson.txt'
+            file_path_spearman = f'./results_tables_select_c/txt_files/{dataset}_1_RandomForest_Spearman.txt'
+            file_path_cramer = f'./results_tables_select_c/txt_files/{dataset}_1_RandomForest_Cramer.txt'
+            file_path_su = f'./results_tables_select_c/txt_files/{dataset}_1_RandomForest_SU.txt'
         elif i == 4:
-            file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_LinearModel_Pearson.txt'
-            file_path_spearman = f'./raw_results/{dataset}/{dataset}_1_LinearModel_Spearman.txt'
-            file_path_cramer = f'./raw_results/{dataset}/{dataset}_1_LinearModel_Cramer.txt'
-            file_path_su = f'./raw_results/{dataset}/{dataset}_1_LinearModel_SU.txt'
+            file_path_pearson = f'./results_tables_select_c/txt_files/{dataset}_1_LinearModel_Pearson.txt'
+            file_path_spearman = f'./results_tables_select_c/txt_files/{dataset}_1_LinearModel_Spearman.txt'
+            file_path_cramer = f'./results_tables_select_c/txt_files/{dataset}_1_LinearModel_Cramer.txt'
+            file_path_su = f'./results_tables_select_c/txt_files/{dataset}_1_LinearModel_SU.txt'
         elif i == 5:
-            file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_SVM2_Pearson.txt'
-            file_path_spearman = f'./raw_results/{dataset}/{dataset}_1_SVM2_Spearman.txt'
-            file_path_cramer = f'./raw_results/{dataset}/{dataset}_1_SVM2_Cramer.txt'
-            file_path_su = f'./raw_results/{dataset}/{dataset}_1_SVM2_SU.txt'
+            file_path_pearson = f'./results_tables_select_c/txt_files/{dataset}_1_SVM_Pearson.txt'
+            file_path_spearman = f'./results_tables_select_c/txt_files/{dataset}_1_SVM_Spearman.txt'
+            file_path_cramer = f'./results_tables_select_c/txt_files/{dataset}_1_SVM_Cramer.txt'
+            file_path_su = f'./results_tables_select_c/txt_files/{dataset}_1_SVM_SU.txt'
         count_1 = 0
         with open(file_path_pearson, 'r') as file:
             for line in file:
-                performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+\.\d+)', line)
-                features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
+                performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+(\.\d+)?|0)', line)
 
-                if features_match:
-                    current_num_features = int(features_match.group(1))
                 if performance_match:
                     current_performance = float(performance_match.group(1))
-
-                if current_performance is not None and current_num_features is not None:
-                    if current_num_features in current_good_features:
-                        if i >= 2:
-                            pearson_performance[count_1] += current_performance
-                            count_1 = count_1 + 1
-                        else:
-                            pearson_performance.append(current_performance)
-
-                    current_performance = None
-                    current_num_features = None
+                    if i >= 2:
+                        pearson_performance[count_1] += current_performance
+                        count_1 = count_1 + 1
+                    else:
+                        pearson_performance.append(current_performance)
 
         count_2 = 0
         with open(file_path_spearman, 'r') as file:
             for line in file:
-                performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+\.\d+)', line)
-                features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
+                performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+(\.\d+)?|0)', line)
 
-                if features_match:
-                    current_num_features = int(features_match.group(1))
                 if performance_match:
                     current_performance = float(performance_match.group(1))
-
-                if current_performance is not None and current_num_features is not None:
-                    if current_num_features in current_good_features:
-                        if i >= 2:
-                            spearman_performance[count_2] += current_performance
-                            count_2 = count_2 + 1
-                        else:
-                            spearman_performance.append(current_performance)
-
-                    current_performance = None
-                    current_num_features = None
+                    if i >= 2:
+                        spearman_performance[count_2] += current_performance
+                        count_2 = count_2 + 1
+                    else:
+                        spearman_performance.append(current_performance)
 
         count_3 = 0
         with open(file_path_cramer, 'r') as file:
             for line in file:
-                performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+\.\d+)', line)
-                features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
+                performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+(\.\d+)?|0)', line)
 
-                if features_match:
-                    current_num_features = int(features_match.group(1))
                 if performance_match:
                     current_performance = float(performance_match.group(1))
-
-                if current_performance is not None and current_num_features is not None:
-                    if current_num_features in current_good_features:
-                        if i >= 2:
-                            cramersv_performance[count_3] += current_performance
-                            count_3 = count_3 + 1
-                        else:
-                            cramersv_performance.append(current_performance)
-
-                    current_performance = None
-                    current_num_features = None
+                    if i >= 2:
+                        cramersv_performance[count_3] += current_performance
+                        count_3 = count_3 + 1
+                    else:
+                        cramersv_performance.append(current_performance)
 
         count_4 = 0
         with open(file_path_su, 'r') as file:
             for line in file:
-                performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+\.\d+)', line)
-                features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
+                performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+(\.\d+)?|0)', line)
 
-                if features_match:
-                    current_num_features = int(features_match.group(1))
                 if performance_match:
                     current_performance = float(performance_match.group(1))
-
-                if current_performance is not None and current_num_features is not None:
-                    if current_num_features in current_good_features:
-                        if i >= 2:
-                            su_performance[count_4] += current_performance
-                            count_4 = count_4 + 1
-                        else:
-                            su_performance.append(current_performance)
-
-                    current_performance = None
-                    current_num_features = None
+                    if i >= 2:
+                        su_performance[count_4] += current_performance
+                        count_4 = count_4 + 1
+                    else:
+                        su_performance.append(current_performance)
 
         with open(file_path_su, 'r') as file:
             for line in file:
@@ -200,9 +138,11 @@ def parse_data_all(dataset=current_dataset1, num_files=5, current_good_features=
     su_performance = [value / num_files for value in su_performance]
     baseline_performance /= num_files
 
-    print(dataset)
-    print(stats.ttest_ind(pearson_performance, su_performance))
-    print('\n')
+    print(pearson_performance)
+    print(spearman_performance)
+    print(cramersv_performance)
+    print(su_performance)
+    print(baseline_value)
 
     return pearson_performance, spearman_performance, cramersv_performance, su_performance, baseline_performance
 
@@ -225,11 +165,6 @@ def plot_average_over_number_of_features(dataset_type=1, evaluation_metric='accu
 
     pearson_performance6, spearman_performance6, cramersv_performance6, su_performance6, baseline_performance6 = \
         parse_data_all(dataset=current_dataset6, num_files=5, current_good_features=current_good_features6)
-
-    evaluation_metric_name = evaluation_metrics_options.get(evaluation_metric)
-    # #plt.figure(figsize=(8, 6), dpi=1200)
-    # ax = plt.gca()
-    # ax.xaxis.set_major_locator(mticker.MultipleLocator(2))
 
     sns.set(font_scale=2.6)
     sns.set_style("whitegrid", {"grid.color": "0.9", "grid.linestyle": "-", "grid.linewidth": "0.2"})
@@ -318,77 +253,12 @@ def plot_average_over_number_of_features(dataset_type=1, evaluation_metric='accu
     axes[0][2].set_xticks([10, 20, 33])
     axes[1][2].set_xticks([100, 200, 279])
 
-    # x_ticks_1 = list(range(0, current_good_features1[-1] + 1, 2))
-    # x_ticks_1.append(1)
-    # x_ticks_1.remove(0)
-    # axes[0].set_xticks(x_ticks_1)
-    #
-    # x_ticks_2 = list(range(0, current_good_features2[-1] + 1, 5))
-    # x_ticks_2.append(1)
-    # x_ticks_2.remove(0)
-    # x_ticks_2.remove(30)
-    # x_ticks_2.append(current_good_features2[-1])
-    # axes[1].set_xticks(x_ticks_2)
-    #
-    # x_ticks_3 = list(range(0, current_good_features3[-1] + 1, 5))
-    # x_ticks_3.append(1)
-    # x_ticks_3.remove(0)
-    # x_ticks_3.remove(30)
-    # x_ticks_3.append(current_good_features3[-1])
-    # axes[2].set_xticks(x_ticks_3)
-
-    # max_value = round(max(np.max(np.array(pearson_performance) * 100), np.max(np.array(spearman_performance) * 100),
-    #                 np.max(np.array(cramersv_performance) * 100), np.max(np.array(su_performance) * 100),
-    #                       baseline_performance), 2)
-    # xt = axes[0].get_yticks()
-    # xt = np.append(xt, max_value)
-    # xtl = xt.tolist()
-    # xtl[-1] = str(max_value)
-    # axes[0].set_yticks(xt)
-    # axes[0].set_yticklabels(xtl)
-    # ytick_labels = axes[0].get_yticklabels()
-    # ytick_labels[-1].set_color('red')
-    #
-    # max_value2 = round(max(np.max(np.array(pearson_performance2) * 100), np.max(np.array(spearman_performance2) * 100),
-    #                 np.max(np.array(cramersv_performance2) * 100), np.max(np.array(su_performance2) * 100),
-    #                        baseline_performance2 * 100), 2)
-    # xt = axes[1].get_yticks()
-    # xt = np.append(xt, max_value2)
-    # xtl = xt.tolist()
-    # xtl[-1] = str(max_value2)
-    # axes[1].set_yticks(xt)
-    # axes[1].set_yticklabels(xtl)
-    # ytick_labels = axes[1].get_yticklabels()
-    # ytick_labels[-1].set_color('red')
-    #
-    # max_value3 = round(max(np.max(np.array(pearson_performance3) * 100), np.max(np.array(spearman_performance3) * 100),
-    #                 np.max(np.array(cramersv_performance3) * 100), np.max(np.array(su_performance3) * 100),
-    #                        baseline_performance3 * 100), 2)
-    # xt = axes[2].get_yticks()
-    # if max_value3 == 100:
-    #     mask = xt != 100
-    #     xt = xt[mask]
-    # xt = np.append(xt, max_value3)
-    # xtl = xt.tolist()
-    # xtl[-1] = str(max_value3)
-    # axes[2].set_yticks(xt)
-    # axes[2].set_yticklabels(xtl)
-    # ytick_labels = axes[2].get_yticklabels()
-    # ytick_labels[-1].set_color('red')
-    # if max_value3 == 100:
-    #     axes[2].set_ylim(60, 100)
-
     for i in [0, 1]:
         for j in [0, 1, 2]:
-            #axes[i][j].set_facecolor('white')
             axes[i][j].spines['top'].set_linewidth(3)
             axes[i][j].spines['bottom'].set_linewidth(3)
             axes[i][j].spines['left'].set_linewidth(3)
             axes[i][j].spines['right'].set_linewidth(3)
-            # axes[i][j].spines['top'].set_edgecolor('black')
-            # axes[i][j].spines['bottom'].set_edgecolor('black')
-            # axes[i][j].spines['left'].set_edgecolor('black')
-            # axes[i][j].spines['right'].set_edgecolor('black')
 
     # axes[1].set_facecolor('white')
     # axes[1].spines['top'].set_linewidth(1.2)
@@ -399,7 +269,7 @@ def plot_average_over_number_of_features(dataset_type=1, evaluation_metric='accu
     # axes[1].spines['bottom'].set_edgecolor('black')
     # axes[1].spines['left'].set_edgecolor('black')
     # axes[1].spines['right'].set_edgecolor('black')
-    #
+
     # axes[2].set_facecolor('white')
     # axes[2].spines['top'].set_linewidth(1.2)
     # axes[2].spines['bottom'].set_linewidth(1.2)

@@ -112,38 +112,7 @@ def plot_performance(dataset_name, n_features, mrmr, mifs, jmi, cife, save=True)
     plt.show()
     plt.clf()
 
-def plot_performance_8(dataset_name, n_features, mrmr, mifs, jmi, cife, mrmr_complex, mifs_complex, jmi_complex, cife_complex, save=True):
-    features = list(range(1, n_features+1))
 
-    font_color = '#000000'
-    figure(figsize=(8, 6), dpi=100)
-    sns.set(font_scale=2, palette='bright')
-    sns.set_style('whitegrid', {"grid.color": ".6", "grid.linestyle": ":"})
-
-    k = int(np.log(n_features) / np.log(2))
-    plt.gca().xaxis.set_major_locator(mticker.MultipleLocator(k))
-
-    plt.plot(features, np.array(mifs_complex), marker='o', linestyle='-', markevery=k)
-    plt.plot(features, np.array(mrmr_complex), marker='s', linestyle='--', markevery=k)
-    plt.plot(features, np.array(cife_complex), marker='^', linestyle='-.', markevery=k)
-    plt.plot(features, np.array(jmi_complex), marker='*', linestyle=':', markevery=k)
-    plt.plot(features, np.array(mifs), linestyle='-')
-    plt.plot(features, np.array(mrmr), linestyle='--')
-    plt.plot(features,np.array(cife), linestyle='-.')
-    plt.plot(features, np.array(jmi), linestyle=':')
-
-    plt.xlabel('Number of Features', fontsize=14, color=font_color)
-    plt.xticks(fontsize=14, color=font_color)
-    plt.ylabel('Seconds', fontsize=14, color=font_color)
-    plt.yticks(fontsize=14, color=font_color)
-    plt.legend([ 'MIFS complex', 'MRMR complex', 'CIFE complex', 'JMI complex', 'MIFS', 'MRMR', 'CIFE', 'JMI'],
-               fontsize=14, labelcolor=font_color)
-    plt.title(f'{dataset_name} dataset runtime performance', fontsize=16, color=font_color)
-
-    if save:
-        plt.savefig(f'./results/result_{dataset_name}_runtime.png', dpi=400)
-    plt.show()
-    plt.clf()
 def plot_performance_two(title, n_features, mrmr, mifs, jmi, cife, base, mrmr_complex, mifs_complex, jmi_complex, cife_complex, base_complex, save=True):
     """
     Plots the runtime difference in entropy estimators.

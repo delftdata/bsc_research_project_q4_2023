@@ -35,6 +35,7 @@ for i in [210, 220, 230, 240, 250, 260, 270, 279]:
 current_dataset1 = 'Gisette'
 current_number_of_features1 = 200
 current_good_features1 = list(range(1, 201, 10))
+current_algorithm = 'SVM'
 
 evaluation_metrics_options = {
     'accuracy': 'Average accuracy (%)',
@@ -42,190 +43,24 @@ evaluation_metrics_options = {
 }
 
 
-def parse_data_all2(dataset=current_dataset3, num_files=5, current_good_features=current_good_features3):
-    pearson_performance = []
-    spearman_performance = []
-    cramersv_performance = []
-    su_performance = []
-    baseline_performance = 0
+def parse_data_threshold(dataset=current_dataset1):
+    threshold_values = [0.9, 0.8, 0.7, 0.6, 0.5, 0.3, 0.2, 0.1, 0]
+    accuracy_values = []
 
-    current_performance = None
-    current_num_features = None
-    for i in range(1, num_files + 1):
-        if i == 1:
-            file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_XGBoost_Pearson.txt'
-            file_path_spearman = f'./raw_results/{dataset}/{dataset}_1_XGBoost_Spearman.txt'
-            file_path_cramer = f'./raw_results/{dataset}/{dataset}_1_XGBoost_Cramer.txt'
-            file_path_su = f'./raw_results/{dataset}/{dataset}_1_XGBoost_SU.txt'
-        elif i == 2:
-            file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_LightGBM_Pearson.txt'
-            file_path_spearman = f'./raw_results/{dataset}/{dataset}_1_LightGBM_Spearman.txt'
-            file_path_cramer = f'./raw_results/{dataset}/{dataset}_1_LightGBM_Cramer.txt'
-            file_path_su = f'./raw_results/{dataset}/{dataset}_1_LightGBM_SU.txt'
-        elif i == 3:
-            file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_RandomForest_Pearson.txt'
-            file_path_spearman = f'./raw_results/{dataset}/{dataset}_1_RandomForest_Spearman.txt'
-            file_path_cramer = f'./raw_results/{dataset}/{dataset}_1_RandomForest_Cramer.txt'
-            file_path_su = f'./raw_results/{dataset}/{dataset}_1_RandomForest_SU.txt'
-        elif i == 4:
-            file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_LinearModel_Pearson.txt'
-            file_path_spearman = f'./raw_results/{dataset}/{dataset}_1_LinearModel_Spearman.txt'
-            file_path_cramer = f'./raw_results/{dataset}/{dataset}_1_LinearModel_Cramer.txt'
-            file_path_su = f'./raw_results/{dataset}/{dataset}_1_LinearModel_SU.txt'
-        elif i == 5:
-            file_path_pearson = f'./raw_results/{dataset}/{dataset}_1_SVM2_Pearson.txt'
-            file_path_spearman = f'./raw_results/{dataset}/{dataset}_1_SVM2_Spearman.txt'
-            file_path_cramer = f'./raw_results/{dataset}/{dataset}_1_SVM2_Cramer.txt'
-            file_path_su = f'./raw_results/{dataset}/{dataset}_1_SVM2_SU.txt'
-        count_1 = 0
-        with open(file_path_pearson, 'r') as file:
-            for line in file:
-                performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+\.\d+)', line)
-                features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
+    with open(f'./results_tables_select_c/txt_files/{dataset}_1_{current_algorithm}_Pearson.txt', 'r') as file:
+        for line in file:
+            if line.startswith('CURRENT PERFORMANCE:'):
+                accuracy = float(line.split(':')[1].strip())
+                accuracy_values.append(accuracy)
+    plt.bar(threshold_values, accuracy_values)
+    plt.xlabel('Threshold Value')
+    plt.ylabel('Accuracy')
+    #plt.xlim(0, 0.9)
+    plt.title('Accuracy vs. Threshold Value')
+    plt.grid(True)
+    plt.show()
 
-                if features_match:
-                    current_num_features = int(features_match.group(1))
-                if performance_match:
-                    current_performance = float(performance_match.group(1))
-
-                if current_performance is not None and current_num_features is not None:
-                    if current_num_features in current_good_features:
-                        if i >= 2:
-                            pearson_performance[count_1] += current_performance
-                            count_1 = count_1 + 1
-                        else:
-                            pearson_performance.append(current_performance)
-
-                    current_performance = None
-                    current_num_features = None
-
-        count_2 = 0
-        with open(file_path_spearman, 'r') as file:
-            for line in file:
-                performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+\.\d+)', line)
-                features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
-
-                if features_match:
-                    current_num_features = int(features_match.group(1))
-                if performance_match:
-                    current_performance = float(performance_match.group(1))
-
-                if current_performance is not None and current_num_features is not None:
-                    if current_num_features in current_good_features:
-                        if i >= 2:
-                            spearman_performance[count_2] += current_performance
-                            count_2 = count_2 + 1
-                        else:
-                            spearman_performance.append(current_performance)
-
-                    current_performance = None
-                    current_num_features = None
-
-        count_3 = 0
-        with open(file_path_cramer, 'r') as file:
-            for line in file:
-                performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+\.\d+)', line)
-                features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
-
-                if features_match:
-                    current_num_features = int(features_match.group(1))
-                if performance_match:
-                    current_performance = float(performance_match.group(1))
-
-                if current_performance is not None and current_num_features is not None:
-                    if current_num_features in current_good_features:
-                        if i >= 2:
-                            cramersv_performance[count_3] += current_performance
-                            count_3 = count_3 + 1
-                        else:
-                            cramersv_performance.append(current_performance)
-
-                    current_performance = None
-                    current_num_features = None
-
-        count_4 = 0
-        with open(file_path_su, 'r') as file:
-            for line in file:
-                performance_match = re.search(r'CURRENT PERFORMANCE: (-?\d+\.\d+)', line)
-                features_match = re.search(r'SUBSET OF FEATURES: (\d+)', line)
-
-                if features_match:
-                    current_num_features = int(features_match.group(1))
-                if performance_match:
-                    current_performance = float(performance_match.group(1))
-
-                if current_performance is not None and current_num_features is not None:
-                    if current_num_features in current_good_features:
-                        if i >= 2:
-                            su_performance[count_4] += current_performance
-                            count_4 = count_4 + 1
-                        else:
-                            su_performance.append(current_performance)
-
-                    current_performance = None
-                    current_num_features = None
-
-        with open(file_path_su, 'r') as file:
-            for line in file:
-                match = re.search(r'BASELINE PERFORMANCE: (\d+\.\d+)', line)
-                if match:
-                    baseline_value = float(match.group(1))
-                    baseline_performance += baseline_value
-                    break
-
-    pearson_performance = [value / num_files for value in pearson_performance]
-    spearman_performance = [value / num_files for value in spearman_performance]
-    cramersv_performance = [value / num_files for value in cramersv_performance]
-    su_performance = [value / num_files for value in su_performance]
-    baseline_performance /= num_files
-
-    dataframe = pd.DataFrame(columns=['Method', 'Number', 'Accuracy'])
-    count = 0
-    for number_features in current_good_features1:
-        entry1 = {
-            'Method': 'Pearson',
-            'Number': str(number_features),
-            'Accuracy': float(pearson_performance[count])
-        }
-        dataframe = dataframe.append(entry1, ignore_index=True)
-        entry2 = {
-            'Method': 'Spearman',
-            'Number': str(number_features),
-            'Accuracy': float(spearman_performance[count])
-        }
-        dataframe = dataframe.append(entry2, ignore_index=True)
-        entry3 = {
-            'Method': 'Cramer',
-            'Number': str(number_features),
-            'Accuracy': float(cramersv_performance[count])
-        }
-        dataframe = dataframe.append(entry3, ignore_index=True)
-        entry4 = {
-            'Method': 'SU',
-            'Number': str(number_features),
-            'Accuracy': float(su_performance[count])
-        }
-        dataframe = dataframe.append(entry4, ignore_index=True)
-        count += 1
-
-    pd.set_option('display.max_rows', None)
-    print(dataframe)
-
-    model = ols('Accuracy ~ C(Method) + C(Number)', data=dataframe).fit()
-    anova_table = anova_lm(model, typ=2)
-
-    print(anova_table)
-
-    p_value = anova_table['PR(>F)']['C(Method)']
-
-    print(p_value)
-
-    if p_value < 0.05:
-        print("The accuracy between the two methods significantly differs across all numbers of features.")
-    else:
-        print("There is no significant difference in accuracy between the two methods across all numbers of features.")
-
-    return dataframe
+    return threshold_values, accuracy_values
 
 
 def parse_data_all(dataset=current_dataset1, num_files=5, current_good_features=current_good_features1):

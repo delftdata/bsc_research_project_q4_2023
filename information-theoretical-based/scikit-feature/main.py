@@ -14,9 +14,9 @@ from warnings import filterwarnings
 import logging
 from ast import literal_eval
 
-from skfeature.utility.data_preparation import prepare_data_for_ml, get_hyperparameters
-from skfeature.utility.plotting import *
-from skfeature.utility.experiments import select_jmi, select_cife, select_mrmr, select_mifs
+from skfeature.utility.data_preparation import get_hyperparameters
+from skfeature.utility.plotting_helpers import *
+from skfeature.utility.experiments import select_jmi, select_cife, select_mrmr, select_mifs, select_mifs_beta
 
 filterwarnings("ignore", category=UserWarning)
 filterwarnings("ignore", category=RuntimeWarning)
@@ -117,7 +117,6 @@ def evaluate_SVM(train, test, fs_results, y_label):
 
 
 def evaluate_performance_SVM():
-    with open('results/me.txt', "r") as file:
     """
     Evaluates the performance of several feature selection algorithm
     provided an input file with the results from selecting features.
@@ -125,6 +124,7 @@ def evaluate_performance_SVM():
     Returns:
         None, but the results are stored on disk
     """
+    with open('results/logs/performance_complex.txt', "r") as file:
         data = file.readlines()
 
     data = [data[i:i + 5] for i in range(0, len(data), 5)]
@@ -326,15 +326,11 @@ def plot_feature_selection_performance():
     """
     Plots effectiveness for simple and complex entropy estimator for XGB and LR.
     """
-    # with open('results/22-5-2023/performance_simple.txt', "r") as file:
-    #     data = file.readlines()
-    # with open('results/22-5-2023/performance_complex.txt', "r") as file:
-    #     data_complex = file.readlines()
-
-    with open('results/me.txt', "r") as file:
+    with open('results/logs/performance_simple.txt', "r") as file:
         data = file.readlines()
+    with open('results/logs/performance_complex.txt', "r") as file:
+        data_complex = file.readlines()
 
-    data_complex = []
     datasets = [data[i:i + 5] for i in range(0, len(data), 5)]
     datasets_complex = [data_complex[i:i + 5] for i in range(0, len(data_complex), 5)]
     for i in range(len(datasets)):
@@ -382,14 +378,13 @@ def plot_feature_selection_performance():
 
 
 def plot_feature_selection_three_models():
-    with open('results/logs/performance_complex.txt', "r") as file:
     """
     Plots the effectiveness of the feature selection algorithms over the
     three ML algorithms.
 
     Note that here you can select whether you want an individual plot or three plots.
     """
-    with open('results/logs/performance.txt', "r") as file:
+    with open('results/logs/performance_complex.txt', "r") as file:
         data = file.readlines()
 
     data = [data[i:i + 5] for i in range(0, len(data), 5)]
@@ -411,14 +406,14 @@ def plot_feature_selection_three_models():
 
 
 def plot_feature_selection_two_side_by_side():
-    with open('results/22-5-2023/performance_simple.txt', "r") as file:
     """
     Plots the difference in effectiveness of simple and complex entropy estimator.
 
     Note that the function will only plot for steel, but that can be modified.
     """
+    with open('results/logs/performance_simple.txt', "r") as file:
         data = file.readlines()
-    with open('results/22-5-2023/performance_complex.txt', "r") as file:
+    with open('results/logs/performance_complex.txt', "r") as file:
         data_complex = file.readlines()
 
     datasets = [data[i:i + 5] for i in range(0, len(data), 5)]
@@ -445,12 +440,12 @@ def plot_feature_selection_two_side_by_side():
 
 
 def plot_feature_selection_runtime():
-    with open('results/22-5-2023/fs_simple.txt', "r") as file:
     """
     Plots runtime difference between simple and complex entropy estimators.
     """
+    with open('results/logs/fs_simple.txt', "r") as file:
         data = file.readlines()
-    with open('results/22-5-2023/fs_complex.txt', "r") as file:
+    with open('results/logs/fs_complex.txt', "r") as file:
         data_complex = file.readlines()
 
     datasets = [data[i:i + 5] for i in range(0, len(data), 5)]
@@ -494,8 +489,8 @@ def plot_feature_selection_runtime():
         plot_performance_8(dataset_name, len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one, mrmr_complex_one, mifs_complex_one, jmi_complex_one, cife_complex_one)
         # plot_performance_two('Breast cancer dataset runtime performance', len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one, mrmr_complex_one, mifs_complex_one, jmi_complex_one, cife_complex_one)
 
-def perform_feature_selection_for_multiple_datasets():
 
+def perform_feature_selection_for_multiple_datasets():
     """
     Performs the feature selection for all provided datasets for MIFS, MRMR, CIFE, and JMI.
     """
@@ -522,13 +517,14 @@ def perform_feature_selection_for_multiple_datasets():
 
 
 def evaluate_performance():
-    with open('results/logs/fs_simple.txt', "r") as file:
     """
     Evaluates the performance of MIFS, MRMR, CIFE, and JMI.
     provided an input file with the results from selecting features.
 
     Returns:
         None, but the results are stored on disk
+    """
+    with open('results/logs/performance_complex.txt', "r") as file:
         data = file.readlines()
 
     data = [data[i:i + 5] for i in range(0, len(data), 5)]

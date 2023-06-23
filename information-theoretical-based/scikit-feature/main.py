@@ -47,6 +47,56 @@ def perform_feature_selection_single(fs_algorithm, n_features, train, y_label):
     return result
 
 
+def perform_feature_selection_single_mifs(fs_algorithm, n_features, train, y_label, beta):
+    """
+    Helper function to perform the feature selection for MIFS with hyperparameter beta.
+
+    Args:
+        fs_algorithm: the algorithm to use to select featurs
+        n_features: the number of features to select
+        train: training set
+        y_label: name of y label
+        beta: the hyperparameter for MIFS
+
+    Returns:
+        An array of tuples, where the selected features are first element
+        and time it took to select is second tuple element.
+    """
+    # Perform feature selection
+    train_data = TabularDataset(train)
+    np.random.seed(42)
+    idx, _, _, times = fs_algorithm(train_data.drop(y_label, axis=1).to_numpy(), train_data[y_label].to_numpy(), n_selected_features=n_features, beta=beta)
+    result = [idx[0:i] for i in range(1, len(idx)+1)]
+    result = list(zip(result, times))
+    print(result)
+    return result
+
+
+def perform_feature_selection_mifs(n_features, train, y_label):
+    """
+    Helper function to perform the feature selection for five possible MIFS configurations.
+
+    Args:
+        n_features: the number of features
+        train: the training set
+        y_label: the name of the y label
+
+    Returns:
+        arrays with performed feature selection for each of the five possibilities
+    """
+    mifs_000 = perform_feature_selection_single_mifs(select_mifs_beta, n_features, train, y_label, 0.0)
+    logging.error(mifs_000)
+    mifs_025 = perform_feature_selection_single_mifs(select_mifs_beta, n_features, train, y_label, 0.25)
+    logging.error(mifs_025)
+    mifs_050 = perform_feature_selection_single_mifs(select_mifs_beta, n_features, train, y_label, 0.5)
+    logging.error(mifs_050)
+    mifs_075 = perform_feature_selection_single_mifs(select_mifs_beta, n_features, train, y_label, 0.75)
+    logging.error(mifs_075)
+    mifs_100 = perform_feature_selection_single_mifs(select_mifs_beta, n_features, train, y_label, 1.0)
+    logging.error(mifs_100)
+    return mifs_000, mifs_025, mifs_050, mifs_075, mifs_100
+
+
 def perform_feature_selection_all(n_features, train, y_label):
     """
     Helper function to perform the feature selection for MIFS, MRMR, CIFE, and JMI.
@@ -516,6 +566,32 @@ def perform_feature_selection_for_multiple_datasets():
         perform_feature_selection_all(n_features, train, y_label)
 
 
+def perform_mifs_comparison():
+    """
+    Performws feature selection for all MIFS scenarios.
+    """
+    for dataset in datasets:
+        mat = pd.read_csv(dataset['path'])
+        y_label = dataset['y_label']
+        n_features = len(mat.columns) - 1
+
+        # Encode features
+        train_data = TabularDataset(mat)
+        train_data = AutoMLPipelineFeatureGenerator(enable_text_special_features=False,
+                                                    enable_text_ngram_features=False).fit_transform(X=train_data)
+
+        # Split data
+        X_train, X_test, y_train, y_test = train_test_split(train_data.drop(columns=[y_label]), train_data[y_label],
+                                                            test_size=0.2, random_state=42)
+        train = X_train.copy()
+        train[y_label] = y_train
+
+        # Perform feature selection
+        print(dataset['path'])
+        logging.error(dataset['path'])
+        perform_feature_selection_mifs(n_features, train, y_label)
+
+
 def evaluate_performance():
     """
     Evaluates the performance of MIFS, MRMR, CIFE, and JMI.
@@ -572,6 +648,67 @@ def evaluate_performance():
         logging.error(jmi)
         print(cife)
         logging.error(cife)
+
+
+def evaluate_performance_mifs():
+    """
+    Evaluates the performance of MIFS under different hyperparameters.
+    provided an input file with the results from selecting features.
+
+    Returns:
+        None, but the results are stored on disk
+    """
+    with open('results/logs/performance_mifs.txt', "r") as file:
+        data = file.readlines()
+
+    data = [data[i:i + 6] for i in range(0, len(data), 6)]
+    for i in range(len(data)):
+        dataset = data[i]
+
+        mifs_000 = literal_eval(dataset[1].replace('array', ''))
+        mifs_025 = literal_eval(dataset[2].replace('array', ''))
+        mifs_050 = literal_eval(dataset[3].replace('array', ''))
+        mifs_075 = literal_eval(dataset[4].replace('array', ''))
+        mifs_100 = literal_eval(dataset[5].replace('array', ''))
+
+        mat = pd.read_csv([x['path'] for x in datasets if x['path'] == '../.' + dataset[0].strip()][0])
+        y_label = [x['y_label'] for x in datasets if x['path'] == '../.' + dataset[0].strip()][0]
+        n_features = len(mat.columns) - 1
+
+        algorithm = ['XGB', 'LR']
+        model_name = ['XGBoost', 'LinearModel']
+        train_data = TabularDataset(mat)
+        train_data = AutoMLPipelineFeatureGenerator(enable_text_special_features=False,
+                                                    enable_text_ngram_features=False).fit_transform(X=train_data)
+
+        logging.error(f'{dataset[0]}, {algorithm}')
+        hyperparameters = get_hyperparameters(train_data, y_label, algorithm, model_name)
+        print(hyperparameters)
+
+        # Split data
+        X_train, X_test, y_train, y_test = train_test_split(train_data.drop(columns=[y_label]), train_data[y_label],
+                                                            test_size=0.2, random_state=42)
+        train = X_train.copy()
+        train[y_label] = y_train
+        test = X_test.copy()
+        test[y_label] = y_test
+
+        # Perform evaluation
+        mifs_000 = evaluate_model(train, test, mifs_000, y_label, algorithm, hyperparameters)
+        print(mifs_000)
+        logging.error(mifs_000)
+        mifs_025 = evaluate_model(train, test, mifs_025, y_label, algorithm, hyperparameters)
+        print(mifs_025)
+        logging.error(mifs_025)
+        mifs_050 = evaluate_model(train, test, mifs_050, y_label, algorithm, hyperparameters)
+        print(mifs_050)
+        logging.error(mifs_050)
+        mifs_075 = evaluate_model(train, test, mifs_075, y_label, algorithm, hyperparameters)
+        print(mifs_075)
+        logging.error(mifs_075)
+        mifs_100 = evaluate_model(train, test, mifs_100, y_label, algorithm, hyperparameters)
+        print(mifs_100)
+        logging.error(mifs_100)
 
 
 if __name__ == '__main__':

@@ -24,6 +24,19 @@ filterwarnings("ignore", category=FutureWarning)
 
 
 def perform_feature_selection_single(fs_algorithm, n_features, train, y_label):
+    """
+    Helper function to perform the feature selection for a single algorithm.
+
+    Args:
+        fs_algorithm: the algorithm to use to select featurs
+        n_features: the number of features to select
+        train: training set
+        y_label: name of y label
+
+    Returns:
+        An array of tuples, where the selected features are first element
+        and time it took to select is second tuple element.
+    """
     # Perform feature selection
     train_data = TabularDataset(train)
     np.random.seed(42)
@@ -35,6 +48,17 @@ def perform_feature_selection_single(fs_algorithm, n_features, train, y_label):
 
 
 def perform_feature_selection_all(n_features, train, y_label):
+    """
+    Helper function to perform the feature selection for MIFS, MRMR, CIFE, and JMI.
+
+    Args:
+        n_features: number of features to select
+        train: the training set
+        y_label: the name of y label
+
+    Returns:
+        arrays with performed feature selection for each of the four possibilities
+    """
     mrmr_result = perform_feature_selection_single(select_mrmr, n_features, train, y_label)
     logging.error(mrmr_result)
     mifs_result = perform_feature_selection_single(select_mifs, n_features, train, y_label)
@@ -47,6 +71,18 @@ def perform_feature_selection_all(n_features, train, y_label):
 
 
 def evaluate_SVM(train, test, fs_results, y_label):
+    """
+    Evaluates datasets under SVM model for a single feature selection algorithm.
+
+    Args:
+        train: the training set
+        test: the test set
+        fs_results: an array with the result from performing feature selection
+        y_label: the name of the y label
+
+    Returns:
+        accuracy for each subset of selected features for SVM
+    """
     if train[y_label].nunique() > 20:
         is_regression = True
     else:
@@ -82,6 +118,13 @@ def evaluate_SVM(train, test, fs_results, y_label):
 
 def evaluate_performance_SVM():
     with open('results/me.txt', "r") as file:
+    """
+    Evaluates the performance of several feature selection algorithm
+    provided an input file with the results from selecting features.
+
+    Returns:
+        None, but the results are stored on disk
+    """
         data = file.readlines()
 
     data = [data[i:i + 5] for i in range(0, len(data), 5)]
@@ -132,6 +175,20 @@ def evaluate_performance_SVM():
 
 
 def evaluate_model(train, test, fs_results, y_label, algorithms, hyperparameters):
+    """
+    Evaluates datasets under ML algorithms for a single feature selection algorithm.
+
+    Args:
+        train: the training set
+        test: the test set
+        fs_results: an array with the result from performing feature selection
+        y_label: the name of the y label
+        algorithms: ML algorithms
+        hyperparameters: hyperparameters for the ML algorithms
+
+    Returns:
+        accuracy for each subset of selected features for each ML algorithm
+    """
     results = []
     for algorithm, hyperparameter in zip(algorithms, hyperparameters):
         result = []
@@ -163,6 +220,19 @@ def evaluate_model(train, test, fs_results, y_label, algorithms, hyperparameters
 
 
 def run_pipeline(mat, y_label, algorithm, model_name, n_features):
+    """
+    Runs all steps from feature selection to model evaluation
+
+    Args:
+        mat: entire dataset
+        y_label: name of y label
+        algorithm: ML algorithm to train in
+        model_name: name of ML algorithm in AutoGluon
+        n_features: number of features to select
+
+    Returns:
+        Arrays with results from evaluation for each feature selection method.
+    """
     # Encode features
     train_data = TabularDataset(mat)
     train_data = AutoMLPipelineFeatureGenerator(enable_text_special_features=False,
@@ -197,6 +267,18 @@ def run_pipeline(mat, y_label, algorithm, model_name, n_features):
 
 
 def visualize_results(dataset_name, model_names, n, mrmrs, mifss, jmis, cifes):
+    """
+    Plots the efficiency and effectiveness of each FS method
+
+    Args:
+        dataset_name: name of dataset
+        model_names: name of ML algorithms
+        n: number of features
+        mrmrs: results from MRMR
+        mifss: results from MIFS
+        jmis: results from JMI
+        cifes: results from CIFE
+    """
     i = 0
     for mrmr, mifs, jmi, cife in zip(mrmrs, mifss, jmis, cifes):
         model_name = model_names[i]
@@ -215,6 +297,9 @@ def visualize_results(dataset_name, model_names, n, mrmrs, mifss, jmis, cifes):
         i += 1
 
 def plot_feature_selection_performance_svm():
+    """
+    Plots the effectiveness of feature selection algorithms for SVM.
+    """
     with open('results/logs/performance_complex_svm.txt', "r") as file:
         data = file.readlines()
 
@@ -238,6 +323,9 @@ def plot_feature_selection_performance_svm():
 
 
 def plot_feature_selection_performance():
+    """
+    Plots effectiveness for simple and complex entropy estimator for XGB and LR.
+    """
     # with open('results/22-5-2023/performance_simple.txt', "r") as file:
     #     data = file.readlines()
     # with open('results/22-5-2023/performance_complex.txt', "r") as file:
@@ -295,6 +383,13 @@ def plot_feature_selection_performance():
 
 def plot_feature_selection_three_models():
     with open('results/logs/performance_complex.txt', "r") as file:
+    """
+    Plots the effectiveness of the feature selection algorithms over the
+    three ML algorithms.
+
+    Note that here you can select whether you want an individual plot or three plots.
+    """
+    with open('results/logs/performance.txt', "r") as file:
         data = file.readlines()
 
     data = [data[i:i + 5] for i in range(0, len(data), 5)]
@@ -317,6 +412,11 @@ def plot_feature_selection_three_models():
 
 def plot_feature_selection_two_side_by_side():
     with open('results/22-5-2023/performance_simple.txt', "r") as file:
+    """
+    Plots the difference in effectiveness of simple and complex entropy estimator.
+
+    Note that the function will only plot for steel, but that can be modified.
+    """
         data = file.readlines()
     with open('results/22-5-2023/performance_complex.txt', "r") as file:
         data_complex = file.readlines()
@@ -346,6 +446,9 @@ def plot_feature_selection_two_side_by_side():
 
 def plot_feature_selection_runtime():
     with open('results/22-5-2023/fs_simple.txt', "r") as file:
+    """
+    Plots runtime difference between simple and complex entropy estimators.
+    """
         data = file.readlines()
     with open('results/22-5-2023/fs_complex.txt', "r") as file:
         data_complex = file.readlines()
@@ -393,6 +496,9 @@ def plot_feature_selection_runtime():
 
 def perform_feature_selection_for_multiple_datasets():
 
+    """
+    Performs the feature selection for all provided datasets for MIFS, MRMR, CIFE, and JMI.
+    """
     for dataset in datasets:
         mat = pd.read_csv(dataset['path'])
         y_label = dataset['y_label']
@@ -417,6 +523,12 @@ def perform_feature_selection_for_multiple_datasets():
 
 def evaluate_performance():
     with open('results/logs/fs_simple.txt', "r") as file:
+    """
+    Evaluates the performance of MIFS, MRMR, CIFE, and JMI.
+    provided an input file with the results from selecting features.
+
+    Returns:
+        None, but the results are stored on disk
         data = file.readlines()
 
     data = [data[i:i + 5] for i in range(0, len(data), 5)]

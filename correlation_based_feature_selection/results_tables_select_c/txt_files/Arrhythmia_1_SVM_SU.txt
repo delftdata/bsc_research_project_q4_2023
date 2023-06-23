@@ -1,0 +1,108 @@
+DATASET NAME: Arrhythmia
+DATASET TYPE: 1
+ALGORITHM NAME: SVM
+CORRELATION METHOD: SU
+THRESHOLD C: 0.9
+SUBSET OF FEATURES: 0
+CURRENT FEATURE SUBSET: []
+CURRENT PERFORMANCE: 0
+CURRENT RUNTIME: 0
+BASELINE PERFORMANCE: 0.5934065934065934
+BASELINE RUNTIME: 0.3022763729095459
+
+DATASET NAME: Arrhythmia
+DATASET TYPE: 1
+ALGORITHM NAME: SVM
+CORRELATION METHOD: SU
+THRESHOLD C: 0.8
+SUBSET OF FEATURES: 0
+CURRENT FEATURE SUBSET: []
+CURRENT PERFORMANCE: 0
+CURRENT RUNTIME: 0
+BASELINE PERFORMANCE: 0.5934065934065934
+BASELINE RUNTIME: 0.3022763729095459
+
+DATASET NAME: Arrhythmia
+DATASET TYPE: 1
+ALGORITHM NAME: SVM
+CORRELATION METHOD: SU
+THRESHOLD C: 0.7
+SUBSET OF FEATURES: 0
+CURRENT FEATURE SUBSET: []
+CURRENT PERFORMANCE: 0
+CURRENT RUNTIME: 0
+BASELINE PERFORMANCE: 0.5934065934065934
+BASELINE RUNTIME: 0.3022763729095459
+
+DATASET NAME: Arrhythmia
+DATASET TYPE: 1
+ALGORITHM NAME: SVM
+CORRELATION METHOD: SU
+THRESHOLD C: 0.6
+SUBSET OF FEATURES: 0
+CURRENT FEATURE SUBSET: []
+CURRENT PERFORMANCE: 0
+CURRENT RUNTIME: 0
+BASELINE PERFORMANCE: 0.5934065934065934
+BASELINE RUNTIME: 0.3022763729095459
+
+DATASET NAME: Arrhythmia
+DATASET TYPE: 1
+ALGORITHM NAME: SVM
+CORRELATION METHOD: SU
+THRESHOLD C: 0.5
+SUBSET OF FEATURES: 0
+CURRENT FEATURE SUBSET: []
+CURRENT PERFORMANCE: 0
+CURRENT RUNTIME: 0
+BASELINE PERFORMANCE: 0.5934065934065934
+BASELINE RUNTIME: 0.3022763729095459
+
+DATASET NAME: Arrhythmia
+DATASET TYPE: 1
+ALGORITHM NAME: SVM
+CORRELATION METHOD: SU
+THRESHOLD C: 0.3
+SUBSET OF FEATURES: 34
+CURRENT FEATURE SUBSET: ['Q-T interval', 'T interval', 'QRS', 'DI QRSA', 'DI QRSTA', 'DII QRSA', 'DII QRSTA', 'DIII QRSA', 'DIII QRSTA', 'AVR QRSA', 'AVR QRSTA', 'AVL QRSA', 'AVL QRSTA', 'AVF QRSA', 'AVF QRSTA', 'V1 QRSA', 'V1 QRSTA', 'V2 Amplitude: S wave', 'V2 QRSA', 'V2 QRSTA', 'V3 Amplitude: R wave', 'V3 Amplitude: S wave', 'V3 Amplitude: T wave', 'V3 QRSA', 'V3 QRSTA', 'V4 Amplitude: R wave', 'V4 Amplitude: S wave', 'V4 QRSA', 'V4 QRSTA', 'V5 Amplitude: R wave', 'V5 QRSA', 'V5 QRSTA', 'V6 QRSA', 'V6 QRSTA']
+CURRENT PERFORMANCE: 0.5934065934065934
+CURRENT RUNTIME: 0.05460476875305176
+BASELINE PERFORMANCE: 0.5934065934065934
+BASELINE RUNTIME: 0.3022763729095459
+
+DATASET NAME: Arrhythmia
+DATASET TYPE: 1
+ALGORITHM NAME: SVM
+CORRELATION METHOD: SU
+THRESHOLD C: 0.2
+SUBSET OF FEATURES: 82
+CURRENT FEATURE SUBSET: ['Age', 'Height', 'Weight', 'QRS duration', 'P-R interval', 'Q-T interval', 'T interval', 'P interval', 'QRS', 'V2 Average width: Q wave', 'V3 Average width: S wave', 'DI Amplitude: R wave', 'DI Amplitude: S wave', 'DI Amplitude: T wave', 'DI QRSA', 'DI QRSTA', 'DII Amplitude: R wave', 'DII Amplitude: S wave', 'DII Amplitude: T wave', 'DII QRSA', 'DII QRSTA', 'DIII Amplitude: Q wave', 'DIII Amplitude: R wave', 'DIII Amplitude: S wave', 'DIII Amplitude: T wave', 'DIII QRSA', 'DIII QRSTA', 'AVR Amplitude: Q wave', 'AVR Amplitude: T wave', 'AVR QRSA', 'AVR QRSTA', 'AVL Amplitude: R wave', 'AVL Amplitude: S wave', 'AVL Amplitude: T wave', 'AVL QRSA', 'AVL QRSTA', 'AVF Amplitude: Q wave', 'AVF Amplitude: R wave', 'AVF Amplitude: S wave', 'AVF Amplitude: T wave', 'AVF QRSA', 'AVF QRSTA', 'V1 Amplitude: JJ wave', 'V1 Amplitude: Q wave', 'V1 Amplitude: R wave', 'V1 Amplitude: S wave', 'V1 Amplitude: T wave', 'V1 QRSA', 'V1 QRSTA', 'V2 Amplitude: JJ wave', 'V2 Amplitude: Q wave', 'V2 Amplitude: R wave', 'V2 Amplitude: S wave', 'V2 Amplitude: T wave', 'V2 QRSA', 'V2 QRSTA', 'V3 Amplitude: JJ wave', 'V3 Amplitude: R wave', 'V3 Amplitude: S wave', 'V3 Amplitude: T wave', 'V3 QRSA', 'V3 QRSTA', 'V4 Amplitude: JJ wave', 'V4 Amplitude: R wave', 'V4 Amplitude: S wave', 'V4 Amplitude: T wave', 'V4 QRSA', 'V4 QRSTA', 'V5 Amplitude: R wave', 'V5 Amplitude: S wave', 'V5 Amplitude: T wave', 'V5 QRSA', 'V5 QRSTA', 'V6 Amplitude: R wave', 'V6 Amplitude: S wave', 'V6 Amplitude: T wave', 'V6 QRSA', 'V6 QRSTA', 'T', 'P', 'QRST', 'Heart rate']
+CURRENT PERFORMANCE: 0.6043956043956044
+CURRENT RUNTIME: 0.20252609252929688
+BASELINE PERFORMANCE: 0.5934065934065934
+BASELINE RUNTIME: 0.3022763729095459
+
+DATASET NAME: Arrhythmia
+DATASET TYPE: 1
+ALGORITHM NAME: SVM
+CORRELATION METHOD: SU
+THRESHOLD C: 0.1
+SUBSET OF FEATURES: 160
+CURRENT FEATURE SUBSET: ['Age', 'Height', 'Weight', 'QRS duration', 'P-R interval', 'Q-T interval', 'T interval', 'P interval', 'QRS', 'DI Average width: R wave', 'DI Average width: S wave', 'DI Number of intrinsic deflections', 'DII Average width: Q wave', 'DII Average width: R wave', 'DII Average width: S wave', 'DII Number of intrinsic deflections', 'DIII Average width: Q wave', 'DIII Average width: R wave', 'DIII Average width: S wave', 'DIII Number of intrinsic deflections', 'AVR Average width: Q wave', 'AVR Average width: R wave', 'AVR Average width: S wave', 'AVR Number of intrinsic deflections', 'AVL Average width: Q wave', 'AVL Average width: R wave', 'AVL Average width: S wave', 'AVL Number of intrinsic deflections', 'AVF Average width: Q wave', 'AVF Average width: R wave', 'AVF Average width: S wave', 'AVF Number of intrinsic deflections', 'V1 Average width: Q wave', 'V1 Average width: R wave', 'V1 Average width: S wave', "V1 Average width: R' wave", 'V1 Number of intrinsic deflections', 'V2 Average width: Q wave', 'V2 Average width: R wave', 'V2 Average width: S wave', "V2 Average width: R' wave", 'V2 Number of intrinsic deflections', 'V3 Average width: Q wave', 'V3 Average width: R wave', 'V3 Average width: S wave', 'V3 Number of intrinsic deflections', 'V4 Average width: Q wave', 'V4 Average width: R wave', 'V4 Average width: S wave', 'V4 Number of intrinsic deflections', 'V5 Average width: R wave', 'V5 Average width: S wave', 'V5 Number of intrinsic deflections', 'V6 Average width: Q wave', 'V6 Average width: R wave', 'V6 Average width: S wave', 'V6 Number of intrinsic deflections', 'DI Amplitude: JJ wave', 'DI Amplitude: Q wave', 'DI Amplitude: R wave', 'DI Amplitude: S wave', 'DI Amplitude: P wave', 'DI Amplitude: T wave', 'DI QRSA', 'DI QRSTA', 'DII Amplitude: JJ wave', 'DII Amplitude: Q wave', 'DII Amplitude: R wave', 'DII Amplitude: S wave', 'DII Amplitude: P wave', 'DII Amplitude: T wave', 'DII QRSA', 'DII QRSTA', 'DIII Amplitude: JJ wave', 'DIII Amplitude: Q wave', 'DIII Amplitude: R wave', 'DIII Amplitude: S wave', 'DIII Amplitude: P wave', 'DIII Amplitude: T wave', 'DIII QRSA', 'DIII QRSTA', 'AVR Amplitude: JJ wave', 'AVR Amplitude: Q wave', 'AVR Amplitude: R wave', 'AVR Amplitude: S wave', "AVR Amplitude: R' wave", 'AVR Amplitude: P wave', 'AVR Amplitude: T wave', 'AVR QRSA', 'AVR QRSTA', 'AVL Amplitude: JJ wave', 'AVL Amplitude: Q wave', 'AVL Amplitude: R wave', 'AVL Amplitude: S wave', 'AVL Amplitude: P wave', 'AVL Amplitude: T wave', 'AVL QRSA', 'AVL QRSTA', 'AVF Amplitude: JJ wave', 'AVF Amplitude: Q wave', 'AVF Amplitude: R wave', 'AVF Amplitude: S wave', 'AVF Amplitude: P wave', 'AVF Amplitude: T wave', 'AVF QRSA', 'AVF QRSTA', 'V1 Amplitude: JJ wave', 'V1 Amplitude: Q wave', 'V1 Amplitude: R wave', 'V1 Amplitude: S wave', "V1 Amplitude: R' wave", 'V1 Amplitude: P wave', 'V1 Amplitude: T wave', 'V1 QRSA', 'V1 QRSTA', 'V2 Amplitude: JJ wave', 'V2 Amplitude: Q wave', 'V2 Amplitude: R wave', 'V2 Amplitude: S wave', "V2 Amplitude: R' wave", 'V2 Amplitude: P wave', 'V2 Amplitude: T wave', 'V2 QRSA', 'V2 QRSTA', 'V3 Amplitude: JJ wave', 'V3 Amplitude: Q wave', 'V3 Amplitude: R wave', 'V3 Amplitude: S wave', 'V3 Amplitude: P wave', 'V3 Amplitude: T wave', 'V3 QRSA', 'V3 QRSTA', 'V4 Amplitude: JJ wave', 'V4 Amplitude: Q wave', 'V4 Amplitude: R wave', 'V4 Amplitude: S wave', 'V4 Amplitude: P wave', 'V4 Amplitude: T wave', 'V4 QRSA', 'V4 QRSTA', 'V5 Amplitude: JJ wave', 'V5 Amplitude: Q wave', 'V5 Amplitude: R wave', 'V5 Amplitude: S wave', 'V5 Amplitude: P wave', 'V5 Amplitude: T wave', 'V5 QRSA', 'V5 QRSTA', 'V6 Amplitude: JJ wave', 'V6 Amplitude: Q wave', 'V6 Amplitude: R wave', 'V6 Amplitude: S wave', 'V6 Amplitude: P wave', 'V6 Amplitude: T wave', 'V6 QRSA', 'V6 QRSTA', 'T', 'P', 'QRST', 'Heart rate']
+CURRENT PERFORMANCE: 0.5934065934065934
+CURRENT RUNTIME: 0.30454206466674805
+BASELINE PERFORMANCE: 0.5934065934065934
+BASELINE RUNTIME: 0.3022763729095459
+
+DATASET NAME: Arrhythmia
+DATASET TYPE: 1
+ALGORITHM NAME: SVM
+CORRELATION METHOD: SU
+THRESHOLD C: 0
+SUBSET OF FEATURES: 262
+CURRENT FEATURE SUBSET: ['Age', 'Gender', 'Height', 'Weight', 'QRS duration', 'P-R interval', 'Q-T interval', 'T interval', 'P interval', 'QRS', 'DI Average width: Q wave', 'DI Average width: R wave', 'DI Average width: S wave', "DI Average width: R' wave", 'DI Number of intrinsic deflections', 'DI Existence of ragged Average width: R wave', 'DI Existence of diphasic derivation of Average width: R wave', 'DI Existence of ragged P wave', 'DI Existence of diphasic derivation of P wave', 'DI Existence of ragged T wave', 'DI Existence of diphasic derivation of T wave', 'DII Average width: Q wave', 'DII Average width: R wave', 'DII Average width: S wave', "DII Average width: R' wave", "DII Average width: S' wave", 'DII Number of intrinsic deflections', 'DII Existence of ragged Average width: R wave', 'DII Existence of diphasic derivation of Average width: R wave', 'DII Existence of ragged P wave', 'DII Existence of diphasic derivation of P wave', 'DII Existence of ragged T wave', 'DII Existence of diphasic derivation of T wave', 'DIII Average width: Q wave', 'DIII Average width: R wave', 'DIII Average width: S wave', "DIII Average width: R' wave", "DIII Average width: S' wave", 'DIII Number of intrinsic deflections', 'DIII Existence of ragged Average width: R wave', 'DIII Existence of diphasic derivation of Average width: R wave', 'DIII Existence of ragged P wave', 'DIII Existence of diphasic derivation of P wave', 'DIII Existence of ragged T wave', 'DIII Existence of diphasic derivation of T wave', 'AVR Average width: Q wave', 'AVR Average width: R wave', 'AVR Average width: S wave', "AVR Average width: R' wave", "AVR Average width: S' wave", 'AVR Number of intrinsic deflections', 'AVR Existence of ragged Average width: R wave', 'AVR Existence of diphasic derivation of Average width: R wave', 'AVR Existence of ragged P wave', 'AVR Existence of diphasic derivation of P wave', 'AVR Existence of ragged T wave', 'AVR Existence of diphasic derivation of T wave', 'AVL Average width: Q wave', 'AVL Average width: R wave', 'AVL Average width: S wave', "AVL Average width: R' wave", 'AVL Number of intrinsic deflections', 'AVL Existence of diphasic derivation of Average width: R wave', 'AVL Existence of ragged P wave', 'AVL Existence of diphasic derivation of P wave', 'AVL Existence of ragged T wave', 'AVL Existence of diphasic derivation of T wave', 'AVF Average width: Q wave', 'AVF Average width: R wave', 'AVF Average width: S wave', "AVF Average width: R' wave", "AVF Average width: S' wave", 'AVF Number of intrinsic deflections', 'AVF Existence of ragged Average width: R wave', 'AVF Existence of diphasic derivation of Average width: R wave', 'AVF Existence of diphasic derivation of P wave', 'AVF Existence of ragged T wave', 'AVF Existence of diphasic derivation of T wave', 'V1 Average width: Q wave', 'V1 Average width: R wave', 'V1 Average width: S wave', "V1 Average width: R' wave", "V1 Average width: S' wave", 'V1 Number of intrinsic deflections', 'V1 Existence of ragged Average width: R wave', 'V1 Existence of diphasic derivation of Average width: R wave', 'V1 Existence of ragged P wave', 'V1 Existence of diphasic derivation of P wave', 'V1 Existence of ragged T wave', 'V1 Existence of diphasic derivation of T wave', 'V2 Average width: Q wave', 'V2 Average width: R wave', 'V2 Average width: S wave', "V2 Average width: R' wave", "V2 Average width: S' wave", 'V2 Number of intrinsic deflections', 'V2 Existence of ragged Average width: R wave', 'V2 Existence of diphasic derivation of Average width: R wave', 'V2 Existence of ragged P wave', 'V2 Existence of diphasic derivation of P wave', 'V2 Existence of ragged T wave', 'V2 Existence of diphasic derivation of T wave', 'V3 Average width: Q wave', 'V3 Average width: R wave', 'V3 Average width: S wave', "V3 Average width: R' wave", "V3 Average width: S' wave", 'V3 Number of intrinsic deflections', 'V3 Existence of ragged Average width: R wave', 'V3 Existence of diphasic derivation of Average width: R wave', 'V3 Existence of ragged P wave', 'V3 Existence of diphasic derivation of P wave', 'V3 Existence of ragged T wave', 'V3 Existence of diphasic derivation of T wave', 'V4 Average width: Q wave', 'V4 Average width: R wave', 'V4 Average width: S wave', "V4 Average width: R' wave", "V4 Average width: S' wave", 'V4 Number of intrinsic deflections', 'V4 Existence of ragged Average width: R wave', 'V4 Existence of diphasic derivation of Average width: R wave', 'V4 Existence of ragged T wave', 'V4 Existence of diphasic derivation of T wave', 'V5 Average width: Q wave', 'V5 Average width: R wave', 'V5 Average width: S wave', "V5 Average width: R' wave", 'V5 Number of intrinsic deflections', 'V5 Existence of diphasic derivation of Average width: R wave', 'V5 Existence of diphasic derivation of P wave', 'V5 Existence of diphasic derivation of T wave', 'V6 Average width: Q wave', 'V6 Average width: R wave', 'V6 Average width: S wave', "V6 Average width: R' wave", 'V6 Number of intrinsic deflections', 'V6 Existence of ragged Average width: R wave', 'V6 Existence of diphasic derivation of Average width: R wave', 'V6 Existence of ragged P wave', 'V6 Existence of diphasic derivation of T wave', 'DI Amplitude: JJ wave', 'DI Amplitude: Q wave', 'DI Amplitude: R wave', 'DI Amplitude: S wave', "DI Amplitude: R' wave", 'DI Amplitude: P wave', 'DI Amplitude: T wave', 'DI QRSA', 'DI QRSTA', 'DII Amplitude: JJ wave', 'DII Amplitude: Q wave', 'DII Amplitude: R wave', 'DII Amplitude: S wave', "DII Amplitude: R' wave", "DII Amplitude: S' wave", 'DII Amplitude: P wave', 'DII Amplitude: T wave', 'DII QRSA', 'DII QRSTA', 'DIII Amplitude: JJ wave', 'DIII Amplitude: Q wave', 'DIII Amplitude: R wave', 'DIII Amplitude: S wave', "DIII Amplitude: R' wave", "DIII Amplitude: S' wave", 'DIII Amplitude: P wave', 'DIII Amplitude: T wave', 'DIII QRSA', 'DIII QRSTA', 'AVR Amplitude: JJ wave', 'AVR Amplitude: Q wave', 'AVR Amplitude: R wave', 'AVR Amplitude: S wave', "AVR Amplitude: R' wave", "AVR Amplitude: S' wave", 'AVR Amplitude: P wave', 'AVR Amplitude: T wave', 'AVR QRSA', 'AVR QRSTA', 'AVL Amplitude: JJ wave', 'AVL Amplitude: Q wave', 'AVL Amplitude: R wave', 'AVL Amplitude: S wave', "AVL Amplitude: R' wave", 'AVL Amplitude: P wave', 'AVL Amplitude: T wave', 'AVL QRSA', 'AVL QRSTA', 'AVF Amplitude: JJ wave', 'AVF Amplitude: Q wave', 'AVF Amplitude: R wave', 'AVF Amplitude: S wave', "AVF Amplitude: R' wave", "AVF Amplitude: S' wave", 'AVF Amplitude: P wave', 'AVF Amplitude: T wave', 'AVF QRSA', 'AVF QRSTA', 'V1 Amplitude: JJ wave', 'V1 Amplitude: Q wave', 'V1 Amplitude: R wave', 'V1 Amplitude: S wave', "V1 Amplitude: R' wave", "V1 Amplitude: S' wave", 'V1 Amplitude: P wave', 'V1 Amplitude: T wave', 'V1 QRSA', 'V1 QRSTA', 'V2 Amplitude: JJ wave', 'V2 Amplitude: Q wave', 'V2 Amplitude: R wave', 'V2 Amplitude: S wave', "V2 Amplitude: R' wave", "V2 Amplitude: S' wave", 'V2 Amplitude: P wave', 'V2 Amplitude: T wave', 'V2 QRSA', 'V2 QRSTA', 'V3 Amplitude: JJ wave', 'V3 Amplitude: Q wave', 'V3 Amplitude: R wave', 'V3 Amplitude: S wave', "V3 Amplitude: R' wave", "V3 Amplitude: S' wave", 'V3 Amplitude: P wave', 'V3 Amplitude: T wave', 'V3 QRSA', 'V3 QRSTA', 'V4 Amplitude: JJ wave', 'V4 Amplitude: Q wave', 'V4 Amplitude: R wave', 'V4 Amplitude: S wave', "V4 Amplitude: R' wave", "V4 Amplitude: S' wave", 'V4 Amplitude: P wave', 'V4 Amplitude: T wave', 'V4 QRSA', 'V4 QRSTA', 'V5 Amplitude: JJ wave', 'V5 Amplitude: Q wave', 'V5 Amplitude: R wave', 'V5 Amplitude: S wave', "V5 Amplitude: R' wave", 'V5 Amplitude: P wave', 'V5 Amplitude: T wave', 'V5 QRSA', 'V5 QRSTA', 'V6 Amplitude: JJ wave', 'V6 Amplitude: Q wave', 'V6 Amplitude: R wave', 'V6 Amplitude: S wave', "V6 Amplitude: R' wave", 'V6 Amplitude: P wave', 'V6 Amplitude: T wave', 'V6 QRSA', 'V6 QRSTA', 'T', 'P', 'QRST', 'J', 'Heart rate']
+CURRENT PERFORMANCE: 0.5934065934065934
+CURRENT RUNTIME: 0.3245091438293457
+BASELINE PERFORMANCE: 0.5934065934065934
+BASELINE RUNTIME: 0.3022763729095459
+

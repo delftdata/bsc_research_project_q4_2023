@@ -1,0 +1,108 @@
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: RandomForest
+CORRELATION METHOD: Spearman
+THRESHOLD C: 0.9
+SUBSET OF FEATURES: 0
+CURRENT FEATURE SUBSET: []
+CURRENT PERFORMANCE: 0
+CURRENT RUNTIME: 0
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 1.0205707550048828
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: RandomForest
+CORRELATION METHOD: Spearman
+THRESHOLD C: 0.8
+SUBSET OF FEATURES: 0
+CURRENT FEATURE SUBSET: []
+CURRENT PERFORMANCE: 0
+CURRENT RUNTIME: 0
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 1.0205707550048828
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: RandomForest
+CORRELATION METHOD: Spearman
+THRESHOLD C: 0.7
+SUBSET OF FEATURES: 11
+CURRENT FEATURE SUBSET: ['radius_mean', 'perimeter_mean', 'area_mean', 'concavity_mean', 'concave points_mean', 'area_se', 'radius_worst', 'perimeter_worst', 'area_worst', 'concave points_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9473684210526315
+CURRENT RUNTIME: 1.0134119987487793
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 1.0205707550048828
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: RandomForest
+CORRELATION METHOD: Spearman
+THRESHOLD C: 0.6
+SUBSET OF FEATURES: 16
+CURRENT FEATURE SUBSET: ['radius_mean', 'perimeter_mean', 'area_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'radius_se', 'perimeter_se', 'area_se', 'radius_worst', 'perimeter_worst', 'area_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9298245614035088
+CURRENT RUNTIME: 1.1044549942016602
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 1.0205707550048828
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: RandomForest
+CORRELATION METHOD: Spearman
+THRESHOLD C: 0.5
+SUBSET OF FEATURES: 16
+CURRENT FEATURE SUBSET: ['radius_mean', 'perimeter_mean', 'area_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'radius_se', 'perimeter_se', 'area_se', 'radius_worst', 'perimeter_worst', 'area_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9298245614035088
+CURRENT RUNTIME: 1.0394065380096436
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 1.0205707550048828
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: RandomForest
+CORRELATION METHOD: Spearman
+THRESHOLD C: 0.3
+SUBSET OF FEATURES: 26
+CURRENT FEATURE SUBSET: ['radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean', 'radius_se', 'perimeter_se', 'area_se', 'compactness_se', 'concavity_se', 'concave points_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9473684210526315
+CURRENT RUNTIME: 0.9718060493469238
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 1.0205707550048828
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: RandomForest
+CORRELATION METHOD: Spearman
+THRESHOLD C: 0.2
+SUBSET OF FEATURES: 26
+CURRENT FEATURE SUBSET: ['radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean', 'radius_se', 'perimeter_se', 'area_se', 'compactness_se', 'concavity_se', 'concave points_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9473684210526315
+CURRENT RUNTIME: 1.0519495010375977
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 1.0205707550048828
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: RandomForest
+CORRELATION METHOD: Spearman
+THRESHOLD C: 0.1
+SUBSET OF FEATURES: 27
+CURRENT FEATURE SUBSET: ['radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean', 'radius_se', 'perimeter_se', 'area_se', 'compactness_se', 'concavity_se', 'concave points_se', 'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 1.0218839645385742
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 1.0205707550048828
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: RandomForest
+CORRELATION METHOD: Spearman
+THRESHOLD C: 0
+SUBSET OF FEATURES: 28
+CURRENT FEATURE SUBSET: ['radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean', 'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'compactness_se', 'concavity_se', 'concave points_se', 'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9385964912280702
+CURRENT RUNTIME: 0.9784150123596191
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 1.0205707550048828
+

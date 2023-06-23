@@ -1,0 +1,108 @@
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: XGBoost
+CORRELATION METHOD: Cramer
+THRESHOLD C: 0.9
+SUBSET OF FEATURES: 30
+CURRENT FEATURE SUBSET: ['id', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'fractal_dimension_mean', 'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'smoothness_se', 'compactness_se', 'concavity_se', 'concave points_se', 'symmetry_se', 'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.6228630542755127
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 0.6024856567382812
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: XGBoost
+CORRELATION METHOD: Cramer
+THRESHOLD C: 0.8
+SUBSET OF FEATURES: 32
+CURRENT FEATURE SUBSET: ['id', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean', 'fractal_dimension_mean', 'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'smoothness_se', 'compactness_se', 'concavity_se', 'concave points_se', 'symmetry_se', 'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.6984882354736328
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 0.6024856567382812
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: XGBoost
+CORRELATION METHOD: Cramer
+THRESHOLD C: 0.7
+SUBSET OF FEATURES: 32
+CURRENT FEATURE SUBSET: ['id', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean', 'fractal_dimension_mean', 'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'smoothness_se', 'compactness_se', 'concavity_se', 'concave points_se', 'symmetry_se', 'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.7590456008911133
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 0.6024856567382812
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: XGBoost
+CORRELATION METHOD: Cramer
+THRESHOLD C: 0.6
+SUBSET OF FEATURES: 32
+CURRENT FEATURE SUBSET: ['id', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean', 'fractal_dimension_mean', 'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'smoothness_se', 'compactness_se', 'concavity_se', 'concave points_se', 'symmetry_se', 'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.5813727378845215
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 0.6024856567382812
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: XGBoost
+CORRELATION METHOD: Cramer
+THRESHOLD C: 0.5
+SUBSET OF FEATURES: 32
+CURRENT FEATURE SUBSET: ['id', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean', 'fractal_dimension_mean', 'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'smoothness_se', 'compactness_se', 'concavity_se', 'concave points_se', 'symmetry_se', 'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.4892463684082031
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 0.6024856567382812
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: XGBoost
+CORRELATION METHOD: Cramer
+THRESHOLD C: 0.3
+SUBSET OF FEATURES: 32
+CURRENT FEATURE SUBSET: ['id', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean', 'fractal_dimension_mean', 'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'smoothness_se', 'compactness_se', 'concavity_se', 'concave points_se', 'symmetry_se', 'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.6065547466278076
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 0.6024856567382812
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: XGBoost
+CORRELATION METHOD: Cramer
+THRESHOLD C: 0.2
+SUBSET OF FEATURES: 32
+CURRENT FEATURE SUBSET: ['id', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean', 'fractal_dimension_mean', 'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'smoothness_se', 'compactness_se', 'concavity_se', 'concave points_se', 'symmetry_se', 'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.5203573703765869
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 0.6024856567382812
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: XGBoost
+CORRELATION METHOD: Cramer
+THRESHOLD C: 0.1
+SUBSET OF FEATURES: 32
+CURRENT FEATURE SUBSET: ['id', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean', 'fractal_dimension_mean', 'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'smoothness_se', 'compactness_se', 'concavity_se', 'concave points_se', 'symmetry_se', 'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.42572665214538574
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 0.6024856567382812
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: XGBoost
+CORRELATION METHOD: Cramer
+THRESHOLD C: 0
+SUBSET OF FEATURES: 32
+CURRENT FEATURE SUBSET: ['id', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean', 'fractal_dimension_mean', 'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'smoothness_se', 'compactness_se', 'concavity_se', 'concave points_se', 'symmetry_se', 'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.5323655605316162
+BASELINE PERFORMANCE: 0.956140350877193
+BASELINE RUNTIME: 0.6024856567382812
+

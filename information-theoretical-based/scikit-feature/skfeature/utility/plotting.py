@@ -71,6 +71,18 @@ def plot_over_features_2(dataset_name, title, n_features, mrmr, mifs, jmi, cife,
 
 
 def plot_performance(dataset_name, n_features, mrmr, mifs, jmi, cife, save=True):
+    """
+    Plots the runtime difference in the four feature selection methods.
+
+    Args:
+        dataset_name: name of dataset
+        n_features: number of features to plot
+        mrmr: the results for MRMR
+        mifs: the results for MIFS
+        jmi: the results for JMI
+        cife: the results for CIFE
+        save: should you save to disk or not
+    """
     features = list(range(1, n_features+1))
 
     font_color = '#017188'
@@ -132,7 +144,23 @@ def plot_performance_8(dataset_name, n_features, mrmr, mifs, jmi, cife, mrmr_com
         plt.savefig(f'./results/result_{dataset_name}_runtime.png', dpi=400)
     plt.show()
     plt.clf()
+def plot_performance_two(title, n_features, mrmr, mifs, jmi, cife, base, mrmr_complex, mifs_complex, jmi_complex, cife_complex, base_complex, save=True):
+    """
+    Plots the runtime difference in entropy estimators.
 
+    Args:
+        dataset_name: name of dataset
+        n_features: number of features to plot
+        mrmr: the results for MRMR on simple entropy estimator
+        mifs: the results for MIFS on simple entropy estimator
+        jmi: the results for JMI on simple entropy estimator
+        cife: the results for CIFE on simple entropy estimator
+        mrmr_complex: the results for MRMR on complex entropy estimator
+        mifs_complex: the results for MIFS on complex entropy estimator
+        jmi_complex: the results for JMI on complex entropy estimator
+        cife_complex: the results for CIFE on complex entropy estimator
+        save: should you save to disk or not
+    """
 
 def plot_performance_two(title, n_features, mrmr, mifs, jmi, cife, mrmr_complex, mifs_complex, jmi_complex, cife_complex, save=True):
     features = list(range(1, n_features + 1))

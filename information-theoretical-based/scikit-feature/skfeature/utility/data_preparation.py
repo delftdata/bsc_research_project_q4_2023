@@ -17,6 +17,17 @@ def prepare_data_for_ml(dataframe):
 
 
 def get_hyperparameters(train_data, y_label, algorithms, model_names):
+    """
+    Helper function to get hyperparameters of a model
+    Args:
+        train_data: training data
+        y_label: name of y label
+        algorithms: name of algorithms
+        model_names: name of models
+
+    Returns:
+        Array of hyperparameters for each model.
+    """
     hyperparameters = []
     for algorithm, model_name in zip(algorithms, model_names):
         # Train model on entire dataset

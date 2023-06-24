@@ -15,8 +15,8 @@ import logging
 from ast import literal_eval
 
 from skfeature.utility.data_preparation import get_hyperparameters
-from skfeature.utility.plotting_helpers import *
 from skfeature.utility.experiments import select_jmi, select_cife, select_mrmr, select_mifs, select_mifs_beta
+from plotting import *
 
 filterwarnings("ignore", category=UserWarning)
 filterwarnings("ignore", category=RuntimeWarning)
@@ -316,230 +316,6 @@ def run_pipeline(mat, y_label, algorithm, model_name, n_features):
     return mrmr, mifs, jmi, cife
 
 
-def visualize_results(dataset_name, model_names, n, mrmrs, mifss, jmis, cifes):
-    """
-    Plots the efficiency and effectiveness of each FS method
-
-    Args:
-        dataset_name: name of dataset
-        model_names: name of ML algorithms
-        n: number of features
-        mrmrs: results from MRMR
-        mifss: results from MIFS
-        jmis: results from JMI
-        cifes: results from CIFE
-    """
-    i = 0
-    for mrmr, mifs, jmi, cife in zip(mrmrs, mifss, jmis, cifes):
-        model_name = model_names[i]
-
-        mrmr_one = [i[0] for i in mrmr]
-        mifs_one = [i[0] for i in mifs]
-        jmi_one = [i[0] for i in jmi]
-        cife_one = [i[0] for i in cife]
-        plot_over_features(dataset_name, model_name, n, mrmr_one, mifs_one, jmi_one, cife_one)
-
-        mrmr_one = [i[1] for i in mrmr]
-        mifs_one = [i[1] for i in mifs]
-        jmi_one = [i[1] for i in jmi]
-        cife_one = [i[1] for i in cife]
-        plot_performance(dataset_name, n, mrmr_one, mifs_one, jmi_one, cife_one)
-        i += 1
-
-def plot_feature_selection_performance_svm():
-    """
-    Plots the effectiveness of feature selection algorithms for SVM.
-    """
-    with open('results/logs/performance_complex_svm.txt', "r") as file:
-        data = file.readlines()
-
-    datasets = [data[i:i + 5] for i in range(0, len(data), 5)]
-    for i in range(len(datasets)):
-        dataset = datasets[i]
-        dataset_name = dataset[0].split('datasets/')[1].split('/')[0]
-        mrmr_result = literal_eval(dataset[1].replace('array', ''))
-        mifs_result = literal_eval(dataset[2].replace('array', ''))
-        jmi_result = literal_eval(dataset[3].replace('array', ''))
-        cife_result = literal_eval(dataset[4].replace('array', ''))
-
-        mrmr_one = [i[0] for i in mrmr_result]
-        mifs_one = [i[0] for i in mifs_result]
-        jmi_one = [i[0] for i in jmi_result]
-        cife_one = [i[0] for i in cife_result]
-
-        model_name = 'SVM'
-
-        plot_over_features(dataset_name, model_name, len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one)
-
-
-def plot_feature_selection_performance():
-    """
-    Plots effectiveness for simple and complex entropy estimator for XGB and LR.
-    """
-    with open('results/logs/performance_simple.txt', "r") as file:
-        data = file.readlines()
-    with open('results/logs/performance_complex.txt', "r") as file:
-        data_complex = file.readlines()
-
-    datasets = [data[i:i + 5] for i in range(0, len(data), 5)]
-    datasets_complex = [data_complex[i:i + 5] for i in range(0, len(data_complex), 5)]
-    for i in range(len(datasets)):
-        dataset = datasets[i]
-        dataset_name = dataset[0].split('datasets/')[1].split('/')[0]
-        mrmr_result = literal_eval(dataset[1].replace('array', ''))
-        mifs_result = literal_eval(dataset[2].replace('array', ''))
-        jmi_result = literal_eval(dataset[3].replace('array', ''))
-        cife_result = literal_eval(dataset[4].replace('array', ''))
-
-        model_names = ['XGBoost', 'LinearModel']
-        j = 0
-        for mrmr, mifs, jmi, cife in zip(mrmr_result, mifs_result, jmi_result, cife_result):
-            mrmr_one = [i[0] for i in mrmr]
-            mifs_one = [i[0] for i in mifs]
-            jmi_one = [i[0] for i in jmi]
-            cife_one = [i[0] for i in cife]
-
-            model_name = model_names[j]
-
-            plot_over_features(dataset_name, model_name, len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one)
-            j += 1
-
-    for i in range(len(datasets_complex)):
-        dataset_complex = datasets_complex[i]
-        dataset_name = dataset_complex[0].split('datasets/')[1].split('/')[0]
-        mrmr_result_complex = literal_eval(dataset_complex[1].replace('array', ''))
-        mifs_result_complex = literal_eval(dataset_complex[2].replace('array', ''))
-        jmi_result_complex = literal_eval(dataset_complex[3].replace('array', ''))
-        cife_result_complex = literal_eval(dataset_complex[4].replace('array', ''))
-
-        model_names = ['XGBoost', 'LinearModel']
-
-        j = 0
-        for mrmr, mifs, jmi, cife in zip(mrmr_result_complex, mifs_result_complex, jmi_result_complex, cife_result_complex):
-            mrmr_one = [i[0] for i in mrmr]
-            mifs_one = [i[0] for i in mifs]
-            jmi_one = [i[0] for i in jmi]
-            cife_one = [i[0] for i in cife]
-
-            model_name = model_names[j]
-
-            plot_over_features(dataset_name + '_complex_', model_name, len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one)
-            j += 1
-
-
-def plot_feature_selection_three_models():
-    """
-    Plots the effectiveness of the feature selection algorithms over the
-    three ML algorithms.
-
-    Note that here you can select whether you want an individual plot or three plots.
-    """
-    with open('results/logs/performance_complex.txt', "r") as file:
-        data = file.readlines()
-
-    data = [data[i:i + 5] for i in range(0, len(data), 5)]
-
-    for i in range(len(data)):
-        dataset = data[i]
-        dataset_name = dataset[0].split('datasets/')[1].split('/')[0]
-        mrmr_result = [[entry[0] for entry in model] for model in literal_eval(dataset[1].replace('array', ''))]
-        mifs_result = [[entry[0] for entry in model] for model in literal_eval(dataset[2].replace('array', ''))]
-        jmi_result = [[entry[0] for entry in model] for model in literal_eval(dataset[3].replace('array', ''))]
-        cife_result = [[entry[0] for entry in model] for model in literal_eval(dataset[4].replace('array', ''))]
-
-        is_classification = [x for x in datasets if x['path'] == '../.' + dataset[0].strip()][0]['is_classification']
-        name = [x for x in datasets if x['path'] == '../.' + dataset[0].strip()][0]['name']
-        title = f'Performance on {name} dataset'
-        plot_over_features_3(dataset_name, title, len(mrmr_result[0]),
-                             mrmr_result, mifs_result, jmi_result, cife_result,
-                             is_classification)
-
-
-def plot_feature_selection_two_side_by_side():
-    """
-    Plots the difference in effectiveness of simple and complex entropy estimator.
-
-    Note that the function will only plot for steel, but that can be modified.
-    """
-    with open('results/logs/performance_simple.txt', "r") as file:
-        data = file.readlines()
-    with open('results/logs/performance_complex.txt', "r") as file:
-        data_complex = file.readlines()
-
-    datasets = [data[i:i + 5] for i in range(0, len(data), 5)]
-    datasets_complex = [data_complex[i:i + 5] for i in range(0, len(data_complex), 5)]
-
-    temp = []
-    for i in range(len(datasets)):
-        dataset = datasets[i]
-        if 'steel' in dataset[0]:
-            temp.append(dataset)
-
-    for i in range(len(datasets_complex)):
-        dataset = datasets_complex[i]
-        if 'steel' in dataset[0]:
-            temp.append(dataset)
-
-    mrmr = [literal_eval(temp[0][1].replace('array', ''))[1], literal_eval(temp[1][1].replace('array', ''))[1]]
-    mifs = [literal_eval(temp[0][2].replace('array', ''))[1], literal_eval(temp[1][2].replace('array', ''))[1]]
-    jmi = [literal_eval(temp[0][3].replace('array', ''))[1], literal_eval(temp[1][3].replace('array', ''))[1]]
-    cife = [literal_eval(temp[0][4].replace('array', ''))[1], literal_eval(temp[1][4].replace('array', ''))[1]]
-
-    plot_over_features_2('steel', 'Steel Plate Faults dataset performance on Linear Regression model',
-                         len(mrmr[0]), mrmr, mifs, jmi, cife)
-
-
-def plot_feature_selection_runtime():
-    """
-    Plots runtime difference between simple and complex entropy estimators.
-    """
-    with open('results/logs/fs_simple.txt', "r") as file:
-        data = file.readlines()
-    with open('results/logs/fs_complex.txt', "r") as file:
-        data_complex = file.readlines()
-
-    datasets = [data[i:i + 5] for i in range(0, len(data), 5)]
-    datasets_complex = [data_complex[i:i + 5] for i in range(0, len(data_complex), 5)]
-    for i in range(len(datasets_complex)):
-        dataset = datasets[i]
-        dataset_name = dataset[0].split('datasets/')[1].split('/')[0]
-        mrmr_result = literal_eval(dataset[1].replace('array', ''))
-        mifs_result = literal_eval(dataset[2].replace('array', ''))
-        jmi_result = literal_eval(dataset[3].replace('array', ''))
-        cife_result = literal_eval(dataset[4].replace('array', ''))
-
-        mrmr_one = [i[1] for i in mrmr_result]
-        mifs_one = [i[1] for i in mifs_result]
-        jmi_one = [i[1] for i in jmi_result]
-        cife_one = [i[1] for i in cife_result]
-
-        dataset_complex = datasets_complex[i]
-        mrmr_result_complex = literal_eval(dataset_complex[1].replace('array', ''))
-        mifs_result_complex = literal_eval(dataset_complex[2].replace('array', ''))
-        jmi_result_complex = literal_eval(dataset_complex[3].replace('array', ''))
-        cife_result_complex = literal_eval(dataset_complex[4].replace('array', ''))
-
-        mrmr_complex_one = [i[1] for i in mrmr_result_complex]
-        mifs_complex_one = [i[1] for i in mifs_result_complex]
-        jmi_complex_one = [i[1] for i in jmi_result_complex]
-        cife_complex_one = [i[1] for i in cife_result_complex]
-
-
-        print(dataset_name)
-        print(round(mifs_one[-1], 2))
-        print(round(mrmr_one[-1], 2))
-        print(round(cife_one[-1], 2))
-        print(round(jmi_one[-1], 2))
-        print(round(mifs_complex_one[-1], 2))
-        print(round(mrmr_complex_one[-1], 2))
-        print(round(cife_complex_one[-1], 2))
-        print(round(jmi_complex_one[-1], 2))
-        # plot_performance(dataset_name, len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one, False)
-
-        plot_performance_8(dataset_name, len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one, mrmr_complex_one, mifs_complex_one, jmi_complex_one, cife_complex_one)
-        # plot_performance_two('Breast cancer dataset runtime performance', len(mrmr_one), mrmr_one, mifs_one, jmi_one, cife_one, mrmr_complex_one, mifs_complex_one, jmi_complex_one, cife_complex_one)
-
-
 def perform_feature_selection_for_multiple_datasets():
     """
     Performs the feature selection for all provided datasets for MIFS, MRMR, CIFE, and JMI.
@@ -723,8 +499,23 @@ if __name__ == '__main__':
     datasets.append({'name': 'Gisette', 'path': '../../datasets/gisette/gisette_train.csv', 'y_label': 'Class', 'n_features': 250, 'is_classification': True})
     datasets.append({'name': 'Internet advertisements', 'path': '../../datasets/internet_advertisements/internet_advertisements.csv', 'y_label': 'class', 'n_features': 200, 'is_classification': True})
 
+    # Uncomment the following to perform feature selection for the datasets above
+    # for MIFS, MRMR, CIFE, and JMI
     # perform_feature_selection_for_multiple_datasets()
     # evaluate_performance()
+    # evaluate_performance_SVM()
+
+    # Uncomment the following to perform feature selection for the datasets above
+    # for different beta values for MIFS approach
+    # perform_mifs_comparison()
+    # evaluate_performance_mifs()
+    # evaluate_performance_mifs_SVM()
+
+    # Uncomment the following to plot the results. Note that you need to have a look at
+    # the folders that lead to the performance and feature selection logs
+    # plot_feature_selection_three_models(datasets)
+    # plot_feature_selection_three_models_mifs(datasets)
+    # plot_feature_selection_two_side_by_side()
     # plot_feature_selection_runtime()
     # plot_feature_selection_performance()
     # plot_two_side_by_side()

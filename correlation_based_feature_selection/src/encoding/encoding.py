@@ -44,7 +44,6 @@ class OneHotEncoder:
         self.encoder = preprocessing.OneHotEncoder()
 
     def encode(self, df, target_column):
-        print(df)
         categoricalColumns = getCategoricalColumns(
             df.drop([target_column], axis=1))
 
@@ -55,17 +54,11 @@ class OneHotEncoder:
 
         onehot_df = pd.DataFrame(
             onehot, columns=self.encoder.get_feature_names_out(categoricalColumns))
-        print(onehot_df)
 
-        print(self.encoder.get_feature_names_out(categoricalColumns))
         df = df.drop(categoricalColumns, axis=1)
         df = pd.concat([df, onehot_df], axis=1)
 
         df = normalizeColumns(df, target_column)
-
-        # df = pd.concat([df, target_df], axis = 1)
-
-        print(df)
         return df
 
 class KBinsDiscretizer:

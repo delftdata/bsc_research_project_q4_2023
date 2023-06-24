@@ -174,7 +174,7 @@ def evaluate_performance_SVM():
     Returns:
         None, but the results are stored on disk
     """
-    with open('results/logs/performance_complex.txt', "r") as file:
+    with open('results/logs/fs_complex.txt', "r") as file:
         data = file.readlines()
 
     data = [data[i:i + 5] for i in range(0, len(data), 5)]
@@ -344,7 +344,7 @@ def perform_feature_selection_for_multiple_datasets():
 
 def perform_mifs_comparison():
     """
-    Performws feature selection for all MIFS scenarios.
+    Performs feature selection for all MIFS scenarios.
     """
     for dataset in datasets:
         mat = pd.read_csv(dataset['path'])
@@ -376,10 +376,10 @@ def evaluate_performance():
     Returns:
         None, but the results are stored on disk
     """
-    with open('results/logs/performance_complex.txt', "r") as file:
+    with open('results/logs/fs_complex.txt', "r") as file:
         data = file.readlines()
 
-    data = [data[i:i + 5] for i in range(0, len(data), 5)]
+    data = [data[i:i + 6] for i in range(0, len(data), 6)]
     for i in range(len(data)):
         dataset = data[i]
 
@@ -434,7 +434,7 @@ def evaluate_performance_mifs():
     Returns:
         None, but the results are stored on disk
     """
-    with open('results/logs/performance_mifs.txt', "r") as file:
+    with open('results/logs/mifs.txt', "r") as file:
         data = file.readlines()
 
     data = [data[i:i + 6] for i in range(0, len(data), 6)]
@@ -577,7 +577,3 @@ if __name__ == '__main__':
     # plot_feature_selection_two_side_by_side()
     # plot_feature_selection_runtime()
     # plot_feature_selection_performance()
-    # plot_two_side_by_side()
-    # evaluate_performance_SVM()
-    # plot_feature_selection_performance_svm()
-    plot_feature_selection_three_models()

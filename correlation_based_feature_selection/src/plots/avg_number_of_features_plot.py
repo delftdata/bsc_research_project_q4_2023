@@ -18,13 +18,18 @@ current_dataset2 = 'BreastCancer'
 current_number_of_features2 = 31
 current_good_features2 = list(range(1, 32, 1))
 
-current_dataset3 = 'SteelPlatesFaults'
-current_number_of_features3 = 33
-current_good_features3 = list(range(1, 34, 1))
+current_dataset3 = 'InternetAds'
+current_number_of_features3 = 250
+current_good_features3 = list(range(1, 201, 10))
+# current_good_features3.append(210)
+# current_good_features3.append(220)
+# current_good_features3.append(230)
+# current_good_features3.append(240)
+# current_good_features3.append(250)
 
-current_dataset5 = 'Nursery'
-current_number_of_features5 = 8
-current_good_features5 = list(range(1, 9, 1))
+current_dataset5 = 'Connect4'
+current_number_of_features5 = 42
+current_good_features5 = list(range(1, 43, 1))
 
 current_dataset6 = 'Arrhythmia'
 current_number_of_features6 = 279
@@ -42,7 +47,7 @@ evaluation_metrics_options = {
 }
 
 
-def parse_data_all2(dataset=current_dataset6, num_files=5, current_good_features=current_good_features6):
+def parse_data_all2(dataset='SteelPlatesFaults', num_files=5, current_good_features=list(range(1, 34, 1))):
     pearson_performance = []
     spearman_performance = []
     cramersv_performance = []
@@ -391,15 +396,6 @@ def plot_average_over_number_of_features(dataset_type=1, evaluation_metric='accu
     pearson_performance6, spearman_performance6, cramersv_performance6, su_performance6, baseline_performance6 = \
         parse_data_all(dataset=current_dataset6, num_files=5, current_good_features=current_good_features6)
 
-    print(pearson_performance6)
-    print(baseline_performance6)
-    print(max(pearson_performance6))
-
-    evaluation_metric_name = evaluation_metrics_options.get(evaluation_metric)
-    # #plt.figure(figsize=(8, 6), dpi=1200)
-    # ax = plt.gca()
-    # ax.xaxis.set_major_locator(mticker.MultipleLocator(2))
-
     sns.set(font_scale=2.6)
     sns.set_style("whitegrid", {"grid.color": "0.9", "grid.linestyle": "-", "grid.linewidth": "0.2"})
     fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(22, 12), dpi=1200, gridspec_kw={'hspace': 0.5})
@@ -477,75 +473,15 @@ def plot_average_over_number_of_features(dataset_type=1, evaluation_metric='accu
     axes[1][0].set_ylabel('Accuracy (%)')
     axes[0][0].set_title(current_dataset1 + ' (disc.)')
     axes[0][1].set_title(current_dataset2 + ' (cont.)')
-    axes[0][2].set_title(current_dataset3 + ' (disc., cont.)')
+    axes[0][2].set_title(current_dataset3 + ' (cont., nom.)')
     axes[1][0].set_title(current_dataset4 + ' (cont., nom.)')
-    axes[1][1].set_title(current_dataset5 + ' (nom., ord.)')
+    axes[1][1].set_title(current_dataset5 + ' (nom.)')
     axes[1][2].set_title(current_dataset6 + ' (disc., cont., nom.)')
 
     axes[1][0].set_xticks([5, 10, 14])
     axes[0][1].set_xticks([10, 20, 31])
-    axes[0][2].set_xticks([10, 20, 33])
     axes[1][2].set_xticks([100, 200, 279])
-
-    # x_ticks_1 = list(range(0, current_good_features1[-1] + 1, 2))
-    # x_ticks_1.append(1)
-    # x_ticks_1.remove(0)
-    # axes[0].set_xticks(x_ticks_1)
-    #
-    # x_ticks_2 = list(range(0, current_good_features2[-1] + 1, 5))
-    # x_ticks_2.append(1)
-    # x_ticks_2.remove(0)
-    # x_ticks_2.remove(30)
-    # x_ticks_2.append(current_good_features2[-1])
-    # axes[1].set_xticks(x_ticks_2)
-    #
-    # x_ticks_3 = list(range(0, current_good_features3[-1] + 1, 5))
-    # x_ticks_3.append(1)
-    # x_ticks_3.remove(0)
-    # x_ticks_3.remove(30)
-    # x_ticks_3.append(current_good_features3[-1])
-    # axes[2].set_xticks(x_ticks_3)
-
-    # max_value = round(max(np.max(np.array(pearson_performance) * 100), np.max(np.array(spearman_performance) * 100),
-    #                 np.max(np.array(cramersv_performance) * 100), np.max(np.array(su_performance) * 100),
-    #                       baseline_performance), 2)
-    # xt = axes[0].get_yticks()
-    # xt = np.append(xt, max_value)
-    # xtl = xt.tolist()
-    # xtl[-1] = str(max_value)
-    # axes[0].set_yticks(xt)
-    # axes[0].set_yticklabels(xtl)
-    # ytick_labels = axes[0].get_yticklabels()
-    # ytick_labels[-1].set_color('red')
-    #
-    # max_value2 = round(max(np.max(np.array(pearson_performance2) * 100), np.max(np.array(spearman_performance2) * 100),
-    #                 np.max(np.array(cramersv_performance2) * 100), np.max(np.array(su_performance2) * 100),
-    #                        baseline_performance2 * 100), 2)
-    # xt = axes[1].get_yticks()
-    # xt = np.append(xt, max_value2)
-    # xtl = xt.tolist()
-    # xtl[-1] = str(max_value2)
-    # axes[1].set_yticks(xt)
-    # axes[1].set_yticklabels(xtl)
-    # ytick_labels = axes[1].get_yticklabels()
-    # ytick_labels[-1].set_color('red')
-    #
-    # max_value3 = round(max(np.max(np.array(pearson_performance3) * 100), np.max(np.array(spearman_performance3) * 100),
-    #                 np.max(np.array(cramersv_performance3) * 100), np.max(np.array(su_performance3) * 100),
-    #                        baseline_performance3 * 100), 2)
-    # xt = axes[2].get_yticks()
-    # if max_value3 == 100:
-    #     mask = xt != 100
-    #     xt = xt[mask]
-    # xt = np.append(xt, max_value3)
-    # xtl = xt.tolist()
-    # xtl[-1] = str(max_value3)
-    # axes[2].set_yticks(xt)
-    # axes[2].set_yticklabels(xtl)
-    # ytick_labels = axes[2].get_yticklabels()
-    # ytick_labels[-1].set_color('red')
-    # if max_value3 == 100:
-    #     axes[2].set_ylim(60, 100)
+    axes[1][1].set_xticks([0, 20, 42])
 
     for i in [0, 1]:
         for j in [0, 1, 2]:
@@ -555,36 +491,16 @@ def plot_average_over_number_of_features(dataset_type=1, evaluation_metric='accu
             axes[i][j].spines['left'].set_linewidth(3)
             axes[i][j].spines['right'].set_linewidth(3)
 
-            if i == 0 and j == 2:
-                axes[i][j].spines['top'].set_edgecolor('black')
-                axes[i][j].spines['bottom'].set_edgecolor('black')
-                axes[i][j].spines['left'].set_edgecolor('black')
-                axes[i][j].spines['right'].set_edgecolor('black')
-            if i == 1 and j == 1:
-                axes[i][j].spines['top'].set_edgecolor('black')
-                axes[i][j].spines['bottom'].set_edgecolor('black')
-                axes[i][j].spines['left'].set_edgecolor('black')
-                axes[i][j].spines['right'].set_edgecolor('black')
-
-    # axes[1].set_facecolor('white')
-    # axes[1].spines['top'].set_linewidth(1.2)
-    # axes[1].spines['bottom'].set_linewidth(1.2)
-    # axes[1].spines['left'].set_linewidth(1.2)
-    # axes[1].spines['right'].set_linewidth(1.2)
-    # axes[1].spines['top'].set_edgecolor('black')
-    # axes[1].spines['bottom'].set_edgecolor('black')
-    # axes[1].spines['left'].set_edgecolor('black')
-    # axes[1].spines['right'].set_edgecolor('black')
-    #
-    # axes[2].set_facecolor('white')
-    # axes[2].spines['top'].set_linewidth(1.2)
-    # axes[2].spines['bottom'].set_linewidth(1.2)
-    # axes[2].spines['left'].set_linewidth(1.2)
-    # axes[2].spines['right'].set_linewidth(1.2)
-    # axes[2].spines['top'].set_edgecolor('black')
-    # axes[2].spines['bottom'].set_edgecolor('black')
-    # axes[2].spines['left'].set_edgecolor('black')
-    # axes[2].spines['right'].set_edgecolor('black')
+            # if i == 0 and j == 2:
+            #     axes[i][j].spines['top'].set_edgecolor('black')
+            #     axes[i][j].spines['bottom'].set_edgecolor('black')
+            #     axes[i][j].spines['left'].set_edgecolor('black')
+            #     axes[i][j].spines['right'].set_edgecolor('black')
+            # if i == 1 and j == 1:
+            #     axes[i][j].spines['top'].set_edgecolor('black')
+            #     axes[i][j].spines['bottom'].set_edgecolor('black')
+            #     axes[i][j].spines['left'].set_edgecolor('black')
+            #     axes[i][j].spines['right'].set_edgecolor('black')
 
     lines, labels = axes[0][0].get_legend_handles_labels()
     all_lines = lines

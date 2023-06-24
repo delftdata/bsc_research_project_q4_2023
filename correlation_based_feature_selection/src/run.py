@@ -211,7 +211,8 @@ def evaluate_nursery_dataset():
 
     # dataset_evaluator.evaluate_support_vector_machine_model_select_above_c(problem_type='classification')
     # dataset_evaluator.evaluate_all_models_select_above_c()
-    dataset_evaluator.evaluate_all_models()
+    # dataset_evaluator.evaluate_all_models()
+    dataset_evaluator.evaluate_support_vector_machine_model()
 
 
 def evaluate_feature_selection_nursery_dataset():
@@ -230,7 +231,7 @@ def evaluate_dataframe(dataframe):
 
 
 if __name__ == '__main__':
-    plot_average_over_number_of_features_encoded()
+    # plot_average_over_number_of_features_encoded()
     # plot_average_over_number_of_features_alg()
     # parse_data_all2()
     # plot_average_over_number_of_features_threshold()
@@ -238,7 +239,7 @@ if __name__ == '__main__':
     # plot_average_over_number_of_features()
     # plot_over_runtime()
     # parse_data()
-    # plot_over_number_of_features()
+    plot_over_number_of_features()
     # plot_over_number_of_features_custom()
     # plot_over_number_of_features_runtime()
     # plot_over_number_of_features_runtime_custom()

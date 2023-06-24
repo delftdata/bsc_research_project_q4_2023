@@ -1,0 +1,880 @@
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 1
+CURRENT FEATURE SUBSET: ['Id']
+CURRENT PERFORMANCE: 0.11827959254555298
+CURRENT RUNTIME: 0.004374027252197266
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 2
+CURRENT FEATURE SUBSET: ['Id', 'Street']
+CURRENT PERFORMANCE: 0.1175672983806061
+CURRENT RUNTIME: 0.005437612533569336
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 3
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea']
+CURRENT PERFORMANCE: 0.11297690814796628
+CURRENT RUNTIME: 0.0060617923736572266
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 4
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual']
+CURRENT PERFORMANCE: 0.0694775687822747
+CURRENT RUNTIME: 0.009745597839355469
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 5
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual']
+CURRENT PERFORMANCE: 0.06633000811323066
+CURRENT RUNTIME: 0.012378931045532227
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 6
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape']
+CURRENT PERFORMANCE: 0.06611560713089716
+CURRENT RUNTIME: 0.014755010604858398
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 7
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath']
+CURRENT PERFORMANCE: 0.06560994051286599
+CURRENT RUNTIME: 0.016350507736206055
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 8
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual']
+CURRENT PERFORMANCE: 0.06413515092583041
+CURRENT RUNTIME: 0.01880168914794922
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 9
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars']
+CURRENT PERFORMANCE: 0.06338971680105275
+CURRENT RUNTIME: 0.01959395408630371
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 10
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea']
+CURRENT PERFORMANCE: 0.060635663325016895
+CURRENT RUNTIME: 0.021295785903930664
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 11
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond']
+CURRENT PERFORMANCE: 0.06035707816463432
+CURRENT RUNTIME: 0.02388787269592285
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 12
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType']
+CURRENT PERFORMANCE: 0.06041724804934331
+CURRENT RUNTIME: 0.02572774887084961
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 13
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual']
+CURRENT PERFORMANCE: 0.05989116405301205
+CURRENT RUNTIME: 0.028127670288085938
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 14
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF']
+CURRENT PERFORMANCE: 0.06068753168927394
+CURRENT RUNTIME: 0.029892444610595703
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 15
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning']
+CURRENT PERFORMANCE: 0.06032739860320901
+CURRENT RUNTIME: 0.03194117546081543
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 16
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish']
+CURRENT PERFORMANCE: 0.06017781739686612
+CURRENT RUNTIME: 0.034142255783081055
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 17
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF']
+CURRENT PERFORMANCE: 0.0626975816979779
+CURRENT RUNTIME: 0.03714323043823242
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 18
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd']
+CURRENT PERFORMANCE: 0.06225457245177296
+CURRENT RUNTIME: 0.0388791561126709
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 19
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond']
+CURRENT PERFORMANCE: 0.062468869659753366
+CURRENT RUNTIME: 0.0418393611907959
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 20
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType']
+CURRENT PERFORMANCE: 0.06269170269098556
+CURRENT RUNTIME: 0.045485496520996094
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 21
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir']
+CURRENT PERFORMANCE: 0.06296568751771936
+CURRENT RUNTIME: 0.04886674880981445
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 22
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure']
+CURRENT PERFORMANCE: 0.062210339672340555
+CURRENT RUNTIME: 0.05191850662231445
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 23
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2']
+CURRENT PERFORMANCE: 0.06264752500907961
+CURRENT RUNTIME: 0.05357480049133301
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 24
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition']
+CURRENT PERFORMANCE: 0.06260023252731454
+CURRENT RUNTIME: 0.05715680122375488
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 25
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath']
+CURRENT PERFORMANCE: 0.06286015094755533
+CURRENT RUNTIME: 0.057977914810180664
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 26
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF']
+CURRENT PERFORMANCE: 0.06836464888345874
+CURRENT RUNTIME: 0.06146383285522461
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 27
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea']
+CURRENT PERFORMANCE: 0.06849958928681557
+CURRENT RUNTIME: 0.06593060493469238
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 28
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu']
+CURRENT PERFORMANCE: 0.06969199492023088
+CURRENT RUNTIME: 0.06489109992980957
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 29
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType']
+CURRENT PERFORMANCE: 0.06846409904125657
+CURRENT RUNTIME: 0.06750202178955078
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 30
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual']
+CURRENT PERFORMANCE: 0.06922996992382058
+CURRENT RUNTIME: 0.06970047950744629
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 31
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage']
+CURRENT PERFORMANCE: 0.07095454552362271
+CURRENT RUNTIME: 0.07120466232299805
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 32
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF']
+CURRENT PERFORMANCE: 0.07006847680646597
+CURRENT RUNTIME: 0.0721282958984375
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 33
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces']
+CURRENT PERFORMANCE: 0.07046120585346699
+CURRENT RUNTIME: 0.0754389762878418
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 34
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation']
+CURRENT PERFORMANCE: 0.07065052275242775
+CURRENT RUNTIME: 0.07804346084594727
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 35
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope']
+CURRENT PERFORMANCE: 0.06981913664808537
+CURRENT RUNTIME: 0.07897782325744629
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 36
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath']
+CURRENT PERFORMANCE: 0.06977032030652493
+CURRENT RUNTIME: 0.07973408699035645
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 37
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour']
+CURRENT PERFORMANCE: 0.06948367902295965
+CURRENT RUNTIME: 0.08223152160644531
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 38
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea']
+CURRENT PERFORMANCE: 0.07083852055382474
+CURRENT RUNTIME: 0.08436203002929688
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 39
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood']
+CURRENT PERFORMANCE: 0.07049269713637274
+CURRENT RUNTIME: 0.08611726760864258
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 40
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical']
+CURRENT PERFORMANCE: 0.07046192164582152
+CURRENT RUNTIME: 0.09000706672668457
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 41
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF']
+CURRENT PERFORMANCE: 0.07053727184075904
+CURRENT RUNTIME: 0.08936429023742676
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 42
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond']
+CURRENT PERFORMANCE: 0.06984734555312404
+CURRENT RUNTIME: 0.0934906005859375
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 43
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold']
+CURRENT PERFORMANCE: 0.06971673169804914
+CURRENT RUNTIME: 0.09422540664672852
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 44
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF']
+CURRENT PERFORMANCE: 0.06963216681013035
+CURRENT RUNTIME: 0.09528851509094238
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 45
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold']
+CURRENT PERFORMANCE: 0.06973224710049195
+CURRENT RUNTIME: 0.0968782901763916
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 46
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC']
+CURRENT PERFORMANCE: 0.07135571743479063
+CURRENT RUNTIME: 0.09900975227355957
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 47
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley']
+CURRENT PERFORMANCE: 0.06915464119393805
+CURRENT RUNTIME: 0.0993502140045166
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 48
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1']
+CURRENT PERFORMANCE: 0.06895226881386772
+CURRENT RUNTIME: 0.10269808769226074
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 49
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1']
+CURRENT PERFORMANCE: 0.07006669493302652
+CURRENT RUNTIME: 0.1048583984375
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 50
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal']
+CURRENT PERFORMANCE: 0.06892619430219085
+CURRENT RUNTIME: 0.10482215881347656
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 51
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle']
+CURRENT PERFORMANCE: 0.07097682314376108
+CURRENT RUNTIME: 0.10969090461730957
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 52
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt']
+CURRENT PERFORMANCE: 0.06891467577653508
+CURRENT RUNTIME: 0.11156678199768066
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 53
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr']
+CURRENT PERFORMANCE: 0.06853238796408859
+CURRENT RUNTIME: 0.11372971534729004
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 54
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature']
+CURRENT PERFORMANCE: 0.06850214946066084
+CURRENT RUNTIME: 0.1140906810760498
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 55
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle']
+CURRENT PERFORMANCE: 0.06851460491282088
+CURRENT RUNTIME: 0.11598968505859375
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 56
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2']
+CURRENT PERFORMANCE: 0.07187598859383687
+CURRENT RUNTIME: 0.12026619911193848
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 57
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional']
+CURRENT PERFORMANCE: 0.0680727335418572
+CURRENT RUNTIME: 0.1233062744140625
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 58
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl']
+CURRENT PERFORMANCE: 0.06791786080541712
+CURRENT RUNTIME: 0.12343049049377441
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 59
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd']
+CURRENT PERFORMANCE: 0.06819579273125734
+CURRENT RUNTIME: 0.1355597972869873
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 60
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch']
+CURRENT PERFORMANCE: 0.06879997243475401
+CURRENT RUNTIME: 0.12810492515563965
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 61
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st']
+CURRENT PERFORMANCE: 0.0685373253825648
+CURRENT RUNTIME: 0.13103079795837402
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 62
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt']
+CURRENT PERFORMANCE: 0.07042496577466842
+CURRENT RUNTIME: 0.13123703002929688
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 63
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass']
+CURRENT PERFORMANCE: 0.06651747989472147
+CURRENT RUNTIME: 0.13407516479492188
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 64
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive']
+CURRENT PERFORMANCE: 0.06649998961876322
+CURRENT RUNTIME: 0.13605737686157227
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 65
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch']
+CURRENT PERFORMANCE: 0.06676152666921979
+CURRENT RUNTIME: 0.13637518882751465
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 66
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd']
+CURRENT PERFORMANCE: 0.06826470693582584
+CURRENT RUNTIME: 0.13868975639343262
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 67
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond']
+CURRENT PERFORMANCE: 0.06929969279811717
+CURRENT RUNTIME: 0.14149022102355957
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 68
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond', 'PoolArea']
+CURRENT PERFORMANCE: 0.06661080597270416
+CURRENT RUNTIME: 0.14075708389282227
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 69
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond', 'PoolArea', 'BldgType']
+CURRENT PERFORMANCE: 0.06656436562763471
+CURRENT RUNTIME: 0.14121627807617188
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 70
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond', 'PoolArea', 'BldgType', 'BsmtFinSF2']
+CURRENT PERFORMANCE: 0.06658724447232908
+CURRENT RUNTIME: 0.14152097702026367
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 71
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond', 'PoolArea', 'BldgType', 'BsmtFinSF2', 'EnclosedPorch']
+CURRENT PERFORMANCE: 0.0662568433604315
+CURRENT RUNTIME: 0.14156055450439453
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 72
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond', 'PoolArea', 'BldgType', 'BsmtFinSF2', 'EnclosedPorch', 'LotConfig']
+CURRENT PERFORMANCE: 0.06641112596678657
+CURRENT RUNTIME: 0.1438612937927246
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 73
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond', 'PoolArea', 'BldgType', 'BsmtFinSF2', 'EnclosedPorch', 'LotConfig', 'Fence']
+CURRENT PERFORMANCE: 0.06605064025468584
+CURRENT RUNTIME: 0.14393877983093262
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 74
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond', 'PoolArea', 'BldgType', 'BsmtFinSF2', 'EnclosedPorch', 'LotConfig', 'Fence', 'LowQualFinSF']
+CURRENT PERFORMANCE: 0.06641212828247622
+CURRENT RUNTIME: 0.14441299438476562
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 75
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond', 'PoolArea', 'BldgType', 'BsmtFinSF2', 'EnclosedPorch', 'LotConfig', 'Fence', 'LowQualFinSF', 'Heating']
+CURRENT PERFORMANCE: 0.06675366111692577
+CURRENT RUNTIME: 0.14609432220458984
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 76
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond', 'PoolArea', 'BldgType', 'BsmtFinSF2', 'EnclosedPorch', 'LotConfig', 'Fence', 'LowQualFinSF', 'Heating', 'Condition1']
+CURRENT PERFORMANCE: 0.06673818750619621
+CURRENT RUNTIME: 0.1468648910522461
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 77
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond', 'PoolArea', 'BldgType', 'BsmtFinSF2', 'EnclosedPorch', 'LotConfig', 'Fence', 'LowQualFinSF', 'Heating', 'Condition1', 'PoolQC']
+CURRENT PERFORMANCE: 0.06899126630873267
+CURRENT RUNTIME: 0.14612388610839844
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 78
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond', 'PoolArea', 'BldgType', 'BsmtFinSF2', 'EnclosedPorch', 'LotConfig', 'Fence', 'LowQualFinSF', 'Heating', 'Condition1', 'PoolQC', 'KitchenAbvGr']
+CURRENT PERFORMANCE: 0.07085888806404907
+CURRENT RUNTIME: 0.16025590896606445
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 79
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond', 'PoolArea', 'BldgType', 'BsmtFinSF2', 'EnclosedPorch', 'LotConfig', 'Fence', 'LowQualFinSF', 'Heating', 'Condition1', 'PoolQC', 'KitchenAbvGr', 'BsmtHalfBath']
+CURRENT PERFORMANCE: 0.07024310710829391
+CURRENT RUNTIME: 0.18285918235778809
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2-LinearSVR
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 80
+CURRENT FEATURE SUBSET: ['Id', 'Street', 'LotArea', 'OverallQual', 'ExterQual', 'LotShape', 'FullBath', 'KitchenQual', 'GarageCars', 'GrLivArea', 'BsmtCond', 'MasVnrType', 'BsmtQual', 'BsmtUnfSF', 'MSZoning', 'GarageFinish', '1stFlrSF', 'TotRmsAbvGrd', 'OverallCond', 'SaleType', 'CentralAir', 'BsmtExposure', 'Condition2', 'SaleCondition', 'HalfBath', 'TotalBsmtSF', 'GarageArea', 'FireplaceQu', 'GarageType', 'GarageQual', 'LotFrontage', 'OpenPorchSF', 'Fireplaces', 'Foundation', 'LandSlope', 'BsmtFullBath', 'LandContour', 'MasVnrArea', 'Neighborhood', 'Electrical', '2ndFlrSF', 'ExterCond', 'YrSold', 'WoodDeckSF', 'MoSold', 'HeatingQC', 'Alley', 'BsmtFinType1', 'BsmtFinSF1', 'MiscVal', 'HouseStyle', 'YearBuilt', 'BedroomAbvGr', 'MiscFeature', 'RoofStyle', 'BsmtFinType2', 'Functional', 'RoofMatl', 'Exterior2nd', '3SsnPorch', 'Exterior1st', 'GarageYrBlt', 'MSSubClass', 'PavedDrive', 'ScreenPorch', 'YearRemodAdd', 'GarageCond', 'PoolArea', 'BldgType', 'BsmtFinSF2', 'EnclosedPorch', 'LotConfig', 'Fence', 'LowQualFinSF', 'Heating', 'Condition1', 'PoolQC', 'KitchenAbvGr', 'BsmtHalfBath', 'Utilities']
+CURRENT PERFORMANCE: 0.07344135027430687
+CURRENT RUNTIME: 0.18050742149353027
+BASELINE PERFORMANCE: 0.07344135027430687
+BASELINE RUNTIME: 0.15062260627746582
+

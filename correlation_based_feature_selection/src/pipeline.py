@@ -256,11 +256,11 @@ class MLPipeline:
         # Encode the features
         # all_continuous_train_dataframe, all_continuous_test_dataframe = \
         #     PreML.onehot_encoding(train_dataframe, test_dataframe, self.target_label)
-        # all_nominal_train_dataframe, all_nominal_test_dataframe = \
-        #     PreML.k_bins_discretizer(train_dataframe, test_dataframe, self.target_label)
+        current_train_dataframe, current_test_dataframe = \
+            PreML.k_bins_discretizer(current_train_dataframe, current_test_dataframe, self.target_label)
 
         # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
-        dataset_type = 1
+        dataset_type = 2
         # COMPUTATION: Compute the ranking of features returned by each correlation method
         pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features = \
             InML.feature_selection_select_k_best(current_train_dataframe,

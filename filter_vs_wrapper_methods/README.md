@@ -54,4 +54,4 @@ To customize the specific experiment to run or plot, you can modify the correspo
 `arguments_main.json` for running experiments and `arguments_plot.json` for plotting.
 
 For detailed information about the supported arguments, please consult the documentation located in
-`filter_vs_wrapper_methods/docs/documentation.md`.
+`filter_vs_wrapper_methods/documentation.md`.

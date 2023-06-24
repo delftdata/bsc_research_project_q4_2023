@@ -1,5 +1,6 @@
 {
-    "experiment_name": "experiment3",
-    "dataset": "character_font_images",
-    "plot_type": "all_results"
+    "experiment_name": "experiment2",
+    "dataset": "breast_cancer",
+    "plot_type": "results",
+    "leaderboard": "all"
 }

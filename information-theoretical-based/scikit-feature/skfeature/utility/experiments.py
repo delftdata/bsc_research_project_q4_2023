@@ -6,13 +6,11 @@ from sklearn.model_selection import KFold
 from sklearn.svm import LinearSVC
 from sklearn.tree import DecisionTreeClassifier
 
-from skfeature.utility.data_preparation import prepare_data_for_ml
-
 from multiprocessing import Pool, cpu_count
 from itertools import repeat
 
 from skfeature.information_theoretical_based import JMI, MIFS, CIFE, MRMR
-from skfeature.utility.plotting import plot_over_features
+from skfeature.utility.plotting_helpers import plot_over_features
 
 
 def run_parallel_results(n_features, X, y, model, fs_algorithm):

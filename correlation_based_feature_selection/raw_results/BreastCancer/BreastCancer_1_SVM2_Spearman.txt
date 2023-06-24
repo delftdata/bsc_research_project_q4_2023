@@ -1,0 +1,341 @@
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 1
+CURRENT FEATURE SUBSET: ['perimeter_worst']
+CURRENT PERFORMANCE: 0.9298245614035088
+CURRENT RUNTIME: 0.0018079280853271484
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 2
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst']
+CURRENT PERFORMANCE: 0.9210526315789473
+CURRENT RUNTIME: 0.0018088817596435547
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 3
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.0018191337585449219
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 4
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.0018227100372314453
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 5
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.0018410682678222656
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 6
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.0018677711486816406
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 7
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.0019192695617675781
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 8
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.0019481182098388672
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 9
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.002010822296142578
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 10
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 0.0019974708557128906
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 11
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst']
+CURRENT PERFORMANCE: 0.9473684210526315
+CURRENT RUNTIME: 0.002045154571533203
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 12
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se']
+CURRENT PERFORMANCE: 0.9298245614035088
+CURRENT RUNTIME: 0.0020635128021240234
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 13
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean']
+CURRENT PERFORMANCE: 0.9385964912280702
+CURRENT RUNTIME: 0.002102375030517578
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 14
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se']
+CURRENT PERFORMANCE: 0.9385964912280702
+CURRENT RUNTIME: 0.0021576881408691406
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 15
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst']
+CURRENT PERFORMANCE: 0.9385964912280702
+CURRENT RUNTIME: 0.002162933349609375
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 16
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se']
+CURRENT PERFORMANCE: 0.9210526315789473
+CURRENT RUNTIME: 0.0022428035736083984
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 17
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 0.002243518829345703
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 18
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 0.0022504329681396484
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 19
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean', 'concavity_se']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 0.0023174285888671875
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 20
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean', 'concavity_se', 'smoothness_worst']
+CURRENT PERFORMANCE: 0.9824561403508771
+CURRENT RUNTIME: 0.0024061203002929688
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 21
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean', 'concavity_se', 'smoothness_worst', 'symmetry_worst']
+CURRENT PERFORMANCE: 0.9736842105263158
+CURRENT RUNTIME: 0.0025284290313720703
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 22
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean', 'concavity_se', 'smoothness_worst', 'symmetry_worst', 'smoothness_mean']
+CURRENT PERFORMANCE: 0.9736842105263158
+CURRENT RUNTIME: 0.002555370330810547
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 23
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean', 'concavity_se', 'smoothness_worst', 'symmetry_worst', 'smoothness_mean', 'compactness_se']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 0.002672910690307617
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 24
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean', 'concavity_se', 'smoothness_worst', 'symmetry_worst', 'smoothness_mean', 'compactness_se', 'symmetry_mean']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 0.0028243064880371094
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 25
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean', 'concavity_se', 'smoothness_worst', 'symmetry_worst', 'smoothness_mean', 'compactness_se', 'symmetry_mean', 'fractal_dimension_worst']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 0.0028409957885742188
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 26
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean', 'concavity_se', 'smoothness_worst', 'symmetry_worst', 'smoothness_mean', 'compactness_se', 'symmetry_mean', 'fractal_dimension_worst', 'fractal_dimension_se']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 0.0028295516967773438
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 27
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean', 'concavity_se', 'smoothness_worst', 'symmetry_worst', 'smoothness_mean', 'compactness_se', 'symmetry_mean', 'fractal_dimension_worst', 'fractal_dimension_se', 'id']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 0.002939939498901367
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 28
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean', 'concavity_se', 'smoothness_worst', 'symmetry_worst', 'smoothness_mean', 'compactness_se', 'symmetry_mean', 'fractal_dimension_worst', 'fractal_dimension_se', 'id', 'symmetry_se']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 0.0029702186584472656
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 29
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean', 'concavity_se', 'smoothness_worst', 'symmetry_worst', 'smoothness_mean', 'compactness_se', 'symmetry_mean', 'fractal_dimension_worst', 'fractal_dimension_se', 'id', 'symmetry_se', 'smoothness_se']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 0.0029578208923339844
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 30
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean', 'concavity_se', 'smoothness_worst', 'symmetry_worst', 'smoothness_mean', 'compactness_se', 'symmetry_mean', 'fractal_dimension_worst', 'fractal_dimension_se', 'id', 'symmetry_se', 'smoothness_se', 'fractal_dimension_mean']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 0.0029039382934570312
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: SVM2
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 31
+CURRENT FEATURE SUBSET: ['perimeter_worst', 'concave points_worst', 'radius_worst', 'area_worst', 'concave points_mean', 'perimeter_mean', 'concavity_mean', 'area_mean', 'radius_mean', 'area_se', 'concavity_worst', 'perimeter_se', 'compactness_mean', 'radius_se', 'compactness_worst', 'concave points_se', 'texture_worst', 'texture_mean', 'concavity_se', 'smoothness_worst', 'symmetry_worst', 'smoothness_mean', 'compactness_se', 'symmetry_mean', 'fractal_dimension_worst', 'fractal_dimension_se', 'id', 'symmetry_se', 'smoothness_se', 'fractal_dimension_mean', 'texture_se']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 0.0030007362365722656
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 0.0030982494354248047
+

@@ -1,0 +1,1 @@
+{"random_state": 0, "fit_intercept": true, "solver": "lbfgs", "C": 1, "vectorizer_dict_size": 75000, "proc.ngram_range": [1, 5], "proc.skew_threshold": 0.99, "proc.impute_strategy": "median", "penalty": "L2", "handle_text": "ignore"}

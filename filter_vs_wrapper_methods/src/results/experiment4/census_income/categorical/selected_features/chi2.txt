@@ -1,0 +1,8 @@
+relationship
+marital-status
+occupation
+sex
+education
+workclass
+race
+native-country

@@ -42,7 +42,7 @@ evaluation_metrics_options = {
 }
 
 
-def parse_data_all2(dataset=current_dataset3, num_files=5, current_good_features=current_good_features3):
+def parse_data_all2(dataset=current_dataset6, num_files=5, current_good_features=current_good_features6):
     pearson_performance = []
     spearman_performance = []
     cramersv_performance = []
@@ -391,6 +391,10 @@ def plot_average_over_number_of_features(dataset_type=1, evaluation_metric='accu
     pearson_performance6, spearman_performance6, cramersv_performance6, su_performance6, baseline_performance6 = \
         parse_data_all(dataset=current_dataset6, num_files=5, current_good_features=current_good_features6)
 
+    print(pearson_performance6)
+    print(baseline_performance6)
+    print(max(pearson_performance6))
+
     evaluation_metric_name = evaluation_metrics_options.get(evaluation_metric)
     # #plt.figure(figsize=(8, 6), dpi=1200)
     # ax = plt.gca()
@@ -550,10 +554,17 @@ def plot_average_over_number_of_features(dataset_type=1, evaluation_metric='accu
             axes[i][j].spines['bottom'].set_linewidth(3)
             axes[i][j].spines['left'].set_linewidth(3)
             axes[i][j].spines['right'].set_linewidth(3)
-            # axes[i][j].spines['top'].set_edgecolor('black')
-            # axes[i][j].spines['bottom'].set_edgecolor('black')
-            # axes[i][j].spines['left'].set_edgecolor('black')
-            # axes[i][j].spines['right'].set_edgecolor('black')
+
+            if i == 0 and j == 2:
+                axes[i][j].spines['top'].set_edgecolor('black')
+                axes[i][j].spines['bottom'].set_edgecolor('black')
+                axes[i][j].spines['left'].set_edgecolor('black')
+                axes[i][j].spines['right'].set_edgecolor('black')
+            if i == 1 and j == 1:
+                axes[i][j].spines['top'].set_edgecolor('black')
+                axes[i][j].spines['bottom'].set_edgecolor('black')
+                axes[i][j].spines['left'].set_edgecolor('black')
+                axes[i][j].spines['right'].set_edgecolor('black')
 
     # axes[1].set_facecolor('white')
     # axes[1].spines['top'].set_linewidth(1.2)

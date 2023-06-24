@@ -33,6 +33,8 @@ current_good_features6 = list(range(1, 201, 10))
 for i in [210, 220, 230, 240, 250, 260, 270, 279]:
     current_good_features6.append(i)
 
+threshold_values = [0.9, 0.8, 0.7, 0.6, 0.5, 0.3, 0.2, 0.1, 0]
+
 evaluation_metrics_options = {
     'accuracy': 'Average accuracy (%)',
     'rmse': 'Average root mean square error',
@@ -138,103 +140,103 @@ def parse_data_all_threshold(dataset=current_dataset1, num_files=5):
     su_performance = [value / num_files for value in su_performance]
     baseline_performance /= num_files
 
-    print(pearson_performance)
-    print(spearman_performance)
-    print(cramersv_performance)
-    print(su_performance)
-    print(baseline_value)
+    # print(pearson_performance)
+    # print(spearman_performance)
+    # print(cramersv_performance)
+    # print(su_performance)
+    # print(baseline_value)
 
     return pearson_performance, spearman_performance, cramersv_performance, su_performance, baseline_performance
 
 
-def plot_average_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
+def plot_average_over_number_of_features_threshold(dataset_type=1, evaluation_metric='accuracy'):
     pearson_performance, spearman_performance, cramersv_performance, su_performance, baseline_performance = \
-        parse_data_all(dataset=current_dataset1, num_files=5, current_good_features=current_good_features1)
+        parse_data_all_threshold(dataset=current_dataset1, num_files=5)
 
     pearson_performance2, spearman_performance2, cramersv_performance2, su_performance2, baseline_performance2 = \
-        parse_data_all(dataset=current_dataset2, num_files=5, current_good_features=current_good_features2)
+        parse_data_all_threshold(dataset=current_dataset2, num_files=5)
 
     pearson_performance3, spearman_performance3, cramersv_performance3, su_performance3, baseline_performance3 = \
-        parse_data_all(dataset=current_dataset3, num_files=5, current_good_features=current_good_features3)
+        parse_data_all_threshold(dataset=current_dataset3, num_files=5)
 
     pearson_performance4, spearman_performance4, cramersv_performance4, su_performance4, baseline_performance4 = \
-        parse_data_all(dataset=current_dataset4, num_files=5, current_good_features=current_good_features4)
+        parse_data_all_threshold(dataset=current_dataset4, num_files=5)
 
     pearson_performance5, spearman_performance5, cramersv_performance5, su_performance5, baseline_performance5 = \
-        parse_data_all(dataset=current_dataset5, num_files=5, current_good_features=current_good_features5)
+        parse_data_all_threshold(dataset=current_dataset5, num_files=5)
 
     pearson_performance6, spearman_performance6, cramersv_performance6, su_performance6, baseline_performance6 = \
-        parse_data_all(dataset=current_dataset6, num_files=5, current_good_features=current_good_features6)
+        parse_data_all_threshold(dataset=current_dataset6, num_files=5)
 
     sns.set(font_scale=2.6)
     sns.set_style("whitegrid", {"grid.color": "0.9", "grid.linestyle": "-", "grid.linewidth": "0.2"})
     fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(22, 12), dpi=1200, gridspec_kw={'hspace': 0.5})
 
-    sns.lineplot(x=current_good_features1, y=np.array(pearson_performance) * 100, legend=False,
+    sns.lineplot(x=threshold_values, y=np.array(pearson_performance) * 100, legend=False,
                  marker='D', color='#10A5D6', label='Pearson', linewidth=5, ax=axes[0][0], markersize=8)
-    sns.lineplot(x=current_good_features1, y=np.array(spearman_performance) * 100, legend=False,
+    sns.lineplot(x=threshold_values, y=np.array(spearman_performance) * 100, legend=False,
                  marker='o', color='#7030A0', label='Spearman', linewidth=5,  ax=axes[0][0], markersize=8)
-    sns.lineplot(x=current_good_features1, y=np.array(cramersv_performance) * 100, legend=False,
+    sns.lineplot(x=threshold_values, y=np.array(cramersv_performance) * 100, legend=False,
                  marker='p', color='#BF9000', label='Cramér\'s V', linewidth=5,  ax=axes[0][0], markersize=8)
-    sns.lineplot(x=current_good_features1, y=np.array(su_performance) * 100, legend=False,
+    sns.lineplot(x=threshold_values, y=np.array(su_performance) * 100, legend=False,
                  marker='s', color='#c51b8a', label='Symmetric Uncertainty', linewidth=5, ax=axes[0][0], markersize=8)
-    sns.lineplot(x=[current_good_features1[-1]], y=[baseline_performance * 100],
+    sns.lineplot(x=[threshold_values[-1]], y=[baseline_performance * 100],
                  marker='P', color='#000000', label='Baseline', ax=axes[0][0], legend=False, markersize=8,
                  linewidth=5)
 
-    sns.lineplot(x=current_good_features2, y=np.array(pearson_performance2) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(pearson_performance2) * 100,
                  marker='D', color='#10A5D6', linewidth=5, ax=axes[0][1], markersize=8)
-    sns.lineplot(x=current_good_features2, y=np.array(spearman_performance2) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(spearman_performance2) * 100,
                  marker='o', color='#7030A0', linewidth=5,  ax=axes[0][1], markersize=8)
-    sns.lineplot(x=current_good_features2, y=np.array(cramersv_performance2) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(cramersv_performance2) * 100,
                  marker='p', color='#BF9000', linewidth=5,  ax=axes[0][1], markersize=8)
-    sns.lineplot(x=current_good_features2, y=np.array(su_performance2) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(su_performance2) * 100,
                  marker='s', color='#c51b8a', linewidth=5, ax=axes[0][1], markersize=8)
-    sns.lineplot(x=[current_good_features2[-1]], y=[baseline_performance2 * 100],
+    sns.lineplot(x=[threshold_values[-1]], y=[baseline_performance2 * 100],
                  marker='P', color='#000000',  ax=axes[0][1], linewidth=5, markersize=8)
 
-    sns.lineplot(x=current_good_features3, y=np.array(pearson_performance3) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(pearson_performance3) * 100,
                  marker='D', color='#10A5D6', linewidth=5, ax=axes[0][2], markersize=8)
-    sns.lineplot(x=current_good_features3, y=np.array(spearman_performance3) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(spearman_performance3) * 100,
                  marker='o', color='#7030A0', linewidth=5,  ax=axes[0][2], markersize=8)
-    sns.lineplot(x=current_good_features3, y=np.array(cramersv_performance3) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(cramersv_performance3) * 100,
                  marker='p', color='#BF9000', linewidth=5,  ax=axes[0][2], markersize=8)
-    sns.lineplot(x=current_good_features3, y=np.array(su_performance3) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(su_performance3) * 100,
                  marker='s', color='#c51b8a', linewidth=5, ax=axes[0][2], markersize=8)
-    sns.lineplot(x=[current_good_features3[-1]], y=[baseline_performance3 * 100],
+    sns.lineplot(x=[threshold_values[-1]], y=[baseline_performance3 * 100],
                  marker='P', color='#000000', ax=axes[0][2], linewidth=5, markersize=8)
 
-    sns.lineplot(x=current_good_features4, y=np.array(pearson_performance4) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(pearson_performance4) * 100,
                  marker='D', color='#10A5D6', linewidth=5, ax=axes[1][0], markersize=8)
-    sns.lineplot(x=current_good_features4, y=np.array(spearman_performance4) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(spearman_performance4) * 100,
                  marker='o', color='#7030A0', linewidth=5,  ax=axes[1][0], markersize=8)
-    sns.lineplot(x=current_good_features4, y=np.array(cramersv_performance4) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(cramersv_performance4) * 100,
                  marker='p', color='#BF9000', linewidth=5,  ax=axes[1][0], markersize=8)
-    sns.lineplot(x=current_good_features4, y=np.array(su_performance4) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(su_performance4) * 100,
                  marker='s', color='#c51b8a', linewidth=5, ax=axes[1][0], markersize=8)
-    sns.lineplot(x=[current_good_features4[-1]], y=[baseline_performance4 * 100],
+    sns.lineplot(x=[threshold_values[-1]], y=[baseline_performance4 * 100],
                  marker='P', color='#000000', ax=axes[1][0], linewidth=5, markersize=8)
 
-    sns.lineplot(x=current_good_features5, y=np.array(pearson_performance5) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(pearson_performance5) * 100,
                  marker='D', color='#10A5D6', linewidth=5, ax=axes[1][1], markersize=8)
-    sns.lineplot(x=current_good_features5, y=np.array(spearman_performance5) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(spearman_performance5) * 100,
                  marker='o', color='#7030A0', linewidth=5,  ax=axes[1][1], markersize=8)
-    sns.lineplot(x=current_good_features5, y=np.array(cramersv_performance5) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(cramersv_performance5) * 100,
                  marker='p', color='#BF9000', linewidth=5,  ax=axes[1][1], markersize=8)
-    sns.lineplot(x=current_good_features5, y=np.array(su_performance5) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(su_performance5) * 100,
                  marker='s', color='#c51b8a', linewidth=5, ax=axes[1][1], markersize=8)
-    sns.lineplot(x=[current_good_features5[-1]], y=[baseline_performance5 * 100],
+    sns.lineplot(x=[threshold_values[-1]], y=[baseline_performance5 * 100],
                  marker='P', color='#000000', ax=axes[1][1], linewidth=5, markersize=8)
 
-    sns.lineplot(x=current_good_features6, y=np.array(pearson_performance6) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(pearson_performance6) * 100,
                  marker='D', color='#10A5D6', linewidth=5, ax=axes[1][2], markersize=8)
-    sns.lineplot(x=current_good_features6, y=np.array(spearman_performance6) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(spearman_performance6) * 100,
                  marker='o', color='#7030A0', linewidth=5,  ax=axes[1][2], markersize=8)
-    sns.lineplot(x=current_good_features6, y=np.array(cramersv_performance6) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(cramersv_performance6) * 100,
                  marker='p', color='#BF9000', linewidth=5,  ax=axes[1][2], markersize=8)
-    sns.lineplot(x=current_good_features6, y=np.array(su_performance6) * 100,
+    sns.lineplot(x=threshold_values, y=np.array(su_performance6) * 100,
                  marker='s', color='#c51b8a', linewidth=5, ax=axes[1][2], markersize=8)
-    sns.lineplot(x=[current_good_features6[-1]], y=[baseline_performance6 * 100],
+    sns.lineplot(x=[threshold_values[-1]], y=[baseline_performance6 * 100],
                  marker='P', color='#000000', ax=axes[1][2], linewidth=5, markersize=8)
 
     axes[0][1].set_xlabel('Number of features')
@@ -247,11 +249,6 @@ def plot_average_over_number_of_features(dataset_type=1, evaluation_metric='accu
     axes[1][0].set_title(current_dataset4 + ' (cont., nom.)')
     axes[1][1].set_title(current_dataset5 + ' (nom., ord.)')
     axes[1][2].set_title(current_dataset6 + ' (disc., cont., nom.)')
-
-    axes[1][0].set_xticks([5, 10, 14])
-    axes[0][1].set_xticks([10, 20, 31])
-    axes[0][2].set_xticks([10, 20, 33])
-    axes[1][2].set_xticks([100, 200, 279])
 
     for i in [0, 1]:
         for j in [0, 1, 2]:
@@ -291,7 +288,7 @@ def plot_average_over_number_of_features(dataset_type=1, evaluation_metric='accu
     os.makedirs(directory, exist_ok=True)
     # Save the figure to folder
     #plt.tight_layout()
-    plt.savefig(f'./results_performance_avg_database/average_datasets_effectiveness.pdf', dpi=1200,
+    plt.savefig(f'./results_performance_avg_database/average_datasets_effectiveness_select_c_best.pdf', dpi=1200,
                 bbox_inches='tight')
     # plt.show()
     plt.clf()

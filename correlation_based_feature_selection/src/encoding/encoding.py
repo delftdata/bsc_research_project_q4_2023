@@ -24,8 +24,6 @@ def normalizeColumns(df, target_column):
     normalizer = preprocessing.Normalizer()
     train_columns = df.drop([target_column], axis=1).columns
 
-    # NA imputation is handled before encoding the categorical variables.  There should be no 'na' values before executing this line of code.
-    print("0AAAA")
     df = df.fillna(df.mode().iloc[0])
     df[train_columns] = normalizer.fit_transform(df[train_columns])
 
@@ -58,7 +56,7 @@ class OneHotEncoder:
         onehot_df = pd.DataFrame(
             onehot, columns=self.encoder.get_feature_names_out(categoricalColumns))
         print(onehot_df)
-        print('BOBITA')
+
         print(self.encoder.get_feature_names_out(categoricalColumns))
         df = df.drop(categoricalColumns, axis=1)
         df = pd.concat([df, onehot_df], axis=1)
@@ -67,7 +65,6 @@ class OneHotEncoder:
 
         # df = pd.concat([df, target_df], axis = 1)
 
-        print('hello')
         print(df)
         return df
 
@@ -79,14 +76,15 @@ class KBinsDiscretizer:
         continuousColumns = getContinuousColumns(df.drop([target_column], axis=1))
 
         target_df = df[target_column]
+        df_index = df.index
 
-        dis = self.discretizer.fit_transform(df[continuousColumns])
+        dis = self.discretizer.fit_transform(df.drop([target_column], axis=1)[continuousColumns])
 
-        dis_df = pd.DataFrame(dis, columns=self.discretizer.get_feature_names_out(continuousColumns))
-        df = df.drop(continuousColumns, axis=1)
+        dis_df = pd.DataFrame(dis, columns=self.discretizer.get_feature_names_out(continuousColumns), index=df_index)
+        df = df.drop(continuousColumns, axis=1).drop([target_column], axis=1)
         df = pd.concat([df, dis_df], axis=1)
 
-        df = normalizeColumns(df, target_column)
+        # df = normalizeColumns(df, target_column)
         df = pd.concat([df, target_df], axis=1)
 
         return df

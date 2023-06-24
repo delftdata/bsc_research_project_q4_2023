@@ -207,8 +207,9 @@ def evaluate_nursery_dataset():
         dataset_file='../datasets/Nursery/nursery.csv', dataset_name='Nursery',
         target_label='label', evaluation_metric='accuracy', features_to_select=8)
 
-    dataset_evaluator.evaluate_support_vector_machine_model_select_above_c(problem_type='classification')
-    dataset_evaluator.evaluate_all_models_select_above_c()
+    # dataset_evaluator.evaluate_support_vector_machine_model_select_above_c(problem_type='classification')
+    # dataset_evaluator.evaluate_all_models_select_above_c()
+    dataset_evaluator.evaluate_all_models()
 
 
 def evaluate_feature_selection_nursery_dataset():
@@ -242,12 +243,12 @@ if __name__ == '__main__':
     # binary classification
     # evaluate_census_income_dataset()
     # evaluate_breast_cancer_dataset()
-    evaluate_steel_plates_fault_dataset()
+    # evaluate_steel_plates_fault_dataset()
     # evaluate_arrhythmia_dataset()
     # evaluate_internet_advertisements_dataset()
     # evaluate_gisette_dataset()
     # multi-class classification
-    # evaluate_nursery_dataset()
+    evaluate_nursery_dataset()
     # evaluate_connect4_dataset()
 
     # regression

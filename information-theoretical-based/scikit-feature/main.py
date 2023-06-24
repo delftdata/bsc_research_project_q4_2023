@@ -487,6 +487,65 @@ def evaluate_performance_mifs():
         logging.error(mifs_100)
 
 
+def evaluate_performance_mifs_SVM():
+    """
+    Evaluates the performance of MIFS under SVM.
+    provided an input file with the results from selecting features.
+
+    Returns:
+        None, but the results are stored on disk
+    """
+    with open('results/logs/mifs.txt', "r") as file:
+        data = file.readlines()
+
+    data = [data[i:i + 6] for i in range(0, len(data), 6)]
+    for i in range(len(data)):
+        dataset = data[i]
+
+        mifs_000 = literal_eval(dataset[1].replace('array', ''))
+        mifs_025 = literal_eval(dataset[2].replace('array', ''))
+        mifs_050 = literal_eval(dataset[3].replace('array', ''))
+        mifs_075 = literal_eval(dataset[4].replace('array', ''))
+        mifs_100 = literal_eval(dataset[5].replace('array', ''))
+
+        mat = pd.read_csv([x['path'] for x in datasets if x['path'] == '../.' + dataset[0].strip()][0])
+        y_label = [x['y_label'] for x in datasets if x['path'] == '../.' + dataset[0].strip()][0]
+
+        train_data = TabularDataset(mat)
+        train_data = AutoMLPipelineFeatureGenerator(enable_text_special_features=False,
+                                                    enable_text_ngram_features=False).fit_transform(X=train_data)
+        train_data.fillna(0, inplace=True)
+        columns = train_data.columns
+        train_data = pd.DataFrame(MinMaxScaler((-1, 1)).fit_transform(train_data), columns=columns)
+        logging.error(dataset[0])
+        print(dataset[0])
+
+        # Split data
+        X_train, X_test, y_train, y_test = train_test_split(train_data.drop(columns=[y_label]), train_data[y_label],
+                                                            test_size=0.2, random_state=42)
+        train = X_train.copy()
+        train[y_label] = y_train
+        test = X_test.copy()
+        test[y_label] = y_test
+
+        # Perform evaluation
+        mifs_000 = evaluate_SVM(train, test, mifs_000, y_label)
+        print(mifs_000)
+        logging.error(mifs_000)
+        mifs_025 = evaluate_SVM(train, test, mifs_025, y_label)
+        print(mifs_025)
+        logging.error(mifs_025)
+        mifs_050 = evaluate_SVM(train, test, mifs_050, y_label)
+        print(mifs_050)
+        logging.error(mifs_050)
+        mifs_075 = evaluate_SVM(train, test, mifs_075, y_label)
+        print(mifs_075)
+        logging.error(mifs_075)
+        mifs_100 = evaluate_SVM(train, test, mifs_100, y_label)
+        print(mifs_100)
+        logging.error(mifs_100)
+
+
 if __name__ == '__main__':
     # logging.basicConfig(filename='app.log', filemode='a', level=logging.ERROR, format='%(message)s')
 

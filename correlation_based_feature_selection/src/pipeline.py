@@ -610,9 +610,9 @@ class MLPipeline:
                       subset_length, current_subset, current_performance, current_duration,
                       baseline_performance, baseline_duration):
         # Create the directory if it doesn't exist
-        directory = "./results_tables_new2"
+        directory = "./results_tables_time"
         os.makedirs(directory, exist_ok=True)
-        directory = "./results_tables_new2/txt_files"
+        directory = "./results_tables_time/txt_files"
         os.makedirs(directory, exist_ok=True)
         # directory = "./results_tables_new2/csv_files"
         # os.makedirs(directory, exist_ok=True)

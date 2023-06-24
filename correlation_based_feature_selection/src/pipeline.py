@@ -35,7 +35,6 @@ class PreML:
 
     # All features will be continuous
     @staticmethod
-    # TODO: what if target is nominal???
     def onehot_encoding(train_dataframe, test_dataframe, target_label):
         one_hot_encoder = OneHotEncoder()
         encoded_train_dataframe = one_hot_encoder.encode(train_dataframe, target_label)
@@ -46,7 +45,6 @@ class PreML:
     # All features will be nominal
     @staticmethod
     def k_bins_discretizer(train_dataframe, test_dataframe, target_label):
-        # TODO: Should 'encode' be ordinal or onehot here?
         k_bins_discretizer = KBinsDiscretizer()
         encoded_train_dataframe = k_bins_discretizer.encode(train_dataframe, target_label)
         encoded_test_dataframe = k_bins_discretizer.encode(test_dataframe, target_label)
@@ -171,6 +169,16 @@ class MLPipeline:
                              normalized_X[self.target_label],
                              test_size=0.2, random_state=0)
         current_train_dataframe = pd.concat([x_train, y_train], axis=1)
+        current_test_dataframe = pd.concat([x_test, y_test], axis=1)
+
+        current_train_dataframe, current_test_dataframe = \
+            PreML.k_bins_discretizer(current_train_dataframe, current_test_dataframe, self.target_label)
+
+        x_train = current_train_dataframe.drop([self.target_label], axis=1)
+        y_train = current_train_dataframe[self.target_label]
+
+        x_test = current_test_dataframe.drop([self.target_label], axis=1)
+        y_test = current_test_dataframe[self.target_label]
 
         # Perform data preprocessing for SVM
         lab = preprocessing.LabelEncoder()
@@ -178,7 +186,7 @@ class MLPipeline:
         y_test = lab.fit_transform(y_test)
 
         # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
-        dataset_type = 1
+        dataset_type = 2
         # COMPUTATION: Compute the ranking of features returned by each correlation method
         pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features = \
             InML.feature_selection_select_k_best(current_train_dataframe,

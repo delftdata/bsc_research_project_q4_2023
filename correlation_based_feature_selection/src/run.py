@@ -14,8 +14,10 @@ def evaluate_census_income_dataset():
         dataset_file='../datasets/CensusIncome/CensusIncome.csv', dataset_name='CensusIncome',
         target_label='income_label', evaluation_metric='accuracy', features_to_select=14)
 
-    dataset_evaluator.evaluate_support_vector_machine_model_select_above_c(problem_type='classification')
-    dataset_evaluator.evaluate_all_models_select_above_c()
+    # dataset_evaluator.evaluate_support_vector_machine_model_select_above_c(problem_type='classification')
+    # dataset_evaluator.evaluate_all_models_select_above_c()
+    dataset_evaluator.evaluate_support_vector_machine_model(problem_type='classification')
+    dataset_evaluator.evaluate_all_models()
 
 
 def evaluate_feature_selection_census_income_dataset():
@@ -31,8 +33,10 @@ def evaluate_breast_cancer_dataset():
         dataset_file='../datasets/BreastCancer/data.csv', dataset_name='BreastCancer',
         target_label='diagnosis', evaluation_metric='accuracy', features_to_select=31)
 
-    dataset_evaluator.evaluate_support_vector_machine_model_select_above_c(problem_type='classification')
-    dataset_evaluator.evaluate_all_models_select_above_c()
+    # dataset_evaluator.evaluate_support_vector_machine_model_select_above_c(problem_type='classification')
+    # dataset_evaluator.evaluate_all_models_select_above_c()
+    dataset_evaluator.evaluate_support_vector_machine_model(problem_type='classification')
+    dataset_evaluator.evaluate_all_models()
 
 
 def evaluate_feature_selection_breast_cancer_dataset():
@@ -51,7 +55,8 @@ def evaluate_steel_plates_fault_dataset():
     # dataset_evaluator.evaluate_support_vector_machine_model_select_above_c(problem_type='classification')
     # dataset_evaluator.evaluate_all_models_select_above_c()
     # dataset_evaluator.evaluate_all_models()
-    dataset_evaluator.evaluate_support_vector_machine_model()
+    dataset_evaluator.evaluate_support_vector_machine_model(problem_type='classification')
+    dataset_evaluator.evaluate_all_models()
 
 
 def evaluate_feature_selection_steel_plates_faults_dataset():
@@ -162,8 +167,10 @@ def evaluate_arrhythmia_dataset():
         dataset_file='../datasets/Arrhythmia/arrhythmia.csv', dataset_name='Arrhythmia',
         target_label='Class', evaluation_metric='accuracy', features_to_select=200)
 
-    dataset_evaluator.evaluate_support_vector_machine_model_select_above_c(problem_type='classification')
-    dataset_evaluator.evaluate_all_models_select_above_c()
+    # dataset_evaluator.evaluate_support_vector_machine_model_select_above_c(problem_type='classification')
+    # dataset_evaluator.evaluate_all_models_select_above_c()
+    dataset_evaluator.evaluate_support_vector_machine_model(problem_type='classification')
+    dataset_evaluator.evaluate_all_models()
 
 
 def evaluate_feature_selection_arrhythmia_dataset():
@@ -239,16 +246,16 @@ if __name__ == '__main__':
     # plot_average_over_number_of_features()
     # plot_over_runtime()
     # parse_data()
-    plot_over_number_of_features()
+    # plot_over_number_of_features()
     # plot_over_number_of_features_custom()
     # plot_over_number_of_features_runtime()
     # plot_over_number_of_features_runtime_custom()
 
     # binary classification
-    # evaluate_census_income_dataset()
-    # evaluate_breast_cancer_dataset()
-    # evaluate_steel_plates_fault_dataset()
-    # evaluate_arrhythmia_dataset()
+    evaluate_census_income_dataset()
+    evaluate_breast_cancer_dataset()
+    evaluate_steel_plates_fault_dataset()
+    evaluate_arrhythmia_dataset()
     # evaluate_internet_advertisements_dataset()
     # evaluate_gisette_dataset()
     # multi-class classification

@@ -56,12 +56,24 @@ class InML:
     @staticmethod
     def feature_selection_select_k_best(train_dataframe, target_label, k):
         # Compute the ranking of features returned by each correlation method
+        start = time.time()
         pearson_selected_features = PearsonFeatureSelection.feature_selection(train_dataframe, target_label, k)
-        spearman_selected_features = SpearmanFeatureSelection.feature_selection(train_dataframe, target_label, k)
-        cramersv_selected_features = CramersVFeatureSelection.feature_selection(train_dataframe, target_label, k)
-        su_selected_features = SymmetricUncertaintyFeatureSelection.feature_selection(train_dataframe, target_label, k)
+        pearson_duration = time.time() - start
 
-        return pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features
+        start = time.time()
+        spearman_selected_features = SpearmanFeatureSelection.feature_selection(train_dataframe, target_label, k)
+        spearman_duration = time.time() - start
+
+        start = time.time()
+        cramersv_selected_features = CramersVFeatureSelection.feature_selection(train_dataframe, target_label, k)
+        cramersv_duration = time.time() - start
+
+        start = time.time()
+        su_selected_features = SymmetricUncertaintyFeatureSelection.feature_selection(train_dataframe, target_label, k)
+        su_duration = time.time() - start
+
+        return pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features, \
+            pearson_duration, spearman_duration, cramersv_duration, su_duration
 
     @staticmethod
     def feature_selection_select_above_t(train_dataframe, target_label, t):
@@ -190,7 +202,8 @@ class MLPipeline:
         # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
         dataset_type = 3
         # COMPUTATION: Compute the ranking of features returned by each correlation method
-        pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features = \
+        pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features, \
+            pearson_duration, spearman_duration, cramersv_duration, su_duration = \
             InML.feature_selection_select_k_best(current_train_dataframe,
                                                  self.target_label,
                                                  self.features_to_select_k)
@@ -227,6 +240,16 @@ class MLPipeline:
                 else:
                     performance_score = predictor.score(x_test[current_subset], y_test)
 
+                total_duration = current_duration
+                if correlation_method == 'Pearson':
+                    total_duration += pearson_duration
+                elif correlation_method == 'Spearman':
+                    total_duration += spearman_duration
+                elif correlation_method == 'Cramer':
+                    total_duration += cramersv_duration
+                elif correlation_method == 'SU':
+                    total_duration += su_duration
+
                 # Save the results to file
                 MLPipeline.write_to_file(dataset_name=self.dataset_name,
                                          dataset_type=str(dataset_type),
@@ -235,7 +258,7 @@ class MLPipeline:
                                          subset_length=subset_length,
                                          current_subset=current_subset,
                                          current_performance=performance_score,
-                                         current_duration=current_duration,
+                                         current_duration=total_duration,
                                          baseline_performance=baseline_performance,
                                          baseline_duration=baseline_duration)
 
@@ -264,15 +287,16 @@ class MLPipeline:
         current_test_dataframe = pd.concat([x_test, y_test], axis=1)
 
         # Encode the features
-        current_train_dataframe, current_test_dataframe = \
-            PreML.onehot_encoding(current_train_dataframe, current_test_dataframe, self.target_label)
+        # current_train_dataframe, current_test_dataframe = \
+        #     PreML.onehot_encoding(current_train_dataframe, current_test_dataframe, self.target_label)
         # current_train_dataframe, current_test_dataframe = \
         #     PreML.k_bins_discretizer(current_train_dataframe, current_test_dataframe, self.target_label)
 
         # The symbols represent the following: 1 - normal, 2 - all continuous, 3 - all nominal
-        dataset_type = 3
+        dataset_type = 1
         # COMPUTATION: Compute the ranking of features returned by each correlation method
-        pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features = \
+        pearson_selected_features, spearman_selected_features, cramersv_selected_features, su_selected_features, \
+            pearson_duration, spearman_duration, cramersv_duration, su_duration = \
             InML.feature_selection_select_k_best(current_train_dataframe,
                                                  self.target_label,
                                                  self.features_to_select_k)
@@ -297,7 +321,8 @@ class MLPipeline:
 
                     current_performance, current_duration = PostML.evaluate_model(algorithm=algorithm,
                                                                                   hyperparameters=hyperparameters,
-                                                                                  train_dataframe=current_train_dataframe,
+                                                                                  train_dataframe=
+                                                                                  current_train_dataframe,
                                                                                   feature_subset=current_subset,
                                                                                   target_label=self.target_label,
                                                                                   test_dataframe=
@@ -305,6 +330,15 @@ class MLPipeline:
                                                                                   evaluation_metric=
                                                                                   self.evaluation_metric)
 
+                    total_duration = current_duration
+                    if correlation_method == 'Pearson':
+                        total_duration += pearson_duration
+                    elif correlation_method == 'Spearman':
+                        total_duration += spearman_duration
+                    elif correlation_method == 'Cramer':
+                        total_duration += cramersv_duration
+                    elif correlation_method == 'SU':
+                        total_duration += su_duration
                     # Save the results to file
                     MLPipeline.write_to_file(dataset_name=self.dataset_name,
                                              dataset_type=str(dataset_type),
@@ -313,7 +347,7 @@ class MLPipeline:
                                              subset_length=subset_length,
                                              current_subset=current_subset,
                                              current_performance=current_performance,
-                                             current_duration=current_duration,
+                                             current_duration=total_duration,
                                              baseline_performance=baseline_performance,
                                              baseline_duration=baseline_duration)
 
@@ -580,11 +614,11 @@ class MLPipeline:
         os.makedirs(directory, exist_ok=True)
         directory = "./results_tables_new2/txt_files"
         os.makedirs(directory, exist_ok=True)
-        directory = "./results_tables_new2/csv_files"
-        os.makedirs(directory, exist_ok=True)
+        # directory = "./results_tables_new2/csv_files"
+        # os.makedirs(directory, exist_ok=True)
 
         # Write the results to a txt file
-        file_path = f"./results_tables_new2/txt_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
+        file_path = f"./results_tables_time/txt_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
                     f"{correlation_method}.txt"
         file = open(file_path, "a")
 
@@ -602,17 +636,17 @@ class MLPipeline:
         file.close()
 
         # Write the results to a csv file
-        file_path = f"./results_tables_new2/csv_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
-                    f"{correlation_method}_{subset_length}.csv"
-
-        with open(file_path, "w", newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(["DATASET NAME", "DATASET TYPE",
-                             "ALGORITHM NAME", "CORRELATION METHOD",
-                             "SUBSET OF FEATURES", "CURRENT FEATURE SUBSET",
-                             "CURRENT PERFORMANCE", "BASELINE PERFORMANCE"])
-            writer.writerow([dataset_name, dataset_type, algorithm_name, correlation_method,
-                             subset_length, current_subset, current_performance, baseline_performance])
+        # file_path = f"./results_tables_new2/csv_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
+        #             f"{correlation_method}_{subset_length}.csv"
+        #
+        # with open(file_path, "w", newline='') as file:
+        #     writer = csv.writer(file)
+        #     writer.writerow(["DATASET NAME", "DATASET TYPE",
+        #                      "ALGORITHM NAME", "CORRELATION METHOD",
+        #                      "SUBSET OF FEATURES", "CURRENT FEATURE SUBSET",
+        #                      "CURRENT PERFORMANCE", "BASELINE PERFORMANCE"])
+        #     writer.writerow([dataset_name, dataset_type, algorithm_name, correlation_method,
+        #                      subset_length, current_subset, current_performance, baseline_performance])
 
     def evaluate_all_models_k_fold(self):
         number_rows, number_columns = self.dataframe.shape

@@ -180,8 +180,14 @@ def parse_data_all(dataset=current_dataset1, num_files=5, current_good_features=
     baseline_performance /= num_files
 
     print(dataset)
-    print(stats.ttest_ind(spearman_performance, su_performance))
+    print(stats.ttest_ind(pearson_performance, su_performance))
     print('\n')
+
+    t_statistic, p_value = stats.ttest_rel(pearson_performance, su_performance)
+
+    # Output the results
+    print("T-Statistic:", t_statistic)
+    print("P-Value:", p_value)
 
     return pearson_performance, spearman_performance, cramersv_performance, su_performance, baseline_performance
 

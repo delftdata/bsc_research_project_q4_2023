@@ -7,9 +7,9 @@ import matplotlib.ticker as mticker
 
 
 current_algorithm = 'SVM2'
-current_dataset = 'InternetAds'
-current_number_of_features = 250
-current_good_features = [1] + list(range(10, 251, 10))
+current_dataset = 'BreastCancer'
+current_number_of_features = 31
+current_good_features = list(range(1, 32, 1))
 evaluation_metrics_options = {
     'accuracy': 'Accuracy (%)',
     'rmse': 'Root mean square error',
@@ -61,73 +61,120 @@ def parse_data(dataset=current_dataset, algorithm=current_algorithm):
     return pearson_performance, spearman_performance, cramersv_performance, su_performance, baseline_performance
 
 
-def plot_over_number_of_features(dataset_type=1, evaluation_metric='rmse'):
-    dataset_name = current_dataset
-    algorithm = current_algorithm
-    number_of_features = current_number_of_features
-    pearson_performance, spearman_performance, cramersv_performance, su_performance, baseline_performance = parse_data()
+def plot_over_number_of_features(dataset_type=1, evaluation_metric='accuracy'):
+    pearson_performance, spearman_performance, cramersv_performance, su_performance, baseline_performance = \
+        parse_data(dataset=current_dataset, algorithm='LightGBM')
 
-    evaluation_metric_name = evaluation_metrics_options.get(evaluation_metric)
-    number_of_features_iteration = list(range(1, number_of_features + 1))
+    pearson_performance2, spearman_performance2, cramersv_performance2, su_performance2, baseline_performance2 = \
+        parse_data(dataset=current_dataset, algorithm='RandomForest')
 
+    pearson_performance3, spearman_performance3, cramersv_performance3, su_performance3, baseline_performance3 = \
+        parse_data(dataset=current_dataset, algorithm='XGBoost')
+
+    pearson_performance4, spearman_performance4, cramersv_performance4, su_performance4, baseline_performance4 = \
+        parse_data(dataset=current_dataset, algorithm='LinearModel')
+
+    pearson_performance5, spearman_performance5, cramersv_performance5, su_performance5, baseline_performance5 = \
+        parse_data(dataset=current_dataset, algorithm='SVM2')
+
+    sns.set(font_scale=2.6)
     sns.set_style("whitegrid", {"grid.color": "0.9", "grid.linestyle": "-", "grid.linewidth": "0.2"})
-    plt.figure(figsize=(8, 6), dpi=1200)
-    ax = plt.gca()
-    ax.xaxis.set_major_locator(mticker.MultipleLocator(2))
+    fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(22, 12), dpi=1200, gridspec_kw={'hspace': 0.5})
 
-    sns.lineplot(x=number_of_features_iteration, y=np.array(pearson_performance) * 100,
-                 marker='D', color='#10A5D6', label='Pearson', linewidth=1.5)
-    sns.lineplot(x=number_of_features_iteration, y=np.array(spearman_performance) * 100,
-                 marker='o', color='#00005A', label='Spearman', linewidth=1.5)
-    sns.lineplot(x=number_of_features_iteration, y=np.array(cramersv_performance) * 100,
-                 marker='>', color='#BF9000', label='Cramér\'s V', linewidth=1.5)
-    sns.lineplot(x=number_of_features_iteration, y=np.array(su_performance) * 100,
-                 marker='s', color='#CA0020', label='Symmetric Uncertainty', linewidth=1.5)
-    sns.lineplot(x=[number_of_features_iteration[-1]], y=[baseline_performance * 100],
-                 marker='p', color='#7030A0', label='Baseline')
+    axes[1][1].remove()
 
-    plt.xlabel('Number of features')
-    plt.ylabel(str(evaluation_metric_name))
-    max_value = round(max(np.max(np.array(pearson_performance) * 100), np.max(np.array(spearman_performance) * 100),
-                    np.max(np.array(cramersv_performance) * 100), np.max(np.array(su_performance) * 100)), 2)
-    min_value = round(min(np.min(np.array(pearson_performance) * 100), np.min(np.array(spearman_performance) * 100),
-                    np.min(np.array(cramersv_performance) * 100), np.min(np.array(su_performance) * 100)), 2)
-    sns.set(font_scale=1.9)
+    sns.lineplot(x=current_good_features, y=np.array(pearson_performance) * 100, legend=False,
+                 marker='D', color='#10A5D6', label='Pearson', linewidth=5, ax=axes[0][0], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(spearman_performance) * 100, legend=False,
+                 marker='o', color='#7030A0', label='Spearman', linewidth=5,  ax=axes[0][0], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(cramersv_performance) * 100, legend=False,
+                 marker='p', color='#BF9000', label='Cramér\'s V', linewidth=5,  ax=axes[0][0], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(su_performance) * 100, legend=False,
+                 marker='s', color='#c51b8a', label='Symmetric Uncertainty', linewidth=5, ax=axes[0][0], markersize=8)
+    sns.lineplot(x=[current_good_features[-1]], y=[baseline_performance * 100],
+                 marker='P', color='#000000', label='Baseline', ax=axes[0][0], legend=False, markersize=8,
+                 linewidth=5)
 
-    # THIS VARIES PER DATASET
-    # plt.yticks([54, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, min_value, max_value])
-    # plt.yticks([66, 76, 70, 72, 74, 78, 80, 82, 84, 88, min_value, max_value])
-    # plt.yticks([54, 58, 62, 66, 70, 74, 78, 82, 86, 90, 94, 98, min_value, max_value])
-    # plt.yticks([55, 60, 65, 75, 80, 85, 90, 95, 100, min_value, max_value])
-    # plt.yticks([64, 68, 70, 72, 74, 82, 78, 80, 86, 84, 88, 90, min_value, max_value])
-    # print(plt.gca().get_yticklabels())
-    # plt.gca().get_yticklabels()[13].set_color('#CA0020')
-    # plt.gca().get_yticklabels()[12].set_color('#CA0020')
+    sns.lineplot(x=current_good_features, y=np.array(pearson_performance2) * 100,
+                 marker='D', color='#10A5D6', linewidth=5, ax=axes[0][1], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(spearman_performance2) * 100,
+                 marker='o', color='#7030A0', linewidth=5,  ax=axes[0][1], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(cramersv_performance2) * 100,
+                 marker='p', color='#BF9000', linewidth=5,  ax=axes[0][1], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(su_performance2) * 100,
+                 marker='s', color='#c51b8a', linewidth=5, ax=axes[0][1], markersize=8)
+    sns.lineplot(x=[current_good_features[-1]], y=[baseline_performance2 * 100],
+                 marker='P', color='#000000',  ax=axes[0][1], linewidth=5, markersize=8)
 
-    # plt.xticks([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31])
-    # plt.xticks([1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 42])
-    # plt.xticks([1, 2, 4, 6, 8, 10, 12, 14])
-    # plt.xticks([1, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33])
-    # plt.xticks([1, 2, 3, 4, 5, 6, 7, 8])
+    sns.lineplot(x=current_good_features, y=np.array(pearson_performance3) * 100,
+                 marker='D', color='#10A5D6', linewidth=5, ax=axes[0][2], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(spearman_performance3) * 100,
+                 marker='o', color='#7030A0', linewidth=5,  ax=axes[0][2], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(cramersv_performance3) * 100,
+                 marker='p', color='#BF9000', linewidth=5,  ax=axes[0][2], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(su_performance3) * 100,
+                 marker='s', color='#c51b8a', linewidth=5, ax=axes[0][2], markersize=8)
+    sns.lineplot(x=[current_good_features[-1]], y=[baseline_performance3 * 100],
+                 marker='P', color='#000000', ax=axes[0][2], linewidth=5, markersize=8)
 
-    # plt.xlim(0, 43)
-    # plt.ylim(64, 90)
+    sns.lineplot(x=current_good_features, y=np.array(pearson_performance4) * 100,
+                 marker='D', color='#10A5D6', linewidth=5, ax=axes[1][0], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(spearman_performance4) * 100,
+                 marker='o', color='#7030A0', linewidth=5,  ax=axes[1][0], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(cramersv_performance4) * 100,
+                 marker='p', color='#BF9000', linewidth=5,  ax=axes[1][0], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(su_performance4) * 100,
+                 marker='s', color='#c51b8a', linewidth=5, ax=axes[1][0], markersize=8)
+    sns.lineplot(x=[current_good_features[-1]], y=[baseline_performance4 * 100],
+                 marker='P', color='#000000', ax=axes[1][0], linewidth=5, markersize=8)
 
-    ax.set_facecolor('white')
-    ax.spines['top'].set_linewidth(1.2)
-    ax.spines['bottom'].set_linewidth(1.2)
-    ax.spines['left'].set_linewidth(1.2)
-    ax.spines['right'].set_linewidth(1.2)
-    ax.spines['top'].set_edgecolor('black')
-    ax.spines['bottom'].set_edgecolor('black')
-    ax.spines['left'].set_edgecolor('black')
-    ax.spines['right'].set_edgecolor('black')
+    sns.lineplot(x=current_good_features, y=np.array(pearson_performance5) * 100,
+                 marker='D', color='#10A5D6', linewidth=5, ax=axes[1][2], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(spearman_performance5) * 100,
+                 marker='o', color='#7030A0', linewidth=5,  ax=axes[1][2], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(cramersv_performance5) * 100,
+                 marker='p', color='#BF9000', linewidth=5,  ax=axes[1][2], markersize=8)
+    sns.lineplot(x=current_good_features, y=np.array(su_performance5) * 100,
+                 marker='s', color='#c51b8a', linewidth=5, ax=axes[1][2], markersize=8)
+    sns.lineplot(x=[current_good_features[-1]], y=[baseline_performance5 * 100],
+                 marker='P', color='#000000', ax=axes[1][2], linewidth=5, markersize=8)
+
+    axes[0][1].set_xlabel('Number of features')
+    axes[1][1].set_xlabel('Number of features')
+    axes[0][0].set_ylabel('Accuracy (%)')
+    axes[1][0].set_ylabel('Accuracy (%)')
+    axes[0][0].set_title('LightGBM')
+    axes[0][1].set_title('RandomForest')
+    axes[0][2].set_title('XGBoost')
+    axes[1][0].set_title('LinearModel')
+    axes[1][2].set_title('SVM')
+
+    axes[0][0].set_xticks([0, 10, 20, 31])
+    axes[0][1].set_xticks([0, 10, 20, 31])
+    axes[0][2].set_xticks([0, 10, 20, 31])
+    axes[1][0].set_xticks([0, 10, 20, 31])
+    axes[1][2].set_xticks([0, 10, 20, 31])
+
+
+    for i in [0, 1]:
+        for j in [0, 1, 2]:
+            axes[i][j].spines['top'].set_linewidth(3)
+            axes[i][j].spines['bottom'].set_linewidth(3)
+            axes[i][j].spines['left'].set_linewidth(3)
+            axes[i][j].spines['right'].set_linewidth(3)
+
+    lines, labels = axes[0][0].get_legend_handles_labels()
+    all_lines = lines
+    all_labels = labels
+    fig.legend(all_lines, all_labels, loc='lower center', ncol=3, bbox_to_anchor=(0.5, -0.1),
+               frameon=True, facecolor='white', framealpha=1)
 
     # Create the directory if it doesn't exist
     directory = "./results_performance"
     os.makedirs(directory, exist_ok=True)
     # Save the figure to folder
-    plt.savefig(f'./results_performance/result_{dataset_name}_{dataset_type}_{algorithm}.pdf')
+    plt.savefig(f'./results_performance/result_{current_dataset}_{dataset_type}.pdf', dpi=1200,
+                bbox_inches='tight')
     # plt.show()
     plt.clf()
 

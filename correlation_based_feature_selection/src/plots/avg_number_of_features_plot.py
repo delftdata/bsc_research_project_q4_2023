@@ -46,7 +46,7 @@ evaluation_metrics_options = {
     'rmse': 'Average root mean square error',
 }
 
-def parse_data_all(dataset=current_dataset1, num_files=5, current_good_features=current_good_features1):
+def parse_data_all_calc_test(dataset='Nursery', num_files=5, current_good_features=list(range(1, 9, 1))):
     pearson_performance = []
     spearman_performance = []
     cramersv_performance = []
@@ -183,7 +183,8 @@ def parse_data_all(dataset=current_dataset1, num_files=5, current_good_features=
     su_performance = [value / num_files for value in su_performance]
     baseline_performance /= num_files
 
-    print("Indepent p-value:", stats.ttest_ind(pearson_performance, su_performance))
+    print(dataset)
+    print("Indepent p-value:", stats.ttest_ind(spearman_performance, su_performance))
     t_statistic, p_value = stats.ttest_rel(spearman_performance, su_performance)
     print("T-Statistic:", t_statistic)
     print("Two paired sample P-Value:", p_value)

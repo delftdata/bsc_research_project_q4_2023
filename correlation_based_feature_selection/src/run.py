@@ -240,7 +240,7 @@ def evaluate_dataframe(dataframe):
 if __name__ == '__main__':
     # plot_average_over_number_of_features_encoded()
     # plot_average_over_number_of_features_alg()
-    # parse_data_all2()
+    parse_data_all2()
     # plot_average_over_number_of_features_threshold()
     # parse_data_all_threshold()
     # plot_average_over_number_of_features()
@@ -255,7 +255,7 @@ if __name__ == '__main__':
     # evaluate_census_income_dataset()
     # evaluate_breast_cancer_dataset()
     # evaluate_steel_plates_fault_dataset()
-    evaluate_arrhythmia_dataset()
+    # evaluate_arrhythmia_dataset()
     # evaluate_internet_advertisements_dataset()
     # evaluate_gisette_dataset()
     # multi-class classification

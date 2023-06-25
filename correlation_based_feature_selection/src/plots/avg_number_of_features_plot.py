@@ -47,7 +47,7 @@ evaluation_metrics_options = {
 }
 
 
-def parse_data_all2(dataset='SteelPlatesFaults', num_files=5, current_good_features=list(range(1, 34, 1))):
+def parse_data_all2(dataset='Nursery', num_files=5, current_good_features=list(range(1, 9, 1))):
     pearson_performance = []
     spearman_performance = []
     cramersv_performance = []
@@ -184,39 +184,68 @@ def parse_data_all2(dataset='SteelPlatesFaults', num_files=5, current_good_featu
     su_performance = [value / num_files for value in su_performance]
     baseline_performance /= num_files
 
-    dataframe = pd.DataFrame(columns=['Method', 'Number', 'Accuracy'])
+    print(len(pearson_performance))
+    print(len(spearman_performance))
+    print(len(current_good_features))
+
+    # dataframe = pd.DataFrame(columns=['Method', 'Number', 'Accuracy'])
     count = 0
-    for number_features in current_good_features1:
-        entry1 = {
-            'Method': 'Pearson',
-            'Number': str(number_features),
-            'Accuracy': float(pearson_performance[count])
-        }
-        dataframe = dataframe.append(entry1, ignore_index=True)
-        entry2 = {
-            'Method': 'Spearman',
-            'Number': str(number_features),
-            'Accuracy': float(spearman_performance[count])
-        }
-        dataframe = dataframe.append(entry2, ignore_index=True)
-        entry3 = {
-            'Method': 'Cramer',
-            'Number': str(number_features),
-            'Accuracy': float(cramersv_performance[count])
-        }
-        dataframe = dataframe.append(entry3, ignore_index=True)
-        entry4 = {
-            'Method': 'SU',
-            'Number': str(number_features),
-            'Accuracy': float(su_performance[count])
-        }
-        dataframe = dataframe.append(entry4, ignore_index=True)
+    methods = []
+    numbers = []
+    accuracies = []
+    for number_features in current_good_features:
+        # entry1 = {
+        #     'Method': 'Pearson',
+        #     'Number': str(number_features),
+        #     'Accuracy': float(pearson_performance[count])
+        # }
+        # dataframe = dataframe.append(entry1, ignore_index=True)
+        # dataframe.loc[len(dataframe)] = entry1
+        methods.append('Pearson')
+        numbers.append(str(number_features))
+        accuracies.append(float(pearson_performance[count]))
+
+        # entry2 = {
+        #     'Method': 'Spearman',
+        #     'Number': str(number_features),
+        #     'Accuracy': float(spearman_performance[count])
+        # }
+        # dataframe.loc[len(dataframe)] = entry2
+        methods.append('Spearman')
+        numbers.append(str(number_features))
+        accuracies.append(float(spearman_performance[count]))
+
+        # entry3 = {
+        #     'Method': 'Cramer',
+        #     'Number': str(number_features),
+        #     'Accuracy': float(cramersv_performance[count])
+        # }
+        # dataframe = dataframe.append(entry3, ignore_index=True)
+        # dataframe.loc[len(dataframe)] = entry3
+        methods.append('Cramer')
+        numbers.append(str(number_features))
+        accuracies.append(float(cramersv_performance[count]))
+
+        # entry4 = {
+        #     'Method': 'SU',
+        #     'Number': str(number_features),
+        #     'Accuracy': float(su_performance[count])
+        # }
+        # dataframe = dataframe.append(entry4, ignore_index=True)
+        # dataframe.loc[len(dataframe)] = entry4
+        methods.append('SU')
+        numbers.append(str(number_features))
+        accuracies.append(float(su_performance[count]))
         count += 1
+
+    dataframe = pd.DataFrame({'Method': methods, 'Number': numbers, 'Accuracy': accuracies})
 
     pd.set_option('display.max_rows', None)
     print(dataframe)
 
-    model = ols('Accuracy ~ C(Method) + C(Number)', data=dataframe).fit()
+    dataframe.to_csv('output.csv', columns=['Method', 'Number', 'Accuracy'], index=False)
+
+    model = ols('Accuracy ~ C(Method) * C(Number)', data=dataframe).fit()
     anova_table = anova_lm(model, typ=2)
 
     print(anova_table)

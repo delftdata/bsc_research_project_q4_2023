@@ -1,0 +1,116 @@
+V5 QRSTA
+V1 QRSA
+DII QRSTA
+V4 Amplitude: R wave
+V4 QRSTA
+V4 QRSA
+DI Amplitude: T wave
+V2 QRSTA
+V5 QRSA
+DII QRSA
+V2 QRSA
+DI Amplitude: JJ wave
+DI Amplitude: Q wave
+DI Amplitude: R wave
+DI Amplitude: S wave
+DI Amplitude: R' wave
+DI Amplitude: P wave
+DII Amplitude: JJ wave
+DII Amplitude: Q wave
+DII Amplitude: R wave
+DII Amplitude: S wave
+DI QRSTA
+V1 QRSTA
+V3 Amplitude: Q wave
+V3 QRSA
+DII Amplitude: R' wave
+DII Amplitude: S' wave
+DII Amplitude: P wave
+DII Amplitude: T wave
+DIII Amplitude: JJ wave
+DIII Amplitude: R wave
+DIII Amplitude: S wave
+DIII Amplitude: R' wave
+DIII Amplitude: S' wave
+DIII Amplitude: P wave
+AVR Amplitude: Q wave
+AVR Amplitude: JJ wave
+AVR Amplitude: R wave
+AVR Amplitude: R' wave
+AVR Amplitude: S' wave
+AVR Amplitude: P wave
+AVL Amplitude: JJ wave
+AVL Amplitude: Q wave
+AVL Amplitude: S wave
+AVL Amplitude: R' wave
+AVL Amplitude: P wave
+AVF Amplitude: JJ wave
+AVF Amplitude: R wave
+AVF Amplitude: S wave
+AVF Amplitude: R' wave
+AVF Amplitude: S' wave
+AVF Amplitude: P wave
+AVF Amplitude: T wave
+V1 Amplitude: JJ wave
+V1 Amplitude: Q wave
+V1 Amplitude: R wave
+DIII Amplitude: T wave
+V1 Amplitude: S' wave
+V1 Amplitude: P wave
+V2 Amplitude: JJ wave
+V2 Amplitude: Q wave
+AVR Amplitude: T wave
+AVL Amplitude: T wave
+V2 Amplitude: S wave
+DIII Amplitude: Q wave
+AVR Amplitude: S wave
+AVF Amplitude: Q wave
+V1 Amplitude: T wave
+V2 Amplitude: S' wave
+V2 Amplitude: P wave
+V2 Amplitude: T wave
+V2 Amplitude: R' wave
+V3 Amplitude: JJ wave
+V3 Amplitude: R' wave
+V3 Amplitude: S' wave
+V3 Amplitude: P wave
+V3 Amplitude: T wave
+V4 Amplitude: JJ wave
+V4 Amplitude: Q wave
+V4 Amplitude: S wave
+V3 Amplitude: S wave
+V6 QRSA
+AVF QRSA
+AVL QRSTA
+V1 Amplitude: R' wave
+V2 Amplitude: R wave
+V4 Amplitude: R' wave
+V4 Amplitude: S' wave
+V4 Amplitude: P wave
+V4 Amplitude: T wave
+V5 Amplitude: JJ wave
+V5 Amplitude: Q wave
+V5 Amplitude: R wave
+V5 Amplitude: S wave
+V5 Amplitude: R' wave
+V5 Amplitude: P wave
+V5 Amplitude: T wave
+V6 Amplitude: JJ wave
+V6 Amplitude: Q wave
+V6 Amplitude: R wave
+V6 Amplitude: S wave
+V6 Amplitude: R' wave
+V6 Amplitude: P wave
+DIII QRSA
+AVR QRSTA
+DI QRSA
+AVL Amplitude: R wave
+V1 Amplitude: S wave
+V6 Amplitude: T wave
+DIII QRSTA
+AVR QRSA
+AVF QRSTA
+V3 Amplitude: R wave
+AVL QRSA
+V6 QRSTA
+V3 QRSTA

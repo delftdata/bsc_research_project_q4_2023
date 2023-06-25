@@ -45,23 +45,6 @@ class AutogluonModel():
             self.predictor.fit(self.df_train, presets='best_quality',
                                hyperparameters=self.hyperparameters)
 
-    def fit_split_data(self, training_df, test_df):
-        """
-        Fits machine learning models.
-
-        Args:
-            df (Pandas Dataframe): Dataframe to train and test the models on.
-        """
-        self.df_train = training_df
-        self.df_test = test_df
-
-        if not self.data_preprocessing:
-            self.predictor.fit(self.df_train, presets='best_quality', hyperparameters=self.hyperparameters,
-                               feature_generator=IdentityFeatureGenerator())
-        else:
-            self.predictor.fit(self.df_train, presets='best_quality',
-                               hyperparameters=self.hyperparameters)
-
     def evaluate(self):
         """
         Evaluates machine learning models and returns the results of the best performing one.

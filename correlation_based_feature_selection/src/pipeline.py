@@ -97,7 +97,8 @@ class PostML:
         start_time_model = time.time()
         fitted_predictor = TabularPredictor(label=target_label,
                                             eval_metric=evaluation_metric,
-                                            verbosity=0) \
+                                            verbosity=0,
+                                            problem_type='binary') \
             .fit(train_data=train_data, hyperparameters={algorithm: hyperparameters})
         # Get the duration the model with feature selection took
         current_duration = time.time() - start_time_model

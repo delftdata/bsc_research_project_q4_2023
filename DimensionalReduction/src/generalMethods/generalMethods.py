@@ -14,11 +14,15 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 import sklearn
 from sklearn.preprocessing import OneHotEncoder
-# import matlab.engine
+import matlab.engine
 # import oct2py
 from sklearn import preprocessing
 from sklearn import datasets, cluster
 import time
+from sklearn.metrics.pairwise import pairwise_kernels
+from DimensionalReduction.src.generalMethods.gda2 import *
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+
 
 
 
@@ -31,6 +35,8 @@ class DataSet(enum.Enum):
     CIFAR_10 = 1
     BCWD = 2
     FONTS = 3
+    CROPS = 4
+    MNIST = 5
 
 class DRMethod(enum.Enum):
     PCA = 1
@@ -39,6 +45,7 @@ class DRMethod(enum.Enum):
     LASSO = 4
     NONE = 5
     FA = 6
+    QDA =7
 
 class ClassificationMethod(enum.Enum):
     LOGISTIC_REGRESSION = 1
@@ -53,9 +60,11 @@ class Handle:
     def __init__(self):
         self.variance_to_keep = 0.95
         self.alpha = 0.01
+        self.numberOfClasses = 10
 
     def readSplit(self, data_set):
         file_to_read = self.fileToRead(data_set)
+        df = None
 
         if data_set == DataSet.BCWD:
             df = pd.read_csv(file_to_read)
@@ -67,33 +76,61 @@ class Handle:
 
         elif data_set == DataSet.CIFAR_10:
             df = pd.read_csv(file_to_read, dtype=np.uint8)
+            df = df.sample(n=10000, random_state=42)
             train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
             train_label = train_df['label']
             train_matrix = train_df.drop('label', axis=1)
             test_label = test_df['label']
             test_matrix = test_df.drop('label', axis=1)
 
+        elif data_set == DataSet.MNIST:
+            df = pd.read_csv(file_to_read)
+            df = df.sample(n=10000, random_state=42)
+            train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
+            train_label = train_df['label']
+            train_matrix = train_df.drop(['label'], axis=1)
+            test_label = test_df['label']
+            test_matrix = test_df.drop(['label'], axis=1)
+
+
+        elif data_set == DataSet.CROPS:
+            df = pd.read_csv(file_to_read)
+            df = df.sample(n=10000, random_state=42)
+            train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
+            train_label = train_df['label']
+            train_matrix = train_df.drop(['label'], axis=1)
+            test_label = test_df['label']
+            test_matrix = test_df.drop(['label'], axis=1)
+
+
         elif data_set == DataSet.FONTS:
-            map_to_read = "/datasets/CharacterFontImages/"
+            map_to_read = "../../datasets/CharacterFontImages/"
             df = []
-            i =0
-            for file in os.listdir(map_to_read):
-                if file.endswith(".csv"):
+            print("number of fonts: ", self.numberOfClasses)
+            for i, file in enumerate(os.listdir(map_to_read)):
+                if file.endswith(".csv") and i < self.numberOfClasses:
                     print(file)
-                    i += 1
                     file_to_read = map_to_read + file
                     df.append(pd.read_csv(file_to_read))
             df = pd.concat(df)
+            # nnn = self.numberOfClasses *1000
+            nnn = 1900
+            print(nnn)
+            df = df.sample(n=nnn, random_state=42)
             # print(df)
-            print(df.shape)
-            train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
+            # print(df.shape)
+            train_df, test_df = train_test_split(df, test_size=0.526, random_state=42)
             train_label = train_df['font']
             train_matrix = train_df.drop(['font', 'fontVariant'], axis=1)
             test_label = test_df['font']
             test_matrix = test_df.drop(['font', 'fontVariant'], axis=1)
+            self.numberOfClasses += 10
+
+
 
 
         header = df.columns
+        print("done reading data with shape: ", df.shape)
 
 
         return header, train_matrix, train_label, test_matrix, test_label
@@ -109,6 +146,11 @@ class Handle:
             matrix = df.drop(['id', 'label'], axis=1)
 
         elif data_set == DataSet.CIFAR_10:
+            df = pd.read_csv(file_to_read, dtype=np.uint8)
+            label = df['label']
+            matrix = df.drop('label', axis=1)
+
+        elif data_set == DataSet.MNIST:
             df = pd.read_csv(file_to_read, dtype=np.uint8)
             label = df['label']
             matrix = df.drop('label', axis=1)
@@ -157,7 +199,7 @@ class Handle:
             print(file)
 
     def fileToRead (self, data_set):
-        file_to_read = "/datasets"
+        file_to_read = "../../datasets"
 
         # directory_path = '/datasets'
         # self.print_files_in_path(directory_path)
@@ -169,6 +211,10 @@ class Handle:
             file_to_read += "/CIFAR-10"
         elif data_set == DataSet.FONTS:
             file_to_read += "/Fonts"
+        elif data_set == DataSet.CROPS:
+            file_to_read += "/crops"
+        elif data_set == DataSet.MNIST:
+            file_to_read += "/MNIST"
 
         file_to_read += "/data.csv"
         return file_to_read
@@ -190,11 +236,11 @@ class Handle:
         elif drMethod == DRMethod.PCA:
             pca = PCA(n_components= self.variance_to_keep)
             start_time = time.time()
-            # print(training_data)
             pca.fit(training_data)
             training_data_result = pca.transform(training_data)
-            test_data_result = pca.transform(test_data)
             end_time = time.time()
+            test_data_result = pca.transform(test_data)
+
 
         elif drMethod == DRMethod.LDA:
             lda = LinearDiscriminantAnalysis(n_components=var)
@@ -213,11 +259,13 @@ class Handle:
             # lda.n_components = (n_components -1)
 
             training_data_result = lda.transform(training_data)
-            test_data_result = lda.transform(test_data)
             end_time = time.time()
+            test_data_result = lda.transform(test_data)
+
+
+
 
         elif drMethod == DRMethod.LASSO:
-
             # Initialize the Lasso model and one hot encode classes
             lasso = Lasso(alpha=self.alpha)
             encoder = OneHotEncoder()
@@ -262,42 +310,60 @@ class Handle:
             test_data_result = agglo.transform(test_data)
             end_time = time.time()
 
-        # elif drMethod == DRMethod.GDA:
-        #     eng = matlab.engine.start_matlab()
-        #     folder_path = '.\src'
-        #     eng.cd(folder_path, nargout=0)
-        #
-        #     new_test_data = np.transpose(test_data.to_numpy())
-        #     new_training_data = np.transpose(training_data.to_numpy())
-        #     new_training_label = training_label.to_numpy()
-        #     le = preprocessing.LabelEncoder()
-        #     le.fit(new_training_label)
-        #     new_training_label = le.transform(new_training_label)
-        #     new_training_label += 1
-        #     print("new train: ", new_training_data)
-        #     print(type(new_training_data))
-        #     print("new label: ", new_training_label)
-        #     print(type(new_training_label))
-        #     print("new test: ", new_test_data)
-        #     print(type(new_test_data))
-        #
-        #
-        #
-        #     #
-        #     start_time = time.time()
-        #     mappedData_train = eng.gda(new_training_data, new_training_data,
-        #                          new_training_label)
-        #     mappedData_test = eng.gda(new_test_data, new_training_data,
-        #                          new_training_label)
-        #
-        #     # mappedData_train = oc.gda(new_training_data, new_training_label, new_training_label)
-        #     # mappedData_test = oc.gda( new_test_data, new_training_data, new_training_label)
-        #     end_time = time.time()
-        #     #
-        #     training_data_result = np.transpose(np.array(mappedData_train))
-        #     test_data_result = np.transpose(np.array(mappedData_test))
-        #     # oc.exit()
-        #     eng.quit()
+        elif drMethod == DRMethod.GDA:
+            eng = matlab.engine.start_matlab()
+            # folder_path = '.\src'
+            # eng.cd(folder_path, nargout=0)
+
+            new_test_data = np.transpose(test_data.to_numpy())
+            new_training_data = np.transpose(training_data.to_numpy())
+            new_training_label = training_label.to_numpy()
+            le = preprocessing.LabelEncoder()
+            le.fit(new_training_label)
+            new_training_label = le.transform(new_training_label)
+            new_training_label += 1
+            # print("new train: ", new_training_data)
+            # print(type(new_training_data))
+            # print("new label: ", new_training_label)
+            # print(type(new_training_label))
+            # print("new test: ", new_test_data)
+            # print(type(new_test_data))
+
+            #
+            start_time = time.time()
+            gda = GDA(n_components=1, kernel="poly", kernel_params={"degree": 3})
+            training_data = training_data.to_numpy()  # Convert DataFrame to numpy array
+            training_label = training_label.to_numpy().ravel()  # Convert Series to numpy array
+
+            # mappedData_train = gda.fit_transform(training_data, training_label)
+            # mappedData_test = gda.transform(test_data)
+            # mappedData_train = self.gda(new_training_data, new_training_data, new_training_label, var)
+            # mappedData_test = self.gda(new_test_data, new_training_data, new_training_label, var)
+            try:
+                mappedData_train = eng.gda(new_training_data, new_training_data,
+                                     new_training_label, var)
+                mappedData_test = eng.gda(new_test_data, new_training_data,
+                                     new_training_label, var)
+            except:
+                print("numebr of components to big")
+            # mappedData_train = oc.gda(new_training_data, new_training_label, new_training_label)
+            # mappedData_test = oc.gda( new_test_data, new_training_data, new_training_label)
+            end_time = time.time()
+            #
+            training_data_result = np.transpose(np.array(mappedData_train))
+            test_data_result = np.transpose(np.array(mappedData_test))
+            # oc.exit()
+            eng.quit()
+
+        elif drMethod == DRMethod.QDA:
+            start_time = time.time()
+            gda = QuadraticDiscriminantAnalysis(kernel='poly')
+            gda.fit(training_data, training_label)
+            training_data_result = gda.transform(training_data)
+            end_time = time.time()
+            test_data_result = gda.transform(test_data)
+
+
 
         hours, rem = divmod(end_time - start_time, 3600)
         minutes, seconds = divmod(rem, 60)
@@ -352,3 +418,108 @@ class Handle:
         else:
             return "unknown enum name"
 
+
+    # def gda(self, data, trainData, trainLabel, nDim=None, options=None):
+    #     # Check dimensions
+    #     print(data.shape)
+    #     print(trainData.shape)
+    #     trainLabel = trainLabel.reshape(1, -1)
+    #     print(trainLabel.shape)
+    #     if data.shape[0] != trainData.shape[0]:
+    #         raise ValueError('DATA and TRAINDATA must be in the same space with equal dimensions.')
+    #     if trainData.shape[1] != trainLabel.shape[1]:
+    #         raise ValueError('The length of the TRAINLABEL must be equal to the number of columns in TRAINDATA.')
+    #
+    #     # Set default options if not provided
+    #     if options is None:
+    #         options = {'KernelType': 'poly'}
+    #
+    #     # Separate samples of each class in a list
+    #     c = np.max(trainLabel)
+    #     dataCell = [trainData[:, np.where(trainLabel[0] == i)[0]] for i in range(1, c+1)]
+    #
+    #     # Create class-specific kernel for the training data
+    #     kTrainCell = []
+    #     for p in range(c):
+    #         print("p = ",p)
+    #         for q in range(c):
+    #             classP = dataCell[p]
+    #             classQ = dataCell[q]
+    #             Kpq = pairwise_kernels(classP.T, classQ.T, metric='poly')
+    #             print(Kpq.shape)
+    #             kTrainCell.append(Kpq)
+    #     kTrain = np.concatenate(kTrainCell, axis=1)
+    #
+    #     # Make data have zero mean
+    #     n = trainData.shape[1]
+    #     One = np.ones((n, n)) / n
+    #     zeroMeanKtrain = kTrain - One @ kTrain - kTrain @ One + One @ kTrain @ One
+    #
+    #     # Create the block-diagonal W matrix
+    #     wTrainCell = []
+    #     for p in range(c):
+    #         for q in range(c):
+    #             if p == q:
+    #                 wTrainCell.append(np.ones((dataCell[p].shape[1], dataCell[q].shape[1])) / dataCell[p].shape[1])
+    #             else:
+    #                 wTrainCell.append(np.zeros((dataCell[p].shape[1], dataCell[q].shape[1])))
+    #     wTrain = np.concatenate(wTrainCell, axis=1)
+    #
+    #     # Decompose zeroMeanKtrain using eigen-decomposition
+    #     gamma, P = np.linalg.eig(zeroMeanKtrain)
+    #     index = np.argsort(gamma)[::-1]
+    #     gamma = gamma[index]
+    #     P = P[:, index]
+    #
+    #     # Remove eigenvalues with relatively small value
+    #     maxEigVal = np.max(np.abs(gamma))
+    #     zeroEigIndex = np.where(np.abs(gamma) / maxEigVal < 1e-6)[0]
+    #     gamma = np.delete(gamma, zeroEigIndex)
+    #     P = np.delete(P, zeroEigIndex, axis=1)
+    #
+    #     # Normalize eigenvectors
+    #     nEig = len(gamma)
+    #     for i in range(nEig):
+    #         P[:, i] /= np.linalg.norm(P[:, i])
+    #
+    #     # Compute eigenvectors (beta) and eigenvalues (lambda)
+    #     BB = P.T @ wTrain @ P
+    #     lambda_, beta = np.linalg.eig(BB)
+    #     index = np.argsort(lambda_)[::-1]
+    #     lambda_ = lambda_[index]
+    #     beta = beta[:, index]
+
+        # Remove eigenvalues with relatively small value
+        maxEigVal = np.max(np.abs(lambda_))
+        zeroEigIndex = np.where(np.abs(lambda_) / maxEigVal < 1e-6)[0]
+        lambda_ = np.delete(lambda_, zeroEigIndex)
+        beta = np.delete(beta, zeroEigIndex, axis=1)
+
+        # Compute eigenvectors (alpha) and normalize them
+        gamma = np.diag(gamma)
+        alpha = P @ np.linalg.inv(gamma) @ beta
+        nEig = len(lambda_)
+        for i in range(nEig):
+            scalar = np.sqrt((alpha[:, i].T @ zeroMeanKtrain @ alpha[:, i]))
+            alpha[:, i] /= scalar
+
+        # Dimensionality reduction (if nDim is not given, nEig dimensions are retained)
+        if nDim is None:
+            nDim = nEig
+        elif nDim > nEig:
+            print(f'Target dimensionality reduced to {nEig}.')
+        w = alpha[:, :nDim]  # Projection matrix
+
+        # Create class-specific kernel for all data points
+        kDataCell = [pairwise_kernels(data.T, classP.T, metric="poly") for classP in dataCell]
+        kData = np.concatenate(kDataCell, axis=1)
+
+        # Make data zero mean
+        nPrime = data.shape[1]
+        Oneprime = np.ones((n, nPrime)) / n
+        zeroMeanKdata = kData - kTrain @ Oneprime - One @ kData + One @ kTrain @ Oneprime
+
+        # Project all data points non-linearly onto a new lower-dimensional subspace (w)
+        mappedData = w.T @ zeroMeanKdata
+
+        return mappedData

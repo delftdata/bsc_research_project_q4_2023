@@ -62,6 +62,9 @@ if (~exist('options','var'))
    options.KernelType='linear';
 end
 
+disp("clear 0")
+% Start the timer
+tic;
 
 % Separate samples of each class in a cell array
 
@@ -74,7 +77,8 @@ for i = 1:c
     dataCell{1,i} = trainData(:,ind);
 end
 clear trainLabel
-
+disp("clear 1")
+disp(options)
 
 % Create class-specific kernel for the training data
 
@@ -95,6 +99,7 @@ end
 kTrain = cell2mat(kTrainCell);
 clear kTrainCell 
 
+disp("clear 2")
 
 % Make data have zero mean
 
@@ -104,6 +109,7 @@ One = (1/n) * ones(n,n);
 zeroMeanKtrain =  kTrain - One*kTrain - kTrain*One+One*kTrain*One;
 clear trainData
 
+disp("clear 3")
 
 % Create the block-diagonl W matrix
 
@@ -120,6 +126,8 @@ end
 wTrain = cell2mat(wTrainCell);
 clear wTrainCell
 
+disp("clear 4")
+
 
 % Decompose zeroMeanKtrain using eigen-decomposition
 
@@ -129,6 +137,7 @@ diagonal = diag(gamma);
 gamma = diagonal(index);
 P = P(:,index);
 
+disp("clear 5")
 
 % Remove eigenvalues with relatively small value
 
@@ -137,6 +146,7 @@ zeroEigIndex = find((abs(gamma)/maxEigVal)<1e-6);
 gamma(zeroEigIndex) = [];
 P(:,zeroEigIndex) = [];
 
+disp("clear 6")
 
 % Normalize eigenvectors
 
@@ -145,7 +155,7 @@ for i = 1:nEig
     P(:,i) = P(:,i)/norm(P(:,i));
 end
 
-
+disp("clear 7")
 % Compute eigenvectors (beta) and eigenvalues (lambda)
 
 BB = (P')*(wTrain)*(P);
@@ -156,7 +166,7 @@ lambda = diagonal(index);
 beta = beta(:,index);
 clear BB wTrain
 
-
+disp("clear 8")
 % Remove eigenvalues with relatively small value
 
 maxEigVal = max(abs(lambda));
@@ -164,7 +174,7 @@ zeroEigIndex = find((abs(lambda)/maxEigVal)<1e-6);
 lambda(zeroEigIndex) = [];
 beta(:,zeroEigIndex) = [];
 
-
+disp("clear 9")
 % Compute eigenvectors (alpha) and normalize them
 
 gamma = diag(gamma);
@@ -176,7 +186,7 @@ for i = 1:nEig
 end
 clear zeroMeanKtrain P gamma beta
 
-
+disp("clear 10")
 % Dimensionality reduction (if nDim is not given, nEig dimensions are retained):
 
 if (~exist('nDim','var'))
@@ -187,6 +197,7 @@ end
 
 w = alpha(:,1:nDim);    % Projection matrix
 
+disp("clear 11")
 
 % Create class-specific kernel for all data points:
 
@@ -205,17 +216,20 @@ end
 kData = cell2mat(kDataCell);
 clear data dataCell kDataCell
 
-
+disp("clear 12")
 % Make data zero mean
 
 Oneprime = (1/n)*ones(n,nPrime);
 zeroMeanKdata = kData - kTrain*Oneprime - One*kData+One*kTrain*Oneprime;
 clear kTrain kData
 
-
+disp("clear 13,")
 % Project all data points non-linearly onto a new lower-dimensional subspace (w):
 
 mappedData = (w.') * (zeroMeanKdata);
+% Stop the timer and display the elapsed time
+elapsedTime = toc;
+fprintf('Execution time: %.4f seconds\n', elapsedTime);
 disp("ending matlab")
 end
 %mappedData

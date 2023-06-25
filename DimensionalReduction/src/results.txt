@@ -1,0 +1,38 @@
+dr method:  DRMethod.GDA  |classification methods:  {'LR': {}}
+var value:  1  |accuracy:  0.671  |number of features:  1
+var value:  2  |accuracy:  0.593  |number of features:  2
+var value:  3  |accuracy:  0.562  |number of features:  3
+var value:  4  |accuracy:  0.549  |number of features:  4
+var value:  5  |accuracy:  0.53  |number of features:  5
+var value:  6  |accuracy:  0.539  |number of features:  6
+var value:  7  |accuracy:  0.547  |number of features:  7
+var value:  8  |accuracy:  0.545  |number of features:  8
+var value:  9  |accuracy:  0.551  |number of features:  9
+
+dr method:  DRMethod.GDA  |classification methods:  {'RF': {}}
+var value:  1  |accuracy:  0.525  |number of features:  1
+var value:  2  |accuracy:  0.549  |number of features:  2
+var value:  3  |accuracy:  0.548  |number of features:  3
+var value:  4  |accuracy:  0.529  |number of features:  4
+var value:  5  |accuracy:  0.509  |number of features:  5
+var value:  6  |accuracy:  0.521  |number of features:  6
+var value:  7  |accuracy:  0.542  |number of features:  7
+var value:  8  |accuracy:  0.543  |number of features:  8
+var value:  9  |accuracy:  0.554  |number of features:  9
+
+dr method:  DRMethod.GDA  |classification methods:  SVM
+var value:  1  |accuracy:  0.677  |number of features:  1
+var value:  2  |accuracy:  0.672  |number of features:  2
+var value:  3  |accuracy:  0.652  |number of features:  3
+var value:  4  |accuracy:  0.619  |number of features:  4
+var value:  5  |accuracy:  0.597  |number of features:  5
+var value:  6  |accuracy:  0.596  |number of features:  6
+var value:  7  |accuracy:  0.605  |number of features:  7
+var value:  8  |accuracy:  0.6  |number of features:  8
+var value:  9  |accuracy:  0.598  |number of features:  9
+
+Process finished with exit code 0
+
+
+
+

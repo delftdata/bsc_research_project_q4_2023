@@ -66,6 +66,9 @@ def lcsi(X, y, **kwargs):
     t2 = np.zeros(n_features)
     # t3 stores sum_j(I(fj;f|y)) for each feature f
     t3 = np.zeros(n_features)
+
+    time_before = time.time()
+
     for i in range(n_features):
         f = X[:, i]
         t1[i] = mi(f, y)
@@ -73,7 +76,6 @@ def lcsi(X, y, **kwargs):
     # make sure that j_cmi is positive at the very beginning
     j_cmi = 1
 
-    time_before = time.time()
     while True:
         if len(F) == 0:
             # select the feature whose mutual information is the largest

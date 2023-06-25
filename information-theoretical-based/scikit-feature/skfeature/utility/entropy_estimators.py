@@ -1,3 +1,5 @@
+# Code taken from https://github.com/charliec443/scikit-feature
+
 # Written by Greg Ver Steeg (http://www.isi.edu/~gregv/npeet.html)
 
 import scipy.spatial as ss

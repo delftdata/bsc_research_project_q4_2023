@@ -1,0 +1,11 @@
+instant
+registered
+casual
+hr
+mnth
+season
+weekday
+weathersit
+yr
+holiday
+workingday

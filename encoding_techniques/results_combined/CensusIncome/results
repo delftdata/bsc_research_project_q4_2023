@@ -1,0 +1,40 @@
+For column workclass and algorithm LR => encoder target is the best: 82.0
+For column workclass and algorithm XGB => encoder ordinal is the best: 83.0
+For column workclass and algorithm GBM => encoder ordinal is the best: 81.5
+For column workclass and algorithm RF => encoder onehot is the best: 81.5
+
+For column education and algorithm LR => encoder target is the best: 83.5
+For column education and algorithm XGB => encoder onehot is the best: 81.0
+For column education and algorithm GBM => encoder ordinal is the best: 80.0
+For column education and algorithm RF => encoder catboost is the best: 82.0
+
+For column marital-status and algorithm LR => encoder ordinal is the best: 81.0
+For column marital-status and algorithm XGB => encoder ordinal is the best: 83.0
+For column marital-status and algorithm GBM => encoder ordinal is the best: 81.5
+For column marital-status and algorithm RF => encoder target is the best: 82.5
+
+For column occupation and algorithm LR => encoder ordinal is the best: 82.0
+For column occupation and algorithm XGB => encoder onehot is the best: 82.0
+For column occupation and algorithm GBM => encoder onehot is the best: 80.0
+For column occupation and algorithm RF => encoder onehot is the best: 81.0
+
+For column relationship and algorithm LR => encoder ordinal is the best: 80.5
+For column relationship and algorithm GBM => encoder target is the best: 81.0
+For column relationship and algorithm RF => encoder target is the best: 82.0
+For column relationship and algorithm XGB => encoder onehot is the best: 81.5
+
+For column race and algorithm LR => encoder onehot is the best: 80.0
+For column race and algorithm XGB => encoder onehot is the best: 82.5
+For column race and algorithm GBM => encoder ordinal is the best: 80.5
+For column race and algorithm RF => encoder onehot is the best: 81.0
+For column sex and algorithm LR => encoder onehot is the best: 80.0
+For column sex and algorithm GBM => encoder onehot is the best: 80.5
+For column sex and algorithm RF => encoder onehot is the best: 81.0
+For column sex and algorithm XGB => encoder onehot is the best: 80.5
+
+For column native-country and algorithm GBM => encoder onehot is the best: 81.0
+For column native-country and algorithm RF => encoder ordinal is the best: 81.5
+For column native-country and algorithm LR => encoder ordinal is the best: 80.5
+For column native-country and algorithm XGB => encoder ordinal is the best: 82.0
+For column native-country and algorithm LR => encoder ordinal is the best: 80.5
+For column native-country and algorithm XGB => encoder ordinal is the best: 82.0

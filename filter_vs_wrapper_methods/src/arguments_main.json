@@ -1,0 +1,7 @@
+{
+    "experiment_name": "experiment4",
+    "imputation_strategy": "mean",
+    "normalization": true,
+    "evaluate_on_svm": true,
+    "dataset": "bank_marketing"
+}

@@ -1,0 +1,13 @@
+version: "3.3"
+
+services:
+  api:
+    build: ./scikit-feature
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./scikit-feature:/scikit-feature
+    restart: always
+    tty: true
+    privileged: true
+    command: bash

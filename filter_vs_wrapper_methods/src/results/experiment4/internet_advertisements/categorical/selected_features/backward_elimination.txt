@@ -1,0 +1,4 @@
+aratio
+height
+local
+width

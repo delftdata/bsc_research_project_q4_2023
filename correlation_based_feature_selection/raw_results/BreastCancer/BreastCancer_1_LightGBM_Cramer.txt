@@ -1,0 +1,341 @@
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 1
+CURRENT FEATURE SUBSET: ['id', 'diagnosis']
+CURRENT PERFORMANCE: 0.6491228070175439
+CURRENT RUNTIME: 0.7810685634613037
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 2
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'diagnosis']
+CURRENT PERFORMANCE: 0.9035087719298246
+CURRENT RUNTIME: 1.1050665378570557
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 3
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'diagnosis']
+CURRENT PERFORMANCE: 0.9298245614035088
+CURRENT RUNTIME: 0.9741835594177246
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 4
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'diagnosis']
+CURRENT PERFORMANCE: 0.9122807017543859
+CURRENT RUNTIME: 1.3483078479766846
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 5
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 1.3348259925842285
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 6
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 1.3648438453674316
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 7
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'diagnosis']
+CURRENT PERFORMANCE: 0.9473684210526315
+CURRENT RUNTIME: 1.3266184329986572
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 8
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9298245614035088
+CURRENT RUNTIME: 1.3647401332855225
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 9
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9385964912280702
+CURRENT RUNTIME: 1.589536428451538
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 10
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'diagnosis']
+CURRENT PERFORMANCE: 0.9210526315789473
+CURRENT RUNTIME: 1.340585470199585
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 11
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'diagnosis']
+CURRENT PERFORMANCE: 0.9210526315789473
+CURRENT RUNTIME: 1.3077287673950195
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 12
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'diagnosis']
+CURRENT PERFORMANCE: 0.9210526315789473
+CURRENT RUNTIME: 1.3143792152404785
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 13
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'diagnosis']
+CURRENT PERFORMANCE: 0.9210526315789473
+CURRENT RUNTIME: 1.3412694931030273
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 14
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9473684210526315
+CURRENT RUNTIME: 1.3396580219268799
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 15
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'diagnosis']
+CURRENT PERFORMANCE: 0.9385964912280702
+CURRENT RUNTIME: 1.3560359477996826
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 16
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'diagnosis']
+CURRENT PERFORMANCE: 0.9385964912280702
+CURRENT RUNTIME: 1.3714983463287354
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 17
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'diagnosis']
+CURRENT PERFORMANCE: 0.9385964912280702
+CURRENT RUNTIME: 1.3669319152832031
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 18
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9385964912280702
+CURRENT RUNTIME: 1.3523435592651367
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 19
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9385964912280702
+CURRENT RUNTIME: 1.3342719078063965
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 20
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_worst', 'perimeter_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 1.3649232387542725
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 21
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_worst', 'perimeter_worst', 'texture_se', 'diagnosis']
+CURRENT PERFORMANCE: 0.956140350877193
+CURRENT RUNTIME: 1.3665354251861572
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 22
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_worst', 'perimeter_worst', 'texture_se', 'texture_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9824561403508771
+CURRENT RUNTIME: 1.2730247974395752
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 23
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_worst', 'perimeter_worst', 'texture_se', 'texture_worst', 'concave points_se', 'diagnosis']
+CURRENT PERFORMANCE: 0.9824561403508771
+CURRENT RUNTIME: 1.1375114917755127
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 24
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_worst', 'perimeter_worst', 'texture_se', 'texture_worst', 'concave points_se', 'radius_mean', 'diagnosis']
+CURRENT PERFORMANCE: 0.9824561403508771
+CURRENT RUNTIME: 1.0751011371612549
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 25
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_worst', 'perimeter_worst', 'texture_se', 'texture_worst', 'concave points_se', 'radius_mean', 'fractal_dimension_mean', 'diagnosis']
+CURRENT PERFORMANCE: 0.9824561403508771
+CURRENT RUNTIME: 1.17720365524292
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 26
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_worst', 'perimeter_worst', 'texture_se', 'texture_worst', 'concave points_se', 'radius_mean', 'fractal_dimension_mean', 'texture_mean', 'diagnosis']
+CURRENT PERFORMANCE: 0.9473684210526315
+CURRENT RUNTIME: 1.1230573654174805
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 27
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_worst', 'perimeter_worst', 'texture_se', 'texture_worst', 'concave points_se', 'radius_mean', 'fractal_dimension_mean', 'texture_mean', 'symmetry_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9473684210526315
+CURRENT RUNTIME: 1.296846866607666
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 28
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_worst', 'perimeter_worst', 'texture_se', 'texture_worst', 'concave points_se', 'radius_mean', 'fractal_dimension_mean', 'texture_mean', 'symmetry_worst', 'symmetry_se', 'diagnosis']
+CURRENT PERFORMANCE: 0.9473684210526315
+CURRENT RUNTIME: 1.2912440299987793
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 29
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_worst', 'perimeter_worst', 'texture_se', 'texture_worst', 'concave points_se', 'radius_mean', 'fractal_dimension_mean', 'texture_mean', 'symmetry_worst', 'symmetry_se', 'smoothness_mean', 'diagnosis']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 1.2996149063110352
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 30
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_worst', 'perimeter_worst', 'texture_se', 'texture_worst', 'concave points_se', 'radius_mean', 'fractal_dimension_mean', 'texture_mean', 'symmetry_worst', 'symmetry_se', 'smoothness_mean', 'smoothness_worst', 'diagnosis']
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 1.322481632232666
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+
+DATASET NAME: BreastCancer
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Cramer
+SUBSET OF FEATURES: 31
+CURRENT FEATURE SUBSET: ['id', 'concave points_mean', 'smoothness_se', 'perimeter_mean', 'concavity_worst', 'concavity_mean', 'radius_se', 'compactness_worst', 'area_worst', 'concavity_se', 'compactness_se', 'perimeter_se', 'area_mean', 'concave points_worst', 'area_se', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_worst', 'perimeter_worst', 'texture_se', 'texture_worst', 'concave points_se', 'radius_mean', 'fractal_dimension_mean', 'texture_mean', 'symmetry_worst', 'symmetry_se', 'smoothness_mean', 'smoothness_worst', 'symmetry_mean', 'diagnosis']
+CURRENT PERFORMANCE: 0.9824561403508771
+CURRENT RUNTIME: 1.324188470840454
+BASELINE PERFORMANCE: 0.9824561403508771
+BASELINE RUNTIME: 0.9849579334259033
+

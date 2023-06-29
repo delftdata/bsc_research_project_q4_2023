@@ -172,9 +172,6 @@ class Runner:
             self.run_experiment3(df, dataset_info)
         elif self.experiment_name == "experiment4":
             self.run_experiment4(df, dataset_info)
-        elif self.experiment_name == "experiment5":
-            self.evaluate_feature_selection(df, dataset_info)
-            self.run_experiment4(df, dataset_info)
         else:
             self.evaluate_feature_selection(df, dataset_info)
 

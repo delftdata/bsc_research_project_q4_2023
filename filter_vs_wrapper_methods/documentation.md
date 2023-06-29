@@ -44,8 +44,7 @@ as recorded after performing experiment 4.
 As outlined in the research paper, four experiments were carried out to evaluate the performance of filter
 and wrapper feature selection techniques.
 
-In the codebase, these experiments are labeled as `experiment1`, `experiment2`, `experiment3`, `experiment4`,
-and `experiment5`.
+In the codebase, these experiments are labeled as `experiment1`, `experiment2`, `experiment3`, and `experiment4`.
 
 For detailed information and a comprehensive analysis of the experiments, please refer to the research paper,
 where each experiment is extensively discussed.
@@ -69,7 +68,7 @@ where each experiment is extensively discussed.
     Here is the meaning of each key:
 
     - `"experiment_name"`: Indicates the experiment to be executed. Valid options are: `"experiment1"`,
-      `"experiment2"`, `"experiment3"`, `"experiment4"`, `"experiment5"`.
+      `"experiment2"`, `"experiment3"`, `"experiment4"`.
     - `"imputation_strategy"`: Specifies the imputation strategy to be applied to continuous data.
       Acceptable values are `"mean"`, `"median"`.
     - `"normalization"`: Determines whether normalization should be performed for ANOVA, Forward Selection,
@@ -90,14 +89,14 @@ where each experiment is extensively discussed.
         "experiment_name": "experiment1",
         "dataset": "steel_plates_faults",
         "plot_type": "average_runtime",
-        "leaderboard": "all"
+        "3D": false
     }
     ```
 
     Here is the meaning of each key:
 
     - `"experiment_name"`: Specifies the experimental results to be plotted. Valid options are:
-      `"experiment1"`, `"experiment2"`, `"experiment3"`, `"experiment4"`, `"experiment5"`.
+      `"experiment1"`, `"experiment2"`, `"experiment3"`, `"experiment4"`.
     - `"dataset"`: Specifies the dataset for which the results should be considered by `main`. Supported datasets
       include:`"bank_marketing"`, `"breast_cancer"`, `"steel_plates_faults"`,
       `"housing_prices"`, `"bike_sharing"`, `"census_income"`, `"arrhythmia"`, `"crop"`,
@@ -109,12 +108,10 @@ where each experiment is extensively discussed.
           Ignores the value of `"dataset"`.
         - `"average_runtime"`: Plots the average runtime across all datasets for the specified `"experiment_name"`.
           Ignores the value of `"dataset"`.
-        - `"baseline"`: Plots the baseline-based graphs for the specified `"experiment_name"`.
-        - `"all_baselines"`: Plots the baseline-based graphs for all datasets for the specified `"experiment_name"`.
-        - `"average_baseline"`: Plots the average baseline-based graphs across all datasets for the specified
-          `"experiment_name"`.
-    - `"leaderboard"`: Specifies which method to display on the baseline-based graphs. Valid options are:
-      `"best"`, `"second"`, `"third"`, `"worst"`, and `"all"` to use all first four options during a single run.
+        - `"runtime_features"`: Plots the number of features - runtime graph across all datasets for
+          the specified `"experiment_name"`.
+    - `"3D"`: Specifies whether to plot the results in 3D or not. The third dimension is the runtime. Valid options are:
+      `true`, `false`. This key impacts the following `"plot_type"`: `"results"`, `"all_results"`.
 
 ## Project Structure
 
@@ -169,7 +166,6 @@ is required to make Python treat those directories as packages<sup>[1]</sup>.
 -   `experiment2` directory
 -   `experiment3` directory
 -   `experiment4` directory
--   `experiment5` directory
 -   `runtime` directory
 
 ### `evaluator` directory

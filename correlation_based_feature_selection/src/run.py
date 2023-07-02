@@ -91,8 +91,9 @@ def evaluate_housing_prices_dataset():
 
     # dataset_evaluator.evaluate_support_vector_machine_model_select_above_c(problem_type='regression')
     # dataset_evaluator.evaluate_all_models_select_above_c()
-    dataset_evaluator.evaluate_support_vector_machine_model(problem_type='classification')
-    dataset_evaluator.evaluate_all_models()
+    # dataset_evaluator.evaluate_support_vector_machine_model(problem_type='classification')
+    # dataset_evaluator.evaluate_all_models()
+    evaluate_dataframe(dataset_evaluator.dataframe)
 
 
 def evaluate_feature_selection_housing_prices_dataset():
@@ -246,34 +247,20 @@ def evaluate_dataframe(dataframe):
 
 
 if __name__ == '__main__':
-    # parse_data_all_calc_test()
-    # plot_average_over_number_of_features2()
-    # plot_average_over_number_of_features_alg()
-    # parse_data_all2()
-    # plot_average_over_number_of_features_threshold()
-    # parse_data_all_threshold()
-    # plot_average_over_number_of_features()
-    # plot_over_runtime()
-    # parse_data()
-    # plot_over_number_of_features()
-    # plot_over_number_of_features_custom()
-    # plot_over_number_of_features_runtime()
-    # plot_over_number_of_features_runtime_custom()
-
     # binary classification
     evaluate_census_income_dataset()
     # evaluate_breast_cancer_dataset()
     # evaluate_steel_plates_fault_dataset()
     # evaluate_arrhythmia_dataset()
-    evaluate_internet_advertisements_dataset()
-    evaluate_gisette_dataset()
+    # evaluate_internet_advertisements_dataset()
+    # evaluate_gisette_dataset()
     # multi-class classification
-    evaluate_nursery_dataset()
-    evaluate_connect4_dataset()
+    # evaluate_nursery_dataset()
+    # evaluate_connect4_dataset()
 
     # regression
-    evaluate_housing_prices_dataset()
-    evaluate_bike_sharing_dataset()
+    # evaluate_housing_prices_dataset()
+    # evaluate_bike_sharing_dataset()
 
     # databases that have SMALL number of instances
     # evaluate_feature_selection_breast_cancer_dataset()

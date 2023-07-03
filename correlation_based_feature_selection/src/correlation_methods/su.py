@@ -91,7 +91,7 @@ class SymmetricUncertaintyFeatureSelection:
         target_column = train_dataframe[target_feature]
         train_dataframe = train_dataframe.drop(columns=[target_feature])
 
-        # Calculate the Spearman correlation between each feature and the target feature
+        # Calculate the Symmetric Uncertainty correlation between each feature and the target feature
         su_correlations = train_dataframe \
             .apply(func=lambda feature: SymmetricUncertaintyFeatureSelection.
                    compute_correlation(feature, target_column),

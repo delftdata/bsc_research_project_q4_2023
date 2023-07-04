@@ -69,7 +69,7 @@ from scipy.io import arff
 
 # def evaluate_feature_selection_housing_prices_dataset():
 #     dataset_evaluator = MLPipeline(
-#         dataset_file='../datasets/HousingPrices/train.csv', dataset_name='Housing Prices',
+#         dataset_file='../datasets/HousingPrices/housing_prices.csv', dataset_name='Housing Prices',
 #         target_label='SalePrice', evaluation_metric='root_mean_squared_error')
 #
 #     dataset_evaluator.evaluate_feature_selection_step()
@@ -214,8 +214,24 @@ def evaluate_gisette_dataset():
 
 def evaluate_housing_prices_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../autofeat_datasets/HousingPrices/train.csv', dataset_name='HousingPrices',
+        dataset_file='../autofeat_datasets/HousingPrices/housing_prices.csv', dataset_name='HousingPrices',
         target_label='SalePrice', evaluation_metric='root_mean_squared_error', features_to_select='small')
+
+    dataset_evaluator.evaluate_all_models()
+
+
+def evaluate_topo_2_1_dataset():
+    dataset_evaluator = MLPipeline(
+        dataset_file='../autofeat_datasets/TOPO_2_1/topo_2_1.csv', dataset_name='TOPO-2-1',
+        target_label='oz267', evaluation_metric='root_mean_squared_error', features_to_select='medium')
+
+    dataset_evaluator.evaluate_all_models()
+
+
+def evaluate_qsar_tid_dataset():
+    dataset_evaluator = MLPipeline(
+        dataset_file='../autofeat_datasets/QSAR-TID-11109/qsar.csv', dataset_name='QSAR-TID-11109',
+        target_label='class', evaluation_metric='root_mean_squared_error', features_to_select='large')
 
     dataset_evaluator.evaluate_all_models()
 
@@ -237,9 +253,10 @@ if __name__ == '__main__':
     # evaluate_breast_cancer_dataset()
     # evaluate_internet_advertisements_dataset()
     # evaluate_gisette_dataset()
-    evaluate_spam_email_dataset()
-    evaluate_musk_dataset()
-    evaluate_arrhythmia_dataset()
+    # evaluate_spam_email_dataset()
+    # evaluate_musk_dataset()
+    # evaluate_arrhythmia_dataset()
 
     # Regression
-    # evaluate_housing_prices_dataset()
+    evaluate_housing_prices_dataset()
+    evaluate_topo_2_1_dataset()

@@ -33,7 +33,7 @@ class InformationGainFeatureSelection:
         return calculate_information_gain(feature, target_feature)
 
     @staticmethod
-    def feature_selection(train_dataframe, target_feature, number_features):
+    def feature_selection(train_dataframe, target_feature):
         """
         Performs feature selection using the Information Gain correlation-based method. Selects
         a specified number of top-performing features.
@@ -42,7 +42,6 @@ class InformationGainFeatureSelection:
         ----------
         train_dataframe (DataFrame): Training data containing the features
         target_feature (str): Name of the target feature column
-        number_features (int): Number of best-performing features to select
 
         Returns
         -------
@@ -59,7 +58,7 @@ class InformationGainFeatureSelection:
         # Select the top features with the highest correlation
         sorted_correlations = ig_correlations.sort_values(ascending=False)
 
-        return sorted_correlations[:number_features].index.tolist()
+        return sorted_correlations.index.tolist(), sorted_correlations.values.tolist()
 
     @staticmethod
     def feature_selection_second_approach(train_dataframe, target_feature, threshold):

@@ -27,24 +27,29 @@ class PreML:
 
 class InML:
     @staticmethod
-    def feature_selection_select_k_best(train_dataframe, target_label, k):
+    def feature_selection_select_k_best(train_dataframe, target_label):
         start = time.time()
-        pearson_selected_features = PearsonFeatureSelection.feature_selection(train_dataframe, target_label, k)
+        pearson_ranked_features, pearson_correlations = \
+            PearsonFeatureSelection.feature_selection(train_dataframe, target_label)
         pearson_duration = time.time() - start
 
         start = time.time()
-        spearman_selected_features = SpearmanFeatureSelection.feature_selection(train_dataframe, target_label, k)
+        spearman_ranked_features, spearman_correlations = \
+            SpearmanFeatureSelection.feature_selection(train_dataframe, target_label)
         spearman_duration = time.time() - start
 
         start = time.time()
-        su_selected_features = SymmetricUncertaintyFeatureSelection.feature_selection(train_dataframe, target_label, k)
+        su_ranked_features, su_correlations = \
+            SymmetricUncertaintyFeatureSelection.feature_selection(train_dataframe, target_label)
         su_duration = time.time() - start
 
         start = time.time()
-        ig_selected_features = InformationGainFeatureSelection.feature_selection(train_dataframe, target_label, k)
+        ig_ranked_features, ig_correlations = \
+            InformationGainFeatureSelection.feature_selection(train_dataframe, target_label)
         ig_duration = time.time() - start
 
-        return pearson_selected_features, spearman_selected_features, su_selected_features, ig_selected_features, \
+        return pearson_ranked_features, spearman_ranked_features, su_ranked_features, ig_ranked_features, \
+            pearson_correlations, spearman_correlations, su_correlations, ig_correlations, \
             pearson_duration, spearman_duration, su_duration, ig_duration
 
 
@@ -97,7 +102,7 @@ class MLPipeline:
             self.features_to_select_k += [number_columns]
         elif features_to_select == 'large':
             number_columns = self.dataframe.shape[1] - 1
-            self.features_to_select_k = [10, 25, 50, 100, 500]
+            self.features_to_select_k = [10, 25, 50, 100, 250, 500]
             self.features_to_select_k += list(range(1000, number_columns, 1000))
             self.features_to_select_k += [number_columns]
         self.evaluation_metric = evaluation_metric
@@ -150,27 +155,33 @@ class MLPipeline:
 
         # COMPUTATION: Compute the ranking of features returned by each correlation method
         pearson_selected_features, spearman_selected_features, su_selected_features, ig_selected_features, \
+            pearson_correlations, spearman_correlations, su_correlations, ig_correlations, \
             pearson_duration, spearman_duration, su_duration, ig_duration = \
             InML.feature_selection_select_k_best(current_train_dataframe,
-                                                 self.target_label,
-                                                 self.features_to_select_k)
+                                                 self.target_label)
 
         # LOOP: Go through each algorithm
         for algorithm, algorithm_name in self.algorithms_model_names.items():
-            # COMPUTATION: Get the hyperparameters on the data set with all features
+            # COMPUTATION: Get the hyperparameters on the dataset with all features (i.e. baseline configuration)
             hyperparameters, baseline_performance, baseline_duration = \
                 self.run_model_no_feature_selection(algorithm, algorithm_name,
                                                     current_train_dataframe, current_test_dataframe)
 
             # LOOP: Go through each method
             correlation_methods = ['Pearson', 'Spearman', 'SU', 'IG']
-            for ranked_features, correlation_method in zip([pearson_selected_features, spearman_selected_features,
-                                                            su_selected_features, ig_selected_features],
-                                                           correlation_methods):
+            for ranked_features, correlation_values, correlation_method in \
+                    zip([pearson_selected_features, spearman_selected_features,
+                         su_selected_features, ig_selected_features],
+                        [pearson_correlations, spearman_correlations,
+                         su_correlations, ig_correlations],
+                        correlation_methods):
                 # LOOP: Go to all possible values of k (i.e. number of selected features)
+                # k depends on whether the dataset is small, medium or large
                 for subset_length in self.features_to_select_k:
                     # Get the current feature subset
                     current_subset = ranked_features[:subset_length]
+                    current_correlation_values = correlation_values[:subset_length]
+                    paired_values = list(zip(current_subset, current_correlation_values))
                     current_subset.append(self.target_label)
 
                     current_performance, current_duration = PostML.evaluate_model(algorithm=algorithm,
@@ -199,6 +210,7 @@ class MLPipeline:
                                              correlation_method=correlation_method,
                                              subset_length=subset_length,
                                              current_subset=current_subset,
+                                             current_correlations=paired_values,
                                              current_performance=current_performance,
                                              current_duration=total_duration,
                                              baseline_performance=baseline_performance,
@@ -207,8 +219,8 @@ class MLPipeline:
 
     @staticmethod
     def write_to_file(dataset_name, algorithm_name, correlation_method,
-                      subset_length, current_subset, current_performance,
-                      current_duration, baseline_performance, baseline_duration):
+                      subset_length, current_subset, current_correlations,
+                      current_performance, current_duration, baseline_performance, baseline_duration):
         # Create the directory if it doesn't exist
         directory = "./autofeat_results"
         os.makedirs(directory, exist_ok=True)
@@ -223,6 +235,7 @@ class MLPipeline:
         file.write("CORRELATION METHOD: " + correlation_method + '\n')
         file.write("SUBSET OF FEATURES: " + str(subset_length) + '\n')
         file.write("CURRENT FEATURE SUBSET: " + str(current_subset) + '\n')
+        file.write("CURRENT FEATURE SUBSET CORRELATIONS: " + str(current_correlations) + '\n')
         file.write("CURRENT PERFORMANCE: " + str(current_performance) + '\n')
         file.write("CURRENT RUNTIME: " + str(current_duration) + '\n')
         file.write("BASELINE PERFORMANCE: " + str(baseline_performance) + '\n')

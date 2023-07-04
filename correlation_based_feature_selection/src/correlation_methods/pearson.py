@@ -37,7 +37,7 @@ class PearsonFeatureSelection:
         return pearson
 
     @staticmethod
-    def feature_selection(train_dataframe, target_feature, number_features):
+    def feature_selection(train_dataframe, target_feature):
         """
         SELECT K BEST ALGORITHM: Performs feature selection using the Pearson correlation-based method. Selects
         a specified number of top-performing features.
@@ -46,7 +46,6 @@ class PearsonFeatureSelection:
         ----------
         train_dataframe (DataFrame): Training data containing the features
         target_feature (str): Name of the target feature column
-        number_features (int): Number of best-performing features to select
 
         Returns
         -------
@@ -62,7 +61,8 @@ class PearsonFeatureSelection:
 
         # Select the top features with the highest absolute correlation
         sorted_correlations = pearson_correlations.abs().sort_values(ascending=False)
-        return sorted_correlations[:number_features].index.tolist()
+
+        return sorted_correlations.index.tolist(), sorted_correlations.values.tolist()
 
     @staticmethod
     def feature_selection_second_approach(train_dataframe, target_feature, threshold):

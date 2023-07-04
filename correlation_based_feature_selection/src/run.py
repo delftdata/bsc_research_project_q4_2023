@@ -1,4 +1,6 @@
 from .autofeat_pipeline import MLPipeline
+import pandas as pd
+from scipy.io import arff
 
 
 # def evaluate_census_income_dataset():
@@ -164,6 +166,30 @@ def evaluate_breast_cancer_dataset():
     dataset_evaluator.evaluate_all_models()
 
 
+def evaluate_spam_email_dataset():
+    dataset_evaluator = MLPipeline(
+        dataset_file='../datasets/SPAM/spam.csv', dataset_name='SpamEmail',
+        target_label='class', evaluation_metric='accuracy', features_to_select='small')
+
+    dataset_evaluator.evaluate_all_models()
+
+
+def evaluate_musk_dataset():
+    dataset_evaluator = MLPipeline(
+        dataset_file='../datasets/Musk/musk.csv', dataset_name='Musk',
+        target_label='class', evaluation_metric='accuracy', features_to_select='medium')
+
+    dataset_evaluator.evaluate_all_models()
+
+
+def evaluate_arrhythmia_dataset():
+    dataset_evaluator = MLPipeline(
+        dataset_file='../datasets/Arrhythmia/arrhythmia.csv', dataset_name='Arrhythmia',
+        target_label='binaryClass', evaluation_metric='accuracy', features_to_select='medium')
+
+    dataset_evaluator.evaluate_all_models()
+
+
 def evaluate_internet_advertisements_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../datasets/InternetAdvertisements/internet_advertisements.csv',
@@ -194,26 +220,26 @@ def evaluate_housing_prices_dataset():
     dataset_evaluator.evaluate_all_models()
 
 
+# def arff_to_csv(file_path, csv_file_path):
+#     data = arff.loadarff(file_path)
+#     dataframe = pd.DataFrame(data[0])
+#
+#     cat_columns = [col for col in dataframe.columns if dataframe[col].dtype == "O"]
+#     dataframe[cat_columns] = dataframe[cat_columns].apply(lambda x: x.str.decode('utf8'))
+#     dataframe.to_csv(csv_file_path, index=False)
+
 
 if __name__ == '__main__':
+    # arff_to_csv(file_path='../autofeat_datasets/QSAR-TID-11109/qsar.arff',
+    #             csv_file_path='../autofeat_datasets/QSAR-TID-11109/qsar.csv')
+
     # Binary classification
-    evaluate_breast_cancer_dataset()
-    evaluate_internet_advertisements_dataset()
+    # evaluate_breast_cancer_dataset()
+    # evaluate_internet_advertisements_dataset()
+    # evaluate_gisette_dataset()
+    evaluate_spam_email_dataset()
+    evaluate_musk_dataset()
+    evaluate_arrhythmia_dataset()
 
     # Regression
     # evaluate_housing_prices_dataset()
-
-    # binary classification
-    # evaluate_census_income_dataset()
-    # evaluate_breast_cancer_dataset()
-    # evaluate_steel_plates_fault_dataset()
-    # evaluate_arrhythmia_dataset()
-    # evaluate_internet_advertisements_dataset()
-    # evaluate_gisette_dataset()
-    # multi-class classification
-    # evaluate_nursery_dataset()
-    # evaluate_connect4_dataset()
-
-    # regression
-    # evaluate_housing_prices_dataset()
-    # evaluate_bike_sharing_dataset()

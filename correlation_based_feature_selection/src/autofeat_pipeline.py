@@ -2,20 +2,16 @@ import pandas as pd
 import numpy as np
 import os
 import time
-import timeit
 from sklearn import preprocessing
-from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from autogluon.features.generators import AutoMLPipelineFeatureGenerator, FillNaFeatureGenerator
 from autogluon.tabular import TabularDataset
-from sklearn.preprocessing import MinMaxScaler
 from autogluon.tabular import TabularPredictor
 from .correlation_methods.pearson import PearsonFeatureSelection
 from .correlation_methods.spearman import SpearmanFeatureSelection
 from .correlation_methods.su import SymmetricUncertaintyFeatureSelection
 from .correlation_methods.information_gain import InformationGainFeatureSelection
 from warnings import filterwarnings
-from sklearn.svm import LinearSVR, LinearSVC
 
 
 filterwarnings("ignore", category=UserWarning)
@@ -74,7 +70,7 @@ class PostML:
 
 
 class MLPipeline:
-    def __init__(self, dataset_file, dataset_name, target_label, evaluation_metric, features_to_select=None):
+    def __init__(self, dataset_file, dataset_name, target_label, evaluation_metric, features_to_select='small'):
         self.dataset_file = dataset_file
         self.dataset_name = dataset_name
         self.target_label = target_label
@@ -87,10 +83,23 @@ class MLPipeline:
             # 'LR': 'LinearModel',
             # 'XGB': 'XGBoost'
         }
-        # The maximum number of features that can be selected during feature selection (excl. target)
-        self.features_to_select_k = features_to_select
-        if self.features_to_select_k is None:
-            self.features_to_select_k = self.dataframe.shape[1] - 1
+        # The number of features that will be selected during feature selection (excl. target)
+        self.features_to_select_k = []
+        if features_to_select == 'small':
+            number_columns = self.dataframe.shape[1] - 1
+            self.features_to_select_k = [5]
+            self.features_to_select_k += list(range(10, number_columns, 10))
+            self.features_to_select_k += [number_columns]
+        elif features_to_select == 'medium':
+            number_columns = self.dataframe.shape[1] - 1
+            self.features_to_select_k = [10, 25]
+            self.features_to_select_k += list(range(50, number_columns, 50))
+            self.features_to_select_k += [number_columns]
+        elif features_to_select == 'large':
+            number_columns = self.dataframe.shape[1] - 1
+            self.features_to_select_k = [10, 25, 50, 100, 500]
+            self.features_to_select_k += list(range(1000, number_columns, 1000))
+            self.features_to_select_k += [number_columns]
         self.evaluation_metric = evaluation_metric
 
     def run_model_no_feature_selection(self, algorithm, model_name, train_dataframe, test_dataframe):
@@ -112,7 +121,6 @@ class MLPipeline:
         baseline_performance = fitted_predictor.evaluate(test_dataframe)[self.evaluation_metric]
 
         # print("Feature importance: " + importance)
-
         return hyperparameters, baseline_performance, baseline_duration
 
     def evaluate_all_models(self):
@@ -121,6 +129,7 @@ class MLPipeline:
         print('Dataset: ' + self.dataset_name)
         print('Total columns: ' + str(number_columns - 1))
         print('Total rows: ' + str(number_rows))
+        print('Feature subsets: ' + str(self.features_to_select_k))
 
         # Prepare the data for Autogluon
         self.dataframe = TabularDataset(self.dataframe)
@@ -159,7 +168,7 @@ class MLPipeline:
                                                             su_selected_features, ig_selected_features],
                                                            correlation_methods):
                 # LOOP: Go to all possible values of k (i.e. number of selected features)
-                for subset_length in range(1, len(ranked_features) + 1):
+                for subset_length in self.features_to_select_k:
                     # Get the current feature subset
                     current_subset = ranked_features[:subset_length]
                     current_subset.append(self.target_label)
@@ -180,10 +189,10 @@ class MLPipeline:
                         total_duration += pearson_duration
                     elif correlation_method == 'Spearman':
                         total_duration += spearman_duration
-                    elif correlation_method == 'Cramer':
-                        total_duration += cramersv_duration
                     elif correlation_method == 'SU':
                         total_duration += su_duration
+                    elif correlation_method == 'IG':
+                        total_duration += ig_duration
                     # Save the results to file
                     MLPipeline.write_to_file(dataset_name=self.dataset_name,
                                              algorithm_name=algorithm_name,

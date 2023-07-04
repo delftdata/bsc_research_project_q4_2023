@@ -160,7 +160,7 @@ def evaluate_dataframe(dataframe):
 
 def evaluate_breast_cancer_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../datasets/BreastCancer/data.csv', dataset_name='BreastCancer',
+        dataset_file='../autofeat_datasets/BreastCancer/data.csv', dataset_name='BreastCancer',
         target_label='diagnosis', evaluation_metric='accuracy', features_to_select='small')
 
     dataset_evaluator.evaluate_all_models()
@@ -168,7 +168,7 @@ def evaluate_breast_cancer_dataset():
 
 def evaluate_spam_email_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../datasets/SPAM/spam.csv', dataset_name='SpamEmail',
+        dataset_file='../autofeat_datasets/SPAM/spam.csv', dataset_name='SpamEmail',
         target_label='class', evaluation_metric='accuracy', features_to_select='small')
 
     dataset_evaluator.evaluate_all_models()
@@ -176,7 +176,7 @@ def evaluate_spam_email_dataset():
 
 def evaluate_musk_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../datasets/Musk/musk.csv', dataset_name='Musk',
+        dataset_file='../autofeat_datasets/Musk/musk.csv', dataset_name='Musk',
         target_label='class', evaluation_metric='accuracy', features_to_select='medium')
 
     dataset_evaluator.evaluate_all_models()
@@ -184,7 +184,7 @@ def evaluate_musk_dataset():
 
 def evaluate_arrhythmia_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../datasets/Arrhythmia/arrhythmia.csv', dataset_name='Arrhythmia',
+        dataset_file='../autofeat_datasets/Arrhythmia/arrhythmia.csv', dataset_name='Arrhythmia',
         target_label='binaryClass', evaluation_metric='accuracy', features_to_select='medium')
 
     dataset_evaluator.evaluate_all_models()
@@ -192,7 +192,7 @@ def evaluate_arrhythmia_dataset():
 
 def evaluate_internet_advertisements_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../datasets/InternetAdvertisements/internet_advertisements.csv',
+        dataset_file='../autofeat_datasets/InternetAdvertisements/internet_advertisements.csv',
         dataset_name='InternetAds',
         target_label='class',
         evaluation_metric='accuracy',
@@ -203,7 +203,7 @@ def evaluate_internet_advertisements_dataset():
 
 def evaluate_gisette_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../datasets/Gisette/gisette_train.csv',
+        dataset_file='../autofeat_datasets/Gisette/gisette_train.csv',
         dataset_name='Gisette',
         target_label='Class',
         evaluation_metric='accuracy',
@@ -214,7 +214,7 @@ def evaluate_gisette_dataset():
 
 def evaluate_housing_prices_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../datasets/HousingPrices/train.csv', dataset_name='HousingPrices',
+        dataset_file='../autofeat_datasets/HousingPrices/train.csv', dataset_name='HousingPrices',
         target_label='SalePrice', evaluation_metric='root_mean_squared_error', features_to_select='small')
 
     dataset_evaluator.evaluate_all_models()

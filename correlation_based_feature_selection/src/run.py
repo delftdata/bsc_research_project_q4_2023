@@ -222,7 +222,7 @@ def evaluate_housing_prices_dataset():
 
 def evaluate_topo_2_1_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../autofeat_datasets/TOPO_2_1/topo_2_1.csv', dataset_name='TOPO-2-1',
+        dataset_file='../autofeat_datasets/TOPO-2-1/topo_2_1.csv', dataset_name='TOPO-2-1',
         target_label='oz267', evaluation_metric='root_mean_squared_error', features_to_select='medium')
 
     dataset_evaluator.evaluate_all_models()

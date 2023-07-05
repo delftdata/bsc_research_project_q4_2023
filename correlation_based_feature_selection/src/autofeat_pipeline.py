@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import os
 import time
-from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from autogluon.features.generators import AutoMLPipelineFeatureGenerator, FillNaFeatureGenerator
 from autogluon.tabular import TabularDataset
@@ -70,6 +69,7 @@ class PostML:
         # Evaluate the model with feature selection applied
         test_data = TabularDataset(test_dataframe)
         current_performance = fitted_predictor.evaluate(test_data)[evaluation_metric]
+        current_performance = abs(current_performance)
 
         return current_performance, current_duration
 
@@ -124,8 +124,10 @@ class MLPipeline:
         # Get the performance and the feature importance given by the baseline model
         importance = fitted_predictor.feature_importance(data=test_dataframe, feature_stage='original')
         baseline_performance = fitted_predictor.evaluate(test_dataframe)[self.evaluation_metric]
+        baseline_performance = abs(baseline_performance)
 
         # print("Feature importance: " + importance)
+
         return hyperparameters, baseline_performance, baseline_duration
 
     def evaluate_all_models(self):

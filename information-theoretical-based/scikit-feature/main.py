@@ -553,7 +553,7 @@ if __name__ == '__main__':
     datasets.append({'name': 'Bike sharing', 'path': '../../datasets/bike-sharing/hour.csv', 'y_label': 'cnt', 'n_features': 15, 'is_classification': False})
     datasets.append({'name': 'Census Income', 'path': '../../datasets/CensusIncome/CensusIncome.csv', 'y_label': 'income_label', 'n_features': 15, 'is_classification': True})
     datasets.append({'name': 'Breast cancer', 'path': '../../datasets/breast-cancer/data.csv', 'y_label': 'diagnosis', 'n_features': 30, 'is_classification': True})
-    datasets.append({'name': 'Housing prices', 'path': '../../datasets/housing-prices/train.csv', 'y_label': 'SalePrice', 'n_features': 80, 'is_classification': False})
+    datasets.append({'name': 'Housing prices', 'path': '../../datasets/housing-prices/housing_prices.csv', 'y_label': 'SalePrice', 'n_features': 80, 'is_classification': False})
     datasets.append({'name': 'Steel plates faults', 'path': '../../datasets/steel-plates-faults/steel_faults_train.csv', 'y_label': 'Class', 'n_features': 33, 'is_classification': True})
     datasets.append({'name': 'Gisette', 'path': '../../datasets/gisette/gisette_train.csv', 'y_label': 'Class', 'n_features': 250, 'is_classification': True})
     datasets.append({'name': 'Internet advertisements', 'path': '../../datasets/internet_advertisements/internet_advertisements.csv', 'y_label': 'class', 'n_features': 200, 'is_classification': True})

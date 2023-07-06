@@ -11,6 +11,7 @@ from .correlation_methods.spearman import SpearmanFeatureSelection
 from .correlation_methods.su import SymmetricUncertaintyFeatureSelection
 from .correlation_methods.information_gain import InformationGainFeatureSelection
 from warnings import filterwarnings
+from sklearn.datasets import fetch_openml
 
 
 filterwarnings("ignore", category=UserWarning)
@@ -79,8 +80,24 @@ class MLPipeline:
         self.dataset_file = dataset_file
         self.dataset_name = dataset_name
         self.target_label = target_label
-        self.dataframe = pd.read_csv(dataset_file)
-        self.auxiliary_dataframe = pd.read_csv(dataset_file)
+        self.dataframe = None
+        self.auxiliary_dataframe = None
+        if dataset_name != 'QSAR-TID-11109':
+            self.dataframe = pd.read_csv(dataset_file)
+            self.auxiliary_dataframe = pd.read_csv(dataset_file)
+        else:
+            qsar = fetch_openml("QSAR-TID-11109", as_frame=False)
+            data = qsar.data
+            target = qsar.target
+            feature_names = qsar.feature_names
+            target_name = qsar.target_names
+            dense_data = data.toarray()
+            dataframe = pd.DataFrame(dense_data, columns=feature_names)
+            dataframe[target_name[0]] = target
+            self.dataframe = dataframe
+            self.auxiliary_dataframe = dataframe
+        print(self.dataframe)
+
         # Specify the models to use: GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
         self.algorithms_model_names = {
             'GBM': 'LightGBM',
@@ -88,6 +105,8 @@ class MLPipeline:
             # 'LR': 'LinearModel',
             # 'XGB': 'XGBoost'
         }
+        self.evaluation_metric = evaluation_metric
+
         # The number of features that will be selected during feature selection (excl. target)
         self.features_to_select_k = []
         if features_to_select == 'small':
@@ -105,7 +124,6 @@ class MLPipeline:
             self.features_to_select_k = [10, 25, 50, 100, 250, 500]
             self.features_to_select_k += list(range(1000, number_columns, 1000))
             self.features_to_select_k += [number_columns]
-        self.evaluation_metric = evaluation_metric
 
     def run_model_no_feature_selection(self, algorithm, model_name, train_dataframe, test_dataframe):
         train_dataframe = TabularDataset(train_dataframe)

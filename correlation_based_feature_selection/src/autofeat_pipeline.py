@@ -62,11 +62,11 @@ class InML:
             problem_type = 'regression'
 
         start = time.time()
-        transformed_dataframe, relief_ranked_features, relief_correlations = \
+        relief_ranked_features, relief_correlations = \
             ReliefFeatureSelection.feature_selection(train_dataframe, target_label, number_of_features_k, problem_type)
         relief_duration = time.time() - start
 
-        return transformed_dataframe, relief_ranked_features, relief_correlations, relief_duration
+        return relief_ranked_features, relief_correlations, relief_duration
 
 
 class PostML:
@@ -155,11 +155,11 @@ class MLPipeline:
         hyperparameters = training_results['model_info'][model_name]['hyperparameters']
 
         # Get the performance and the feature importance given by the baseline model
-        # importance = fitted_predictor.feature_importance(data=test_dataframe, feature_stage='original')
+        importance = fitted_predictor.feature_importance(data=test_dataframe, feature_stage='original')
         baseline_performance = fitted_predictor.evaluate(test_dataframe)[self.evaluation_metric]
         baseline_performance = abs(baseline_performance)
 
-        # print("Feature importance: " + importance)
+        print("Feature importance: " + importance)
 
         return hyperparameters, baseline_performance, baseline_duration
 
@@ -188,12 +188,12 @@ class MLPipeline:
         current_train_dataframe = pd.concat([x_train, y_train], axis=1)
         current_test_dataframe = pd.concat([x_test, y_test], axis=1)
 
-        # # COMPUTATION: Compute the ranking of features returned by each correlation method
-        # pearson_selected_features, spearman_selected_features, su_selected_features, ig_selected_features, \
-        #     pearson_correlations, spearman_correlations, su_correlations, ig_correlations, \
-        #     pearson_duration, spearman_duration, su_duration, ig_duration = \
-        #     InML.feature_selection_select_k_best(current_train_dataframe,
-        #                                          self.target_label)
+        # COMPUTATION: Compute the ranking of features returned by each correlation method
+        pearson_selected_features, spearman_selected_features, su_selected_features, ig_selected_features, \
+            pearson_correlations, spearman_correlations, su_correlations, ig_correlations, \
+            pearson_duration, spearman_duration, su_duration, ig_duration = \
+            InML.feature_selection_select_k_best(current_train_dataframe,
+                                                 self.target_label)
 
         # LOOP: Go through each algorithm
         for algorithm, algorithm_name in self.algorithms_model_names.items():
@@ -202,57 +202,57 @@ class MLPipeline:
                 self.run_model_no_feature_selection(algorithm, algorithm_name,
                                                     current_train_dataframe, current_test_dataframe)
 
-            # # LOOP: Go through each method
-            # correlation_methods = ['Pearson', 'Spearman', 'SU', 'IG']
-            # for ranked_features, correlation_values, correlation_method in \
-            #         zip([pearson_selected_features, spearman_selected_features,
-            #              su_selected_features, ig_selected_features],
-            #             [pearson_correlations, spearman_correlations,
-            #              su_correlations, ig_correlations],
-            #             correlation_methods):
-            #     # LOOP: Go to all possible values of k (i.e. number of selected features)
-            #     # k depends on whether the dataset is small, medium or large
-            #     for subset_length in self.features_to_select_k:
-            #         # Get the current feature subset
-            #         current_subset = ranked_features[:subset_length]
-            #         current_correlation_values = correlation_values[:subset_length]
-            #         paired_values = list(zip(current_subset, current_correlation_values))
-            #         current_subset.append(self.target_label)
-            #
-            #         current_performance, current_duration = PostML.evaluate_model(algorithm=algorithm,
-            #                                                                       hyperparameters=hyperparameters,
-            #                                                                       train_dataframe=
-            #                                                                       current_train_dataframe,
-            #                                                                       feature_subset=current_subset,
-            #                                                                       target_label=self.target_label,
-            #                                                                       test_dataframe=
-            #                                                                       current_test_dataframe,
-            #                                                                       evaluation_metric=
-            #                                                                       self.evaluation_metric)
-            #
-            #         total_duration = current_duration
-            #         if correlation_method == 'Pearson':
-            #             total_duration += pearson_duration
-            #         elif correlation_method == 'Spearman':
-            #             total_duration += spearman_duration
-            #         elif correlation_method == 'SU':
-            #             total_duration += su_duration
-            #         elif correlation_method == 'IG':
-            #             total_duration += ig_duration
-            #         # Save the results to file
-            #         MLPipeline.write_to_file(dataset_name=self.dataset_name,
-            #                                  algorithm_name=algorithm_name,
-            #                                  correlation_method=correlation_method,
-            #                                  subset_length=subset_length,
-            #                                  current_subset=current_subset,
-            #                                  current_correlations=paired_values,
-            #                                  current_performance=current_performance,
-            #                                  current_duration=total_duration,
-            #                                  baseline_performance=baseline_performance,
-            #                                  baseline_duration=baseline_duration)
+            # LOOP: Go through each method
+            correlation_methods = ['Pearson', 'Spearman', 'SU', 'IG']
+            for ranked_features, correlation_values, correlation_method in \
+                    zip([pearson_selected_features, spearman_selected_features,
+                         su_selected_features, ig_selected_features],
+                        [pearson_correlations, spearman_correlations,
+                         su_correlations, ig_correlations],
+                        correlation_methods):
+                # LOOP: Go to all possible values of k (i.e. number of selected features)
+                # k depends on whether the dataset is small, medium or large
+                for subset_length in self.features_to_select_k:
+                    # Get the current feature subset
+                    current_subset = ranked_features[:subset_length]
+                    current_correlation_values = correlation_values[:subset_length]
+                    paired_values = list(zip(current_subset, current_correlation_values))
+                    current_subset.append(self.target_label)
+
+                    current_performance, current_duration = PostML.evaluate_model(algorithm=algorithm,
+                                                                                  hyperparameters=hyperparameters,
+                                                                                  train_dataframe=
+                                                                                  current_train_dataframe,
+                                                                                  feature_subset=current_subset,
+                                                                                  target_label=self.target_label,
+                                                                                  test_dataframe=
+                                                                                  current_test_dataframe,
+                                                                                  evaluation_metric=
+                                                                                  self.evaluation_metric)
+
+                    total_duration = current_duration
+                    if correlation_method == 'Pearson':
+                        total_duration += pearson_duration
+                    elif correlation_method == 'Spearman':
+                        total_duration += spearman_duration
+                    elif correlation_method == 'SU':
+                        total_duration += su_duration
+                    elif correlation_method == 'IG':
+                        total_duration += ig_duration
+                    # Save the results to file
+                    MLPipeline.write_to_file(dataset_name=self.dataset_name,
+                                             algorithm_name=algorithm_name,
+                                             correlation_method=correlation_method,
+                                             subset_length=subset_length,
+                                             current_subset=current_subset,
+                                             current_correlations=paired_values,
+                                             current_performance=current_performance,
+                                             current_duration=total_duration,
+                                             baseline_performance=baseline_performance,
+                                             baseline_duration=baseline_duration)
 
             for subset_length in self.features_to_select_k:
-                transformed_dataframe, relief_ranked_features, relief_correlations, relief_duration = \
+                relief_ranked_features, relief_correlations, relief_duration = \
                     InML.feature_selection_select_k_best_relief(dataset_name=self.dataset_name,
                                                                 train_dataframe=current_train_dataframe,
                                                                 target_label=self.target_label,
@@ -316,15 +316,17 @@ class MLPipeline:
         file.close()
 
         # Write all results to a csv file
-        file_path = f"./autofeat_results/all_results.csv"
+        csv_file_path = f"./autofeat_results/all_results.csv"
+        csv_file_exists = os.path.exists(csv_file_path)
 
-        with open(file_path, "a", newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(["DATASET NAME", "ALGORITHM NAME", "CORRELATION METHOD",
-                             "SUBSET OF FEATURES", "CURRENT FEATURE SUBSET",
-                             "CURRENT FEATURE SUBSET CORRELATIONS",
-                             "CURRENT PERFORMANCE", "CURRENT RUNTIME",
-                             "BASELINE PERFORMANCE", "BASELINE RUNTIME"])
+        with open(csv_file_path, "a", newline='') as csv_file_path:
+            writer = csv.writer(csv_file_path)
+            if not csv_file_exists:
+                writer.writerow(["DATASET NAME", "ALGORITHM NAME", "CORRELATION METHOD",
+                                 "SUBSET OF FEATURES", "CURRENT FEATURE SUBSET",
+                                 "CURRENT FEATURE SUBSET CORRELATIONS",
+                                 "CURRENT PERFORMANCE", "CURRENT RUNTIME",
+                                 "BASELINE PERFORMANCE", "BASELINE RUNTIME"])
             writer.writerow([dataset_name, algorithm_name, correlation_method,
                              subset_length, current_subset, current_correlations,
                              current_performance, current_duration,

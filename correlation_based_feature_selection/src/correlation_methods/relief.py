@@ -50,4 +50,4 @@ class ReliefFeatureSelection:
         # Select the top features with the highest correlation
         sorted_correlations = relief_correlations.sort_values(by='relief_weight', ascending=False)
         print(sorted_correlations)
-        return transformed_train_dataframe, sorted_correlations.index.tolist(), sorted_correlations.values.tolist()
+        return sorted_correlations['feature'].tolist(), sorted_correlations['relief_weight'].tolist()

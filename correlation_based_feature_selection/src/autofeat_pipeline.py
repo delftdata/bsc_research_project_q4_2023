@@ -61,7 +61,7 @@ class PostML:
         start_time_model = time.time()
         fitted_predictor = TabularPredictor(label=target_label,
                                             eval_metric=evaluation_metric,
-                                            verbosity=0) \
+                                            verbosity=1) \
             .fit(train_data=train_data, hyperparameters={algorithm: hyperparameters})
 
         # Get the duration the model with feature selection took
@@ -131,7 +131,7 @@ class MLPipeline:
         fitted_predictor = TabularPredictor(label=self.target_label,
                                             eval_metric=self.evaluation_metric,
                                             verbosity=1) \
-            .fit(train_data=train_dataframe, hyperparameters={algorithm: {}})
+            .fit(train_data=train_dataframe, hyperparameters={algorithm: {}}, feature_generator=None)
         # Get the duration the baseline took
         baseline_duration = time.time() - start_time_baseline
 
@@ -140,7 +140,7 @@ class MLPipeline:
         hyperparameters = training_results['model_info'][model_name]['hyperparameters']
 
         # Get the performance and the feature importance given by the baseline model
-        importance = fitted_predictor.feature_importance(data=test_dataframe, feature_stage='original')
+        # importance = fitted_predictor.feature_importance(data=test_dataframe, feature_stage='original')
         baseline_performance = fitted_predictor.evaluate(test_dataframe)[self.evaluation_metric]
         baseline_performance = abs(baseline_performance)
 

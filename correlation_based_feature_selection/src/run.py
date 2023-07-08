@@ -180,6 +180,7 @@ def evaluate_musk_dataset():
         dataset_file='../autofeat_datasets/Musk/musk.csv', dataset_name='Musk',
         target_label='class', evaluation_metric='accuracy', features_to_select='medium')
 
+    # print(dataset_evaluator.dataframe.shape)
     dataset_evaluator.evaluate_all_models()
 
 
@@ -252,10 +253,10 @@ if __name__ == '__main__':
     # evaluate_internet_advertisements_dataset()
     # evaluate_gisette_dataset()
     # evaluate_spam_email_dataset()
-    # evaluate_musk_dataset()
+    evaluate_musk_dataset()
     # evaluate_arrhythmia_dataset()
 
     # Regression
     # evaluate_housing_prices_dataset()
     # evaluate_topo_2_1_dataset()
-    evaluate_qsar_tid_dataset()
+    # evaluate_qsar_tid_dataset()

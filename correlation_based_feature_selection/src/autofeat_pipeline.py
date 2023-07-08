@@ -159,7 +159,8 @@ class MLPipeline:
         baseline_performance = fitted_predictor.evaluate(test_dataframe)[self.evaluation_metric]
         baseline_performance = abs(baseline_performance)
 
-        print("Feature importance: " + importance)
+        print("Feature importance: ")
+        print(importance)
 
         return hyperparameters, baseline_performance, baseline_duration
 
@@ -285,9 +286,6 @@ class MLPipeline:
                                          current_duration=total_duration,
                                          baseline_performance=baseline_performance,
                                          baseline_duration=baseline_duration)
-
-
-
 
     @staticmethod
     def write_to_file(dataset_name, algorithm_name, correlation_method,

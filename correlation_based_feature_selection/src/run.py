@@ -249,13 +249,13 @@ def evaluate_qsar_tid_dataset():
 if __name__ == '__main__':
     # Binary classification
     evaluate_breast_cancer_dataset()
-    # evaluate_internet_advertisements_dataset()
-    # evaluate_gisette_dataset()
-    # evaluate_spam_email_dataset()
-    # evaluate_musk_dataset()
-    # evaluate_arrhythmia_dataset()
+    evaluate_internet_advertisements_dataset()
+    evaluate_gisette_dataset()
+    evaluate_spam_email_dataset()
+    evaluate_musk_dataset()
+    evaluate_arrhythmia_dataset()
 
     # Regression
-    # evaluate_housing_prices_dataset()
-    # evaluate_topo_2_1_dataset()
-    # evaluate_qsar_tid_dataset()
+    evaluate_housing_prices_dataset()
+    evaluate_topo_2_1_dataset()
+    evaluate_qsar_tid_dataset()

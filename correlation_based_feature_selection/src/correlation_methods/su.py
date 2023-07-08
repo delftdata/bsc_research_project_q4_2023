@@ -23,8 +23,8 @@ class SymmetricUncertaintyFeatureSelection:
 
         Parameters
         ----------
-        feature (DataFrame column): Feature in the data set
-        target_feature (DataFrame column): Target feature of the data set
+        feature (DataFrame column): Feature in the dataset
+        target_feature (DataFrame column): Target feature of the dataset
 
         Returns
         -------
@@ -51,7 +51,7 @@ class SymmetricUncertaintyFeatureSelection:
         Parameters
         ----------
         train_dataframe (DataFrame): Training data containing the features
-        target_feature (str): Name of the target feature column
+        target_feature (str): Name of the target feature
 
         Returns
         -------

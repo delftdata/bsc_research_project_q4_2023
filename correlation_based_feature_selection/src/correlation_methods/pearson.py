@@ -24,13 +24,12 @@ class PearsonFeatureSelection:
 
         Parameters
         ----------
-        feature (DataFrame column): Feature in the data set
-        target_feature (DataFrame column): Target feature of the data set
+        feature (DataFrame column): Feature in the dataset
+        target_feature (DataFrame column): Target feature of the dataset
 
         Returns
         -------
-        pearson (float): Correlation between the two features measured using
-                         Pearson method
+        pearson (float): Correlation between the two features measured using the Pearson method
         """
         pearson = pearsonr(feature, target_feature).statistic
 

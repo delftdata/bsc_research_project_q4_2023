@@ -123,22 +123,22 @@ class MLPipeline:
         self.evaluation_metric = evaluation_metric
 
         # The number of features that will be selected during feature selection (excl. target)
-        self.features_to_select_k = [self.dataframe.shape[1] - 1]
-        # if features_to_select == 'small':
-        #     number_columns = self.dataframe.shape[1] - 1
-        #     self.features_to_select_k = [5]
-        #     self.features_to_select_k += list(range(10, number_columns, 10))
-        #     # self.features_to_select_k += [number_columns]
-        # elif features_to_select == 'medium':
-        #     number_columns = self.dataframe.shape[1] - 1
-        #     self.features_to_select_k = [5, 10, 25]
-        #     self.features_to_select_k += list(range(50, number_columns, 50))
-        #     # self.features_to_select_k += [number_columns]
-        # elif features_to_select == 'large':
-        #     number_columns = self.dataframe.shape[1] - 1
-        #     self.features_to_select_k = [5, 10, 25, 50, 100, 250, 500]
-        #     self.features_to_select_k += list(range(1000, number_columns, 1000))
-        #     # self.features_to_select_k += [number_columns]
+        self.features_to_select_k = []
+        if features_to_select == 'small':
+            number_columns = self.dataframe.shape[1] - 1
+            self.features_to_select_k = [5]
+            self.features_to_select_k += list(range(10, number_columns, 10))
+            # self.features_to_select_k += [number_columns]
+        elif features_to_select == 'medium':
+            number_columns = self.dataframe.shape[1] - 1
+            self.features_to_select_k = [5, 10, 25]
+            self.features_to_select_k += list(range(50, number_columns, 50))
+            # self.features_to_select_k += [number_columns]
+        elif features_to_select == 'large':
+            number_columns = self.dataframe.shape[1] - 1
+            self.features_to_select_k = [5, 10, 25, 50, 100, 250, 500]
+            self.features_to_select_k += list(range(1000, number_columns, 1000))
+            # self.features_to_select_k += [number_columns]
 
     def run_model_no_feature_selection(self, algorithm, model_name, train_dataframe, test_dataframe):
         train_dataframe = TabularDataset(train_dataframe)
@@ -215,8 +215,8 @@ class MLPipeline:
                 # k depends on whether the dataset is small, medium or large
                 for subset_length in self.features_to_select_k:
                     # Get the current feature subset
-                    current_subset = ranked_features #[:subset_length]
-                    current_correlation_values = correlation_values #[:subset_length]
+                    current_subset = ranked_features[:subset_length]
+                    current_correlation_values = correlation_values[:subset_length]
                     paired_values = list(zip(current_subset, current_correlation_values))
                     current_subset.append(self.target_label)
 
@@ -314,18 +314,18 @@ class MLPipeline:
         file.close()
 
         # Write all results to a csv file
-        # csv_file_path = f"./autofeat_results/all_results.csv"
-        # csv_file_exists = os.path.exists(csv_file_path)
-        #
-        # with open(csv_file_path, "a", newline='') as csv_file_path:
-        #     writer = csv.writer(csv_file_path)
-        #     if not csv_file_exists:
-        #         writer.writerow(["DATASET NAME", "ALGORITHM NAME", "CORRELATION METHOD",
-        #                          "SUBSET OF FEATURES", "CURRENT FEATURE SUBSET",
-        #                          "CURRENT FEATURE SUBSET CORRELATIONS",
-        #                          "CURRENT PERFORMANCE", "CURRENT RUNTIME",
-        #                          "BASELINE PERFORMANCE", "BASELINE RUNTIME"])
-        #     writer.writerow([dataset_name, algorithm_name, correlation_method,
-        #                      subset_length, current_subset, current_correlations,
-        #                      current_performance, current_duration,
-        #                      baseline_performance, baseline_duration])
+        csv_file_path = f"./autofeat_results/all_results.csv"
+        csv_file_exists = os.path.exists(csv_file_path)
+
+        with open(csv_file_path, "a", newline='') as csv_file_path:
+            writer = csv.writer(csv_file_path)
+            if not csv_file_exists:
+                writer.writerow(["DATASET NAME", "ALGORITHM NAME", "CORRELATION METHOD",
+                                 "SUBSET OF FEATURES", "CURRENT FEATURE SUBSET",
+                                 "CURRENT FEATURE SUBSET CORRELATIONS",
+                                 "CURRENT PERFORMANCE", "CURRENT RUNTIME",
+                                 "BASELINE PERFORMANCE", "BASELINE RUNTIME"])
+            writer.writerow([dataset_name, algorithm_name, correlation_method,
+                             subset_length, current_subset, current_correlations,
+                             current_performance, current_duration,
+                             baseline_performance, baseline_duration])

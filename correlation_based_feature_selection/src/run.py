@@ -180,7 +180,6 @@ def evaluate_musk_dataset():
         dataset_file='../autofeat_datasets/Musk/musk.csv', dataset_name='Musk',
         target_label='class', evaluation_metric='accuracy', features_to_select='medium')
 
-    # print(dataset_evaluator.dataframe.shape)
     dataset_evaluator.evaluate_all_models()
 
 
@@ -224,7 +223,7 @@ def evaluate_housing_prices_dataset():
 
 def evaluate_topo_2_1_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../autofeat_datasets/TOPO-2-1/topo_2_1.csv', dataset_name='TOPO-2-1',
+        dataset_file='../autofeat_datasets/TOPO-2-1/topo_2_1.csv', dataset_name='TOPO',
         target_label='oz267', evaluation_metric='root_mean_squared_error', features_to_select='medium')
 
     dataset_evaluator.evaluate_all_models()
@@ -232,7 +231,7 @@ def evaluate_topo_2_1_dataset():
 
 def evaluate_qsar_tid_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../autofeat_datasets/QSAR-TID-11109/qsar.csv', dataset_name='QSAR-TID-11109',
+        dataset_file='../autofeat_datasets/QSAR-TID-11109/qsar.csv', dataset_name='QSAR',
         target_label='MEDIAN_PXC50', evaluation_metric='root_mean_squared_error', features_to_select='large')
 
     dataset_evaluator.evaluate_all_models()
@@ -249,12 +248,12 @@ def evaluate_qsar_tid_dataset():
 
 if __name__ == '__main__':
     # Binary classification
-    # evaluate_breast_cancer_dataset()
-    # evaluate_internet_advertisements_dataset()
-    # evaluate_gisette_dataset()
-    # evaluate_spam_email_dataset()
+    evaluate_breast_cancer_dataset()
+    evaluate_internet_advertisements_dataset()
+    evaluate_gisette_dataset()
+    evaluate_spam_email_dataset()
     evaluate_musk_dataset()
-    # evaluate_arrhythmia_dataset()
+    evaluate_arrhythmia_dataset()
 
     # Regression
     # evaluate_housing_prices_dataset()

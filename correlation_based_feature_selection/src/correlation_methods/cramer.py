@@ -24,13 +24,12 @@ class CramersVFeatureSelection:
 
         Parameters
         ----------
-        feature (DataFrame column): Feature in the data set
-        target_feature (DataFrame column): Target feature of the data set
+        feature (DataFrame column): Feature in the dataset
+        target_feature (DataFrame column): Target feature of the dataset
 
         Returns
         -------
-        cramers_v (float): Correlation between the two features measured using
-                           Cramer's V method
+        cramers_v (float): Correlation between the two features measured using the Cramer's V method
         """
         contingency_table_values = crosstab(feature, target_feature).values
         cramers_v = contingency.association(contingency_table_values, method="cramer")

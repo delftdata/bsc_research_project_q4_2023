@@ -24,13 +24,12 @@ class SpearmanFeatureSelection:
 
         Parameters
         ----------
-        feature (DataFrame column): Feature in the data set
-        target_feature (DataFrame column): Target feature of the data set
+        feature (DataFrame column): Feature in the dataset
+        target_feature (DataFrame column): Target feature of the dataset
 
         Returns
         -------
-        spearman (float): Correlation between the two features measured using
-                          Spearman method
+        spearman (float): Correlation between the two features measured using the Spearman method
         """
         spearman = spearmanr(feature, target_feature).statistic
 

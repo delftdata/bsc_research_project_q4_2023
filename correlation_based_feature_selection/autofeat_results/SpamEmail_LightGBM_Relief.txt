@@ -1,0 +1,77 @@
+DATASET NAME: SpamEmail
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Relief
+SUBSET OF FEATURES: 5
+CURRENT FEATURE SUBSET: ['capital_run_length_total', 'capital_run_length_longest', 'capital_run_length_average', 'word_freq_you', 'word_freq_hp', 'class']
+CURRENT FEATURE SUBSET CORRELATIONS: [('capital_run_length_total', 17.44), ('capital_run_length_longest', 15.42), ('capital_run_length_average', 3.1278299999999986), ('word_freq_you', 1.149), ('word_freq_hp', 0.9297999999999998)]
+CURRENT PERFORMANCE: 0.8631921824104235
+CURRENT RUNTIME: 8.629121780395508
+BASELINE PERFORMANCE: 0.9565689467969598
+BASELINE RUNTIME: 5.495778560638428
+
+DATASET NAME: SpamEmail
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Relief
+SUBSET OF FEATURES: 10
+CURRENT FEATURE SUBSET: ['capital_run_length_longest', 'capital_run_length_total', 'capital_run_length_average', 'word_freq_you', 'word_freq_hp', 'word_freq_your', 'word_freq_george', 'word_freq_will', 'word_freq_hpl', 'word_freq_free', 'class']
+CURRENT FEATURE SUBSET CORRELATIONS: [('capital_run_length_longest', 12.49), ('capital_run_length_total', 6.3), ('capital_run_length_average', 2.0870700000000006), ('word_freq_you', 1.3459999999999999), ('word_freq_hp', 0.8965000000000001), ('word_freq_your', 0.8589000000000003), ('word_freq_george', 0.8539000000000001), ('word_freq_will', 0.6175999999999999), ('word_freq_hpl', 0.45249999999999985), ('word_freq_free', 0.38669999999999993)]
+CURRENT PERFORMANCE: 0.9011943539630836
+CURRENT RUNTIME: 17.890286684036255
+BASELINE PERFORMANCE: 0.9565689467969598
+BASELINE RUNTIME: 5.495778560638428
+
+DATASET NAME: SpamEmail
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Relief
+SUBSET OF FEATURES: 20
+CURRENT FEATURE SUBSET: ['capital_run_length_longest', 'capital_run_length_total', 'capital_run_length_average', 'word_freq_george', 'word_freq_you', 'word_freq_hp', 'word_freq_your', 'word_freq_will', 'word_freq_free', 'word_freq_all', 'word_freq_our', 'word_freq_re', 'word_freq_hpl', 'char_freq_%21', 'word_freq_meeting', 'word_freq_mail', 'word_freq_address', 'word_freq_lab', 'word_freq_edu', 'word_freq_internet', 'class']
+CURRENT FEATURE SUBSET CORRELATIONS: [('capital_run_length_longest', 18.28), ('capital_run_length_total', 4.41), ('capital_run_length_average', 1.8471900000000003), ('word_freq_george', 1.2209999999999999), ('word_freq_you', 1.1192), ('word_freq_hp', 0.7983000000000001), ('word_freq_your', 0.7023), ('word_freq_will', 0.6446), ('word_freq_free', 0.46599999999999986), ('word_freq_all', 0.3799000000000002), ('word_freq_our', 0.3404), ('word_freq_re', 0.33460000000000006), ('word_freq_hpl', 0.3327999999999999), ('char_freq_%21', 0.30798), ('word_freq_meeting', 0.30000000000000004), ('word_freq_mail', 0.28650000000000003), ('word_freq_address', 0.2737), ('word_freq_lab', 0.2719), ('word_freq_edu', 0.2708), ('word_freq_internet', 0.19570000000000004)]
+CURRENT PERFORMANCE: 0.9370249728555917
+CURRENT RUNTIME: 15.194964408874512
+BASELINE PERFORMANCE: 0.9565689467969598
+BASELINE RUNTIME: 5.495778560638428
+
+DATASET NAME: SpamEmail
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Relief
+SUBSET OF FEATURES: 30
+CURRENT FEATURE SUBSET: ['capital_run_length_longest', 'capital_run_length_total', 'word_freq_george', 'capital_run_length_average', 'word_freq_you', 'word_freq_hp', 'word_freq_your', 'word_freq_will', 'word_freq_re', 'word_freq_free', 'word_freq_our', 'word_freq_all', 'char_freq_%21', 'word_freq_hpl', 'word_freq_font', 'word_freq_address', 'word_freq_mail', 'word_freq_email', 'word_freq_business', 'word_freq_edu', 'word_freq_85', 'word_freq_1999', 'word_freq_meeting', 'word_freq_650', 'word_freq_people', 'word_freq_000', 'word_freq_technology', 'word_freq_labs', 'word_freq_make', 'word_freq_remove', 'class']
+CURRENT FEATURE SUBSET CORRELATIONS: [('capital_run_length_longest', 17.32), ('capital_run_length_total', 6.32), ('word_freq_george', 1.2660999999999996), ('capital_run_length_average', 1.22517), ('word_freq_you', 1.1140999999999996), ('word_freq_hp', 1.0242), ('word_freq_your', 0.6807000000000001), ('word_freq_will', 0.4709), ('word_freq_re', 0.44419999999999993), ('word_freq_free', 0.38270000000000004), ('word_freq_our', 0.343), ('word_freq_all', 0.32189999999999996), ('char_freq_%21', 0.30219000000000007), ('word_freq_hpl', 0.26330000000000003), ('word_freq_font', 0.22460000000000002), ('word_freq_address', 0.22260000000000002), ('word_freq_mail', 0.20830000000000004), ('word_freq_email', 0.20650000000000002), ('word_freq_business', 0.19960000000000006), ('word_freq_edu', 0.19810000000000003), ('word_freq_85', 0.1864), ('word_freq_1999', 0.17300000000000001), ('word_freq_meeting', 0.1708), ('word_freq_650', 0.1628), ('word_freq_people', 0.16120000000000004), ('word_freq_000', 0.15489999999999998), ('word_freq_technology', 0.14489999999999995), ('word_freq_labs', 0.1369), ('word_freq_make', 0.13569999999999996), ('word_freq_remove', 0.1331)]
+CURRENT PERFORMANCE: 0.9446254071661238
+CURRENT RUNTIME: 13.186925888061523
+BASELINE PERFORMANCE: 0.9565689467969598
+BASELINE RUNTIME: 5.495778560638428
+
+DATASET NAME: SpamEmail
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Relief
+SUBSET OF FEATURES: 40
+CURRENT FEATURE SUBSET: ['capital_run_length_longest', 'capital_run_length_total', 'capital_run_length_average', 'word_freq_you', 'word_freq_your', 'word_freq_george', 'word_freq_hp', 'word_freq_will', 'word_freq_free', 'word_freq_mail', 'char_freq_%21', 'word_freq_our', 'word_freq_meeting', 'word_freq_all', 'word_freq_re', 'word_freq_edu', 'word_freq_000', 'word_freq_lab', 'word_freq_email', 'word_freq_remove', 'word_freq_hpl', 'word_freq_font', 'word_freq_85', 'char_freq_%28', 'word_freq_labs', 'word_freq_1999', 'word_freq_650', 'word_freq_business', 'word_freq_over', 'char_freq_%23', 'word_freq_people', 'word_freq_order', 'word_freq_internet', 'char_freq_%24', 'word_freq_address', 'word_freq_make', 'word_freq_pm', 'word_freq_money', 'word_freq_data', 'word_freq_addresses', 'class']
+CURRENT FEATURE SUBSET CORRELATIONS: [('capital_run_length_longest', 18.53), ('capital_run_length_total', 4.06), ('capital_run_length_average', 1.4785700000000004), ('word_freq_you', 1.1915999999999998), ('word_freq_your', 0.9925), ('word_freq_george', 0.6824999999999999), ('word_freq_hp', 0.6411), ('word_freq_will', 0.6187000000000001), ('word_freq_free', 0.44630000000000014), ('word_freq_mail', 0.3962), ('char_freq_%21', 0.3934499999999999), ('word_freq_our', 0.39210000000000006), ('word_freq_meeting', 0.38049999999999995), ('word_freq_all', 0.3455000000000002), ('word_freq_re', 0.32289999999999996), ('word_freq_edu', 0.2789), ('word_freq_000', 0.2744), ('word_freq_lab', 0.27390000000000003), ('word_freq_email', 0.24900000000000005), ('word_freq_remove', 0.24240000000000003), ('word_freq_hpl', 0.22820000000000001), ('word_freq_font', 0.22099999999999997), ('word_freq_85', 0.2149), ('char_freq_%28', 0.20653), ('word_freq_labs', 0.2006), ('word_freq_1999', 0.17009999999999995), ('word_freq_650', 0.1648), ('word_freq_business', 0.15330000000000002), ('word_freq_over', 0.1356), ('char_freq_%23', 0.12672), ('word_freq_people', 0.12439999999999998), ('word_freq_order', 0.1204), ('word_freq_internet', 0.12009999999999998), ('char_freq_%24', 0.11784000000000003), ('word_freq_address', 0.11779999999999997), ('word_freq_make', 0.11110000000000002), ('word_freq_pm', 0.1106), ('word_freq_money', 0.10410000000000003), ('word_freq_data', 0.0984), ('word_freq_addresses', 0.09720000000000001)]
+CURRENT PERFORMANCE: 0.9554831704668838
+CURRENT RUNTIME: 14.272561073303223
+BASELINE PERFORMANCE: 0.9565689467969598
+BASELINE RUNTIME: 5.495778560638428
+
+DATASET NAME: SpamEmail
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Relief
+SUBSET OF FEATURES: 50
+CURRENT FEATURE SUBSET: ['capital_run_length_longest', 'capital_run_length_total', 'capital_run_length_average', 'word_freq_you', 'word_freq_george', 'word_freq_hp', 'word_freq_your', 'word_freq_will', 'word_freq_font', 'char_freq_%21', 'word_freq_free', 'word_freq_our', 'word_freq_edu', 'word_freq_all', 'word_freq_hpl', 'word_freq_re', 'word_freq_email', 'word_freq_business', 'word_freq_mail', 'word_freq_1999', 'word_freq_remove', 'word_freq_make', 'word_freq_85', 'word_freq_project', 'char_freq_%28', 'word_freq_650', 'word_freq_3d', 'word_freq_receive', 'word_freq_000', 'word_freq_pm', 'word_freq_technology', 'word_freq_report', 'word_freq_data', 'char_freq_%24', 'word_freq_internet', 'word_freq_money', 'word_freq_address', 'word_freq_meeting', 'word_freq_over', 'word_freq_credit', 'word_freq_cs', 'word_freq_order', 'word_freq_people', 'word_freq_lab', 'word_freq_labs', 'word_freq_telnet', 'word_freq_original', 'word_freq_addresses', 'char_freq_%23', 'word_freq_415', 'class']
+CURRENT FEATURE SUBSET CORRELATIONS: [('capital_run_length_longest', 11.84), ('capital_run_length_total', 6.97), ('capital_run_length_average', 1.6287), ('word_freq_you', 1.3256000000000003), ('word_freq_george', 0.8751999999999996), ('word_freq_hp', 0.823), ('word_freq_your', 0.8171999999999998), ('word_freq_will', 0.6201999999999999), ('word_freq_font', 0.3958), ('char_freq_%21', 0.3843300000000001), ('word_freq_free', 0.38099999999999995), ('word_freq_our', 0.3692), ('word_freq_edu', 0.3558999999999999), ('word_freq_all', 0.33909999999999996), ('word_freq_hpl', 0.3221), ('word_freq_re', 0.31849999999999995), ('word_freq_email', 0.3112999999999999), ('word_freq_business', 0.29919999999999997), ('word_freq_mail', 0.29339999999999994), ('word_freq_1999', 0.2823), ('word_freq_remove', 0.21939999999999998), ('word_freq_make', 0.21829999999999994), ('word_freq_85', 0.19349999999999998), ('word_freq_project', 0.1597), ('char_freq_%28', 0.15862), ('word_freq_650', 0.1555), ('word_freq_3d', 0.1539), ('word_freq_receive', 0.15000000000000002), ('word_freq_000', 0.1458), ('word_freq_pm', 0.13909999999999997), ('word_freq_technology', 0.13349999999999998), ('word_freq_report', 0.1285), ('word_freq_data', 0.1284), ('char_freq_%24', 0.12443), ('word_freq_internet', 0.12219999999999999), ('word_freq_money', 0.12110000000000001), ('word_freq_address', 0.1208), ('word_freq_meeting', 0.11909999999999998), ('word_freq_over', 0.11900000000000002), ('word_freq_credit', 0.10329999999999999), ('word_freq_cs', 0.09519999999999999), ('word_freq_order', 0.09510000000000002), ('word_freq_people', 0.08810000000000001), ('word_freq_lab', 0.08560000000000001), ('word_freq_labs', 0.08380000000000001), ('word_freq_telnet', 0.0653), ('word_freq_original', 0.063), ('word_freq_addresses', 0.06299999999999999), ('char_freq_%23', 0.05276), ('word_freq_415', 0.0464)]
+CURRENT PERFORMANCE: 0.9576547231270358
+CURRENT RUNTIME: 26.572225332260132
+BASELINE PERFORMANCE: 0.9565689467969598
+BASELINE RUNTIME: 5.495778560638428
+
+DATASET NAME: SpamEmail
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Relief
+SUBSET OF FEATURES: 57
+CURRENT FEATURE SUBSET: ['capital_run_length_longest', 'capital_run_length_total', 'capital_run_length_average', 'word_freq_you', 'word_freq_your', 'word_freq_george', 'word_freq_will', 'word_freq_hp', 'word_freq_our', 'word_freq_font', 'word_freq_edu', 'word_freq_free', 'word_freq_all', 'word_freq_mail', 'char_freq_%21', 'word_freq_1999', 'word_freq_address', 'word_freq_re', 'word_freq_hpl', 'word_freq_business', 'word_freq_remove', 'word_freq_email', 'word_freq_internet', 'word_freq_data', 'word_freq_lab', 'word_freq_000', 'char_freq_%28', 'word_freq_meeting', 'word_freq_money', 'word_freq_receive', 'word_freq_credit', 'word_freq_make', 'word_freq_people', 'char_freq_%23', 'word_freq_order', 'word_freq_pm', 'word_freq_85', 'char_freq_%3B', 'word_freq_technology', 'word_freq_labs', 'char_freq_%24', 'word_freq_over', 'word_freq_direct', 'word_freq_650', 'word_freq_report', 'word_freq_telnet', 'word_freq_415', 'word_freq_857', 'word_freq_addresses', 'word_freq_project', 'word_freq_original', 'word_freq_cs', 'word_freq_conference', 'char_freq_%5B', 'word_freq_table', 'word_freq_parts', 'word_freq_3d', 'class']
+CURRENT FEATURE SUBSET CORRELATIONS: [('capital_run_length_longest', 30.59), ('capital_run_length_total', 7.7), ('capital_run_length_average', 1.6586399999999997), ('word_freq_you', 1.4320000000000002), ('word_freq_your', 1.0200999999999998), ('word_freq_george', 0.6521999999999999), ('word_freq_will', 0.5776999999999998), ('word_freq_hp', 0.5623), ('word_freq_our', 0.5024000000000002), ('word_freq_font', 0.4436), ('word_freq_edu', 0.4206), ('word_freq_free', 0.3953000000000001), ('word_freq_all', 0.32339999999999997), ('word_freq_mail', 0.3224000000000001), ('char_freq_%21', 0.31765), ('word_freq_1999', 0.3085), ('word_freq_address', 0.2908), ('word_freq_re', 0.28340000000000004), ('word_freq_hpl', 0.27330000000000004), ('word_freq_business', 0.2697), ('word_freq_remove', 0.23719999999999997), ('word_freq_email', 0.23059999999999994), ('word_freq_internet', 0.21270000000000003), ('word_freq_data', 0.17229999999999998), ('word_freq_lab', 0.1718), ('word_freq_000', 0.1635), ('char_freq_%28', 0.15971000000000005), ('word_freq_meeting', 0.14400000000000002), ('word_freq_money', 0.1425), ('word_freq_receive', 0.13690000000000002), ('word_freq_credit', 0.1339), ('word_freq_make', 0.1296), ('word_freq_people', 0.12689999999999999), ('char_freq_%23', 0.11559000000000004), ('word_freq_order', 0.1096), ('word_freq_pm', 0.10889999999999998), ('word_freq_85', 0.1088), ('char_freq_%3B', 0.10141), ('word_freq_technology', 0.0999), ('word_freq_labs', 0.09789999999999999), ('char_freq_%24', 0.09629999999999997), ('word_freq_over', 0.0955), ('word_freq_direct', 0.08310000000000001), ('word_freq_650', 0.0771), ('word_freq_report', 0.07329999999999999), ('word_freq_telnet', 0.0731), ('word_freq_415', 0.0535), ('word_freq_857', 0.0535), ('word_freq_addresses', 0.047599999999999996), ('word_freq_project', 0.047200000000000006), ('word_freq_original', 0.040999999999999995), ('word_freq_cs', 0.0366), ('word_freq_conference', 0.027999999999999997), ('char_freq_%5B', 0.016240000000000004), ('word_freq_table', 0.007700000000000001), ('word_freq_parts', 0.0051), ('word_freq_3d', 0.0)]
+CURRENT PERFORMANCE: 0.9543973941368078
+CURRENT RUNTIME: 24.853776216506958
+BASELINE PERFORMANCE: 0.9565689467969598
+BASELINE RUNTIME: 4.306083917617798
+

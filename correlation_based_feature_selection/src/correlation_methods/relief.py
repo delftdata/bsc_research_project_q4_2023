@@ -3,6 +3,7 @@ Module for feature selection using Relief family of feature selection methods.
 """
 import sklearn_relief as relief
 import pandas as pd
+from skrebate import ReliefF
 
 
 class ReliefFeatureSelection:
@@ -34,19 +35,30 @@ class ReliefFeatureSelection:
         target_column = train_dataframe[target_feature]
         train_dataframe = train_dataframe.drop(columns=[target_feature])
 
-        relief_method = relief.Relief(n_features=number_of_features_k)
-        if problem_type == 'multiclass_classification':
-            relief_method = relief.ReliefF(n_features=number_of_features_k)
-        if problem_type == 'regression':
-            relief_method = relief.RReliefF(n_features=number_of_features_k)
-        transformed_train_dataframe = relief_method.fit_transform(train_dataframe.values, target_column.values)
+        # FIRST IMPLEMENTATION
+        # relief_method = relief.Relief(n_features=number_of_features_k)
+        # if problem_type == 'multiclass_classification':
+        #     relief_method = relief.ReliefF(n_features=number_of_features_k)
+        # if problem_type == 'regression':
+        #     relief_method = relief.RReliefF(n_features=number_of_features_k)
+        # relief_method.fit_transform(train_dataframe.values, target_column.values)
+        #
+        # # Calculate the Relief weight for each feature in the dataset
+        # features = train_dataframe.columns.tolist()
+        # feature_weights = relief_method.w_
+        #
+        # relief_correlations = pd.DataFrame({'feature': features, 'relief_weight': feature_weights})
+        #
+        # # Select the top features with the highest correlation
+        # sorted_correlations = relief_correlations.sort_values(by='relief_weight', ascending=False)
 
-        # Calculate the Relief weight for each feature in the dataset
+        # SECOND IMPLEMENTATION
+        relief = ReliefF(n_features_to_select=number_of_features_k, n_neighbors=train_dataframe.shape[1])
+        relief.fit_transform(train_dataframe.values, target_column.values)
+
         features = train_dataframe.columns.tolist()
-        feature_weights = relief_method.w_
-
-        relief_correlations = pd.DataFrame({'feature': features, 'relief_weight': feature_weights})
-
+        feature_importances = relief.feature_importances_
+        relief_correlations = pd.DataFrame({'feature': features, 'relief_weight': feature_importances})
         # Select the top features with the highest correlation
         sorted_correlations = relief_correlations.sort_values(by='relief_weight', ascending=False)
 

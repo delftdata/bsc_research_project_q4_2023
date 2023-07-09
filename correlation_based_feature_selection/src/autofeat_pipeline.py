@@ -128,17 +128,19 @@ class MLPipeline:
             number_columns = self.dataframe.shape[1] - 1
             self.features_to_select_k = [5]
             self.features_to_select_k += list(range(10, number_columns, 10))
-            # self.features_to_select_k += [number_columns]
+            self.features_to_select_k += [number_columns]
         elif features_to_select == 'medium':
             number_columns = self.dataframe.shape[1] - 1
             self.features_to_select_k = [5, 10, 25]
             self.features_to_select_k += list(range(50, number_columns, 50))
-            # self.features_to_select_k += [number_columns]
+            self.features_to_select_k += [number_columns]
         elif features_to_select == 'large':
             number_columns = self.dataframe.shape[1] - 1
             self.features_to_select_k = [5, 10, 25, 50, 100, 250, 500]
             self.features_to_select_k += list(range(1000, number_columns, 1000))
-            # self.features_to_select_k += [number_columns]
+            if self.dataset_name == 'InternetAds':
+                self.features_to_select_k += [1500]
+            self.features_to_select_k += [number_columns]
 
     def run_model_no_feature_selection(self, algorithm, model_name, train_dataframe, test_dataframe):
         train_dataframe = TabularDataset(train_dataframe)
@@ -155,12 +157,12 @@ class MLPipeline:
         hyperparameters = training_results['model_info'][model_name]['hyperparameters']
 
         # Get the performance and the feature importance given by the baseline model
-        importance = fitted_predictor.feature_importance(data=test_dataframe, feature_stage='original')
+        # importance = fitted_predictor.feature_importance(data=test_dataframe, feature_stage='original')
         baseline_performance = fitted_predictor.evaluate(test_dataframe)[self.evaluation_metric]
         baseline_performance = abs(baseline_performance)
 
-        print("Feature importance: ")
-        print(importance)
+        # print("Feature importance: ")
+        # print(importance)
 
         return hyperparameters, baseline_performance, baseline_duration
 
@@ -292,11 +294,11 @@ class MLPipeline:
                       subset_length, current_subset, current_correlations,
                       current_performance, current_duration, baseline_performance, baseline_duration):
         # Create the directory if it doesn't exist
-        directory = "./autofeat_results"
+        directory = "./autofeat_results2"
         os.makedirs(directory, exist_ok=True)
 
         # Write the results to a txt file
-        file_path = f"./autofeat_results/{dataset_name}_{algorithm_name}_" \
+        file_path = f"./autofeat_results2/{dataset_name}_{algorithm_name}_" \
                     f"{correlation_method}.txt"
         file = open(file_path, "a")
 
@@ -314,7 +316,7 @@ class MLPipeline:
         file.close()
 
         # Write all results to a csv file
-        csv_file_path = f"./autofeat_results/all_results.csv"
+        csv_file_path = f"./autofeat_results2/all_results.csv"
         csv_file_exists = os.path.exists(csv_file_path)
 
         with open(csv_file_path, "a", newline='') as csv_file_path:

@@ -294,11 +294,11 @@ class MLPipeline:
                       subset_length, current_subset, current_correlations,
                       current_performance, current_duration, baseline_performance, baseline_duration):
         # Create the directory if it doesn't exist
-        directory = "./autofeat_results2"
+        directory = "./autofeat_results_GOOD"
         os.makedirs(directory, exist_ok=True)
 
         # Write the results to a txt file
-        file_path = f"./autofeat_results2/{dataset_name}_{algorithm_name}_" \
+        file_path = f"./autofeat_results_GOOD/{dataset_name}_{algorithm_name}_" \
                     f"{correlation_method}.txt"
         file = open(file_path, "a")
 
@@ -316,7 +316,7 @@ class MLPipeline:
         file.close()
 
         # Write all results to a csv file
-        csv_file_path = f"./autofeat_results2/all_results.csv"
+        csv_file_path = f"./autofeat_results_GOOD/all_results.csv"
         csv_file_exists = os.path.exists(csv_file_path)
 
         with open(csv_file_path, "a", newline='') as csv_file_path:

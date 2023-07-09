@@ -7,7 +7,7 @@ import numpy as np
 from skrebate import ReliefF
 from ITMO_FS.filters.univariate import reliefF_measure
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics.pairwise import pairwise_distances, euclidean_distances
+from sklearn.metrics.pairwise import euclidean_distances
 
 
 class ReliefFeatureSelection:
@@ -123,7 +123,6 @@ class ReliefFeatureSelection:
         weights = M - H
 
         return weights / m
-
 
     @staticmethod
     def feature_selection(train_dataframe, target_feature, number_of_features_k,

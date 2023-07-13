@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import os
 import time
 import csv
@@ -181,7 +180,7 @@ class MLPipeline:
             enable_text_special_features=False,
             enable_text_ngram_features=False) \
             .fit_transform(self.dataframe)
-        self.auxiliary_dataframe = PreML.imputation_most_common_value(self.auxiliary_dataframe)
+        self.auxiliary_dataframe = PreML.imputation_mean_value(self.auxiliary_dataframe)
 
         # Split the data into train and test
         x_train, x_test, y_train, y_test = \
@@ -294,11 +293,11 @@ class MLPipeline:
                       subset_length, current_subset, current_correlations,
                       current_performance, current_duration, baseline_performance, baseline_duration):
         # Create the directory if it doesn't exist
-        directory = "./autofeat_results_most_c"
+        directory = "./autofeat_results"
         os.makedirs(directory, exist_ok=True)
 
         # Write the results to a txt file
-        file_path = f"./autofeat_results_most_c/{dataset_name}_{algorithm_name}_" \
+        file_path = f"./autofeat_results/{dataset_name}_{algorithm_name}_" \
                     f"{correlation_method}.txt"
         file = open(file_path, "a")
 
@@ -316,7 +315,7 @@ class MLPipeline:
         file.close()
 
         # Write all results to a csv file
-        csv_file_path = f"./autofeat_results_most_c/all_results.csv"
+        csv_file_path = f"./autofeat_results/all_results.csv"
         csv_file_exists = os.path.exists(csv_file_path)
 
         with open(csv_file_path, "a", newline='') as csv_file_path:

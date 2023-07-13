@@ -248,7 +248,7 @@ def evaluate_qsar_tid_dataset():
 
 if __name__ == '__main__':
     # Binary classification
-    # evaluate_breast_cancer_dataset()
+    evaluate_breast_cancer_dataset()
     # evaluate_internet_advertisements_dataset()
     # evaluate_gisette_dataset()
     # evaluate_spam_email_dataset()

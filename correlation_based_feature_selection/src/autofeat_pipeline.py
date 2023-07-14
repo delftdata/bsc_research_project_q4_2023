@@ -180,7 +180,7 @@ class MLPipeline:
             enable_text_special_features=False,
             enable_text_ngram_features=False) \
             .fit_transform(self.dataframe)
-        self.auxiliary_dataframe = PreML.imputation_mean_value(self.auxiliary_dataframe)
+        self.auxiliary_dataframe = PreML.imputation_most_common_value(self.auxiliary_dataframe)
 
         # Split the data into train and test
         x_train, x_test, y_train, y_test = \

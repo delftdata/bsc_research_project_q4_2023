@@ -3,14 +3,14 @@
 
 ### Introduction
 * The Research paper focuses on the analysis of four correlation-based feature selection techniques:
-- Pearson
-- Spearman
-- Cramér's V
-- Symmetric Uncertainty
+   * Pearson
+   * Spearman
+   * Cramér's V
+   * Symmetric Uncertainty
 
 * Additionally, the AutoFeat paper introduces the analysis of other two correlation techniques:
-- Information Gain
-- Relief
+   * Information Gain
+   * Relief
 
 ### Installation
 Prior to installing the project, ensure that you have

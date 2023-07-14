@@ -19,7 +19,6 @@ def getCategoricalColumns(df):
     df = df.astype(df.infer_objects().dtypes)
     return df.select_dtypes(include=['object']).columns
 
-
 def normalizeColumns(df, target_column):
     normalizer = preprocessing.Normalizer()
     train_columns = df.drop([target_column], axis=1).columns
@@ -29,13 +28,11 @@ def normalizeColumns(df, target_column):
 
     return df
 
-
 def scaleColumns(df, target_column):
     normalizer = preprocessing.MinMaxScaler()
     train_columns = df.drop([target_column], axis=1).columns
     df[train_columns] = normalizer.fit_transform(df[train_columns], df[target_column])
 
-    # print(df.head(1))
     return df
 
 
@@ -60,6 +57,7 @@ class OneHotEncoder:
 
         df = normalizeColumns(df, target_column)
         return df
+
 
 class KBinsDiscretizer:
     def __init__(self):

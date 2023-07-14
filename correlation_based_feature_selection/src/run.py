@@ -191,14 +191,6 @@ def evaluate_arrhythmia_dataset():
     dataset_evaluator.evaluate_all_models()
 
 
-# def evaluate_madelon_dataset():
-#     dataset_evaluator = MLPipeline(
-#         dataset_file='../autofeat_datasets/Madelon/madelon.csv', dataset_name='Madelon',
-#         target_label='Class', evaluation_metric='accuracy', features_to_select='medium')
-#
-#     dataset_evaluator.evaluate_all_models()
-
-
 def evaluate_internet_advertisements_dataset():
     dataset_evaluator = MLPipeline(
         dataset_file='../autofeat_datasets/InternetAdvertisements/internet_advertisements.csv',
@@ -255,7 +247,7 @@ def evaluate_qsar_tid_dataset():
 
 
 if __name__ == '__main__':
-    # Binary classification datasets
+    # AutoFeat - Binary classification datasets
     evaluate_breast_cancer_dataset()
     evaluate_internet_advertisements_dataset()
     evaluate_gisette_dataset()

@@ -1,20 +1,20 @@
-# RQ3: "Data-Driven Empirical Analysis of Correlation-Based Feature Selection Techniques"
-# "AutoFeat: Transitive Feature Discovery over Join Paths"
+# Codebase for "Data-Driven Empirical Analysis of Correlation-Based Feature Selection Techniques"
+# Codebase for "AutoFeat: Transitive Feature Discovery over Join Paths"
 
 ### Introduction
-* Our Research paper focuses on the analysis of four correlation-based feature selection methods:
+* The Research paper focuses on the analysis of four correlation-based feature selection techniques:
 - Pearson
 - Spearman
-- Cramer's V
+- Cramér's V
 - Symmetric Uncertainty
 
-* Additionally, AutoFeat introduces the analysis of two other correlation techniques:
+* Additionally, the AutoFeat paper introduces the analysis of other two correlation techniques:
 - Information Gain
-- Relief-based methods
+- Relief
 
 ### Installation
 Prior to installing the project, ensure that you have
-[Python 3.10](https://www.python.org/downloads/release/python-3100/) installed on your machine.
+[Python 3.10](https://www.python.org/downloads/release/python-3100/) installed on your device.
 
 To install the project, follow these steps:
 1. For **manual** installation, visit the GitHub repository and click on the **<> Code ▼** button,

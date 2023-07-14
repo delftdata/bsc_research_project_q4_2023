@@ -96,7 +96,7 @@ def combined_encoders_results(results):
 plt.style.use('ggplot')
 
 
-dataset_files = ['../../datasets/housing-prices/train.csv',
+dataset_files = ['../../datasets/housing-prices/housing_prices.csv',
     '../../datasets/BankMarketing/bank.csv',
     '../../datasets/CensusIncome/CensusIncome.csv',
     '../../datasets/Connect4/connect4.csv',

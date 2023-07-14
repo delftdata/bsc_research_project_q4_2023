@@ -24,20 +24,19 @@ class SpearmanFeatureSelection:
 
         Parameters
         ----------
-        feature (DataFrame column): Feature in the data set
-        target_feature (DataFrame column): Target feature of the data set
+        feature (DataFrame column): Feature in the dataset
+        target_feature (DataFrame column): Target feature of the dataset
 
         Returns
         -------
-        spearman (float): Correlation between the two features measured using
-                          Spearman method
+        spearman (float): Correlation between the two features measured using the Spearman method
         """
         spearman = spearmanr(feature, target_feature).statistic
 
         return spearman
 
     @staticmethod
-    def feature_selection(train_dataframe, target_feature, number_features):
+    def feature_selection(train_dataframe, target_feature):
         """
         Performs feature selection using the Spearman correlation-based method. Selects
         a specified number of top-performing features.
@@ -46,7 +45,6 @@ class SpearmanFeatureSelection:
         ----------
         train_dataframe (DataFrame): Training data containing the features
         target_feature (str): Name of the target feature column
-        number_features (int): Number of best-performing features to select
 
         Returns
         -------
@@ -62,7 +60,8 @@ class SpearmanFeatureSelection:
 
         # Select the top features with the highest absolute correlation
         sorted_correlations = pearson_correlations.abs().sort_values(ascending=False)
-        return sorted_correlations[:number_features].index.tolist()
+
+        return sorted_correlations.index.tolist(), sorted_correlations.values.tolist()
 
     @staticmethod
     def feature_selection_second_approach(train_dataframe, target_feature, threshold):

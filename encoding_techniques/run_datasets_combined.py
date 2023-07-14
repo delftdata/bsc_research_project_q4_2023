@@ -44,7 +44,7 @@ import time
 
 
 # #Housing Prices
-# file = '../datasets/housing-prices/train.csv'
+# file = '../datasets/housing-prices/housing_prices.csv'
 # dataset_name = 'HousingPrices'
 # df = pd.read_csv(file)
 # label = 'SalePrice'

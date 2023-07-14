@@ -6,7 +6,7 @@ import seaborn as sns
 
 plt.rc_context({"context": "paper"})
 
-def parse_results(directory="./results_runtime2/txt_files"):
+def parse_results(directory="./results_runtime/txt_files"):
     runtimes = []
     methods = []
     datasets = []
@@ -71,7 +71,7 @@ def parse_results(directory="./results_runtime2/txt_files"):
     return dataframe
 
 def plot_over_runtime():
-    dataframe = parse_results(directory="./results_runtime2/txt_files")
+    dataframe = parse_results(directory="./results_runtime/txt_files")
 
     sns.set(font_scale=2.6)
     sns.set_style("whitegrid", {"grid.color": "0.9", "grid.linestyle": "-", "grid.linewidth": "0.2"})
@@ -138,14 +138,14 @@ def plot_over_runtime():
     for handle in lgnd.legendHandles:
         handle._sizes = [250]
 
-    directory = "./results_runtime2"
+    directory = "./results_runtime"
     os.makedirs(directory, exist_ok=True)
-    plt.savefig(f'./results_runtime2/fs_runtime.pdf', dpi=1200,
+    plt.savefig(f'./results_runtime/fs_runtime.pdf', dpi=1200,
                 bbox_inches='tight')
     plt.clf()
 
 # def plot_over_runtime_large_datasets():
-#     dataframe = parse_results(directory="./results_runtime2/txt_files2")
+#     dataframe = parse_results(directory="./results_runtime/txt_files2")
 #
 #     sns.set_theme(style="whitegrid")
 #     sns.set_style("whitegrid")
@@ -176,7 +176,7 @@ def plot_over_runtime():
 #     plt.text(0.84, 0.99, '100% of rows', transform=ax.transAxes, fontsize=9,
 #              verticalalignment='top')
 #
-#     directory = "./results_runtime2"
+#     directory = "./results_runtime"
 #     os.makedirs(directory, exist_ok=True)
-#     plt.savefig(f'./results_runtime2/result_large_datasets.png')
+#     plt.savefig(f'./results_runtime/result_large_datasets.png')
 #     plt.clf()

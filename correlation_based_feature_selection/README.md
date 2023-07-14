@@ -1,11 +1,16 @@
 # RQ3: "Data-Driven Empirical Analysis of Correlation-Based Feature Selection Techniques"
+# "AutoFeat: Transitive Feature Discovery over Join Paths"
 
 ### Introduction
-* Our Research paper focuses on analysis four correlation-based feature selection methods:
+* Our Research paper focuses on the analysis of four correlation-based feature selection methods:
 - Pearson
 - Spearman
 - Cramer's V
 - Symmetric Uncertainty
+
+* Additionally, AutoFeat introduces the analysis of two other correlation techniques:
+- Information Gain
+- Relief-based methods
 
 ### Installation
 Prior to installing the project, ensure that you have
@@ -32,5 +37,8 @@ To install the project, follow these steps:
 
 ### Run
 
-To perform the experiments, choose the desired method in `src/run.py` and use the command from the `correlation_based_feature_selection` folder:
+To perform the experiments for the Research paper, choose the desired method in `src/run.py` and use the command from the `correlation_based_feature_selection` folder:
    > python -m src.run
+
+To perform the experiments for the AutoFeat paper, choose the desired method in `src/run_autofeat.py` and use the command from the `correlation_based_feature_selection` folder:
+   > python -m src.run_autofeat

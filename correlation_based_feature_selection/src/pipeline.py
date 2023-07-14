@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import csv
 import os
 import time
 import timeit
@@ -263,7 +262,7 @@ class MLPipeline:
                                          baseline_duration=baseline_duration)
 
     def evaluate_all_models(self):
-        # Print information about the database
+        # Print information about the dataset
         number_rows, number_columns = self.dataframe.shape
         print('Dataset: ' + self.dataset_name)
         print('Total columns: ' + str(number_columns - 1))
@@ -614,7 +613,7 @@ class MLPipeline:
         os.makedirs(directory, exist_ok=True)
         directory = "./results_tables_time/txt_files"
         os.makedirs(directory, exist_ok=True)
-        # directory = "./results_tables_new2/csv_files"
+        # directory = "./results_tables_accuracy/csv_files"
         # os.makedirs(directory, exist_ok=True)
 
         # Write the results to a txt file
@@ -636,7 +635,7 @@ class MLPipeline:
         file.close()
 
         # Write the results to a csv file
-        # file_path = f"./results_tables_new2/csv_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
+        # file_path = f"./results_tables_accuracy/csv_files/{dataset_name}_{dataset_type}_{algorithm_name}_" \
         #             f"{correlation_method}_{subset_length}.csv"
         #
         # with open(file_path, "w", newline='') as file:

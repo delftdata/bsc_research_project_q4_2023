@@ -1,0 +1,880 @@
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 1
+CURRENT FEATURE SUBSET: ['OverallQual', 'SalePrice']
+CURRENT PERFORMANCE: -48907.60854321327
+CURRENT RUNTIME: 0.48342204093933105
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 2
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'SalePrice']
+CURRENT PERFORMANCE: -42496.8536893068
+CURRENT RUNTIME: 1.6398630142211914
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 3
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'SalePrice']
+CURRENT PERFORMANCE: -39894.32007435893
+CURRENT RUNTIME: 1.503662347793579
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 4
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'SalePrice']
+CURRENT PERFORMANCE: -40146.138724288976
+CURRENT RUNTIME: 1.5858447551727295
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 5
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'SalePrice']
+CURRENT PERFORMANCE: -38217.8265157493
+CURRENT RUNTIME: 1.9006690979003906
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 6
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'SalePrice']
+CURRENT PERFORMANCE: -38283.256226876525
+CURRENT RUNTIME: 2.469878673553467
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 7
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'SalePrice']
+CURRENT PERFORMANCE: -37636.10020898807
+CURRENT RUNTIME: 3.1667253971099854
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 8
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'SalePrice']
+CURRENT PERFORMANCE: -36825.87171473705
+CURRENT RUNTIME: 1.9931156635284424
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 9
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', 'SalePrice']
+CURRENT PERFORMANCE: -36737.82752138045
+CURRENT RUNTIME: 1.9032652378082275
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 10
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'SalePrice']
+CURRENT PERFORMANCE: -36589.789482436114
+CURRENT RUNTIME: 8.63473629951477
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 11
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'SalePrice']
+CURRENT PERFORMANCE: -37225.20518283933
+CURRENT RUNTIME: 1.7600750923156738
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 12
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'SalePrice']
+CURRENT PERFORMANCE: -36804.84812303751
+CURRENT RUNTIME: 1.665034532546997
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 13
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'SalePrice']
+CURRENT PERFORMANCE: -35664.35184212161
+CURRENT RUNTIME: 2.411902904510498
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 14
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'SalePrice']
+CURRENT PERFORMANCE: -36050.431940006674
+CURRENT RUNTIME: 1.9577486515045166
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 15
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'SalePrice']
+CURRENT PERFORMANCE: -36023.25006770005
+CURRENT RUNTIME: 2.430865526199341
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 16
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'SalePrice']
+CURRENT PERFORMANCE: -35662.662480665924
+CURRENT RUNTIME: 2.3509440422058105
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 17
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'SalePrice']
+CURRENT PERFORMANCE: -35508.83650268652
+CURRENT RUNTIME: 2.319153070449829
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 18
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'SalePrice']
+CURRENT PERFORMANCE: -34964.08946645725
+CURRENT RUNTIME: 2.8716859817504883
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 19
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'SalePrice']
+CURRENT PERFORMANCE: -34925.84367753993
+CURRENT RUNTIME: 3.2855417728424072
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 20
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'SalePrice']
+CURRENT PERFORMANCE: -34806.3703510195
+CURRENT RUNTIME: 2.1733884811401367
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 21
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'SalePrice']
+CURRENT PERFORMANCE: -35213.52315098916
+CURRENT RUNTIME: 2.3739771842956543
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 22
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'SalePrice']
+CURRENT PERFORMANCE: -35489.22779148736
+CURRENT RUNTIME: 3.3837392330169678
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 23
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'SalePrice']
+CURRENT PERFORMANCE: -35976.48096153244
+CURRENT RUNTIME: 3.599508047103882
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 24
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'SalePrice']
+CURRENT PERFORMANCE: -35976.48096153244
+CURRENT RUNTIME: 2.0592620372772217
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 25
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'SalePrice']
+CURRENT PERFORMANCE: -36354.65048327584
+CURRENT RUNTIME: 2.014946937561035
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 26
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'SalePrice']
+CURRENT PERFORMANCE: -36142.38921637612
+CURRENT RUNTIME: 2.864323854446411
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 27
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SalePrice']
+CURRENT PERFORMANCE: -36142.38921637612
+CURRENT RUNTIME: 2.376950263977051
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 28
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'SalePrice']
+CURRENT PERFORMANCE: -36142.38921637612
+CURRENT RUNTIME: 4.005828380584717
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 29
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'SalePrice']
+CURRENT PERFORMANCE: -36338.00939051838
+CURRENT RUNTIME: 4.398391962051392
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 30
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'SalePrice']
+CURRENT PERFORMANCE: -33723.28648204778
+CURRENT RUNTIME: 8.53525185585022
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 31
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'SalePrice']
+CURRENT PERFORMANCE: -34128.80618443822
+CURRENT RUNTIME: 5.4714484214782715
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 32
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', 'SalePrice']
+CURRENT PERFORMANCE: -34100.271758999574
+CURRENT RUNTIME: 3.65444278717041
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 33
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'SalePrice']
+CURRENT PERFORMANCE: -33993.00695212349
+CURRENT RUNTIME: 11.272490739822388
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 34
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'SalePrice']
+CURRENT PERFORMANCE: -33921.15035294253
+CURRENT RUNTIME: 294.9645493030548
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 35
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'SalePrice']
+CURRENT PERFORMANCE: -34270.305703886756
+CURRENT RUNTIME: 770.2252833843231
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 36
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'SalePrice']
+CURRENT PERFORMANCE: -34260.45112934398
+CURRENT RUNTIME: 635.5971558094025
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 37
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'SalePrice']
+CURRENT PERFORMANCE: -34173.18166713615
+CURRENT RUNTIME: 820.9484107494354
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 38
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'SalePrice']
+CURRENT PERFORMANCE: -34234.78312276161
+CURRENT RUNTIME: 798.2384488582611
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 39
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'SalePrice']
+CURRENT PERFORMANCE: -34434.307499816096
+CURRENT RUNTIME: 798.0887079238892
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 40
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'SalePrice']
+CURRENT PERFORMANCE: -34593.80531920127
+CURRENT RUNTIME: 666.5368857383728
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 41
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'SalePrice']
+CURRENT PERFORMANCE: -34329.4753179529
+CURRENT RUNTIME: 822.8383948802948
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 42
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SalePrice']
+CURRENT PERFORMANCE: -34357.422529018746
+CURRENT RUNTIME: 754.9845926761627
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 43
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'SalePrice']
+CURRENT PERFORMANCE: -34357.422529018746
+CURRENT RUNTIME: 789.8539905548096
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 44
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'SalePrice']
+CURRENT PERFORMANCE: -33860.16041611467
+CURRENT RUNTIME: 438.49766182899475
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 45
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'SalePrice']
+CURRENT PERFORMANCE: -33578.70457753842
+CURRENT RUNTIME: 4.523416519165039
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 46
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'SalePrice']
+CURRENT PERFORMANCE: -33378.03311008618
+CURRENT RUNTIME: 7.328227758407593
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 47
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'SalePrice']
+CURRENT PERFORMANCE: -33378.03311008618
+CURRENT RUNTIME: 9.513734102249146
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 48
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'SalePrice']
+CURRENT PERFORMANCE: -32789.78489753304
+CURRENT RUNTIME: 3.8252112865448
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 49
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'SalePrice']
+CURRENT PERFORMANCE: -32789.78489753304
+CURRENT RUNTIME: 5.799859046936035
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 50
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'SalePrice']
+CURRENT PERFORMANCE: -32789.78489753304
+CURRENT RUNTIME: 16.496922254562378
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 51
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'SalePrice']
+CURRENT PERFORMANCE: -32789.78489753304
+CURRENT RUNTIME: 4.931177616119385
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 52
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'SalePrice']
+CURRENT PERFORMANCE: -32789.78489753304
+CURRENT RUNTIME: 18.194005489349365
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 53
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'SalePrice']
+CURRENT PERFORMANCE: -32762.96857595095
+CURRENT RUNTIME: 4.24024224281311
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 54
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'SalePrice']
+CURRENT PERFORMANCE: -32633.599886598582
+CURRENT RUNTIME: 12.838988304138184
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 55
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'SalePrice']
+CURRENT PERFORMANCE: -32633.599886598582
+CURRENT RUNTIME: 12.967700481414795
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 56
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'SalePrice']
+CURRENT PERFORMANCE: -32563.810851888004
+CURRENT RUNTIME: 13.778136491775513
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 57
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'SalePrice']
+CURRENT PERFORMANCE: -32836.31042996612
+CURRENT RUNTIME: 3.330531358718872
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 58
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'SalePrice']
+CURRENT PERFORMANCE: -32836.31042996612
+CURRENT RUNTIME: 8.997841119766235
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 59
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'SalePrice']
+CURRENT PERFORMANCE: -32836.31042996612
+CURRENT RUNTIME: 9.249240398406982
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 60
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', 'SalePrice']
+CURRENT PERFORMANCE: -32836.31042996612
+CURRENT RUNTIME: 4.807828664779663
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 61
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'SalePrice']
+CURRENT PERFORMANCE: -32836.31042996612
+CURRENT RUNTIME: 14.400186538696289
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 62
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'SalePrice']
+CURRENT PERFORMANCE: -32836.31042996612
+CURRENT RUNTIME: 5.975376844406128
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 63
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'SalePrice']
+CURRENT PERFORMANCE: -32836.31042996612
+CURRENT RUNTIME: 24.693600177764893
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 64
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'SalePrice']
+CURRENT PERFORMANCE: -32836.31042996612
+CURRENT RUNTIME: 14.253559589385986
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 65
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'SalePrice']
+CURRENT PERFORMANCE: -33137.71627173789
+CURRENT RUNTIME: 6.577158689498901
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 66
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'SalePrice']
+CURRENT PERFORMANCE: -33068.52952142462
+CURRENT RUNTIME: 3.3240034580230713
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 67
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'SalePrice']
+CURRENT PERFORMANCE: -33068.52952142462
+CURRENT RUNTIME: 7.7348761558532715
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 68
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'Exterior2nd', 'SalePrice']
+CURRENT PERFORMANCE: -33149.95533879278
+CURRENT RUNTIME: 2.8239827156066895
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 69
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'Exterior2nd', 'Exterior1st', 'SalePrice']
+CURRENT PERFORMANCE: -32869.41488836483
+CURRENT RUNTIME: 17.801025390625
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 70
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'Exterior2nd', 'Exterior1st', 'PoolArea', 'SalePrice']
+CURRENT PERFORMANCE: -32869.41488836483
+CURRENT RUNTIME: 11.155985116958618
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 71
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'Exterior2nd', 'Exterior1st', 'PoolArea', 'PoolQC', 'SalePrice']
+CURRENT PERFORMANCE: -32869.41488836483
+CURRENT RUNTIME: 7.234763145446777
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 72
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'Exterior2nd', 'Exterior1st', 'PoolArea', 'PoolQC', 'YrSold', 'SalePrice']
+CURRENT PERFORMANCE: -32692.32492209778
+CURRENT RUNTIME: 26.21516251564026
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 73
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'Exterior2nd', 'Exterior1st', 'PoolArea', 'PoolQC', 'YrSold', 'Street', 'SalePrice']
+CURRENT PERFORMANCE: -32692.32492209778
+CURRENT RUNTIME: 12.972426176071167
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 74
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'Exterior2nd', 'Exterior1st', 'PoolArea', 'PoolQC', 'YrSold', 'Street', 'BsmtFinSF2', 'SalePrice']
+CURRENT PERFORMANCE: -32702.382958618564
+CURRENT RUNTIME: 5.089752912521362
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 75
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'Exterior2nd', 'Exterior1st', 'PoolArea', 'PoolQC', 'YrSold', 'Street', 'BsmtFinSF2', 'Id', 'SalePrice']
+CURRENT PERFORMANCE: -32949.326608730276
+CURRENT RUNTIME: 8.497099876403809
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 76
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'Exterior2nd', 'Exterior1st', 'PoolArea', 'PoolQC', 'YrSold', 'Street', 'BsmtFinSF2', 'Id', 'Utilities', 'SalePrice']
+CURRENT PERFORMANCE: -32949.326608730276
+CURRENT RUNTIME: 41.75943994522095
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 77
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'Exterior2nd', 'Exterior1st', 'PoolArea', 'PoolQC', 'YrSold', 'Street', 'BsmtFinSF2', 'Id', 'Utilities', 'BsmtHalfBath', 'SalePrice']
+CURRENT PERFORMANCE: -32949.326608730276
+CURRENT RUNTIME: 6.460649728775024
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 78
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'Exterior2nd', 'Exterior1st', 'PoolArea', 'PoolQC', 'YrSold', 'Street', 'BsmtFinSF2', 'Id', 'Utilities', 'BsmtHalfBath', 'MSSubClass', 'SalePrice']
+CURRENT PERFORMANCE: -32984.01072564491
+CURRENT RUNTIME: 6.725088357925415
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 79
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'Exterior2nd', 'Exterior1st', 'PoolArea', 'PoolQC', 'YrSold', 'Street', 'BsmtFinSF2', 'Id', 'Utilities', 'BsmtHalfBath', 'MSSubClass', 'BsmtFinType1', 'SalePrice']
+CURRENT PERFORMANCE: -32818.055450151944
+CURRENT RUNTIME: 5.007406234741211
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+
+DATASET NAME: HousingPrices
+DATASET TYPE: 1
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: Spearman
+SUBSET OF FEATURES: 80
+CURRENT FEATURE SUBSET: ['OverallQual', 'GrLivArea', 'GarageCars', 'GarageArea', 'YearBuilt', 'FullBath', 'ExterQual', 'TotalBsmtSF', 'YearRemodAdd', '1stFlrSF', 'KitchenQual', 'TotRmsAbvGrd', 'Fireplaces', 'Foundation', 'BsmtQual', 'FireplaceQu', 'OpenPorchSF', 'HeatingQC', 'LotArea', 'GarageYrBlt', 'MasVnrArea', 'GarageFinish', 'WoodDeckSF', 'GarageCond', 'LotFrontage', 'HalfBath', 'GarageQual', 'SaleCondition', 'MSZoning', 'BsmtFinSF1', 'CentralAir', 'LotShape', '2ndFlrSF', 'PavedDrive', 'Electrical', 'HouseStyle', 'GarageType', 'BedroomAbvGr', 'BsmtFullBath', 'EnclosedPorch', 'Fence', 'BsmtExposure', 'SaleType', 'Condition1', 'BsmtUnfSF', 'KitchenAbvGr', 'Functional', 'Neighborhood', 'RoofStyle', 'BsmtCond', 'BsmtFinType2', 'BldgType', 'Alley', 'ExterCond', 'RoofMatl', 'OverallCond', 'ScreenPorch', 'Heating', 'LotConfig', 'MasVnrType', '3SsnPorch', 'MiscFeature', 'MiscVal', 'LowQualFinSF', 'MoSold', 'LandSlope', 'Condition2', 'Exterior2nd', 'Exterior1st', 'PoolArea', 'PoolQC', 'YrSold', 'Street', 'BsmtFinSF2', 'Id', 'Utilities', 'BsmtHalfBath', 'MSSubClass', 'BsmtFinType1', 'LandContour', 'SalePrice']
+CURRENT PERFORMANCE: -32818.055450151944
+CURRENT RUNTIME: 8.496131181716919
+BASELINE PERFORMANCE: -32817.29431394794
+BASELINE RUNTIME: 5.176964282989502
+

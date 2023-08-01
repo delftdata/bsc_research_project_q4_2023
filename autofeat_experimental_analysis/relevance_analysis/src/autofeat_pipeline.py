@@ -112,7 +112,7 @@ class MLPipeline:
             self.dataframe = dataframe
             self.auxiliary_dataframe = dataframe
 
-        # Specify the models to use: GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
+        # Specify the model to use (LightGBM)
         self.algorithms_model_names = {
             'GBM': 'LightGBM',
         }

@@ -55,7 +55,7 @@ class InML:
 
     @staticmethod
     def feature_selection_select_k_best_relief(dataset_name, train_dataframe, target_label, number_of_features_k):
-        # Establish the problem type
+        # Establish the problem type (binary classification)
         problem_type = 'binary_classification'
 
         start = time.time()

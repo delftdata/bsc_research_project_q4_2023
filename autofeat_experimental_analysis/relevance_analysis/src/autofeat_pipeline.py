@@ -57,8 +57,6 @@ class InML:
     def feature_selection_select_k_best_relief(dataset_name, train_dataframe, target_label, number_of_features_k):
         # Establish the problem type
         problem_type = 'binary_classification'
-        if dataset_name == 'HousingPrices' or dataset_name == 'TOPO-2-1' or dataset_name == 'QSAR-TID-11109':
-            problem_type = 'regression'
 
         start = time.time()
         relief_ranked_features, relief_correlations = \
@@ -97,22 +95,10 @@ class MLPipeline:
         self.target_label = target_label
         self.dataframe = None
         self.auxiliary_dataframe = None
-        if dataset_name != 'QSAR-TID-11109':
-            self.dataframe = pd.read_csv(dataset_file)
-            self.auxiliary_dataframe = pd.read_csv(dataset_file)
-        else:
-            qsar = fetch_openml("QSAR-TID-11109", as_frame=False)
-            data = qsar.data
-            target = qsar.target
-            feature_names = qsar.feature_names
-            target_name = qsar.target_names
-            dense_data = data.toarray()
-            dataframe = pd.DataFrame(dense_data, columns=feature_names)
-            dataframe[target_name[0]] = target
-            self.dataframe = dataframe
-            self.auxiliary_dataframe = dataframe
+        self.dataframe = pd.read_csv(dataset_file)
+        self.auxiliary_dataframe = pd.read_csv(dataset_file)
 
-        # Specify the model to use (LightGBM)
+        # Specify the model(s) to use (GBM - LightGBM)
         self.algorithms_model_names = {
             'GBM': 'LightGBM',
         }
@@ -194,7 +180,7 @@ class MLPipeline:
                 self.run_model_no_feature_selection(algorithm, algorithm_name,
                                                     current_train_dataframe, current_test_dataframe)
 
-            # LOOP: Go through each method
+            # LOOP: Go through each method (Pearson, Spearman, Symmetrical Uncertainty, Information Gain)
             correlation_methods = ['Pearson', 'Spearman', 'SU', 'IG']
             for ranked_features, correlation_values, correlation_method in \
                     zip([pearson_selected_features, spearman_selected_features,
@@ -243,6 +229,7 @@ class MLPipeline:
                                              baseline_performance=baseline_performance,
                                              baseline_duration=baseline_duration)
 
+            # Go through Relief method
             for subset_length in self.features_to_select_k:
                 relief_ranked_features, relief_correlations, relief_duration = \
                     InML.feature_selection_select_k_best_relief(dataset_name=self.dataset_name,

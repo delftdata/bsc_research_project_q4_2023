@@ -86,7 +86,7 @@ class Handle:
             # df = df.iloc[:1000]
             train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
             train_df.to_csv('data/CIFAR-10/data_train.csv', index=False)
-            test_df.to_csv('data/CIFAR-10/data.csv', index=False)
+            test_df.to_csv('data/CIFAR-10/breast_cancer.csv', index=False)
 
         elif data_set == DataSet.FONTS:
             map_to_read = "data/Fonts/"
@@ -98,7 +98,7 @@ class Handle:
             df = pd.concat(df)
             train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
             train_df.to_csv('data/Fonts/data_train.csv', index=False)
-            test_df.to_csv('data/Fonts/data.csv', index=False)
+            test_df.to_csv('data/Fonts/breast_cancer.csv', index=False)
 
         elif data_set == DataSet.BCWD:
             map_to_read = "data/BCWD/"
@@ -109,7 +109,7 @@ class Handle:
                     df.append(pd.read_csv(file_to_read))
             train_df, test_df = train_test_split(df, test_size=0.1, random_state=42)
             train_df.to_csv('data/BCWD/data_train.csv', index=False)
-            test_df.to_csv('data/BCWD/data.csv', index=False)
+            test_df.to_csv('data/BCWD/breast_cancer.csv', index=False)
 
 
 
@@ -123,7 +123,7 @@ class Handle:
         elif data_set == DataSet.FONTS:
             file_to_read += "/Fonts"
 
-        file_to_read += "/data.csv"
+        file_to_read += "/breast_cancer.csv"
         return file_to_read
 
 

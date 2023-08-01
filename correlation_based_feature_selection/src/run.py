@@ -25,7 +25,7 @@ from sklearn.datasets import fetch_openml
 
 # def evaluate_feature_selection_breast_cancer_dataset():
 #     dataset_evaluator = MLPipeline(
-#         dataset_file='../datasets/BreastCancer/data.csv', dataset_name='BreastCancer',
+#         dataset_file='../datasets/BreastCancer/breast_cancer.csv', dataset_name='BreastCancer',
 #         target_label='diagnosis', evaluation_metric='accuracy')
 #
 #     dataset_evaluator.evaluate_feature_selection_step()
@@ -78,7 +78,7 @@ from sklearn.datasets import fetch_openml
 
 # def evaluate_feature_selection_gisette_dataset():
 #     dataset_evaluator = MLPipeline(
-#         dataset_file='../datasets/Gisette/gisette_train.csv', dataset_name='Gisette',
+#         dataset_file='../datasets/Gisette/gisette.csv', dataset_name='Gisette',
 #         target_label='Class', evaluation_metric='accuracy')
 #
 #     dataset_evaluator.evaluate_support_vector_machine_model()
@@ -161,7 +161,7 @@ def evaluate_dataframe(dataframe):
 
 def evaluate_breast_cancer_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../autofeat_datasets/BreastCancer/data.csv', dataset_name='BreastCancer',
+        dataset_file='../autofeat_datasets/BreastCancer/breast_cancer.csv', dataset_name='BreastCancer',
         target_label='diagnosis', evaluation_metric='accuracy', features_to_select='small')
 
     dataset_evaluator.evaluate_all_models()
@@ -204,7 +204,7 @@ def evaluate_internet_advertisements_dataset():
 
 def evaluate_gisette_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../autofeat_datasets/Gisette/gisette_train.csv',
+        dataset_file='../autofeat_datasets/Gisette/gisette.csv',
         dataset_name='Gisette',
         target_label='Class',
         evaluation_metric='accuracy',

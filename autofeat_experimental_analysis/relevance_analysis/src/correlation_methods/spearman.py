@@ -62,32 +62,3 @@ class SpearmanFeatureSelection:
         sorted_correlations = pearson_correlations.abs().sort_values(ascending=False)
 
         return sorted_correlations.index.tolist(), sorted_correlations.values.tolist()
-
-    @staticmethod
-    def feature_selection_second_approach(train_dataframe, target_feature, threshold):
-        """
-        SELECT ABOVE C ALGORITHM: Performs feature selection using the Spearman correlation-based method. Selects
-        a number of features that have correlation with the target above a certain threshold.
-
-        Parameters
-        ----------
-        train_dataframe (DataFrame): Training data containing the features
-        target_feature (str): Name of the target feature column
-        threshold (float): Minimum value for the feature to be considered useful for predicting the target
-
-        Returns
-        -------
-        selected_features (list): List of selected features based on the Spearman correlation using "Select above c"
-        """
-        target_column = train_dataframe[target_feature]
-        train_dataframe = train_dataframe.drop(columns=[target_feature])
-
-        # Calculate the Spearman correlation between each feature and the target feature
-        spearman_correlations = train_dataframe \
-            .apply(func=lambda feature: SpearmanFeatureSelection.compute_correlation(feature, target_column),
-                   axis=0)
-
-        # Select the features with the absolute correlation above the threshold
-        filtered_features = [feature for feature, correlation in spearman_correlations.items()
-                             if correlation >= threshold]
-        return filtered_features

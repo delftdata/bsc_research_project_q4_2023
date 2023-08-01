@@ -1,4 +1,4 @@
-# Codebase for relevance analysis for paper "AutoFeat: Transitive Feature Discovery over Join Paths"
+# Relevance analysis for paper "AutoFeat: Transitive Feature Discovery over Join Paths"
 
 ### Introduction
 * The AutoFeat paper focuses on the analysis of five correlation-based feature selection techniques:
@@ -26,15 +26,12 @@ To install the project, follow these steps:
     > gh repo clone `delftdata/bsc_research_project_q4_2023`
 
 2. Once the project is installed, navigate to the source folder:
-    > cd .\correlation_based_feature_selection\
+    > cd .\autofeat_experimental_analysis\relevance_analysis\
 
 3. Install the project requirements by running:
     > pip install -r `requirements.txt`
 
 ### Run
 
-To perform the experiments for the Research paper, choose the desired method in `src/run.py` and use the command from the `correlation_based_feature_selection` folder:
-   > python -m src.run
-
-To perform the experiments for the AutoFeat paper, choose the desired method in `src/run_autofeat.py` and use the command from the `correlation_based_feature_selection` folder:
+To perform the experiments, choose the desired method in `src/run_autofeat.py` and use the command from the `correlation_based_feature_selection` folder:
    > python -m src.run_autofeat

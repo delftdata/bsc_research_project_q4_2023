@@ -1,11 +1,8 @@
 """
 Module for feature selection using Relief family of feature selection methods.
 """
-import sklearn_relief as relief
 import pandas as pd
 import numpy as np
-from skrebate import ReliefF
-from ITMO_FS.filters.univariate import reliefF_measure
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics.pairwise import euclidean_distances
 
@@ -144,38 +141,11 @@ class ReliefFeatureSelection:
         target_column = train_dataframe[target_feature]
         train_dataframe = train_dataframe.drop(columns=[target_feature])
 
-        # FIRST IMPLEMENTATION - https://gitlab.com/moongoal/sklearn-relief
-        # relief_method = relief.Relief(n_features=number_of_features_k)
-        # if problem_type == 'multiclass_classification':
-        #     relief_method = relief.ReliefF(n_features=number_of_features_k)
-        # if problem_type == 'regression':
-        #     relief_method = relief.RReliefF(n_features=number_of_features_k)
-        # relief_method.fit_transform(train_dataframe.values, target_column.values)
-        #
-        # # Calculate the Relief weight for each feature in the dataset
-        # features = train_dataframe.columns.tolist()
-        # feature_weights = relief_method.w_
-        #
-        # relief_correlations = pd.DataFrame({'feature': features, 'relief_weight': feature_weights})
-        #
-        # # Select the top features with the highest correlation
-        # sorted_correlations = relief_correlations.sort_values(by='relief_weight', ascending=False)
-
-        # SECOND IMPLEMENTATION - https://github.com/ctlab/ITMO_FS/tree/a2e61e2fabb9dfb34d90a1130fc7f5f162a2c921
+        # https://github.com/ctlab/ITMO_FS/tree/a2e61e2fabb9dfb34d90a1130fc7f5f162a2c921
         features = train_dataframe.columns.tolist()
         feature_scores = ReliefFeatureSelection.relief_measure(train_dataframe.values, target_column.values)
         relief_correlations = pd.DataFrame({'feature': features, 'relief_weight': feature_scores})
         # Select the top features with the highest correlation
         sorted_correlations = relief_correlations.sort_values(by='relief_weight', ascending=False)
-
-        # THIRD IMPLEMENTATION - https://github.com/EpistasisLab/scikit-rebate/tree/master
-        # relief = ReliefF(n_features_to_select=number_of_features_k, n_neighbors=train_dataframe.shape[1])
-        # relief.fit_transform(train_dataframe.values, target_column.values)
-        #
-        # features = train_dataframe.columns.tolist()
-        # feature_importances = relief.feature_importances_
-        # relief_correlations = pd.DataFrame({'feature': features, 'relief_weight': feature_importances})
-        # # Select the top features with the highest correlation
-        # sorted_correlations = relief_correlations.sort_values(by='relief_weight', ascending=False)
 
         return sorted_correlations['feature'].tolist(), sorted_correlations['relief_weight'].tolist()

@@ -25,10 +25,6 @@ class PreML:
     def imputation_most_common_value(dataframe):
         return dataframe.apply(lambda x: x.fillna(x.value_counts().index[0]))
 
-    @staticmethod
-    def imputation_mean_value(dataframe):
-        return dataframe.apply(lambda x: x.fillna(x.mean()))
-
 
 class InML:
     @staticmethod
@@ -119,9 +115,6 @@ class MLPipeline:
         # Specify the models to use: GBM (LightGBM), RF (RandomForest), LR (LinearModel), XGB (XGBoost)
         self.algorithms_model_names = {
             'GBM': 'LightGBM',
-            # 'RF': 'RandomForest',
-            # 'LR': 'LinearModel',
-            # 'XGB': 'XGBoost'
         }
         self.evaluation_metric = evaluation_metric
 
@@ -131,19 +124,16 @@ class MLPipeline:
             number_columns = self.dataframe.shape[1] - 1
             self.features_to_select_k = [5]
             self.features_to_select_k += list(range(10, number_columns, 10))
-            # self.features_to_select_k += [number_columns]
         elif features_to_select == 'medium':
             number_columns = self.dataframe.shape[1] - 1
             self.features_to_select_k = [5, 10, 25]
             self.features_to_select_k += list(range(50, number_columns, 50))
-            # self.features_to_select_k += [number_columns]
         elif features_to_select == 'large':
             number_columns = self.dataframe.shape[1] - 1
             self.features_to_select_k = [5, 10, 25, 50, 100, 250, 500]
             self.features_to_select_k += list(range(1000, number_columns, 1000))
             if self.dataset_name == 'InternetAds':
                 self.features_to_select_k += [1500]
-            # self.features_to_select_k += [number_columns]
 
     def run_model_no_feature_selection(self, algorithm, model_name, train_dataframe, test_dataframe):
         train_dataframe = TabularDataset(train_dataframe)

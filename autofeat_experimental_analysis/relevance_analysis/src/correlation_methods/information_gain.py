@@ -10,17 +10,16 @@ class InformationGainFeatureSelection:
 
     Methods
     -------
-    compute_correlation(feature, target_feature): Computes the value of the correlation
-    feature_selection(train_dataframe, target_feature): Ranks the features according to their relevance for predicting
-    the target
+    compute_correlation(feature, target_feature): Computes the value of the correlation using Information Gain
+    feature_selection(train_dataframe, target_feature): Ranks all the features according to their correlation with the
+    target
     """
     @staticmethod
     def compute_correlation(feature, target_feature):
         """
-        SELECT K BEST ALGORITHM: Calculates the correlation between the feature and target feature using the Information
-        Gain method. A value of 0 means that the features are independent, whereas a value
-        of 1 means that knowledge of the feature’s value strongly represents target’s value. Source
-        of the code is: https://github.com/jundongl/scikit-feature.
+        Calculates the correlation between the feature and target feature using the Information Gain method. A value of
+        0 means that the features are independent, whereas a value of 1 means that knowledge of the feature’s value
+        strongly represents target’s value. Source of the code is: https://github.com/jundongl/scikit-feature.
 
         Parameters
         ----------
@@ -36,8 +35,8 @@ class InformationGainFeatureSelection:
     @staticmethod
     def feature_selection(train_dataframe, target_feature):
         """
-        Performs feature selection using the Information Gain correlation-based method. Selects
-        a specified number of top-performing features.
+        Performs feature selection using the Information Gain method. Ranks all the features. After calling this method,
+        a specified number k of top-performing features can be selected.
 
         Parameters
         ----------
@@ -46,17 +45,17 @@ class InformationGainFeatureSelection:
 
         Returns
         -------
-        selected_features (list): List of selected features using Information Gain
+        selected_features (list): List of selected features using Information Gain method
         """
         target_column = train_dataframe[target_feature]
         train_dataframe = train_dataframe.drop(columns=[target_feature])
 
-        # Calculate the Symmetric Uncertainty correlation between each feature and the target feature
+        # Calculate the Information Gain value between each feature and the target feature
         ig_correlations = train_dataframe\
             .apply(func=lambda feature: InformationGainFeatureSelection.compute_correlation(feature, target_column),
                    axis=0)
 
-        # Select the top features with the highest correlation
+        # Rank the features in order of the Information Gain value
         sorted_correlations = ig_correlations.sort_values(ascending=False)
 
         return sorted_correlations.index.tolist(), sorted_correlations.values.tolist()

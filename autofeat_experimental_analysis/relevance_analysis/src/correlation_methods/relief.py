@@ -16,29 +16,23 @@ class ReliefFeatureSelection:
     feature_selection(train_dataframe, target_feature): Ranks the features according to their relevance for predicting
     the target
     """
-    def knn_from_class(distances, y, index, k, cl, anyOtherClass=False,
-                       anyClass=False):
-        """Return the indices of k nearest neighbors of X[index] from the selected
-        class.
+    def knn_from_class(distances, y, index, k, cl, anyOtherClass=False, anyClass=False):
+        """
+        Returns the indices of k nearest neighbors of X[index] from the selected class. Source of the code is:
+        https://github.com/ctlab/ITMO_FS/tree/a2e61e2fabb9dfb34d90a1130fc7f5f162a2c921.
 
         Parameters
         ----------
-        distances : array-like, shape (n_samples, n_samples)
-            The distance matrix of the input samples.
-        y : array-like, shape (n_samples,)
-            The classes for the samples.
-        index : int
-            The index of an element.
-        k : int
-            The amount of nearest neighbors to return.
-        cl : int
-            The class label for the nearest neighbors.
-        anyClass : bool
-            If True, returns neighbors not belonging to the same class as X[index].
+        distances (array-like with shape (n_samples, n_samples)): The distance matrix of the input samples
+        y (array-like with shape (n_samples,)): The classes for the samples
+        index (int): The index of an element
+        k (int): The amount of nearest neighbors to return
+        cl (int): The class label for the nearest neighbors
+        anyClass (bool): If True, returns neighbors not belonging to the same class as X[index]
 
         Returns
         -------
-        array-like, shape (k,) - the indices of the nearest neighbors
+        (array-like with shape (k,)): The indices of the nearest neighbors
         """
         y_c = np.copy(y)
         if anyOtherClass:
@@ -56,30 +50,21 @@ class ReliefFeatureSelection:
 
     @staticmethod
     def relief_measure(x, y, m=None, random_state=42):
-        """Calculate Relief measure for each feature. This measure is supposed to
-        work only with binary classification datasets; for multi-class problems use
-        the ReliefF measure. Bigger values mean more important features.
+        """
+        Calculates Relief measure for each feature. This measure is supposed to work only with binary classification
+        datasets; for multi-class problems use the ReliefF measure. Bigger values mean more important features. Source
+        of the code is: https://github.com/ctlab/ITMO_FS/tree/a2e61e2fabb9dfb34d90a1130fc7f5f162a2c921.
 
         Parameters
         ----------
-        x : array-like, shape (n_samples, n_features)
-            The input samples.
-        y : array-like, shape (n_samples,)
-            The classes for the samples.
-        m : int, optional
-            Amount of iterations to do. If not specified, n_samples iterations
-            would be performed.
-        random_state : int, optional
-            Random state for numpy random.
+        x (array-like with shape (n_samples, n_features)): The input samples
+        y (array-like with shape (n_samples,)): The classes for the samples
+        m (int, optional): Amount of iterations to do. If not specified, n_samples iterations would be performed
+        random_state (int, optional): Random state for numpy random
 
         Returns
         -------
-        array-like, shape (n_features,) : feature scores
-
-        See Also
-        --------
-        R.J. Urbanowicz et al. Relief-based feature selection: Introduction and
-        review. Journal of Biomedical Informatics 85 (2018) 189–203
+        (array-like with shape (n_features,)): Feature scores
         """
         weights = np.zeros(x.shape[1])
         classes, counts = np.unique(y, return_counts=True)
@@ -122,12 +107,14 @@ class ReliefFeatureSelection:
         return weights / m
 
     @staticmethod
-    def feature_selection(train_dataframe, target_feature, number_of_features_k,
-                          problem_type='binary_classification'):
+    def feature_selection(train_dataframe, target_feature, number_of_features_k):
         """
-        Performs feature selection using the Relief family of feature selection methods. The choice of method
-        depends on the problem type: binary classification - original Relief method, multiclass classification - ReliefF
-        method and regression - RReliefF method. Selects a specified number of top-performing features.
+        Performs feature selection using the Relief family of feature selection methods. Ranks all the features.
+        Selects the top-performing k features.
+
+        The choice of method depends on the problem type: binary classification - original Relief method, multiclass
+        classification - ReliefF method and regression - RReliefF method. This method currently supports only binary
+        classification datasets.
 
         Parameters
         ----------
@@ -136,16 +123,17 @@ class ReliefFeatureSelection:
 
         Returns
         -------
-        selected_features (list): List of selected features using Relief/ReliefF/RReliefF
+        selected_features (list): List of selected features using Relief
         """
         target_column = train_dataframe[target_feature]
         train_dataframe = train_dataframe.drop(columns=[target_feature])
 
-        # https://github.com/ctlab/ITMO_FS/tree/a2e61e2fabb9dfb34d90a1130fc7f5f162a2c921
+        # Calculate the Relief value between each feature and the target feature
         features = train_dataframe.columns.tolist()
         feature_scores = ReliefFeatureSelection.relief_measure(train_dataframe.values, target_column.values)
         relief_correlations = pd.DataFrame({'feature': features, 'relief_weight': feature_scores})
-        # Select the top features with the highest correlation
+
+        # Rank the features in order of the value returned by Relief
         sorted_correlations = relief_correlations.sort_values(by='relief_weight', ascending=False)
 
         return sorted_correlations['feature'].tolist(), sorted_correlations['relief_weight'].tolist()

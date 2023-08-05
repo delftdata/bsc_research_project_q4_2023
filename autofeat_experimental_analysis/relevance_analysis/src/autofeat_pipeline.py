@@ -12,7 +12,6 @@ from .correlation_methods.su import SymmetricUncertaintyFeatureSelection
 from .correlation_methods.information_gain import InformationGainFeatureSelection
 from .correlation_methods.relief import ReliefFeatureSelection
 from warnings import filterwarnings
-from sklearn.datasets import fetch_openml
 
 
 filterwarnings("ignore", category=UserWarning)
@@ -23,27 +22,32 @@ filterwarnings("ignore", category=FutureWarning)
 class PreML:
     @staticmethod
     def imputation_most_common_value(dataframe):
+        # Fill in missing value with the most common value in that feature/column
         return dataframe.apply(lambda x: x.fillna(x.value_counts().index[0]))
 
 
 class InML:
     @staticmethod
     def feature_selection_select_k_best(train_dataframe, target_label):
+        # Compute the ranked list of features with Pearson and compute the feature selection time
         start = time.time()
         pearson_ranked_features, pearson_correlations = \
             PearsonFeatureSelection.feature_selection(train_dataframe, target_label)
         pearson_duration = time.time() - start
 
+        # Compute the ranked list of features with Spearman and compute the feature selection time
         start = time.time()
         spearman_ranked_features, spearman_correlations = \
             SpearmanFeatureSelection.feature_selection(train_dataframe, target_label)
         spearman_duration = time.time() - start
 
+        # Compute the ranked list of features with Symmetrical Uncertainty and compute the feature selection time
         start = time.time()
         su_ranked_features, su_correlations = \
             SymmetricUncertaintyFeatureSelection.feature_selection(train_dataframe, target_label)
         su_duration = time.time() - start
 
+        # Compute the ranked list of features with Information Gain and compute the feature selection time
         start = time.time()
         ig_ranked_features, ig_correlations = \
             InformationGainFeatureSelection.feature_selection(train_dataframe, target_label)
@@ -54,13 +58,11 @@ class InML:
             pearson_duration, spearman_duration, su_duration, ig_duration
 
     @staticmethod
-    def feature_selection_select_k_best_relief(dataset_name, train_dataframe, target_label, number_of_features_k):
-        # Establish the problem type (binary classification)
-        problem_type = 'binary_classification'
-
+    def feature_selection_select_k_best_relief(train_dataframe, target_label, number_of_features_k):
+        # Compute the ranked list of features with Relief and compute the feature selection time
         start = time.time()
         relief_ranked_features, relief_correlations = \
-            ReliefFeatureSelection.feature_selection(train_dataframe, target_label, number_of_features_k, problem_type)
+            ReliefFeatureSelection.feature_selection(train_dataframe, target_label, number_of_features_k)
         relief_duration = time.time() - start
 
         return relief_ranked_features, relief_correlations, relief_duration
@@ -187,7 +189,7 @@ class MLPipeline:
                          su_correlations, ig_correlations],
                         correlation_methods):
                 # LOOP: Go to all possible values of k (i.e. number of selected features)
-                # k depends on whether the dataset is small, medium or large
+                # The number of selected features k depends on whether the dataset is small, medium or large
                 for subset_length in self.features_to_select_k:
                     # Get the current feature subset
                     current_subset = ranked_features[:subset_length]
@@ -230,8 +232,7 @@ class MLPipeline:
             # Go through Relief method
             for subset_length in self.features_to_select_k:
                 relief_ranked_features, relief_correlations, relief_duration = \
-                    InML.feature_selection_select_k_best_relief(dataset_name=self.dataset_name,
-                                                                train_dataframe=current_train_dataframe,
+                    InML.feature_selection_select_k_best_relief(train_dataframe=current_train_dataframe,
                                                                 target_label=self.target_label,
                                                                 number_of_features_k=subset_length)
 

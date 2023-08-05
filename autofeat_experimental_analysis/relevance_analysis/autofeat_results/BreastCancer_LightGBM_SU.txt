@@ -1,0 +1,44 @@
+DATASET NAME: BreastCancer
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: SU
+SUBSET OF FEATURES: 5
+CURRENT FEATURE SUBSET: ['id', 'smoothness_se', 'radius_se', 'concavity_mean', 'concave points_mean', 'diagnosis']
+CURRENT FEATURE SUBSET CORRELATIONS: [('id', 0.19460493691309222), ('smoothness_se', 0.19449278742009846), ('radius_se', 0.19446782597919807), ('concavity_mean', 0.1944678259791977), ('concave points_mean', 0.19400098070391159)]
+CURRENT PERFORMANCE: 0.9298245614035088
+CURRENT RUNTIME: 1.2365827560424805
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 2.2097365856170654
+
+DATASET NAME: BreastCancer
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: SU
+SUBSET OF FEATURES: 10
+CURRENT FEATURE SUBSET: ['id', 'smoothness_se', 'radius_se', 'concavity_mean', 'concave points_mean', 'perimeter_mean', 'area_mean', 'concavity_worst', 'concave points_worst', 'area_worst', 'diagnosis']
+CURRENT FEATURE SUBSET CORRELATIONS: [('id', 0.19460493691309222), ('smoothness_se', 0.19449278742009846), ('radius_se', 0.19446782597919807), ('concavity_mean', 0.1944678259791977), ('concave points_mean', 0.19400098070391159), ('perimeter_mean', 0.19377506925898694), ('area_mean', 0.19312553594895834), ('concavity_worst', 0.19303782778049608), ('concave points_worst', 0.19272807658863111), ('area_worst', 0.19248034255800625)]
+CURRENT PERFORMANCE: 0.9473684210526315
+CURRENT RUNTIME: 1.2537810802459717
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 2.2097365856170654
+
+DATASET NAME: BreastCancer
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: SU
+SUBSET OF FEATURES: 20
+CURRENT FEATURE SUBSET: ['id', 'smoothness_se', 'radius_se', 'concavity_mean', 'concave points_mean', 'perimeter_mean', 'area_mean', 'concavity_worst', 'concave points_worst', 'area_worst', 'perimeter_se', 'radius_worst', 'concavity_se', 'area_se', 'compactness_worst', 'compactness_se', 'perimeter_worst', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'diagnosis']
+CURRENT FEATURE SUBSET CORRELATIONS: [('id', 0.19460493691309222), ('smoothness_se', 0.19449278742009846), ('radius_se', 0.19446782597919807), ('concavity_mean', 0.1944678259791977), ('concave points_mean', 0.19400098070391159), ('perimeter_mean', 0.19377506925898694), ('area_mean', 0.19312553594895834), ('concavity_worst', 0.19303782778049608), ('concave points_worst', 0.19272807658863111), ('area_worst', 0.19248034255800625), ('perimeter_se', 0.1924803425580059), ('radius_worst', 0.19183737165912984), ('concavity_se', 0.19080012757466144), ('area_se', 0.19064501283353205), ('compactness_worst', 0.19048915352071444), ('compactness_se', 0.19035967823450722), ('perimeter_worst', 0.18973519904493033), ('fractal_dimension_se', 0.1891145421705868), ('compactness_mean', 0.1890083470721036), ('fractal_dimension_worst', 0.1857395718639937)]
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 1.2320218086242676
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 2.2097365856170654
+
+DATASET NAME: BreastCancer
+ALGORITHM NAME: LightGBM
+CORRELATION METHOD: SU
+SUBSET OF FEATURES: 30
+CURRENT FEATURE SUBSET: ['id', 'smoothness_se', 'radius_se', 'concavity_mean', 'concave points_mean', 'perimeter_mean', 'area_mean', 'concavity_worst', 'concave points_worst', 'area_worst', 'perimeter_se', 'radius_worst', 'concavity_se', 'area_se', 'compactness_worst', 'compactness_se', 'perimeter_worst', 'fractal_dimension_se', 'compactness_mean', 'fractal_dimension_worst', 'radius_mean', 'symmetry_worst', 'texture_worst', 'texture_se', 'concave points_se', 'fractal_dimension_mean', 'texture_mean', 'symmetry_se', 'smoothness_mean', 'smoothness_worst', 'diagnosis']
+CURRENT FEATURE SUBSET CORRELATIONS: [('id', 0.19460493691309222), ('smoothness_se', 0.19449278742009846), ('radius_se', 0.19446782597919807), ('concavity_mean', 0.1944678259791977), ('concave points_mean', 0.19400098070391159), ('perimeter_mean', 0.19377506925898694), ('area_mean', 0.19312553594895834), ('concavity_worst', 0.19303782778049608), ('concave points_worst', 0.19272807658863111), ('area_worst', 0.19248034255800625), ('perimeter_se', 0.1924803425580059), ('radius_worst', 0.19183737165912984), ('concavity_se', 0.19080012757466144), ('area_se', 0.19064501283353205), ('compactness_worst', 0.19048915352071444), ('compactness_se', 0.19035967823450722), ('perimeter_worst', 0.18973519904493033), ('fractal_dimension_se', 0.1891145421705868), ('compactness_mean', 0.1890083470721036), ('fractal_dimension_worst', 0.1857395718639937), ('radius_mean', 0.18505241055466257), ('symmetry_worst', 0.18436075709254024), ('texture_worst', 0.1817432352628161), ('texture_se', 0.1802987055124972), ('concave points_se', 0.18014122014712997), ('fractal_dimension_mean', 0.17974395901650883), ('texture_mean', 0.1780781399749552), ('symmetry_se', 0.17676920997130185), ('smoothness_mean', 0.1725829806183996), ('smoothness_worst', 0.164728931373897)]
+CURRENT PERFORMANCE: 0.9649122807017544
+CURRENT RUNTIME: 1.1275157928466797
+BASELINE PERFORMANCE: 0.9649122807017544
+BASELINE RUNTIME: 2.2097365856170654
+

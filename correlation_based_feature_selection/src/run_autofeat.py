@@ -3,7 +3,7 @@ from .autofeat_pipeline import MLPipeline
 
 def evaluate_breast_cancer_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../autofeat_datasets/binary_classification/BreastCancer/data.csv', dataset_name='BreastCancer',
+        dataset_file='../autofeat_datasets/binary_classification/BreastCancer/breast_cancer.csv', dataset_name='BreastCancer',
         target_label='diagnosis', evaluation_metric='accuracy', features_to_select='small')
 
     dataset_evaluator.evaluate_all_models()
@@ -46,7 +46,7 @@ def evaluate_internet_advertisements_dataset():
 
 def evaluate_gisette_dataset():
     dataset_evaluator = MLPipeline(
-        dataset_file='../autofeat_datasets/binary_classification/Gisette/gisette_train.csv',
+        dataset_file='../autofeat_datasets/binary_classification/Gisette/gisette.csv',
         dataset_name='Gisette',
         target_label='Class',
         evaluation_metric='accuracy',

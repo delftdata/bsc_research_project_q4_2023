@@ -6,7 +6,7 @@ from scipy.stats import pearsonr
 
 class PearsonFeatureSelection:
     """
-    Class to perform feature selection using the Pearson method.
+    Class to perform feature selection using the correlation-based Pearson method.
 
     Methods
     -------

@@ -89,7 +89,7 @@ The main sources for finding datasets were [OpenML](https://www.openml.org/), [K
 
 ## Plots
 
-In order to recreate the relevance plot that was included in the AutoFeat paper, one can take the following steps:
+In order to recreate the relevance plot that was included in the AutoFeat paper, you can take the following steps:
 1. Assuming you have already followed the steps in [Installation section](#installation) and are in the
 `relevance_analysis` folder, navigate to the `src` folder inside.
 2. Navigate to the `autofeat_plots` folder.

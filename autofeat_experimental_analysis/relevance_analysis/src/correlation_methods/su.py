@@ -7,7 +7,7 @@ from .utility.mutual_information import calculate_information_gain
 
 class SymmetricUncertaintyFeatureSelection:
     """
-    Class to perform feature selection using the Symmetrical Uncertainty method.
+    Class to perform feature selection using the information-theory based Symmetrical Uncertainty method.
 
     Methods
     -------

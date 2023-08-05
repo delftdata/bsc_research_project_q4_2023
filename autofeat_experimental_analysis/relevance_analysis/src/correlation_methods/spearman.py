@@ -6,7 +6,7 @@ from scipy.stats import spearmanr
 
 class SpearmanFeatureSelection:
     """
-    Class to perform feature selection using the Spearman method.
+    Class to perform feature selection using the correlation-based Spearman method.
 
     Methods
     -------

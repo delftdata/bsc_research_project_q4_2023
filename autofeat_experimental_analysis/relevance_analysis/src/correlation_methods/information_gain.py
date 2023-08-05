@@ -6,7 +6,7 @@ from .utility.mutual_information import calculate_information_gain
 
 class InformationGainFeatureSelection:
     """
-    Class to perform feature selection using the Information Gain method.
+    Class to perform feature selection using the information-theory based Information Gain method.
 
     Methods
     -------

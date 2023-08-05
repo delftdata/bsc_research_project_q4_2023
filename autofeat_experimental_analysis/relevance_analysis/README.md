@@ -11,7 +11,7 @@
 
 * We implemented the **Select κ best** heuristic approach for feature selection [3]. **Select κ best** sorts the 
 features based on their correlation score with the target feature, then selects the top-κ performers. We used existing 
-implementations of the 5 correlation metrics from different reputable sources:
+implementations of the correlation metrics from different reputable sources:
  
 | Method                  | Implementation source                                                                     |
 |-------------------------|-------------------------------------------------------------------------------------------|
@@ -78,7 +78,7 @@ in the AutoFeat paper.
 The main sources for finding datasets were [OpenML](https://www.openml.org/), [Kaggle](https://www.kaggle.com/) and
 [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/).
 
-| Task                  | Size            | Name                    | Source                                                                                                         | #Instances | #Features (excl. target) | #Features to consider for FS                         |
+| Task                  | Size            | Dataset name            | Source                                                                                                         | #Instances | #Features (excl. target) | Considered values for κ                              |
 |-----------------------|-----------------|-------------------------|----------------------------------------------------------------------------------------------------------------|------------|--------------------------|------------------------------------------------------|
 | Binary classification | Small (< 100)   | Breast Cancer           | [Link](https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data)                                     | 569        | 31                       | 5, 10, 20, 30                                        |
 | Binary classification | Small (< 100)   | SPAM E-mail             | [Link](https://www.openml.org/search?type=data&status=active&id=44)                                            | 4601       | 57                       | 5, 10, 20, 30, 40, 50                                |
@@ -89,7 +89,7 @@ The main sources for finding datasets were [OpenML](https://www.openml.org/), [K
 
 ## Plots
 
-In order to recreate the relevance plot that was included in the AutoFeat paper, you can take the following steps:
+In order to recreate the relevance plot that was included in the AutoFeat paper, one can take the following steps:
 1. Assuming you have already followed the steps in [Installation section](#installation) and are in the
 `relevance_analysis` folder, navigate to the `src` folder inside.
 2. Navigate to the `autofeat_plots` folder.

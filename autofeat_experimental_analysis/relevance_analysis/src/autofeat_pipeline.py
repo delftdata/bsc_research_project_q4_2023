@@ -89,7 +89,7 @@ class PostML:
 
 
 class MLPipeline:
-    def __init__(self, dataset_file, dataset_name, target_label, evaluation_metric, features_to_select='small'):
+    def __init__(self, dataset_file, dataset_name, target_label, evaluation_metric, features_to_select):
         self.dataset_file = dataset_file
         self.dataset_name = dataset_name
         self.target_label = target_label
@@ -97,13 +97,11 @@ class MLPipeline:
         self.auxiliary_dataframe = None
         self.dataframe = pd.read_csv(dataset_file)
         self.auxiliary_dataframe = pd.read_csv(dataset_file)
-
         # Specify the model(s) to use (GBM - LightGBM)
         self.algorithms_model_names = {
             'GBM': 'LightGBM',
         }
         self.evaluation_metric = evaluation_metric
-
         # The number of features that will be selected during feature selection (excl. target)
         self.features_to_select_k = []
         if features_to_select == 'small':

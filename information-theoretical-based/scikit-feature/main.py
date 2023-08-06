@@ -641,22 +641,94 @@ def arfToCSV(file):
     train.to_csv(f'{file}.csv', index=False)
 
 
+def evaluate_group_lasso():
+    from group_lasso import GroupLasso
+    import time
+    from itertools import compress
+
+    df = pd.read_csv(datasets[0]['path'])
+    df = TabularDataset(df)
+    df = pd.DataFrame(AutoMLPipelineFeatureGenerator(enable_text_special_features=False,
+                                                     enable_text_ngram_features=False).fit_transform(X=df))
+    df = pd.DataFrame(df).apply(pd.to_numeric).fillna(0)
+
+    time_before = time.time()
+    for groups in [1, 10, 50, 100, 169]:
+        N = len(df.columns) - 1
+        K = groups
+        array = []
+
+        for i in range(K):
+            array.extend([i + 1] * (N // K))
+        array.extend([K + 1] * (N % K))
+        # groups = np.concatenate(
+        #     [size * [i] for i, size in enumerate(group_sizes)]
+        # ).reshape(-1, 1)
+
+        array = np.array(array).reshape(-1, 1)
+        gl = GroupLasso(
+            groups=array,
+            group_reg=5,
+            l1_reg=0,
+            frobenius_lipschitz=True,
+            scale_reg="inverse_group_size",
+            subsampling_scheme=1,
+            supress_warning=True,
+            n_iter=1000,
+            tol=1e-3,
+            warm_start=True,  # Warm start to start each subsequent fit with previous weights
+        )
+
+        gl.fit(df.drop(datasets[0]['y_label'], axis=1).to_numpy(), df[[datasets[0]['y_label']]].to_numpy())
+
+        pred_c = gl.predict(df.drop(datasets[0]['y_label'], axis=1))
+        sparsity_mask = gl.sparsity_mask_
+
+        time_after = time.time()
+
+        # print(groups)
+
+        a = df.drop(datasets[0]['y_label'], axis=1)
+        a = a[a.columns[sparsity_mask]]
+        a['y_label'] = df[[datasets[0]['y_label']]]
+        linear_predictor = TabularPredictor(label='y_label',
+                                            verbosity=0,
+                                            path='./AutoGluon') \
+            .fit(train_data=a, hyperparameters={'GBM': {}})
+        test_data = TabularDataset(a)
+        accuracy = linear_predictor.evaluate(test_data)
+        # print(accuracy['accuracy'])
+        # print(time_after - time_before)
+
+        print(f'"{str(list(compress(range(0, len(df)), sparsity_mask)))}",{time_after - time_before},{groups},,GroupLasso,{datasets[0]["name"]},,{abs(accuracy["accuracy"])}')
+
+
 if __name__ == '__main__':
     # logging.basicConfig(filename='app.log', filemode='a', level=logging.ERROR, format='%(message)s')
 
     datasets = []
+    datasets.append({'name': 'Steel plates faults', 'path': '../../datasets/SteelPlatesFaults/steel_faults_train.csv', 'y_label': 'Class', 'n_features': 33, 'is_classification': True})
+    datasets.append({'name': 'Musk', 'path': '../../datasets/Musk/musk.csv', 'y_label': 'class', 'n_features': 169, 'is_classification': True})
+    datasets.append({'name': 'SpamEmail', 'path': '../../datasets/SpamBase/dataset_44_spambase.csv', 'y_label': 'class', 'n_features': 58, 'is_classification': True})
     datasets.append({'name': 'Bike sharing', 'path': '../../datasets/bike-sharing/hour.csv', 'y_label': 'cnt', 'n_features': 15, 'is_classification': False})
     datasets.append({'name': 'Census Income', 'path': '../../datasets/CensusIncome/CensusIncome.csv', 'y_label': 'income_label', 'n_features': 15, 'is_classification': True})
-    datasets.append({'name': 'Breast cancer', 'path': '../../datasets/breast-cancer/data.csv', 'y_label': 'diagnosis', 'n_features': 30, 'is_classification': True})
-    datasets.append({'name': 'Housing prices', 'path': '../../datasets/housing-prices/train.csv', 'y_label': 'SalePrice', 'n_features': 80, 'is_classification': False})
-    datasets.append({'name': 'Steel plates faults', 'path': '../../datasets/steel-plates-faults/steel_faults_train.csv', 'y_label': 'Class', 'n_features': 33, 'is_classification': True})
+    datasets.append({'name': 'BreastCancer', 'path': '../../datasets/BreastCancer/data.csv', 'y_label': 'diagnosis', 'n_features': 30, 'is_classification': True})
+    datasets.append({'name': 'Housing prices', 'path': '../../datasets/HousingPrices/train.csv', 'y_label': 'SalePrice', 'n_features': 80, 'is_classification': False})
     datasets.append({'name': 'Gisette', 'path': '../../datasets/gisette/gisette_train.csv', 'y_label': 'Class', 'n_features': 250, 'is_classification': True})
-    datasets.append({'name': 'Internet advertisements', 'path': '../../datasets/internet_advertisements/internet_advertisements.csv', 'y_label': 'class', 'n_features': 200, 'is_classification': True})
+    datasets.append({'name': 'InternetAds', 'path': '../../datasets/InternetAdvertisements/internet_advertisements.csv', 'y_label': 'class', 'n_features': 200, 'is_classification': True})
+    datasets.append({'name': 'Arrhythmia', 'path': '../../datasets/Arrhythmia/arrhythmia.csv', 'y_label': 'binaryClass', 'n_features': 33, 'is_classification': True})
+    datasets.append({'name': 'Topo2', 'path': '../../datasets/Topo2/topo_2_1.csv', 'y_label': 'oz267', 'n_features': 33, 'is_classification': False})
+    datasets.append({'name': 'QSAR', 'path': '../../datasets/QSAR/qsar.csv', 'y_label': 'MEDIAN_PXC50', 'n_features': 33, 'is_classification': False})
+
+    # perform_feature_selection_for_multiple_datasets()
+    evaluate_gbm()
+
 
     # Uncomment the following to perform feature selection for the datasets above
     # for MIFS, MRMR, CIFE, and JMI
     # perform_feature_selection_for_multiple_datasets()
     # evaluate_performance()
+    # evaluate_gbm()
     # evaluate_performance_SVM()
 
     # Uncomment the following to perform feature selection for the datasets above

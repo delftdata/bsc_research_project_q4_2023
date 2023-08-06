@@ -9,7 +9,7 @@ from sklearn.tree import DecisionTreeClassifier
 from multiprocessing import Pool, cpu_count
 from itertools import repeat
 
-from skfeature.information_theoretical_based import JMI, MIFS, CIFE, MRMR
+from skfeature.information_theoretical_based import JMI, MIFS, CIFE, MRMR, CMIM
 from skfeature.utility.plotting_helpers import plot_over_features
 
 
@@ -162,6 +162,21 @@ def select_cife(X, y, n_selected_features):
         Result from feature selection
     """
     return CIFE.cife(X, y, n_selected_features=n_selected_features)
+
+
+def select_cmim(X, y, n_selected_features):
+    """
+     Helper function to run CIFE feature selection.
+
+    Args:
+        X: training set without target column
+        y: target column
+        n_selected_features: number of features to select
+
+    Returns:
+        Result from feature selection
+    """
+    return CMIM.cmim(X, y, n_selected_features=n_selected_features)
 
 
 def main():

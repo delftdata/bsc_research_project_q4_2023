@@ -25,7 +25,8 @@ def get_hyperparameters(train_data, y_label, algorithms, model_names):
     for algorithm, model_name in zip(algorithms, model_names):
         # Train model on entire dataset
         initial_linear_predictor = TabularPredictor(label=y_label,
-                                                    verbosity=0) \
+                                                    verbosity=0,
+                                            path='./AutoGluon') \
             .fit(train_data=train_data, hyperparameters={algorithm: {}})
         initial_training_results = initial_linear_predictor.info()
         # Get tuned hyper-parameters

@@ -110,6 +110,6 @@ pp. 273–290, 2016.
 [5] R. J. Urbanowicz, M. Meeker, W. La Cava, R. S. Olson, and J. H. Moore, “Relief-based feature selection: 
 Introduction and review,” Journal of biomedical informatics, vol. 85, pp. 189–203, 2018.
 
-# Maintainer
+### Maintainer
 
 This repository is created and maintained by [Florena Buse](https://www.linkedin.com/in/florena-buse/).

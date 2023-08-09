@@ -1,16 +1,11 @@
 # Codebase for "Data-Driven Empirical Analysis of Correlation-Based Feature Selection Techniques"
-# Codebase for "AutoFeat: Transitive Feature Discovery over Join Paths"
 
 ### Introduction
 * The Research paper focuses on the analysis of four correlation-based feature selection techniques:
    * Pearson
    * Spearman
    * Cramér's V
-   * Symmetric Uncertainty
-
-* Additionally, the AutoFeat paper introduces the analysis of other two correlation techniques:
-   * Information Gain
-   * Relief
+   * Symmetrical Uncertainty
 
 ### Installation
 Prior to installing the project, ensure that you have
@@ -39,6 +34,3 @@ To install the project, follow these steps:
 
 To perform the experiments for the Research paper, choose the desired method in `src/run.py` and use the command from the `correlation_based_feature_selection` folder:
    > python -m src.run
-
-To perform the experiments for the AutoFeat paper, choose the desired method in `src/run_autofeat.py` and use the command from the `correlation_based_feature_selection` folder:
-   > python -m src.run_autofeat
